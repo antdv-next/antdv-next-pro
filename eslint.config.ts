@@ -1,0 +1,44 @@
+import type { Linter } from 'eslint'
+import antfu from '@antfu/eslint-config'
+
+const config = antfu(
+  {
+    markdown: false,
+    formatters: {
+      css: true,
+    },
+    e18e: false,
+    pnpm: true,
+    rules: {
+      'jsdoc/empty-tags': 0,
+      'node/prefer-global/process': 0,
+      'regexp/no-unused-capturing-group': 0,
+      'no-template-curly-in-string': 0,
+      'vue/no-template-shadow': 0,
+      'vue/one-component-per-file': 0,
+      'style/quote-props': 0,
+      'test/prefer-lowercase-title': 0,
+      'pnpm/yaml-enforce-settings': 0,
+    },
+  },
+  {
+    ignores: [
+      'docs/**',
+      '**/dist/**',
+    ],
+  },
+  {
+    files: [
+      'tests/**/*',
+      'playground/**/*',
+      'packages/**/tests/**/*',
+    ],
+    rules: {
+      'no-console': 0,
+      'no-restricted-globals': 0,
+      'no-irregular-whitespace': 0,
+    },
+  },
+) as Linter.Config
+
+export default config

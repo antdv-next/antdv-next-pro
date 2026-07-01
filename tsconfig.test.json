@@ -1,0 +1,28 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "composite": true,
+    "lib": ["ESNext", "DOM"],
+    "baseUrl": ".",
+    "paths": {
+      "/@tests/*": ["./tests/*"]
+    },
+    "types": ["@testing-library/jest-dom/vitest"],
+    /* Linting */
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noUncheckedSideEffectImports": true
+  },
+  "include": [
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "packages/**/tests/**/*.ts",
+    "packages/**/tests/**/*.tsx",
+    "vitest-plugin.ts",
+    "vitest.config.ts",
+    "packages/**/vitest.config.ts"
+  ]
+}

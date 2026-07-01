@@ -1,0 +1,70 @@
+{
+  "name": "antdv-next-pro-workspace",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.34.4",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antdv-next/antdv-next-pro.git"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "dev": "pnpm -F @antdv-next/pro dev",
+    "dev:play": "pnpm -F playground dev",
+    "build": "turbo build",
+    "build:pro": "pnpm -F @antdv-next/pro build",
+    "lint": "eslint . --fix",
+    "lint:fix": "eslint --fix",
+    "ci:lint": "eslint",
+    "ci:publish": "pnpm publish -r --access=public",
+    "test": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "pnpm -F @antdv-next/pro typecheck",
+    "prepare": "simple-git-hooks",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "dependencies": {
+    "vue": "catalog:prod"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "catalog:dev",
+    "@testing-library/jest-dom": "catalog:dev",
+    "@types/node": "catalog:types",
+    "@v-c/resize-observer": "catalog:vc",
+    "@v-c/util": "catalog:vc",
+    "@vitejs/plugin-vue": "catalog:dev",
+    "@vitejs/plugin-vue-jsx": "catalog:dev",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "@vue/test-utils": "catalog:dev",
+    "@vue/tsconfig": "catalog:dev",
+    "bumpp": "catalog:dev",
+    "cross-env": "catalog:dev",
+    "eslint": "catalog:dev",
+    "eslint-plugin-format": "catalog:dev",
+    "jsdom": "catalog:dev",
+    "lint-staged": "catalog:dev",
+    "mockdate": "catalog:dev",
+    "npm-run-all": "catalog:dev",
+    "pretty-format": "catalog:dev",
+    "simple-git-hooks": "catalog:dev",
+    "tsx": "catalog:dev",
+    "turbo": "catalog:dev",
+    "typescript": "catalog:dev",
+    "vite": "catalog:dev",
+    "vite-plugin-tsx-resolve-types": "catalog:dev",
+    "vitest": "catalog:dev",
+    "vue-tsc": "catalog:dev"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue,json}": [
+      "pnpm run lint:fix"
+    ]
+  }
+}
