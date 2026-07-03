@@ -1,0 +1,500 @@
+<script setup lang="ts">
+import type { CSSProperties } from 'vue'
+import { CheckOutlined, CodeOutlined, CopyOutlined, EditOutlined, ThunderboltOutlined } from '@antdv-next/icons'
+import { aquaBlue, atomDark } from '@codesandbox/sandpack-themes'
+import { useClipboard, useDebounceFn } from '@vueuse/core'
+import antdvPkg from 'antdv-next/package.json'
+import { SandpackProvider } from 'sandpack-vue3'
+import demos from 'virtual:demos'
+import { computed, defineAsyncComponent, markRaw, shallowRef, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import CodeEditorBridge from '@/components/code-demo/code-editor-bridge.vue'
+import ExpandIcon from '@/components/code-demo/expand-icon.vue'
+import CodeIframe from '@/components/code-demo/iframe.vue'
+import { compileSfcSource } from '@/components/code-demo/utils/compileSfc'
+import { getId } from '@/components/code-demo/utils/getId'
+import { loadPlaygroundUrl } from '@/components/code-demo/utils/playground.ts'
+import ExternalLink from '@/components/icons/external-link.vue'
+import { useLocale } from '@/composables/use-locale'
+import { useAppStore } from '@/stores/app.ts'
+import { openStackBlitz } from './utils/stackblitz'
+
+type DemoCodeType = 'ts' | 'js'
+
+interface DemoMeta {
+  component?: any
+  locales?: Record<string, {
+    html?: string
+    title?: string
+  }>
+  source?: string
+  jsSource?: string
+  html?: string
+  jsHtml?: string
+}
+
+defineOptions({
+  name: 'Demo',
+})
+const { src, compact, background, simplify, debug } = defineProps<{
+  src: string
+  iframe?: string
+  compact?: boolean
+  background?: string
+  simplify?: boolean
+  /** Debug demos are shown in development only and hidden in the production docs build. */
+  debug?: boolean
+}>()
+
+// Debug demos are visible while developing but stripped from the production docs.
+const hidden = computed(() => Boolean(debug) && import.meta.env.PROD)
+const demo = computed<DemoMeta | undefined>(() => demos[src])
+const route = useRoute()
+const router = useRouter()
+const appStore = useAppStore()
+const { t } = useLocale()
+
+const codeType = computed<DemoCodeType>({
+  get() {
+    return appStore.demoCodeType
+  },
+  set(value) {
+    appStore.setDemoCodeType(value)
+  },
+})
+
+const hasJsSource = computed(() => {
+  const jsSource = demo.value?.jsSource?.trim()
+  return Boolean(jsSource)
+})
+
+const activeCodeType = computed<DemoCodeType>({
+  get() {
+    if (codeType.value === 'js' && hasJsSource.value)
+      return 'js'
+    return 'ts'
+  },
+  set(value) {
+    codeType.value = value
+  },
+})
+
+const activeSourceCode = computed(() => {
+  if (activeCodeType.value === 'js')
+    return demo.value?.jsSource ?? demo.value?.source ?? ''
+  return demo.value?.source ?? ''
+})
+
+const description = computed(() => {
+  const locales = demo.value?.locales ?? {}
+  const localeData = locales[appStore.locale] || {}
+  return localeData?.html ?? ''
+})
+const component = computed(() => typeof demo.value?.component === 'function' ? defineAsyncComponent(demo.value.component) : demo.value?.component)
+const id = computed(() => {
+  if (!src)
+    return ''
+  return getId(src)
+})
+const showCode = shallowRef(false)
+const liveComponent = shallowRef<any>(null)
+const compileError = shallowRef<string | null>(null)
+const currentCode = shallowRef<string | null>(null)
+const editorBridgeRef = shallowRef<{ resetCode: (code: string) => void }>()
+
+function handleShowCode() {
+  showCode.value = !showCode.value
+  if (!showCode.value) {
+    // Revert to original when code collapsed
+    liveComponent.value = null
+    compileError.value = null
+    currentCode.value = null
+  }
+}
+
+// Reset live component and editor code when tab changes
+watch(activeCodeType, () => {
+  liveComponent.value = null
+  compileError.value = null
+  currentCode.value = null
+  editorBridgeRef.value?.resetCode(activeSourceCode.value)
+})
+
+const handleCodeChange = useDebounceFn(async (newCode: string) => {
+  currentCode.value = newCode
+  // Code matches original source (e.g. after tab switch reset), skip compilation
+  if (newCode === activeSourceCode.value) {
+    liveComponent.value = null
+    compileError.value = null
+    return
+  }
+  const { component: comp, error } = await compileSfcSource(newCode)
+  if (comp) {
+    liveComponent.value = markRaw(comp)
+    compileError.value = null
+  }
+  else {
+    compileError.value = error
+  }
+}, 300)
+
+const sandpackTheme = computed(() => appStore.darkMode ? atomDark : aquaBlue)
+
+const sandpackFiles = computed(() => ({
+  '/src/App.vue': activeSourceCode.value,
+}))
+const active = computed(() => route.hash === `#${id.value}`)
+function handleScroll(e: Event) {
+  e.preventDefault()
+  e.stopPropagation()
+  router.push({
+    path: route.path,
+    hash: `#${id.value}`,
+  })
+}
+
+const titleRef = shallowRef<HTMLElement>()
+
+function handleStackBlitz() {
+  if (activeSourceCode.value) {
+    const title = `${titleRef.value?.textContent || 'Antdv Next Demo'} - antdv-next@${antdvPkg.version}`
+    openStackBlitz(title, activeSourceCode.value)
+  }
+}
+
+const demoStyle = computed(() => {
+  const styles: CSSProperties = {}
+  if (compact) {
+    styles.padding = '0px'
+    styles.overflow = 'hidden'
+  }
+  if (background) {
+    if (background === 'grey') {
+      styles.backgroundColor = 'var(--ant-color-bg-layout)'
+    }
+  }
+  return styles
+})
+
+const copySource = computed(() => currentCode.value ?? activeSourceCode.value)
+
+const { copied, copy } = useClipboard({
+  source: copySource,
+  legacy: true,
+})
+
+const cls = computed(() => {
+  const cls: string[] = []
+  if (active.value) {
+    cls.push('border-primary')
+  }
+  if (simplify) {
+    cls.push('ant-doc-demo-box-simplify')
+  }
+  if (debug) {
+    cls.push('ant-doc-demo-box-debug')
+  }
+  return cls
+})
+
+function handleOpenPlayground() {
+  const url = loadPlaygroundUrl(activeSourceCode.value ?? '')
+  if (url) {
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
+}
+</script>
+
+<template>
+  <section v-if="!hidden" :id="id" class="ant-doc-demo-box border-solid border-color-split border-1px" :class="cls">
+    <template v-if="simplify">
+      <section class="vp-raw ant-doc-demo-box-demo">
+        <component :is="component" v-if="demo?.component" />
+      </section>
+    </template>
+    <template v-else>
+      <!-- Preview area: always visible, shows live-compiled or original component -->
+      <section v-if="!iframe" class="vp-raw ant-doc-demo-box-demo" :style="demoStyle">
+        <Suspense>
+          <component :is="liveComponent || component" v-if="liveComponent || demo?.component" />
+          <template #fallback>
+            <a-skeleton active :paragraph="{ rows: 5 }" />
+          </template>
+        </Suspense>
+      </section>
+      <template v-else>
+        <CodeIframe :src="id" :height="iframe" />
+      </template>
+      <!-- Compile error hint -->
+      <div v-if="compileError && showCode" class="ant-doc-demo-box-compile-error">
+        <pre>{{ compileError }}</pre>
+      </div>
+      <!-- Meta: title, description, actions -->
+      <section class="ant-doc-demo-box-meta markdown">
+        <div class="ant-doc-demo-box-title">
+          <a ref="titleRef" :href="`#${id}`" @click="handleScroll">
+            <slot />
+          </a>
+          <a target="_blank" rel="noopener norreferrer" class="ml-xs">
+            <EditOutlined class="color-text-tertiary" />
+          </a>
+        </div>
+        <div v-if="description" class="pt-18px pb-24px px-12px ant-doc-demo-box-meta-description">
+          <div v-html="description" />
+        </div>
+        <a-flex class="ant-doc-demo-box-actions " wrap gap="middle">
+          <a class="ant-doc-demo-box-code-action" @click="handleStackBlitz">
+            <a-tooltip :title="t('ui.codeDemo.action.stackblitz')">
+              <ThunderboltOutlined />
+            </a-tooltip>
+          </a>
+          <a class="ant-doc-demo-box-code-action" :href="`/~demos/${id}`" target="_blank" rel="noopener norreferrer">
+            <a-tooltip :title="t('ui.codeDemo.action.externalLink')">
+              <ExternalLink />
+            </a-tooltip>
+          </a>
+          <div class="ant-doc-demo-box-code-action" @click="handleOpenPlayground">
+            <a-tooltip :title="t('ui.codeDemo.action.openPlayground')">
+              <CodeOutlined />
+            </a-tooltip>
+          </div>
+          <div class="ant-doc-demo-box-expand-icon ant-doc-demo-box-code-action" @click="handleShowCode">
+            <a-tooltip :title="t(`ui.codeDemo.action.${showCode ? 'expandedCode' : 'expandCode'}`)">
+              <ExpandIcon :expanded="showCode" />
+            </a-tooltip>
+          </div>
+        </a-flex>
+      </section>
+      <!-- Code editor (only when expanded) -->
+      <template v-if="showCode">
+        <div class="ant-doc-demo-box-code-tabs">
+          <a-tabs
+            v-model:active-key="activeCodeType"
+            centered
+            size="small"
+          >
+            <a-tab-pane key="ts" :tab="t('ui.codeDemo.type.typescript')" />
+            <a-tab-pane key="js" :tab="t('ui.codeDemo.type.javascript')" />
+          </a-tabs>
+        </div>
+        <div class="ant-doc-demo-box-code">
+          <a-tooltip :title="t(`ui.codeDemo.action.${copied ? 'copied' : 'copy'}`)">
+            <div class="ant-doc-demo-box-code-copy" :class="copied ? 'ant-doc-demo-box-code-copied' : ''" @click="copy()">
+              <CopyOutlined v-if="!copied" />
+              <CheckOutlined v-else />
+            </div>
+          </a-tooltip>
+          <SandpackProvider
+            template="vite-vue-ts"
+            :files="sandpackFiles"
+            :theme="sandpackTheme"
+            :options="{ autorun: false }"
+          >
+            <CodeEditorBridge
+              ref="editorBridgeRef"
+              @update:code="handleCodeChange"
+            />
+          </SandpackProvider>
+        </div>
+        <!-- Collapse button at bottom -->
+        <div class="ant-doc-demo-box-collapse-btn" @click="handleShowCode">
+          <ExpandIcon :expanded="showCode" />
+          <span>{{ t('ui.codeDemo.action.expandedCode') }}</span>
+        </div>
+      </template>
+    </template>
+  </section>
+</template>
+
+<style lang="less" scoped>
+.ant-doc-demo-box {
+  @apply bg-container;
+
+  break-inside: avoid;
+  display: flow-root;
+
+  // Debug demos (dev only) get a purple border to stand out, matching antd.
+  &-debug {
+    border-color: #d3adf7;
+  }
+
+  &-debug &-title a {
+    color: #722ed1;
+  }
+  border-radius: 8px;
+  transition: 0.2s;
+  box-sizing: border-box;
+  position: relative;
+
+  &-demo {
+    @apply bg-container;
+    padding: 42px 24px 50px;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 1px solid var(--ant-color-split);
+  }
+
+  &-compile-error {
+    padding: 8px 16px;
+    background: var(--ant-color-error-bg);
+    border-top: 1px solid var(--ant-color-error-border);
+    font-size: 12px;
+    color: var(--ant-color-error);
+    overflow: auto;
+    max-height: 120px;
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  }
+
+  &-simplify {
+    border-radius: 0;
+    margin-bottom: 0;
+    border: none;
+    background: transparent;
+
+    .ant-doc-demo-box-demo {
+      padding: 0;
+      border-bottom: 0;
+      background: transparent;
+    }
+  }
+
+  &-meta.markdown {
+    position: relative;
+    width: 100%;
+    font-size: 14px;
+    border-radius: 0 0 6px 6px;
+    transition: background-color 0.4s;
+
+    h4,
+    p {
+      margin: 0;
+    }
+  }
+
+  &-title {
+    @apply ml-16px;
+    background-color: var(--ant-color-bg-container);
+    position: absolute;
+    top: -16px;
+    padding: 1px 8px;
+    border-radius: 6px 6px 0 0;
+    transition: background-color 0.4s;
+
+    a {
+      @apply color-text! decoration-none! font-500! text-16px!;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+    border-top: 1px dashed var(--ant-color-split);
+    opacity: 0.7;
+    transition: opacity 0.3s;
+
+    .ant-doc-demo-box-code-action {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 16px;
+      height: 16px;
+      @apply color-text-secondary;
+      cursor: pointer;
+      transition: 0.24s;
+    }
+  }
+
+  &-collapse-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    border-top: 1px dashed var(--ant-color-split);
+    cursor: pointer;
+    color: var(--ant-color-text-secondary);
+    font-size: 13px;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--ant-color-primary);
+    }
+  }
+
+  &-code {
+    position: relative;
+    line-height: 2;
+
+    // Remove sandpack wrapper backgrounds and borders
+    :deep(.sp-wrapper) {
+      background: transparent !important;
+    }
+
+    :deep(.sp-layout) {
+      background: transparent !important;
+      border: none !important;
+    }
+
+    :deep(.cm-editor) {
+      background: transparent;
+      font-size: 14px;
+
+      .cm-content {
+        line-height: 2;
+      }
+
+      .cm-activeLine,
+      .cm-activeLineGutter {
+        background: transparent;
+      }
+    }
+
+    :deep(.cm-gutters) {
+      background: transparent;
+      border: none;
+    }
+
+    :deep(.sp-stack) {
+      height: auto !important;
+      background: transparent;
+    }
+
+    // Override sandpack code editor surface background
+    :deep([class*='sp-code-editor']) {
+      background: transparent !important;
+    }
+
+    // Hide sandpack's built-in Run button and Read-only badge
+    :deep(.sp-button),
+    :deep(.sp-read-only) {
+      display: none;
+    }
+
+    &-tabs {
+      border-top: 1px dashed var(--ant-color-split);
+
+      :deep(.ant-tabs-nav) {
+        @apply mb-0;
+      }
+    }
+
+    &-copy {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      cursor: pointer;
+      color: var(--ant-color-icon);
+      z-index: 10;
+    }
+
+    &-copied {
+      color: var(--ant-color-success);
+    }
+  }
+}
+</style>

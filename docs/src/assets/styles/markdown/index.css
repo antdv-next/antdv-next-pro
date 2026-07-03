@@ -1,0 +1,54 @@
+@import 'vars.css';
+@import 'vp-doc.css';
+@import 'vp-code.css';
+@import 'custom-block.css';
+
+.markdown {
+  line-height: 2;
+  /*color: var(--ant-text-color);*/
+  @apply color-text;
+}
+
+/*
+ * Keep demo content (`vp-raw`) isolated from markdown layer typography/code styles.
+ * This prevents markdown rules from leaking into rendered component demos.
+ */
+.vp-doc
+  .vp-raw
+  :where(
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    summary,
+    blockquote,
+    a,
+    strong,
+    ul,
+    ol,
+    li,
+    table,
+    tbody,
+    thead,
+    tr,
+    th,
+    td,
+    hr,
+    pre,
+    code,
+    div[class*='language-'],
+    [class*='language-'] *,
+    .custom-block,
+    .custom-block *,
+    .header-anchor
+  ) {
+  all: revert-layer;
+}
+
+/* Hover-state table rows need an explicit override because :where(...) has zero specificity. */
+.vp-doc .vp-raw tbody tr:hover {
+  all: revert-layer;
+}

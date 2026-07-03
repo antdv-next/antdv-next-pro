@@ -1,9 +1,9 @@
 import type { Component } from 'vue'
+import ConfigProvider from 'antdv-next/config-provider'
 import MockDate from 'mockdate'
 import { describe, expect, it } from 'vitest'
-import { h } from 'vue'
 
-import ConfigProvider from '../../packages/antdv-next/src/config-provider'
+import { h } from 'vue'
 import { mount } from '../utils'
 
 /**

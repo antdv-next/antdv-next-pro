@@ -1,0 +1,36 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "lib": ["esnext", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@antdv-next/pro": ["../packages/pro/src/index.ts"],
+      "@antdv-next/pro/scrollbar": ["../packages/pro/src/scrollbar/index.tsx"],
+      "antdv-next/_util/*": ["./node_modules/antdv-next/dist/_util/*"],
+      "antdv-next/theme/util/*": ["./node_modules/antdv-next/dist/theme/util/*"]
+    },
+    "types": [
+      "vite/client",
+      "antdv-next/global"
+    ],
+
+    /* Linting */
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noUncheckedSideEffectImports": true
+  },
+  "files": [
+    "types/vite-env.d.ts",
+    "types/md.d.ts"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ]
+}

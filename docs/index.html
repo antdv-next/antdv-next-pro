@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/antdv-next.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Antdv Next Pro provides advanced Vue 3 components built on top of Antdv Next, with TypeScript support, rich demos, and customizable themes." />
+    <meta name="keywords" content="Antdv Next Pro, Antdv Next, Vue 3 component library, Ant Design Vue, pro components, UI components, TypeScript, TSX, documentation, vue, vue3" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:site_name" content="Antdv Next Pro" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Antdv Next Pro" />
+    <meta property="og:description" content="Antdv Next Pro provides advanced Vue 3 components built on top of Antdv Next." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Antdv Next Pro" />
+    <meta name="twitter:description" content="Antdv Next Pro provides advanced Vue 3 components built on top of Antdv Next." />
+    <title>Antdv Next Pro</title>
+    <script>
+      // 在页面渲染前应用暗黑模式，避免闪白
+      (function() {
+        try {
+          var darkMode = localStorage.getItem('dark-mode') === 'true'
+          var html = document.documentElement
+          var theme = darkMode ? 'dark' : 'light'
+          html.setAttribute('data-theme', theme)
+          html.classList.add(theme)
+          html.style.colorScheme = theme
+        } catch (e) {}
+      })()
+    </script>
+    <style>
+      /* 暗黑模式下的默认背景色，防止闪白 */
+      html.dark { background-color: #141414; }
+      html.dark body { background-color: #141414; }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

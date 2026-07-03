@@ -30,6 +30,16 @@ export default defineConfig({
         find: /^\/@tests/,
         replacement: path.resolve(baseUrl, './tests'),
       },
+      // Resolve the workspace package to source so tests (and docs demos
+      // rendered by tests) don't require a prebuilt dist.
+      {
+        find: /^@antdv-next\/pro\/scrollbar$/,
+        replacement: path.resolve(baseUrl, './packages/pro/src/scrollbar/index.tsx'),
+      },
+      {
+        find: /^@antdv-next\/pro$/,
+        replacement: path.resolve(baseUrl, './packages/pro/src/index.ts'),
+      },
     ],
   },
 })

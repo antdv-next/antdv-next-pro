@@ -11,10 +11,13 @@
     "node": ">=22.18.0"
   },
   "scripts": {
-    "dev": "pnpm -F @antdv-next/pro dev",
+    "dev": "turbo dev --filter docs",
+    "dev:pro": "pnpm -F @antdv-next/pro dev",
     "dev:play": "pnpm -F playground dev",
-    "build": "turbo build",
+    "build": "run-s build:search build:site",
     "build:pro": "pnpm -F @antdv-next/pro build",
+    "build:search": "pnpm -F docs run gen:search",
+    "build:site": "cross-env NODE_OPTIONS=--max-old-space-size=8192 turbo build --filter docs",
     "lint": "eslint . --fix",
     "lint:fix": "eslint --fix",
     "ci:lint": "eslint",

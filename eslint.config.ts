@@ -23,12 +23,13 @@ const config = antfu(
   },
   {
     ignores: [
-      'docs/**',
+      'docs/src/assets/antd.css',
       '**/dist/**',
     ],
   },
   {
     files: [
+      'docs/**/*',
       'tests/**/*',
       'playground/**/*',
       'packages/**/tests/**/*',

@@ -1,0 +1,6 @@
+@layer reset, default, markdown, antd, layout, common, components, utilities;
+
+@import 'antdv-next/dist/reset.css' layer(reset);
+@import './layout/index.css' layer(layout);
+@import './markdown/index.css' layer(markdown);
+@import './common.css';

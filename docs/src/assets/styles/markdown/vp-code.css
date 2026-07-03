@@ -1,0 +1,12 @@
+:root {
+  --ant-doc-dark: #f8f8f2;
+  --ant-doc-light: #282a36;
+}
+
+.dark .ant-doc-code span {
+  color: var(--ant-doc-dark, inherit);
+}
+
+html:not(.dark) .ant-doc-code span {
+  color: var(--ant-doc-light, inherit);
+}

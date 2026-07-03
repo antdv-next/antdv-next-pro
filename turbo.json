@@ -7,6 +7,23 @@
       "inputs": ["src/**", "scripts/**", "package.json", "tsconfig.json", "tsdown.config.ts"],
       "outputs": ["dist/**", "web-types.json", "web-tags.json"]
     },
+    "docs#build": {
+      "inputs": [
+        "src/**",
+        "plugins/**",
+        "scripts/**",
+        "types/**",
+        "public/**",
+        "index.html",
+        "package.json",
+        "tsconfig.json",
+        "tsconfig.app.json",
+        "uno.config.ts",
+        "vite.config.ts",
+        "../packages/pro/src/**"
+      ],
+      "outputs": ["dist/**"]
+    },
     "dev": {
       "cache": false,
       "persistent": true

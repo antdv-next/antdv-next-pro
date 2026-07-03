@@ -17,7 +17,9 @@ export default function demoTest(component: string, options: DemoTestOptions = {
 
   let files: string[] = []
   try {
-    files = readdirSync(demoDir).filter(f => f.endsWith('.vue')).sort()
+    // `_*.vue` demos rely on docs-site framework helpers (e.g. SemanticPreview),
+    // so they are only rendered by the docs app, not unit tests.
+    files = readdirSync(demoDir).filter(f => f.endsWith('.vue') && !f.startsWith('_')).sort()
   }
   catch {
     // No demo directory found
@@ -32,9 +34,10 @@ export default function demoTest(component: string, options: DemoTestOptions = {
 
   describe(`${component} demo`, () => {
     let antd: any
+    let pro: any
     beforeAll(async () => {
-      const mod = await import('../../packages/antdv-next/src/index')
-      antd = mod.default
+      antd = (await import('antdv-next')).default
+      pro = (await import('../../packages/pro/src/index')).default
     }, 60000)
 
     files.forEach((file) => {
@@ -47,7 +50,7 @@ export default function demoTest(component: string, options: DemoTestOptions = {
 
         const wrapper = mount(Demo, {
           global: {
-            plugins: [antd],
+            plugins: [antd, pro],
           },
           attachTo: document.body,
         })
