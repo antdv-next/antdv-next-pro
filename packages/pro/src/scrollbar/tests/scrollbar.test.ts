@@ -422,7 +422,7 @@ describe('Scrollbar', () => {
     const transition = wrapper.find('transition-stub')
 
     expect(transition.exists()).toBe(true)
-    expect(transition.attributes('name')).toBe('ant-scrollbar-track-motion')
+    expect(transition.attributes('name')).toBe('ant-scrollbar-track-fade-motion')
   })
 
   it('uses fade track motion from component props', async () => {

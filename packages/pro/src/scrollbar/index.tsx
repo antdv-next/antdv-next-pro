@@ -73,7 +73,7 @@ export interface ScrollbarRef {
 
 const DEFAULT_VISIBILITY: ScrollbarVisibility = 'auto'
 const DEFAULT_HIDE_DELAY = 1200
-const DEFAULT_MOTION: ScrollbarMotion = 'slide'
+const DEFAULT_MOTION: ScrollbarMotion = 'fade'
 
 function omitClassAndStyle(attrs: Record<string, any>) {
   const nextAttrs = { ...attrs }
