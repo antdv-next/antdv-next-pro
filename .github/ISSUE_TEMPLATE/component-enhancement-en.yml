@@ -1,6 +1,6 @@
 name: Existing Component Enhancement
 description: Propose a new feature or behavior improvement for an existing Antdv Next Pro component
-title: "[Enhancement] "
+title: '[Enhancement] '
 labels:
   - enhancement
   - component
@@ -14,7 +14,7 @@ body:
     id: component
     attributes:
       label: Target component
-      placeholder: For example: Scrollbar
+      placeholder: 'For example: Scrollbar'
     validations:
       required: true
 
@@ -22,7 +22,7 @@ body:
     id: version
     attributes:
       label: Version in use
-      placeholder: For example: @antdv-next/pro 0.1.0
+      placeholder: 'For example: @antdv-next/pro 0.1.0'
 
   - type: textarea
     id: current-limitation

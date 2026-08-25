@@ -1,6 +1,6 @@
 name: New Component Proposal
 description: Propose a new component that is not currently available in Antdv Next Pro
-title: "[Component Proposal] "
+title: '[Component Proposal] '
 labels:
   - feature
   - component
@@ -16,7 +16,7 @@ body:
     attributes:
       label: Component name
       description: Provide the Chinese and English names if applicable.
-      placeholder: For example: AdvancedTable
+      placeholder: 'For example: AdvancedTable'
     validations:
       required: true
 

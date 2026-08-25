@@ -1,6 +1,6 @@
 name: 现有组件功能增强
 description: 为 Antdv Next Pro 的现有组件提议新功能或行为改进
-title: "[功能增强] "
+title: '[功能增强] '
 labels:
   - enhancement
   - component

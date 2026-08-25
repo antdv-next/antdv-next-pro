@@ -1,6 +1,6 @@
 name: Bug 修复
 description: 报告 Antdv Next Pro 中可复现的问题
-title: "[Bug] "
+title: '[Bug] '
 labels:
   - bug
   - component

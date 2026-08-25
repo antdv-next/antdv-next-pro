@@ -1,6 +1,6 @@
 name: 新增组件提案
 description: 提议一个 Antdv Next Pro 尚未提供的新组件
-title: "[组件提案] "
+title: '[组件提案] '
 labels:
   - feature
   - component
