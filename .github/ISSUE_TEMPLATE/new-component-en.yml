@@ -1,6 +1,6 @@
 name: New Component Proposal
 description: Propose a new component that is not currently available in Antdv Next Pro
-title: '[Component Proposal] '
+title: '[Feature] '
 labels:
   - feature
   - component
