@@ -1,0 +1,77 @@
+name: 现有组件功能增强
+description: 为 Antdv Next Pro 的现有组件提议新功能或行为改进
+title: '[功能增强] '
+labels:
+  - enhancement
+  - component
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先确认该需求属于现有组件的能力增强，而不是新增独立组件。
+
+  - type: input
+    id: component
+    attributes:
+      label: 目标组件
+      placeholder: 例如：Scrollbar
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 使用版本
+      placeholder: 例如：@antdv-next/pro 0.1.0
+
+  - type: textarea
+    id: current-limitation
+    attributes:
+      label: 当前行为与限制
+      description: 描述目前的行为，以及它为什么无法满足实际需求。
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: 期望行为
+      description: 描述希望新增或调整的行为，并尽量给出使用示例。
+    validations:
+      required: true
+
+  - type: textarea
+    id: api-proposal
+    attributes:
+      label: API 或交互方案
+      description: 如涉及 Props、Events、Slots、样式或交互，请给出建议。
+
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: 兼容性与影响
+      description: 说明对现有 API、SSR、性能、无障碍或视觉交互的影响。
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 最小复现或参考资料
+      description: 提供代码片段、在线链接、截图或相关资料。
+
+  - type: checkboxes
+    id: participation
+    attributes:
+      label: 参与意愿
+      options:
+        - label: 我愿意参与开发
+        - label: 我仅提供需求
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已确认该需求可以归属于现有组件
+          required: true
+        - label: 我已检查过现有文档和 Issue，未找到相同需求
+          required: true
