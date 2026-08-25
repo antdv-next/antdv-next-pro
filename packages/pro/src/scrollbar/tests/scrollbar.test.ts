@@ -425,6 +425,36 @@ describe('Scrollbar', () => {
     expect(transition.attributes('name')).toBe('ant-scrollbar-track-motion')
   })
 
+  it('uses fade track motion from component props', async () => {
+    const wrapper = mount(Scrollbar, {
+      props: {
+        visibilityY: 'always',
+        motion: 'fade',
+      },
+    })
+
+    await nextTick()
+
+    expect(wrapper.find('transition-stub').attributes('name')).toBe('ant-scrollbar-track-fade-motion')
+  })
+
+  it('uses track motion from ProConfigProvider', async () => {
+    const wrapper = mount(ProConfigProvider, {
+      props: {
+        scrollbar: {
+          motion: 'fade',
+        },
+      },
+      slots: {
+        default: () => h(Scrollbar, { visibilityY: 'always' }),
+      },
+    })
+
+    await nextTick()
+
+    expect(wrapper.find('transition-stub').attributes('name')).toBe('ant-scrollbar-track-fade-motion')
+  })
+
   it('auto hides overlays after pointer leaves and shows them again on re-enter', async () => {
     vi.useFakeTimers()
 

@@ -1,6 +1,6 @@
 import type { App, CSSProperties, ShallowRef, SlotsType } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semantic'
-import type { ScrollbarConfig, ScrollbarVisibility } from '../config-provider'
+import type { ScrollbarConfig, ScrollbarMotion, ScrollbarVisibility } from '../config-provider'
 import { clsx } from '@v-c/util'
 import { getTransitionProps } from '@v-c/util/dist/utils/transition'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
@@ -48,6 +48,7 @@ export interface ScrollbarProps {
   visibilityX?: ScrollbarVisibility
   visibilityY?: ScrollbarVisibility
   hideDelay?: number
+  motion?: ScrollbarMotion
   native?: boolean
   classes?: ScrollbarClassNamesType
   styles?: ScrollbarStylesType
@@ -72,6 +73,7 @@ export interface ScrollbarRef {
 
 const DEFAULT_VISIBILITY: ScrollbarVisibility = 'auto'
 const DEFAULT_HIDE_DELAY = 1200
+const DEFAULT_MOTION: ScrollbarMotion = 'slide'
 
 function omitClassAndStyle(attrs: Record<string, any>) {
   const nextAttrs = { ...attrs }
@@ -114,6 +116,10 @@ const Scrollbar = defineComponent<
       return props.hideDelay ?? proConfig.value.hideDelay ?? DEFAULT_HIDE_DELAY
     })
 
+    const mergedMotion = computed<ScrollbarMotion>(() => {
+      return props.motion ?? proConfig.value.motion ?? DEFAULT_MOTION
+    })
+
     const mergedConfig = computed<ScrollbarConfig>(() => {
       return {
         ...proConfig.value,
@@ -121,6 +127,7 @@ const Scrollbar = defineComponent<
         visibilityX: mergedVisibilityX.value,
         visibilityY: mergedVisibilityY.value,
         hideDelay: mergedHideDelay.value,
+        motion: mergedMotion.value,
         native: mergedNative.value,
       }
     })
@@ -139,6 +146,7 @@ const Scrollbar = defineComponent<
           visibilityX: mergedVisibilityX.value,
           visibilityY: mergedVisibilityY.value,
           hideDelay: mergedHideDelay.value,
+          motion: mergedMotion.value,
           native: mergedNative.value,
         },
       })),
@@ -169,7 +177,11 @@ const Scrollbar = defineComponent<
       ]
     })
 
-    const trackMotionName = computed(() => `${prefixCls.value}-track-motion`)
+    const trackMotionName = computed(() => {
+      return mergedMotion.value === 'fade'
+        ? `${prefixCls.value}-track-fade-motion`
+        : `${prefixCls.value}-track-motion`
+    })
     const trackTransitionProps = computed(() => getTransitionProps(trackMotionName.value, { appear: false }))
 
     const scrollbarState = useScrollbarState(
@@ -435,6 +447,6 @@ const Scrollbar = defineComponent<
   app.component(Scrollbar.name, Scrollbar)
 }
 
-export type { ScrollbarConfig, ScrollbarVisibility }
+export type { ScrollbarConfig, ScrollbarMotion, ScrollbarVisibility }
 export default Scrollbar
 export { Scrollbar }

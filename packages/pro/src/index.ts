@@ -7,6 +7,7 @@ export { default as ProConfigProvider } from './config-provider'
 export type {
   ProConfigProviderProps,
   ScrollbarConfig,
+  ScrollbarMotion,
   ScrollbarVisibility,
 } from './config-provider'
 

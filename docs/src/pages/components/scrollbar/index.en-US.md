@@ -21,6 +21,7 @@ group:
 <demo-group>
   <demo src="./demo/basic.vue">Basic</demo>
   <demo src="./demo/visibility.vue">Visibility modes</demo>
+  <demo src="./demo/motion.vue">Visibility motion</demo>
   <demo src="./demo/sider.vue">Navigation sider</demo>
   <demo src="./demo/controller.vue">Events and scroll control</demo>
   <demo src="./demo/semantic.vue">Semantic styling</demo>
@@ -34,9 +35,10 @@ group:
 | visibilityX | Visibility strategy for horizontal scrollbar | `'auto' \| 'always' \| 'hidden'` | - |
 | visibilityY | Visibility strategy for vertical scrollbar | `'auto' \| 'always' \| 'hidden'` | - |
 | hideDelay | Delay in milliseconds before auto-mode overlays hide after the pointer leaves the content area | `number` | `1200` |
+| motion | Track visibility motion. `fade` fades in and out; `slide` slides in from the right and out to the right. | `'fade' \| 'slide'` | `'slide'` |
 | native | Use native browser scrollbars and disable overlay thumbs | `boolean` | `false` |
-| classes | Customize semantic class names. Supports object or function. | `Record<[SemanticDOM](#semantic-dom), string> \| (info: { props }) => Record<[SemanticDOM](#semantic-dom), string>` | - |
-| styles | Customize semantic inline styles. Supports object or function. | `Record<[SemanticDOM](#semantic-dom), CSSProperties> \| (info: { props }) => Record<[SemanticDOM](#semantic-dom), CSSProperties>` | - |
+| classes | Customize class for each semantic structure inside the component. Supports object or function. | `ScrollbarClassNamesType` | - |
+| styles | Customize inline style for each semantic structure inside the component. Supports object or function. | `ScrollbarStylesType` | - |
 
 ### Events
 

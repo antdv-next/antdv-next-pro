@@ -2,12 +2,14 @@ import type { ThemeConfig } from 'antdv-next/config-provider/context'
 import type { CSSProperties } from 'vue'
 
 export type ScrollbarVisibility = 'auto' | 'always' | 'hidden'
+export type ScrollbarMotion = 'fade' | 'slide'
 
 export interface ScrollbarConfig {
   visibility?: ScrollbarVisibility
   visibilityX?: ScrollbarVisibility
   visibilityY?: ScrollbarVisibility
   hideDelay?: number
+  motion?: ScrollbarMotion
   native?: boolean
   class?: string
   style?: CSSProperties
