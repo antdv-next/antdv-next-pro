@@ -43,21 +43,6 @@ export default defineConfig({
   },
   optimizeDeps: {
     // include: ['@antdv-next/icons'],
-    exclude: [
-      '@v-c/segmented',
-      '@v-c/trigger',
-      '@v-c/tooltip',
-      '@v-c/util',
-      '@v-c/menu',
-      '@v-c/tour',
-      '@v-c/input',
-      '@v-c/input-number',
-      '@v-c/textarea',
-      '@v-c/select',
-      '@v-c/picker',
-      '@v-c/drawer',
-      '@v-c/dialog',
-    ],
     include: [
       '@antdv-next/icons',
       '@antdv-next/icons/all',
