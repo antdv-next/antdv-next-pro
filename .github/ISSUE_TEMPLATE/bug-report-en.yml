@@ -1,0 +1,86 @@
+name: Bug Report
+description: Report a reproducible problem in Antdv Next Pro
+title: "[Bug] "
+labels:
+  - bug
+  - component
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem. Please provide a minimal reproduction whenever possible.
+
+  - type: input
+    id: component
+    attributes:
+      label: Affected component
+      placeholder: For example: Scrollbar
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: For example: @antdv-next/pro 0.1.0
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Include browser, operating system, Vue, and Node.js versions.
+      placeholder: Chrome 130 / Windows 11 / Vue 3.5 / Node 22
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual behavior
+      description: Clearly describe what happened and include errors or logs.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: Clearly describe what you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to reproduce
+      description: List the steps that reliably reproduce the problem.
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: input
+    id: reproduction-link
+    attributes:
+      label: Online reproduction
+      description: Add a StackBlitz, CodeSandbox, or other accessible link if available.
+
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Screenshots, logs, or additional context
+      description: You can drag screenshots, recordings, or relevant logs here.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Submission checklist
+      options:
+        - label: I have searched existing Issues and found no duplicate report
+          required: true
+        - label: I have provided the minimum information needed to reproduce the problem
+          required: true

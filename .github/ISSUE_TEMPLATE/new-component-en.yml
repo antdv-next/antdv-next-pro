@@ -1,0 +1,103 @@
+name: New Component Proposal
+description: Propose a new component that is not currently available in Antdv Next Pro
+title: "[Component Proposal] "
+labels:
+  - feature
+  - component
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for contributing to the extension component library. Please provide as much detail as possible.
+        You can review [Discussion #426](https://github.com/antdv-next/antdv-next/discussions/426) before submitting.
+
+  - type: input
+    id: component-name
+    attributes:
+      label: Component name
+      description: Provide the Chinese and English names if applicable.
+      placeholder: For example: AdvancedTable
+    validations:
+      required: true
+
+  - type: input
+    id: component-identifier
+    attributes:
+      label: Component identifier
+      description: Prefer lowercase English with hyphens, for example advanced-table.
+      placeholder: advanced-table
+    validations:
+      required: true
+
+  - type: dropdown
+    id: similar-component
+    attributes:
+      label: Is there a similar component?
+      options:
+        - No
+        - Yes, I will explain below
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use cases
+      description: Describe the problem, typical business scenarios, and limitations of existing solutions.
+      placeholder: |
+        - Scenario one:
+        - Scenario two:
+        - Limitations of existing solutions:
+    validations:
+      required: true
+
+  - type: textarea
+    id: feature-design
+    attributes:
+      label: Feature design
+      description: Describe the required basic features and optional advanced features.
+      placeholder: |
+        Basic features:
+        Advanced features:
+    validations:
+      required: true
+
+  - type: textarea
+    id: api-proposal
+    attributes:
+      label: API proposal
+      description: If you have ideas, describe the Props, Events, Slots, or instance methods.
+      placeholder: |
+        Props:
+        Events:
+        Slots:
+
+  - type: textarea
+    id: references
+    attributes:
+      label: Reference implementations
+      description: Include reference libraries or component links and their strengths and weaknesses.
+
+  - type: textarea
+    id: design-notes
+    attributes:
+      label: Design notes
+      description: Include design files, prototypes, or complex interaction details if available.
+
+  - type: checkboxes
+    id: participation
+    attributes:
+      label: Participation
+      options:
+        - label: I am willing to help implement this component
+        - label: I am providing an idea only
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Submission checklist
+      options:
+        - label: I have confirmed that this is not a simple duplicate of an existing Ant Design or Antdv Next component
+          required: true
+        - label: I have provided verifiable use cases where possible
+          required: true
