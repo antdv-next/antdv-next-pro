@@ -1,0 +1,77 @@
+name: Existing Component Enhancement
+description: Propose a new feature or behavior improvement for an existing Antdv Next Pro component
+title: '[Enhancement] '
+labels:
+  - enhancement
+  - component
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please confirm that this request enhances an existing component rather than proposing a separate component.
+
+  - type: input
+    id: component
+    attributes:
+      label: Target component
+      placeholder: 'For example: Scrollbar'
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version in use
+      placeholder: 'For example: @antdv-next/pro 0.1.0'
+
+  - type: textarea
+    id: current-limitation
+    attributes:
+      label: Current behavior and limitation
+      description: Describe the current behavior and why it does not meet the actual need.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: Describe the behavior to add or change, preferably with a usage example.
+    validations:
+      required: true
+
+  - type: textarea
+    id: api-proposal
+    attributes:
+      label: API or interaction proposal
+      description: Include suggestions for Props, Events, Slots, styling, or interactions if relevant.
+
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and impact
+      description: Explain the impact on existing APIs, SSR, performance, accessibility, or visual interactions.
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction or references
+      description: Provide a code snippet, online link, screenshot, or related reference.
+
+  - type: checkboxes
+    id: participation
+    attributes:
+      label: Participation
+      options:
+        - label: I am willing to help implement this enhancement
+        - label: I am providing a requirement only
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Submission checklist
+      options:
+        - label: I have confirmed that this request belongs to an existing component
+          required: true
+        - label: I have checked the existing documentation and Issues for duplicates
+          required: true
