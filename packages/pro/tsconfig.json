@@ -1,6 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
+    "paths": {
+      "/@tests/*": ["../../tests/*"]
+    },
     /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,

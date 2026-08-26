@@ -44,6 +44,7 @@
     "@vitest/ui": "catalog:",
     "@vue/test-utils": "catalog:dev",
     "@vue/tsconfig": "catalog:dev",
+    "antdv-next": "catalog:prod",
     "bumpp": "catalog:dev",
     "cross-env": "catalog:dev",
     "eslint": "catalog:dev",
