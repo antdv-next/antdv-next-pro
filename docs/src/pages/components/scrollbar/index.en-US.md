@@ -58,3 +58,9 @@ The component `ref` exposes the following instance API:
 ## Semantic DOM
 
 <demo src="./demo/_semantic.vue" simplify></demo>
+
+## Design Tokens
+
+Customize Scrollbar styles through `theme.components.Scrollbar`:
+
+<ComponentTokenTable component="Scrollbar" />

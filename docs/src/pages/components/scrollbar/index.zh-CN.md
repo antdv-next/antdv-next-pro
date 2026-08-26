@@ -59,3 +59,9 @@ group:
 ## 语义化 DOM
 
 <demo src="./demo/_semantic.vue" simplify></demo>
+
+## 主题 Token
+
+Scrollbar 支持通过 `theme.components.Scrollbar` 自定义组件样式 Token：
+
+<ComponentTokenTable component="Scrollbar" />
