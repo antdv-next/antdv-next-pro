@@ -10,7 +10,6 @@ export interface ScrollbarConfig {
   visibilityY?: ScrollbarVisibility
   hideDelay?: number
   motion?: ScrollbarMotion
-  native?: boolean
   class?: string
   style?: CSSProperties
   classes?: Record<string, string>

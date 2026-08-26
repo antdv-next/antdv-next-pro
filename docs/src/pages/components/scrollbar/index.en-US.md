@@ -36,7 +36,6 @@ group:
 | visibilityY | Visibility strategy for vertical scrollbar | `'auto' \| 'always' \| 'hidden'` | - |
 | hideDelay | Delay in milliseconds before auto-mode overlays hide after the pointer leaves the content area | `number` | `1200` |
 | motion | Track visibility motion. `fade` fades in and out; `slide` slides in from the right and out to the right. | `'fade' \| 'slide'` | `'fade'` |
-| native | Use native browser scrollbars and disable overlay thumbs | `boolean` | `false` |
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | `ScrollbarClassNamesType` | - |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function. | `ScrollbarStylesType` | - |
 

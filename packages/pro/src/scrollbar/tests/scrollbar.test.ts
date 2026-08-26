@@ -189,15 +189,15 @@ describe('Scrollbar', () => {
 
   it('supports semantic classes and styles as functions', async () => {
     const classes = vi.fn((info: { props: any }) => ({
-      root: info.props.native ? 'native-root' : 'custom-root',
+      root: 'custom-root',
       content: 'dynamic-content',
       trackY: info.props.visibilityY === 'always' ? 'always-track-y' : 'auto-track-y',
       thumbY: 'dynamic-thumb-y',
     }))
 
     const styles = vi.fn((info: { props: any }) => ({
-      root: { margin: info.props.native ? '1px' : '2px' },
-      content: { paddingBottom: info.props.native ? '3px' : '5px' },
+      root: { margin: '2px' },
+      content: { paddingBottom: '5px' },
       thumbY: { backgroundColor: info.props.visibilityY === 'always' ? 'rgb(7, 8, 9)' : 'rgb(9, 8, 7)' },
     }))
 
@@ -220,13 +220,6 @@ describe('Scrollbar', () => {
     expect(wrapper.find('.ant-scrollbar-track-y').classes()).toContain('always-track-y')
     expect(wrapper.find('.ant-scrollbar-thumb-y').classes()).toContain('dynamic-thumb-y')
     expect(wrapper.find('.ant-scrollbar-thumb-y').attributes('style')).toContain('background-color: rgb(7, 8, 9)')
-
-    await wrapper.setProps({
-      native: true,
-      visibilityY: 'auto',
-    })
-
-    expect(wrapper.find('.ant-scrollbar').classes()).toContain('native-root')
   })
 
   it('merges semantic classes and styles from ProConfigProvider and component props', async () => {
@@ -496,39 +489,6 @@ describe('Scrollbar', () => {
     finally {
       vi.useRealTimers()
     }
-  })
-
-  it('disables custom overlays in native mode', async () => {
-    const wrapper = mount(Scrollbar, {
-      props: {
-        native: true,
-        visibilityX: 'always',
-        visibilityY: 'always',
-      },
-    })
-
-    await nextTick()
-
-    expect(wrapper.find('.ant-scrollbar-track-x').exists()).toBe(false)
-    expect(wrapper.find('.ant-scrollbar-track-y').exists()).toBe(false)
-  })
-
-  it('restores native scrollbar styles in native mode', async () => {
-    mount(Scrollbar, {
-      props: {
-        native: true,
-      },
-    })
-
-    await nextTick()
-
-    const styleText = Array.from(document.head.querySelectorAll('style'))
-      .map(node => node.textContent ?? '')
-      .join('\n')
-
-    expect(styleText).toContain('.ant-scrollbar-native')
-    expect(styleText).toContain('scrollbar-width:auto')
-    expect(styleText).toContain('ms-overflow-style:auto')
   })
 
   it('updates tracks when content size changes without a scroll event', async () => {

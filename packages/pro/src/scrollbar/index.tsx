@@ -49,7 +49,6 @@ export interface ScrollbarProps {
   visibilityY?: ScrollbarVisibility
   hideDelay?: number
   motion?: ScrollbarMotion
-  native?: boolean
   classes?: ScrollbarClassNamesType
   styles?: ScrollbarStylesType
 }
@@ -108,10 +107,6 @@ const Scrollbar = defineComponent<
       return props.visibilityY ?? proConfig.value.visibilityY ?? mergedVisibility.value
     })
 
-    const mergedNative = computed(() => {
-      return props.native ?? proConfig.value.native ?? false
-    })
-
     const mergedHideDelay = computed(() => {
       return props.hideDelay ?? proConfig.value.hideDelay ?? DEFAULT_HIDE_DELAY
     })
@@ -128,7 +123,6 @@ const Scrollbar = defineComponent<
         visibilityY: mergedVisibilityY.value,
         hideDelay: mergedHideDelay.value,
         motion: mergedMotion.value,
-        native: mergedNative.value,
       }
     })
 
@@ -147,7 +141,6 @@ const Scrollbar = defineComponent<
           visibilityY: mergedVisibilityY.value,
           hideDelay: mergedHideDelay.value,
           motion: mergedMotion.value,
-          native: mergedNative.value,
         },
       })),
     )
@@ -160,7 +153,6 @@ const Scrollbar = defineComponent<
         rootCls.value,
         {
           [`${prefixCls.value}-rtl`]: direction.value === 'rtl',
-          [`${prefixCls.value}-native`]: mergedNative.value,
         },
         proConfig.value.class,
         props.rootClass,
@@ -222,7 +214,7 @@ const Scrollbar = defineComponent<
 
     function scheduleHide() {
       clearHideTimer()
-      if (!hasAutoVisibility.value || hovering.value || dragging.value || mergedNative.value) {
+      if (!hasAutoVisibility.value || hovering.value || dragging.value) {
         return
       }
 
@@ -413,7 +405,6 @@ const Scrollbar = defineComponent<
         data-visibility-x={mergedVisibilityX.value}
         data-visibility-y={mergedVisibilityY.value}
         data-active={overlaysVisible.value ? '' : undefined}
-        data-native={mergedNative.value ? '' : undefined}
         onMouseenter={handleMouseEnter}
         onMouseleave={handleMouseLeave}
         {...omitClassAndStyle(attrs as Record<string, any>)}
@@ -432,8 +423,8 @@ const Scrollbar = defineComponent<
             {slots.default?.()}
           </div>
         </div>
-        {!mergedNative.value && renderTrackY()}
-        {!mergedNative.value && renderTrackX()}
+        {renderTrackY()}
+        {renderTrackX()}
       </div>
     )
   },

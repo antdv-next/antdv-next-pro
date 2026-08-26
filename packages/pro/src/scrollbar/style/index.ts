@@ -32,17 +32,6 @@ const genScrollbarStyle: GenerateStyle<ScrollbarToken, CSSObject> = (token) => {
         direction: 'rtl',
       },
 
-      '&-native': {
-        [`${componentCls}-container`]: {
-          scrollbarWidth: 'auto',
-          msOverflowStyle: 'auto',
-
-          '&::-webkit-scrollbar': {
-            display: 'block',
-          },
-        },
-      },
-
       [`&-container`]: {
         width: '100%',
         height: '100%',
