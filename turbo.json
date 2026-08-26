@@ -2,8 +2,13 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "tasks": {
-    "build": {
+    "build:token": {
       "dependsOn": ["^build"],
+      "inputs": ["src/**", "scripts/token/**", "package.json", "tsconfig.json"],
+      "outputs": ["../../docs/src/assets/token.json", "../../docs/src/assets/token-meta.json"]
+    },
+    "build": {
+      "dependsOn": ["@antdv-next/pro#build:token", "^build"],
       "inputs": ["src/**", "scripts/**", "package.json", "tsconfig.json", "tsdown.config.ts"],
       "outputs": ["dist/**", "web-types.json", "web-tags.json"]
     },
