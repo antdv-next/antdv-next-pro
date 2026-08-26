@@ -14,7 +14,7 @@ export default mergeConfig(vitestPlugin, defineProject({
     ],
     server: {
       deps: {
-        inline: [/@v-c\//],
+        inline: true,
       },
     },
   },

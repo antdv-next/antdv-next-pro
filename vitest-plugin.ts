@@ -40,6 +40,10 @@ export default defineConfig({
         find: /^@antdv-next\/pro$/,
         replacement: path.resolve(baseUrl, './packages/pro/src/index.ts'),
       },
+      {
+        find: /^antdv-next$/,
+        replacement: path.resolve(baseUrl, './packages/pro/node_modules/antdv-next'),
+      },
     ],
   },
 })

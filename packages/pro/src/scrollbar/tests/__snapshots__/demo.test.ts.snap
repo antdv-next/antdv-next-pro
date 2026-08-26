@@ -1,0 +1,2435 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`scrollbar demo > renders basic correctly 1`] = `
+<div
+  class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+  data-active=""
+  data-visibility="auto"
+  data-visibility-x="auto"
+  data-visibility-y="auto"
+  style="height: 260px; border: 1px solid var(--ant-color-border); border-radius: 12px;"
+>
+  <div
+    class="ant-scrollbar-container"
+  >
+    <div
+      class="ant-scrollbar-content"
+    >
+      <div
+        style="min-width: 680px; padding: 16px;"
+      >
+        <div
+          class="ant-flex css-var-root ant-flex-align-center ant-flex-justify-space-between"
+          style="margin-bottom: 12px;"
+        >
+          <h5
+            class="ant-typography css-var-root"
+            style="margin: 0px;"
+          >
+            <!---->
+             Activity Stream 
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </h5>
+          <span
+            class="ant-tag ant-tag-filled ant-tag-processing css-var-root"
+          >
+             14 items 
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+        <div
+          class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-small ant-flex-vertical"
+        >
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 1
+            </strong>
+            <span>
+              Scrollable content 1
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-default css-var-root"
+            >
+              Queued
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 2
+            </strong>
+            <span>
+              Scrollable content 2
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-success css-var-root"
+            >
+              Synced
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 3
+            </strong>
+            <span>
+              Scrollable content 3
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-default css-var-root"
+            >
+              Queued
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 4
+            </strong>
+            <span>
+              Scrollable content 4
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-success css-var-root"
+            >
+              Synced
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 5
+            </strong>
+            <span>
+              Scrollable content 5
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-default css-var-root"
+            >
+              Queued
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 6
+            </strong>
+            <span>
+              Scrollable content 6
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-success css-var-root"
+            >
+              Synced
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 7
+            </strong>
+            <span>
+              Scrollable content 7
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-default css-var-root"
+            >
+              Queued
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 8
+            </strong>
+            <span>
+              Scrollable content 8
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-success css-var-root"
+            >
+              Synced
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 9
+            </strong>
+            <span>
+              Scrollable content 9
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-default css-var-root"
+            >
+              Queued
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 10
+            </strong>
+            <span>
+              Scrollable content 10
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-success css-var-root"
+            >
+              Synced
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 11
+            </strong>
+            <span>
+              Scrollable content 11
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-default css-var-root"
+            >
+              Queued
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 12
+            </strong>
+            <span>
+              Scrollable content 12
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-success css-var-root"
+            >
+              Synced
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 13
+            </strong>
+            <span>
+              Scrollable content 13
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-default css-var-root"
+            >
+              Queued
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 120px 1fr 120px; gap: 12px; min-width: 640px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 20%);"
+          >
+            <strong>
+              Row 14
+            </strong>
+            <span>
+              Scrollable content 14
+            </span>
+            <span
+              class="ant-tag ant-tag-filled ant-tag-success css-var-root"
+            >
+              Synced
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <transition-stub
+    appear="false"
+    css="true"
+    enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+    enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+    entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+    leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+    leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+    leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+    name="ant-scrollbar-track-fade-motion"
+    persisted="false"
+  >
+    <!---->
+  </transition-stub>
+  <transition-stub
+    appear="false"
+    css="true"
+    enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+    enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+    entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+    leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+    leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+    leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+    name="ant-scrollbar-track-fade-motion"
+    persisted="false"
+  >
+    <!---->
+  </transition-stub>
+</div>
+`;
+
+exports[`scrollbar demo > renders controller correctly 1`] = `
+<div
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+>
+  <div
+    class="ant-flex css-var-root ant-flex-wrap-wrap ant-flex-align-center ant-flex-gap-small"
+  >
+    <button
+      class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm"
+      type="button"
+    >
+      <transition-stub
+        appear="false"
+        css="true"
+        enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+        enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+        entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+        leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+        leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        name="ant-btn-loading-icon-motion"
+        persisted="false"
+      >
+        <!---->
+      </transition-stub>
+      <span>
+         Top Left 
+      </span>
+      <!---->
+    </button>
+    <button
+      class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm"
+      type="button"
+    >
+      <transition-stub
+        appear="false"
+        css="true"
+        enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+        enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+        entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+        leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+        leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        name="ant-btn-loading-icon-motion"
+        persisted="false"
+      >
+        <!---->
+      </transition-stub>
+      <span>
+         Center 
+      </span>
+      <!---->
+    </button>
+    <button
+      class="ant-btn css-var-root ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm"
+      type="button"
+    >
+      <transition-stub
+        appear="false"
+        css="true"
+        enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+        enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+        entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+        leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+        leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        name="ant-btn-loading-icon-motion"
+        persisted="false"
+      >
+        <!---->
+      </transition-stub>
+      <span>
+         Bottom Right 
+      </span>
+      <!---->
+    </button>
+    <span
+      class="ant-tag ant-tag-filled ant-tag-blue css-var-root"
+    >
+       left: 0
+      <!---->
+      <!---->
+      <!---->
+    </span>
+    <span
+      class="ant-tag ant-tag-filled ant-tag-cyan css-var-root"
+    >
+       top: 0
+      <!---->
+      <!---->
+      <!---->
+    </span>
+  </div>
+  <div
+    class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+    data-active=""
+    data-visibility="auto"
+    data-visibility-x="always"
+    data-visibility-y="always"
+    style="height: 240px; border: 1px solid var(--ant-color-border); border-radius: 14px;"
+  >
+    <div
+      class="ant-scrollbar-container"
+    >
+      <div
+        class="ant-scrollbar-content"
+      >
+        <div
+          style="min-width: 720px; padding: 16px;"
+        >
+          <div
+            class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-small ant-flex-vertical"
+          >
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 1
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                1
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 2
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                2
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 3
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                3
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 4
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                4
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 5
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                5
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 6
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                6
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 7
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                7
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 8
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                8
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 9
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                9
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 10
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                10
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 11
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                11
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 120px 1fr 140px; gap: 12px; min-width: 680px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-secondary), transparent 16%);"
+            >
+              <strong>
+                Row 12
+              </strong>
+              <span>
+                Programmatic scrolling keeps the native container and overlay thumbs in sync.
+              </span>
+              <span
+                class="ant-tag ant-tag-filled css-var-root"
+              >
+                12
+                <!---->
+                <!---->
+                <!---->
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <transition-stub
+      appear="false"
+      css="true"
+      enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+      enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+      entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+      leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+      leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+      leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+      name="ant-scrollbar-track-fade-motion"
+      persisted="false"
+    >
+      <div
+        class="ant-scrollbar-track ant-scrollbar-track-y"
+      >
+        <div
+          class="ant-scrollbar-thumb ant-scrollbar-thumb-y"
+          style="height: 0px; transform: translateY(0px);"
+        />
+      </div>
+    </transition-stub>
+    <transition-stub
+      appear="false"
+      css="true"
+      enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+      enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+      entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+      leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+      leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+      leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+      name="ant-scrollbar-track-fade-motion"
+      persisted="false"
+    >
+      <div
+        class="ant-scrollbar-track ant-scrollbar-track-x"
+      >
+        <div
+          class="ant-scrollbar-thumb ant-scrollbar-thumb-x"
+          style="width: 0px; transform: translateX(0px);"
+        />
+      </div>
+    </transition-stub>
+  </div>
+</div>
+`;
+
+exports[`scrollbar demo > renders motion correctly 1`] = `
+<div
+  class="ant-row css-var-root"
+  style="margin-left: -8px; margin-right: -8px; row-gap: 16px;"
+>
+  <div
+    class="ant-col ant-col-xs-24 ant-col-md-12 css-var-root"
+    style="padding-left: 8px; padding-right: 8px;"
+  >
+    <div
+      class="ant-card ant-card-bordered ant-card-small css-var-root"
+    >
+      <div
+        class="ant-card-head"
+      >
+        <div
+          class="ant-card-head-wrapper"
+        >
+          <div
+            class="ant-card-head-title"
+          >
+            Slide
+          </div>
+          <!---->
+        </div>
+        <!---->
+      </div>
+      <!---->
+      <div
+        class="ant-card-body"
+      >
+        <div
+          class="ant-typography ant-typography-secondary css-var-root"
+          style="min-height: 44px; margin-bottom: 12px;"
+        >
+          <!---->
+          Slides in from the right and out to the right.
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+        </div>
+        <div
+          class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+          data-active=""
+          data-visibility="auto"
+          data-visibility-x="auto"
+          data-visibility-y="auto"
+          style="height: 220px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-tertiary), transparent 10%);"
+        >
+          <div
+            class="ant-scrollbar-container"
+          >
+            <div
+              class="ant-scrollbar-content"
+            >
+              <div
+                style="padding: 12px 16px;"
+              >
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 1
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 2
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 3
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 4
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 5
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 6
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 7
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 8
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 9
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 10
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 11
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 12
+                </div>
+              </div>
+            </div>
+          </div>
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-enter ant-scrollbar-track-motion-appear ant-scrollbar-track-motion-appear-prepare ant-scrollbar-track-motion-enter-prepare "
+            enterfromclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-enter ant-scrollbar-track-motion-appear ant-scrollbar-track-motion-appear-prepare ant-scrollbar-track-motion-enter-prepare ant-scrollbar-track-motion-enter-start"
+            entertoclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-enter ant-scrollbar-track-motion-appear ant-scrollbar-track-motion-appear-active ant-scrollbar-track-motion-enter-active"
+            leaveactiveclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-leave ant-scrollbar-track-motion-leave-active"
+            leavefromclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-leave"
+            leavetoclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-leave ant-scrollbar-track-motion-leave-active"
+            name="ant-scrollbar-track-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-enter ant-scrollbar-track-motion-appear ant-scrollbar-track-motion-appear-prepare ant-scrollbar-track-motion-enter-prepare "
+            enterfromclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-enter ant-scrollbar-track-motion-appear ant-scrollbar-track-motion-appear-prepare ant-scrollbar-track-motion-enter-prepare ant-scrollbar-track-motion-enter-start"
+            entertoclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-enter ant-scrollbar-track-motion-appear ant-scrollbar-track-motion-appear-active ant-scrollbar-track-motion-enter-active"
+            leaveactiveclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-leave ant-scrollbar-track-motion-leave-active"
+            leavefromclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-leave"
+            leavetoclass="ant-scrollbar-track-motion ant-scrollbar-track-motion-leave ant-scrollbar-track-motion-leave-active"
+            name="ant-scrollbar-track-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div
+    class="ant-col ant-col-xs-24 ant-col-md-12 css-var-root"
+    style="padding-left: 8px; padding-right: 8px;"
+  >
+    <div
+      class="ant-card ant-card-bordered ant-card-small css-var-root"
+    >
+      <div
+        class="ant-card-head"
+      >
+        <div
+          class="ant-card-head-wrapper"
+        >
+          <div
+            class="ant-card-head-title"
+          >
+            Fade
+          </div>
+          <!---->
+        </div>
+        <!---->
+      </div>
+      <!---->
+      <div
+        class="ant-card-body"
+      >
+        <div
+          class="ant-typography ant-typography-secondary css-var-root"
+          style="min-height: 44px; margin-bottom: 12px;"
+        >
+          <!---->
+          Fades in and out without movement.
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+        </div>
+        <div
+          class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+          data-active=""
+          data-visibility="auto"
+          data-visibility-x="auto"
+          data-visibility-y="auto"
+          style="height: 220px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-tertiary), transparent 10%);"
+        >
+          <div
+            class="ant-scrollbar-container"
+          >
+            <div
+              class="ant-scrollbar-content"
+            >
+              <div
+                style="padding: 12px 16px;"
+              >
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 1
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 2
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 3
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 4
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 5
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 6
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 7
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 8
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 9
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 10
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 11
+                </div>
+                <div
+                  style="padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  Scrollable item 12
+                </div>
+              </div>
+            </div>
+          </div>
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+            enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+            entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+            leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+            leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            name="ant-scrollbar-track-fade-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+            enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+            entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+            leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+            leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            name="ant-scrollbar-track-fade-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+</div>
+`;
+
+exports[`scrollbar demo > renders semantic correctly 1`] = `
+<div
+  class="ant-scrollbar css-var-root ant-scrollbar-css-var pro-scrollbar-demo-root"
+  data-active=""
+  data-visibility="auto"
+  data-visibility-x="auto"
+  data-visibility-y="always"
+  style="background-color: color-mix(in srgb, var(--ant-color-info-bg), white 30%); height: 220px; border-radius: 14px;"
+>
+  <div
+    class="ant-scrollbar-container"
+    style="padding-inline-end: 8px;"
+  >
+    <div
+      class="ant-scrollbar-content"
+    >
+      <div
+        style="padding: 16px;"
+      >
+        <div
+          class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-small ant-flex-vertical"
+        >
+          <div
+            class="ant-card ant-card-bordered ant-card-small css-var-root"
+          >
+            <!---->
+            <!---->
+            <div
+              class="ant-card-body"
+            >
+               Semantic block 1
+            </div>
+            <!---->
+          </div>
+          <div
+            class="ant-card ant-card-bordered ant-card-small css-var-root"
+          >
+            <!---->
+            <!---->
+            <div
+              class="ant-card-body"
+            >
+               Semantic block 2
+            </div>
+            <!---->
+          </div>
+          <div
+            class="ant-card ant-card-bordered ant-card-small css-var-root"
+          >
+            <!---->
+            <!---->
+            <div
+              class="ant-card-body"
+            >
+               Semantic block 3
+            </div>
+            <!---->
+          </div>
+          <div
+            class="ant-card ant-card-bordered ant-card-small css-var-root"
+          >
+            <!---->
+            <!---->
+            <div
+              class="ant-card-body"
+            >
+               Semantic block 4
+            </div>
+            <!---->
+          </div>
+          <div
+            class="ant-card ant-card-bordered ant-card-small css-var-root"
+          >
+            <!---->
+            <!---->
+            <div
+              class="ant-card-body"
+            >
+               Semantic block 5
+            </div>
+            <!---->
+          </div>
+          <div
+            class="ant-card ant-card-bordered ant-card-small css-var-root"
+          >
+            <!---->
+            <!---->
+            <div
+              class="ant-card-body"
+            >
+               Semantic block 6
+            </div>
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <transition-stub
+    appear="false"
+    css="true"
+    enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+    enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+    entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+    leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+    leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+    leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+    name="ant-scrollbar-track-fade-motion"
+    persisted="false"
+  >
+    <div
+      class="ant-scrollbar-track ant-scrollbar-track-y pro-scrollbar-demo-track"
+    >
+      <div
+        class="ant-scrollbar-thumb ant-scrollbar-thumb-y pro-scrollbar-demo-thumb"
+        style="height: 0px; transform: translateY(0px);"
+      />
+    </div>
+  </transition-stub>
+  <transition-stub
+    appear="false"
+    css="true"
+    enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+    enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+    entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+    leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+    leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+    leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+    name="ant-scrollbar-track-fade-motion"
+    persisted="false"
+  >
+    <!---->
+  </transition-stub>
+</div>
+`;
+
+exports[`scrollbar demo > renders sider correctly 1`] = `
+<div
+  style="display: grid; grid-template-columns: 280px 1fr; gap: 16px;"
+>
+  <div
+    class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+    data-active=""
+    data-visibility="auto"
+    data-visibility-x="auto"
+    data-visibility-y="always"
+    style="height: 360px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
+  >
+    <div
+      class="ant-scrollbar-container"
+    >
+      <div
+        class="ant-scrollbar-content"
+      >
+        <div
+          style="padding: 12px;"
+        >
+          <div
+            style="padding: 4px 4px 12px;"
+          >
+            <span
+              class="ant-typography ant-typography-secondary css-var-root"
+            >
+              <!---->
+               Pro navigation 
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <ul
+            class="ant-menu ant-menu-root ant-menu-inline ant-menu-light css-var-root ant-menu-css-var"
+            data-menu-list="true"
+            role="menu"
+            tabindex="0"
+          >
+            <!---->
+            <li
+              class="ant-menu-item ant-menu-item-only-child"
+              data-menu-id="vc-menu-uuid-overview"
+              label="Overview"
+              role="menuitem"
+              style="padding-left: 24px;"
+              tabindex="-1"
+            >
+              <!---->
+              <span
+                class="ant-menu-title-content"
+              >
+                Overview
+              </span>
+              <!---->
+            </li>
+            <!---->
+            <li
+              class="ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open"
+              role="none"
+            >
+              <div
+                aria-controls="vc-menu-uuid-workspace-popup"
+                aria-disabled="false"
+                aria-expanded="true"
+                aria-haspopup="true"
+                class="ant-menu-submenu-title"
+                data-menu-id="vc-menu-uuid-workspace"
+                role="menuitem"
+                style="padding-left: 24px;"
+                tabindex="-1"
+              >
+                <span
+                  class="ant-menu-title-content"
+                >
+                  Workspace
+                </span>
+                <i
+                  class="ant-menu-submenu-arrow"
+                />
+              </div>
+              <!---->
+              <transition-stub
+                appear="true"
+                css="true"
+                enteractiveclass="ant-motion-collapse ant-motion-collapse-enter ant-motion-collapse-appear ant-motion-collapse-appear-prepare ant-motion-collapse-enter-prepare "
+                enterfromclass="ant-motion-collapse ant-motion-collapse-enter ant-motion-collapse-appear ant-motion-collapse-appear-prepare ant-motion-collapse-enter-prepare ant-motion-collapse-enter-start"
+                entertoclass="ant-motion-collapse ant-motion-collapse-enter ant-motion-collapse-appear ant-motion-collapse-appear-active ant-motion-collapse-enter-active"
+                leaveactiveclass="ant-motion-collapse ant-motion-collapse-leave ant-motion-collapse-leave-active"
+                leavefromclass="ant-motion-collapse ant-motion-collapse-leave"
+                leavetoclass="ant-motion-collapse ant-motion-collapse-leave ant-motion-collapse-leave-active"
+                name="ant-motion-collapse"
+                persisted="false"
+              >
+                <ul
+                  class="ant-menu ant-menu-sub ant-menu-inline"
+                  data-menu-list="true"
+                  id="vc-menu-uuid-workspace-popup"
+                  role="menu"
+                >
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-workspace-dashboard"
+                    label="Dashboard"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Dashboard
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-workspace-members"
+                    label="Members"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Members
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-workspace-billing"
+                    label="Billing"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Billing
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-workspace-audit"
+                    label="Audit Logs"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Audit Logs
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                </ul>
+              </transition-stub>
+            </li>
+            <li
+              class="ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open"
+              role="none"
+            >
+              <div
+                aria-controls="vc-menu-uuid-automation-popup"
+                aria-disabled="false"
+                aria-expanded="true"
+                aria-haspopup="true"
+                class="ant-menu-submenu-title"
+                data-menu-id="vc-menu-uuid-automation"
+                role="menuitem"
+                style="padding-left: 24px;"
+                tabindex="-1"
+              >
+                <span
+                  class="ant-menu-title-content"
+                >
+                  Automation
+                </span>
+                <i
+                  class="ant-menu-submenu-arrow"
+                />
+              </div>
+              <!---->
+              <transition-stub
+                appear="true"
+                css="true"
+                enteractiveclass="ant-motion-collapse ant-motion-collapse-enter ant-motion-collapse-appear ant-motion-collapse-appear-prepare ant-motion-collapse-enter-prepare "
+                enterfromclass="ant-motion-collapse ant-motion-collapse-enter ant-motion-collapse-appear ant-motion-collapse-appear-prepare ant-motion-collapse-enter-prepare ant-motion-collapse-enter-start"
+                entertoclass="ant-motion-collapse ant-motion-collapse-enter ant-motion-collapse-appear ant-motion-collapse-appear-active ant-motion-collapse-enter-active"
+                leaveactiveclass="ant-motion-collapse ant-motion-collapse-leave ant-motion-collapse-leave-active"
+                leavefromclass="ant-motion-collapse ant-motion-collapse-leave"
+                leavetoclass="ant-motion-collapse ant-motion-collapse-leave ant-motion-collapse-leave-active"
+                name="ant-motion-collapse"
+                persisted="false"
+              >
+                <ul
+                  class="ant-menu ant-menu-sub ant-menu-inline"
+                  data-menu-list="true"
+                  id="vc-menu-uuid-automation-popup"
+                  role="menu"
+                >
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-automation-flow"
+                    label="Flows"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Flows
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-automation-jobs"
+                    label="Jobs"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Jobs
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-automation-webhooks"
+                    label="Webhooks"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Webhooks
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-automation-secrets"
+                    label="Secrets"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Secrets
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                </ul>
+              </transition-stub>
+            </li>
+            <li
+              class="ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open"
+              role="none"
+            >
+              <div
+                aria-controls="vc-menu-uuid-system-popup"
+                aria-disabled="false"
+                aria-expanded="true"
+                aria-haspopup="true"
+                class="ant-menu-submenu-title"
+                data-menu-id="vc-menu-uuid-system"
+                role="menuitem"
+                style="padding-left: 24px;"
+                tabindex="-1"
+              >
+                <span
+                  class="ant-menu-title-content"
+                >
+                  System
+                </span>
+                <i
+                  class="ant-menu-submenu-arrow"
+                />
+              </div>
+              <!---->
+              <transition-stub
+                appear="true"
+                css="true"
+                enteractiveclass="ant-motion-collapse ant-motion-collapse-enter ant-motion-collapse-appear ant-motion-collapse-appear-prepare ant-motion-collapse-enter-prepare "
+                enterfromclass="ant-motion-collapse ant-motion-collapse-enter ant-motion-collapse-appear ant-motion-collapse-appear-prepare ant-motion-collapse-enter-prepare ant-motion-collapse-enter-start"
+                entertoclass="ant-motion-collapse ant-motion-collapse-enter ant-motion-collapse-appear ant-motion-collapse-appear-active ant-motion-collapse-enter-active"
+                leaveactiveclass="ant-motion-collapse ant-motion-collapse-leave ant-motion-collapse-leave-active"
+                leavefromclass="ant-motion-collapse ant-motion-collapse-leave"
+                leavetoclass="ant-motion-collapse ant-motion-collapse-leave ant-motion-collapse-leave-active"
+                name="ant-motion-collapse"
+                persisted="false"
+              >
+                <ul
+                  class="ant-menu ant-menu-sub ant-menu-inline"
+                  data-menu-list="true"
+                  id="vc-menu-uuid-system-popup"
+                  role="menu"
+                >
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-system-api"
+                    label="API Keys"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      API Keys
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-system-integrations"
+                    label="Integrations"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Integrations
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-system-security"
+                    label="Security"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Security
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                  <li
+                    class="ant-menu-item ant-menu-item-only-child"
+                    data-menu-id="vc-menu-uuid-system-observability"
+                    label="Observability"
+                    role="menuitem"
+                    style="padding-left: 48px;"
+                    tabindex="-1"
+                  >
+                    <!---->
+                    <span
+                      class="ant-menu-title-content"
+                    >
+                      Observability
+                    </span>
+                    <!---->
+                  </li>
+                  <!---->
+                </ul>
+              </transition-stub>
+            </li>
+            <!---->
+            <!---->
+            <!---->
+          </ul>
+          <div
+            aria-hidden="true"
+            style="display: none;"
+          >
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+    <transition-stub
+      appear="false"
+      css="true"
+      enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+      enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+      entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+      leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+      leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+      leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+      name="ant-scrollbar-track-fade-motion"
+      persisted="false"
+    >
+      <div
+        class="ant-scrollbar-track ant-scrollbar-track-y"
+      >
+        <div
+          class="ant-scrollbar-thumb ant-scrollbar-thumb-y"
+          style="height: 0px; transform: translateY(0px);"
+        />
+      </div>
+    </transition-stub>
+    <transition-stub
+      appear="false"
+      css="true"
+      enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+      enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+      entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+      leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+      leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+      leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+      name="ant-scrollbar-track-fade-motion"
+      persisted="false"
+    >
+      <!---->
+    </transition-stub>
+  </div>
+  <div
+    class="ant-card ant-card-bordered css-var-root"
+    style="height: 360px;"
+  >
+    <div
+      class="ant-card-head"
+    >
+      <div
+        class="ant-card-head-wrapper"
+      >
+        <div
+          class="ant-card-head-title"
+        >
+          Panel Preview
+        </div>
+        <!---->
+      </div>
+      <!---->
+    </div>
+    <!---->
+    <div
+      class="ant-card-body"
+    >
+      <div
+        class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+      >
+        <transition-stub
+          appear="false"
+          css="true"
+          leaveactiveclass="ant-alert-motion-leave ant-alert-motion-leave-active"
+          leavefromclass="ant-alert-motion-leave"
+          leavetoclass="ant-alert-motion-leave ant-alert-motion-leave-active"
+          name="ant-alert-motion"
+          persisted="false"
+        >
+          <div
+            class="ant-alert ant-alert-info ant-alert-outlined ant-alert-with-description css-var-root"
+            data-show="true"
+            role="alert"
+          >
+            <span
+              class="ant-alert-icon"
+            >
+              <span
+                aria-label="info-circle"
+                class="anticon anticon-info-circle"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="info-circle"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm32 664c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V456c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272zm-32-344a48.01 48.01 0 010-96 48.01 48.01 0 010 96z"
+                  />
+                </svg>
+              </span>
+            </span>
+            <div
+              class="ant-alert-section"
+            >
+              <div
+                class="ant-alert-title"
+              >
+                This demo keeps the site layout untouched.
+              </div>
+              <div
+                class="ant-alert-description"
+              >
+                Scrollbar only handles the dense sider area inside the component itself.
+              </div>
+            </div>
+            <!---->
+            <!---->
+          </div>
+        </transition-stub>
+        <div
+          class="ant-skeleton ant-skeleton-active css-var-root"
+        >
+          <!---->
+          <div
+            class="ant-skeleton-section"
+          >
+            <h3
+              class="ant-skeleton-title"
+              style="width: 38%;"
+            />
+            <ul
+              class="ant-skeleton-paragraph"
+            >
+              <li />
+              <li />
+              <li />
+              <li
+                style="width: 61%;"
+              />
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`scrollbar demo > renders visibility correctly 1`] = `
+<div
+  class="ant-row css-var-root"
+  style="margin-left: -8px; margin-right: -8px; row-gap: 16px;"
+>
+  <div
+    class="ant-col ant-col-24 css-var-root"
+    style="padding-left: 8px; padding-right: 8px;"
+  >
+    <div
+      class="ant-card ant-card-bordered ant-card-small css-var-root"
+    >
+      <div
+        class="ant-card-head"
+      >
+        <div
+          class="ant-card-head-wrapper"
+        >
+          <div
+            class="ant-card-head-title"
+          >
+            Auto (1200ms)
+          </div>
+          <!---->
+        </div>
+        <!---->
+      </div>
+      <!---->
+      <div
+        class="ant-card-body"
+      >
+        <div
+          class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+          data-active=""
+          data-visibility="auto"
+          data-visibility-x="auto"
+          data-visibility-y="auto"
+          style="height: 160px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-tertiary), transparent 10%);"
+        >
+          <div
+            class="ant-scrollbar-container"
+          >
+            <div
+              class="ant-scrollbar-content"
+            >
+              <div
+                style="min-width: 520px; padding: 12px 16px;"
+              >
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 1
+                  </span>
+                  <span>
+                    Scrollable row content 1
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Auto (1200ms)
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 2
+                  </span>
+                  <span>
+                    Scrollable row content 2
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Auto (1200ms)
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 3
+                  </span>
+                  <span>
+                    Scrollable row content 3
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Auto (1200ms)
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 4
+                  </span>
+                  <span>
+                    Scrollable row content 4
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Auto (1200ms)
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 5
+                  </span>
+                  <span>
+                    Scrollable row content 5
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Auto (1200ms)
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 6
+                  </span>
+                  <span>
+                    Scrollable row content 6
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Auto (1200ms)
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 7
+                  </span>
+                  <span>
+                    Scrollable row content 7
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Auto (1200ms)
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 8
+                  </span>
+                  <span>
+                    Scrollable row content 8
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Auto (1200ms)
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+            enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+            entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+            leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+            leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            name="ant-scrollbar-track-fade-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+            enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+            entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+            leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+            leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            name="ant-scrollbar-track-fade-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div
+    class="ant-col ant-col-24 css-var-root"
+    style="padding-left: 8px; padding-right: 8px;"
+  >
+    <div
+      class="ant-card ant-card-bordered ant-card-small css-var-root"
+    >
+      <div
+        class="ant-card-head"
+      >
+        <div
+          class="ant-card-head-wrapper"
+        >
+          <div
+            class="ant-card-head-title"
+          >
+            Always
+          </div>
+          <!---->
+        </div>
+        <!---->
+      </div>
+      <!---->
+      <div
+        class="ant-card-body"
+      >
+        <div
+          class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+          data-active=""
+          data-visibility="always"
+          data-visibility-x="always"
+          data-visibility-y="always"
+          style="height: 160px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-tertiary), transparent 10%);"
+        >
+          <div
+            class="ant-scrollbar-container"
+          >
+            <div
+              class="ant-scrollbar-content"
+            >
+              <div
+                style="min-width: 520px; padding: 12px 16px;"
+              >
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 1
+                  </span>
+                  <span>
+                    Scrollable row content 1
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Always
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 2
+                  </span>
+                  <span>
+                    Scrollable row content 2
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Always
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 3
+                  </span>
+                  <span>
+                    Scrollable row content 3
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Always
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 4
+                  </span>
+                  <span>
+                    Scrollable row content 4
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Always
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 5
+                  </span>
+                  <span>
+                    Scrollable row content 5
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Always
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 6
+                  </span>
+                  <span>
+                    Scrollable row content 6
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Always
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 7
+                  </span>
+                  <span>
+                    Scrollable row content 7
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Always
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 8
+                  </span>
+                  <span>
+                    Scrollable row content 8
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Always
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+            enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+            entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+            leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+            leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            name="ant-scrollbar-track-fade-motion"
+            persisted="false"
+          >
+            <div
+              class="ant-scrollbar-track ant-scrollbar-track-y"
+            >
+              <div
+                class="ant-scrollbar-thumb ant-scrollbar-thumb-y"
+                style="height: 0px; transform: translateY(0px);"
+              />
+            </div>
+          </transition-stub>
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+            enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+            entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+            leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+            leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            name="ant-scrollbar-track-fade-motion"
+            persisted="false"
+          >
+            <div
+              class="ant-scrollbar-track ant-scrollbar-track-x"
+            >
+              <div
+                class="ant-scrollbar-thumb ant-scrollbar-thumb-x"
+                style="width: 0px; transform: translateX(0px);"
+              />
+            </div>
+          </transition-stub>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div
+    class="ant-col ant-col-24 css-var-root"
+    style="padding-left: 8px; padding-right: 8px;"
+  >
+    <div
+      class="ant-card ant-card-bordered ant-card-small css-var-root"
+    >
+      <div
+        class="ant-card-head"
+      >
+        <div
+          class="ant-card-head-wrapper"
+        >
+          <div
+            class="ant-card-head-title"
+          >
+            Hidden Y
+          </div>
+          <!---->
+        </div>
+        <!---->
+      </div>
+      <!---->
+      <div
+        class="ant-card-body"
+      >
+        <div
+          class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+          data-active=""
+          data-visibility="auto"
+          data-visibility-x="always"
+          data-visibility-y="hidden"
+          style="height: 160px; border-radius: 10px; background: color-mix(in srgb, var(--ant-color-fill-tertiary), transparent 10%);"
+        >
+          <div
+            class="ant-scrollbar-container"
+          >
+            <div
+              class="ant-scrollbar-content"
+            >
+              <div
+                style="min-width: 520px; padding: 12px 16px;"
+              >
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 1
+                  </span>
+                  <span>
+                    Scrollable row content 1
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Hidden Y
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 2
+                  </span>
+                  <span>
+                    Scrollable row content 2
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Hidden Y
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 3
+                  </span>
+                  <span>
+                    Scrollable row content 3
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Hidden Y
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 4
+                  </span>
+                  <span>
+                    Scrollable row content 4
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Hidden Y
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 5
+                  </span>
+                  <span>
+                    Scrollable row content 5
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Hidden Y
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 6
+                  </span>
+                  <span>
+                    Scrollable row content 6
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Hidden Y
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 7
+                  </span>
+                  <span>
+                    Scrollable row content 7
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Hidden Y
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+                <div
+                  style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 480px; padding: 10px 0px; border-bottom: 1px dashed var(--ant-color-border-secondary);"
+                >
+                  <span>
+                    Task 8
+                  </span>
+                  <span>
+                    Scrollable row content 8
+                  </span>
+                  <span
+                    class="ant-tag ant-tag-filled css-var-root"
+                  >
+                    Hidden Y
+                    <!---->
+                    <!---->
+                    <!---->
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+            enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+            entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+            leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+            leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            name="ant-scrollbar-track-fade-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+            enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+            entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+            leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+            leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+            name="ant-scrollbar-track-fade-motion"
+            persisted="false"
+          >
+            <div
+              class="ant-scrollbar-track ant-scrollbar-track-x"
+            >
+              <div
+                class="ant-scrollbar-thumb ant-scrollbar-thumb-x"
+                style="width: 0px; transform: translateX(0px);"
+              />
+            </div>
+          </transition-stub>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+</div>
+`;
