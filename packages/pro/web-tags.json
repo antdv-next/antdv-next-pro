@@ -1,4 +1,105 @@
 {
   "version": "1.0.0",
-  "tags": []
+  "tags": [
+    {
+      "name": "a-scrollbar",
+      "description": "(ZH) 面向 Pro 布局与高密度导航区域的双轴自定义滚动容器。\n\n(EN) A custom dual-axis scrollbar container for Pro layouts and dense navigation areas.",
+      "attributes": [
+        {
+          "name": "visibility",
+          "description": "Default: 'auto'\n\nShared visibility strategy for both axes"
+        },
+        {
+          "name": "visibility-x",
+          "description": "Default: -\n\nVisibility strategy for horizontal scrollbar"
+        },
+        {
+          "name": "visibility-y",
+          "description": "Default: -\n\nVisibility strategy for vertical scrollbar"
+        },
+        {
+          "name": "hide-delay",
+          "description": "Default: 1200\n\nDelay in milliseconds before auto-mode overlays hide after the pointer leaves the content area"
+        },
+        {
+          "name": "motion",
+          "description": "Default: 'fade'\n\nTrack visibility motion. fade fades in and out; slide slides in from the right and out to the right."
+        },
+        {
+          "name": "native",
+          "description": "Default: false\n\nUse native browser scrollbars and disable overlay thumbs"
+        },
+        {
+          "name": "classes",
+          "description": "Default: -\n\nCustomize class for each semantic structure inside the component. Supports object or function."
+        },
+        {
+          "name": "styles",
+          "description": "Default: -\n\nCustomize inline style for each semantic structure inside the component. Supports object or function."
+        }
+      ]
+    },
+    {
+      "name": "ap-config-provider",
+      "description": "(ZH) Provides shared configuration for Pro components.\n\n(EN) Provides shared configuration for Pro components.",
+      "attributes": [
+        {
+          "name": "prefix-cls",
+          "description": "Default: -\n\n(ZH) Prefix class name for components.\n\n(EN) Prefix class name for components."
+        },
+        {
+          "name": "icon-prefix-cls",
+          "description": "Default: -\n\n(ZH) Prefix class name for icons.\n\n(EN) Prefix class name for icons."
+        },
+        {
+          "name": "direction",
+          "description": "Default: -\n\n(ZH) Text direction.\n\n(EN) Text direction."
+        },
+        {
+          "name": "theme",
+          "description": "Default: -\n\n(ZH) Theme configuration.\n\n(EN) Theme configuration."
+        },
+        {
+          "name": "component-size",
+          "description": "Default: -\n\n(ZH) Default size of components.\n\n(EN) Default size of components."
+        },
+        {
+          "name": "component-disabled",
+          "description": "Default: -\n\n(ZH) Whether components are disabled by default.\n\n(EN) Whether components are disabled by default."
+        },
+        {
+          "name": "get-popup-container",
+          "description": "Default: -\n\n(ZH) Container for popup elements.\n\n(EN) Container for popup elements."
+        },
+        {
+          "name": "get-target-container",
+          "description": "Default: -\n\n(ZH) Container used for scrolling and fixed elements.\n\n(EN) Container used for scrolling and fixed elements."
+        },
+        {
+          "name": "csp",
+          "description": "Default: -\n\n(ZH) Content Security Policy configuration.\n\n(EN) Content Security Policy configuration."
+        },
+        {
+          "name": "render-empty",
+          "description": "Default: -\n\n(ZH) Render empty content for components.\n\n(EN) Render empty content for components."
+        },
+        {
+          "name": "virtual",
+          "description": "Default: -\n\n(ZH) Whether virtual scrolling is enabled.\n\n(EN) Whether virtual scrolling is enabled."
+        },
+        {
+          "name": "popup-match-select-width",
+          "description": "Default: -\n\n(ZH) Whether popup width matches the select width.\n\n(EN) Whether popup width matches the select width."
+        },
+        {
+          "name": "popup-overflow",
+          "description": "Default: -\n\n(ZH) Popup overflow strategy.\n\n(EN) Popup overflow strategy."
+        },
+        {
+          "name": "scrollbar",
+          "description": "Default: -\n\n(ZH) Default Scrollbar configuration.\n\n(EN) Default Scrollbar configuration."
+        }
+      ]
+    }
+  ]
 }
