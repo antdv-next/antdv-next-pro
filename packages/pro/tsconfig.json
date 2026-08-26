@@ -4,6 +4,7 @@
     "paths": {
       "/@tests/*": ["../../tests/*"]
     },
+    "types": ["node"],
     /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,

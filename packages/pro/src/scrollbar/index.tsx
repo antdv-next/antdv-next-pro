@@ -206,7 +206,7 @@ const Scrollbar = defineComponent<
       return scrollbarDrag.draggingX.value || scrollbarDrag.draggingY.value
     })
 
-    let hideTimer: ReturnType<typeof window.setTimeout> | undefined
+    let hideTimer: number | undefined
 
     function clearHideTimer() {
       if (hideTimer !== undefined) {

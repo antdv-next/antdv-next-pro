@@ -77,6 +77,7 @@
     "@mdit-vue/plugin-frontmatter": "catalog:docs",
     "@mdit-vue/shared": "catalog:docs",
     "@types/markdown-it": "catalog:types",
+    "@types/node": "catalog:types",
     "@vitejs/plugin-vue": "catalog:dev",
     "@vitejs/plugin-vue-jsx": "catalog:dev",
     "@vue/test-utils": "catalog:dev",
