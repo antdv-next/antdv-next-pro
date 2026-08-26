@@ -51,7 +51,7 @@ async function getGlobalTokenMeta() {
       return
 
     const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true)
-    const normalizedFile = file.replaceAll('\\', '/')
+    const normalizedFile = file.replace(/\\/g, '/')
     const sourceType = normalizedFile.includes('/maps/')
       ? 'map'
       : path.basename(file) === 'alias.d.ts' ? 'alias' : 'seed'
