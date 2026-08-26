@@ -105,8 +105,8 @@ async function main() {
         source: 'Scrollbar',
         token,
         type: member.type?.getText(sourceFile) || 'any',
-        desc: getTagText(member, 'desc', sourceFile),
-        descEn: getTagText(member, 'descEN', sourceFile),
+        desc: getTagText(member, 'desc'),
+        descEn: getTagText(member, 'descEN'),
       }
     })
 
