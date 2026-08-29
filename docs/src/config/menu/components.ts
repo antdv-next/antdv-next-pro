@@ -1,5 +1,6 @@
 import type { AntdvMenuItem } from './interface'
 import type { InnerLocale } from '@/utils/locale'
+import proPkg from '@antdv-next/pro/package.json'
 import locales from '@/locales'
 
 // Helper function to convert nested component locales to flat structure
@@ -55,6 +56,7 @@ export const componentLocales: Record<string, Record<InnerLocale, string>> = (()
 
 export const components: AntdvMenuItem[] = [
   { key: '/components/overview', label: '/components/overview' },
+  { key: '/components/changelog', label: '/components/changelog', tag: `v${proPkg.version}` },
   {
     key: 'navigation',
     label: 'navigation',

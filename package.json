@@ -21,6 +21,7 @@
     "lint": "eslint . --fix",
     "lint:fix": "eslint --fix",
     "ci:lint": "eslint",
+    "contributors": "tsx scripts/generate-contributors.ts",
     "ci:publish": "pnpm publish -r --access=public",
     "test": "vitest run",
     "test:ui": "vitest --ui",
@@ -34,7 +35,9 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",
+    "@octokit/rest": "catalog:dev",
     "@testing-library/jest-dom": "catalog:dev",
+    "@types/cli-progress": "catalog:types",
     "@types/node": "catalog:types",
     "@v-c/resize-observer": "catalog:vc",
     "@v-c/util": "catalog:vc",
@@ -46,6 +49,7 @@
     "@vue/tsconfig": "catalog:dev",
     "antdv-next": "catalog:prod",
     "bumpp": "catalog:dev",
+    "cli-progress": "catalog:dev",
     "cross-env": "catalog:dev",
     "eslint": "catalog:dev",
     "eslint-plugin-format": "catalog:dev",
@@ -53,6 +57,7 @@
     "lint-staged": "catalog:dev",
     "mockdate": "catalog:dev",
     "npm-run-all": "catalog:dev",
+    "picocolors": "catalog:dev",
     "pretty-format": "catalog:dev",
     "simple-git-hooks": "catalog:dev",
     "tsx": "catalog:dev",
@@ -64,7 +69,8 @@
     "vue-tsc": "catalog:dev"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm exec lint-staged"
+    "pre-commit": "pnpm exec lint-staged",
+    "commit-msg": "node scripts/verify-commit.js"
   },
   "lint-staged": {
     "*.{js,ts,tsx,vue,json}": [

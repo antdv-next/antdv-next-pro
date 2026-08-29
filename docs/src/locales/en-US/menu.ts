@@ -14,7 +14,7 @@ const menuLocales = {
 
   docs: {
     vue: {
-      introduce: 'Ant Design of Vue',
+      introduce: 'Introduction',
       use: 'How to Use',
       gettingStarted: 'Getting Started',
       ai: 'AI',

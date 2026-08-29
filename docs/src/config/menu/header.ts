@@ -4,15 +4,25 @@ import locales from '@/locales'
 
 export const headerItems: MenuItemType[] = [
   {
+    key: '/docs/vue',
+    label: '/docs/vue',
+  },
+  {
     key: '/components',
     label: '/components',
+  },
+  {
+    key: '/sponsor',
+    label: '/sponsor',
   },
 ]
 
 // Helper to flatten nested header locales
 function flattenHeaderLocales(nestedLocales: typeof locales['zh-CN']['menu']['header']) {
   return {
+    '/docs/vue': nestedLocales.docs.vue,
     '/components': nestedLocales.components,
+    '/sponsor': nestedLocales.sponsor,
   }
 }
 

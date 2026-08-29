@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { MenuEmits } from 'antdv-next'
 import { BarsOutlined, GithubOutlined } from '@antdv-next/icons'
-import { version } from 'antdv-next'
+import proPkg from '@antdv-next/pro/package.json'
 import { storeToRefs } from 'pinia'
 import { computed, ref, shallowRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -24,13 +24,14 @@ const { headerKey, siderMenus, siderKey, siderOpenKeys, siderLocales, locale, di
 const { t } = useLocale()
 const versions = ref([
   {
-    label: version,
-    value: version,
+    label: proPkg.version,
+    value: proPkg.version,
   },
 ])
+const sponsorUrl = 'https://www.antdv-next.cn/sponsor'
 const { isMobile } = useMobile()
 const { headerSponsors } = useCommercialSponsors()
-const currentVersion = shallowRef(version)
+const currentVersion = shallowRef(proPkg.version)
 const router = useRouter()
 
 const handleSiderChange: MenuEmits['click'] = (info) => {
@@ -50,6 +51,10 @@ const handleHeaderChange: MenuEmits['click'] = (info) => {
   const key = info.key
   if (key === '/playground') {
     window.open('https://pro-play.antdv-next.com', '_blank')
+    return
+  }
+  if (key === '/sponsor') {
+    window.open(sponsorUrl, '_blank')
     return
   }
   router.push(key)
@@ -134,6 +139,8 @@ function changeDirection(value: 1 | 2) {
 function getHeaderMenuUrl(key: string) {
   if (key === '/playground')
     return 'https://pro-play.antdv-next.com'
+  if (key === '/sponsor')
+    return sponsorUrl
   return key
 }
 
@@ -169,7 +176,7 @@ function getSiderMenuUrl(key: string) {
             <router-link class="inline-flex items-center h-(--ant-doc-header-height) line-height-[var(--ant-doc-header-height)] text-18px font-bold a-color-text hover:a-color-text of-hidden" :class="[isMobile ? 'pl-4px' : 'pl-40px']" to="/">
               <img src="../../assets/antdv-next.svg" class="w-36px h-36px inline-block align-middle" draggable="false" alt="logo">
               <span class="ml-2 c-text">
-                Antdv Next
+                Antdv Next Pro
               </span>
             </router-link>
           </h1>

@@ -8,6 +8,7 @@ import { setupRouterGuard } from '@/routes/guard'
 import App from './App.vue'
 import CodeDemo from './components/code-demo'
 import ComponentOverview from './components/component-overview/index.vue'
+import ContributorList from './components/contributor-list/index.vue'
 import IconSearch from './components/icon-search/index.vue'
 import InstallDependencies from './components/install-dependencies/index.vue'
 import StackBlitz from './components/stackblitz/index.vue'
@@ -26,6 +27,7 @@ app.use(CodeDemo)
 app.component('DocHeading', DocHeading)
 app.component('ComponentOverview', ComponentOverview)
 app.component('ComponentTokenTable', ComponentTokenTable)
+app.component('ContributorList', ContributorList)
 app.component('InstallDependencies', InstallDependencies)
 app.component('IconSearch', IconSearch)
 app.component('stackblitz', StackBlitz)

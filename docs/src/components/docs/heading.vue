@@ -26,6 +26,13 @@ const showTitleEdit = computed(() =>
 
 const route = useRoute()
 const githubUrl = computed(() => {
+  // Pages that live as a flat file inside a directory (e.g.
+  // components/changelog.en-US.md) can pin their source path in frontmatter;
+  // component pages conventionally live in components/<name>/index.*.md.
+  const sourceFile = frontmatter.value?.sourceFile
+  if (sourceFile) {
+    return `https://github.com/antdv-next/antdv-next-pro/edit/main/docs/src/pages/${sourceFile}`
+  }
   const path = route.path
   const isComponent = (e => e.length >= 2 && e.includes('components'))(path.split('/').filter(Boolean))
   const pathBase = path.slice(0, -3)

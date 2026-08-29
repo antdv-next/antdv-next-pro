@@ -186,4 +186,11 @@ export default [
     component: () => import('@/layouts/docs/index.vue'),
     children: docGroups.groups,
   },
+  {
+    // Docs pages do not exist yet; keep any deep /docs/* link working by
+    // redirecting to the docs root target, so the header "Development" item
+    // never lands on a 404. Replace with real routes once docs pages land.
+    path: '/docs/:pathMatch(.*)*',
+    redirect: docGroups.rootRedirect,
+  },
 ] as RouteRecordRaw[]

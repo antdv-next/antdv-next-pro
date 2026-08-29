@@ -41,7 +41,7 @@ const pageTurning = computed(() => {
         return [...pre, current]
       }
     },
-    [],
+    [] as AntdvMenuItem[],
   )
   const currentPath = route.path
   const currentIndex = menus.findIndex((item) => {
