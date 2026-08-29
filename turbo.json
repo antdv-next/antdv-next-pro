@@ -13,6 +13,7 @@
       "outputs": ["dist/**", "web-types.json", "web-tags.json"]
     },
     "docs#build": {
+      "dependsOn": ["@antdv-next/pro#build:token"],
       "inputs": [
         "src/**",
         "plugins/**",
