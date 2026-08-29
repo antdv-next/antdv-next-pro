@@ -53,5 +53,6 @@ export type {
   ProConfigProviderProps,
   ProConfigProviderSlots,
   ScrollbarConfig,
+  ScrollbarMotion,
   ScrollbarVisibility,
 } from './define'

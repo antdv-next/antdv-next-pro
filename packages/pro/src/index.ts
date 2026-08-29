@@ -1,12 +1,19 @@
 import type { App, Plugin } from 'vue'
+import type { ComponentToken as ScrollbarComponentToken } from './scrollbar/style'
 import * as components from './components'
-import './theme/augment'
+
+declare module 'antdv-next/theme/interface/components' {
+  interface ComponentTokenMap {
+    Scrollbar?: ScrollbarComponentToken
+  }
+}
 
 export * from './components'
 export { default as ProConfigProvider } from './config-provider'
 export type {
   ProConfigProviderProps,
   ScrollbarConfig,
+  ScrollbarMotion,
   ScrollbarVisibility,
 } from './config-provider'
 

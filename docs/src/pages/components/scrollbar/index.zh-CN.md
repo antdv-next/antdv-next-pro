@@ -22,6 +22,7 @@ group:
 <demo-group>
   <demo src="./demo/basic.vue">基础用法</demo>
   <demo src="./demo/visibility.vue">显隐模式</demo>
+  <demo src="./demo/motion.vue">显隐动画</demo>
   <demo src="./demo/sider.vue">导航侧栏</demo>
   <demo src="./demo/controller.vue">事件与滚动控制</demo>
   <demo src="./demo/semantic.vue">语义化样式</demo>
@@ -35,9 +36,9 @@ group:
 | visibilityX | 横向滚动条显隐策略 | `'auto' \| 'always' \| 'hidden'` | - |
 | visibilityY | 纵向滚动条显隐策略 | `'auto' \| 'always' \| 'hidden'` | - |
 | hideDelay | `auto` 模式下移出内容区域后自动隐藏滚动条的延时，单位为毫秒 | `number` | `1200` |
-| native | 使用浏览器原生滚动条并关闭覆盖层 thumb | `boolean` | `false` |
-| classes | 自定义语义化 class，支持对象和函数形式 | `Record<[语义化 DOM](#语义化-dom), string> \| (info: { props }) => Record<[语义化 DOM](#语义化-dom), string>` | - |
-| styles | 自定义语义化内联样式，支持对象和函数形式 | `Record<[语义化 DOM](#语义化-dom), CSSProperties> \| (info: { props }) => Record<[语义化 DOM](#语义化-dom), CSSProperties>` | - |
+| motion | 滚动条轨道显隐动画，`fade` 为淡入淡出，`slide` 为从右侧滑入、向右侧滑出 | `'fade' \| 'slide'` | `'fade'` |
+| classes | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | `ScrollbarClassNamesType` | - |
+| styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | `ScrollbarStylesType` | - |
 
 ### 事件
 
@@ -57,3 +58,9 @@ group:
 ## 语义化 DOM
 
 <demo src="./demo/_semantic.vue" simplify></demo>
+
+## 主题 Token
+
+Scrollbar 支持通过 `theme.components.Scrollbar` 自定义组件样式 Token：
+
+<ComponentTokenTable component="Scrollbar" />

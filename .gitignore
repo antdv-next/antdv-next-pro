@@ -26,3 +26,7 @@ dist-ssr
 *.sw?
 .turbo
 coverage
+web-types.json
+web-tags.json
+docs/src/assets/token.json
+docs/src/assets/token-meta.json

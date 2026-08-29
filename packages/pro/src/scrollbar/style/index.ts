@@ -18,6 +18,7 @@ interface ScrollbarToken extends FullToken<'Scrollbar'> {
 const genScrollbarStyle: GenerateStyle<ScrollbarToken, CSSObject> = (token) => {
   const { componentCls, trackBg, thumbBg, thumbHoverBg, thumbActiveBg, size, radius, inset } = token
   const trackMotionCls = `${componentCls}-track-motion`
+  const trackFadeMotionCls = `${componentCls}-track-fade-motion`
 
   return {
     [componentCls]: {
@@ -29,17 +30,6 @@ const genScrollbarStyle: GenerateStyle<ScrollbarToken, CSSObject> = (token) => {
 
       '&-rtl': {
         direction: 'rtl',
-      },
-
-      '&-native': {
-        [`${componentCls}-container`]: {
-          scrollbarWidth: 'auto',
-          msOverflowStyle: 'auto',
-
-          '&::-webkit-scrollbar': {
-            display: 'block',
-          },
-        },
       },
 
       [`&-container`]: {
@@ -107,10 +97,7 @@ const genScrollbarStyle: GenerateStyle<ScrollbarToken, CSSObject> = (token) => {
         },
       },
 
-      [`
-        ${trackMotionCls}-enter,
-        ${trackMotionCls}-appear
-      `]: {
+      [`${trackMotionCls}-enter-start`]: {
         opacity: 0,
         transform: 'translate3d(100%, 0, 0)',
       },
@@ -131,6 +118,26 @@ const genScrollbarStyle: GenerateStyle<ScrollbarToken, CSSObject> = (token) => {
       [`${trackMotionCls}-leave-active`]: {
         opacity: 0,
         transform: 'translate3d(100%, 0, 0)',
+      },
+
+      [`${trackFadeMotionCls}-enter-start`]: {
+        opacity: 0,
+      },
+
+      [`
+        ${trackFadeMotionCls}-enter-active,
+        ${trackFadeMotionCls}-appear-active,
+        ${trackFadeMotionCls}-leave-active
+      `]: {
+        transition: `opacity ${token.motionDurationMid} ${token.motionEaseOutCirc}`,
+      },
+
+      [`${trackFadeMotionCls}-leave`]: {
+        opacity: 1,
+      },
+
+      [`${trackFadeMotionCls}-leave-active`]: {
+        opacity: 0,
       },
     },
   }

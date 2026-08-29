@@ -316,7 +316,7 @@ const globalCode = computed(() => {
     </div>
 
     <!-- Global Token Section -->
-    <div v-if="mergedGlobalTokens.length > 0">
+    <div v-if="globalData.length > 0">
       <div class="cursor-pointer relative flex items-center justify-start leading-[40px] gap-2" @click="globalOpen = !globalOpen">
         <RightOutlined
           class="text-16px transition-all duration-300"
