@@ -7,13 +7,17 @@
       "inputs": ["src/**", "scripts/token/**", "package.json", "tsconfig.json"],
       "outputs": ["../../docs/src/assets/token.json", "../../docs/src/assets/token-meta.json"]
     },
+    "@antdv-next/pro#build:style": {
+      "inputs": ["src/**", "scripts/style/**", "scripts/vite-ssr-run.ts", "package.json", "tsconfig.json"],
+      "outputs": ["../../docs/src/assets/antd.css"]
+    },
     "build": {
-      "dependsOn": ["@antdv-next/pro#build:token", "^build"],
+      "dependsOn": ["@antdv-next/pro#build:token", "@antdv-next/pro#build:style", "^build"],
       "inputs": ["src/**", "scripts/**", "package.json", "tsconfig.json", "tsdown.config.ts"],
       "outputs": ["dist/**", "web-types.json", "web-tags.json"]
     },
     "docs#build": {
-      "dependsOn": ["@antdv-next/pro#build:token"],
+      "dependsOn": ["@antdv-next/pro#build:token", "@antdv-next/pro#build:style"],
       "inputs": [
         "src/**",
         "plugins/**",
@@ -28,7 +32,7 @@
         "vite.config.ts",
         "../packages/pro/src/**"
       ],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", "src/assets/antd.css"]
     },
     "dev": {
       "dependsOn": ["^build"],

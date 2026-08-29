@@ -213,6 +213,9 @@ catalogs:
     '@antdv-next/icons':
       specifier: ^1.0.8
       version: 1.1.0
+    '@vue/server-renderer':
+      specifier: ^3.5.38
+      version: 3.5.39
     '@vueuse/core':
       specifier: ^14.3.0
       version: 14.3.0
@@ -568,6 +571,9 @@ importers:
       '@vitejs/plugin-vue-jsx':
         specifier: catalog:dev
         version: 5.1.6(vite@8.1.2(@types/node@25.9.4)(esbuild@0.28.1)(jiti@2.7.0)(less@4.6.7)(tsx@4.22.4)(yaml@2.9.0))(vue@3.5.39(typescript@5.9.3))
+      '@vue/server-renderer':
+        specifier: catalog:prod
+        version: 3.5.39(vue@3.5.39(typescript@5.9.3))
       '@vue/test-utils':
         specifier: catalog:dev
         version: 2.4.11(@vue/compiler-dom@3.5.39)(@vue/server-renderer@3.5.39(vue@3.5.39(typescript@5.9.3)))(vue@3.5.39(typescript@5.9.3))
