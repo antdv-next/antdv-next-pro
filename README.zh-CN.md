@@ -4,41 +4,41 @@
 
 <h1>@antdv-next/pro</h1>
 
-Advanced components for enterprise web applications built on top of Antdv Next.
+基于 Antdv Next 设计体系与组件库的企业级 Vue3 进阶组件。
 
 [![CI status][github-action-image]][github-action-url]
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][download-image]][download-url]
 [![][jsdelivr-image]][jsdelivr-url]
 
-English · [中文](./README.zh-CN.md)
+[English](./README.md) · 中文
 
-## ❤️ Sponsors
+## ❤️ 赞助商
 
 | <a href="https://ergouzi.life/register?utm_source=antdv-next"><img src="https://nzj13gqqmj.ufs.sh/f/7vCb7ZuKZQXM8I2IHQXhPqNEAXV4gJm0LzopUFvck3bCKG1e" width="80" alt="二狗子中转"></a> | <a href="https://penna.pro"><img src="https://penna.pro/logo.svg" width="80" alt="Penna Note"></a> | <a href="https://jeesite.com/?utm_source=antdv-next"><img src="https://jeesite.com/assets/images/logo.png" width="80" alt="JeeSite 低代码"></a> |
 | :-: | :-: | :-: |
 
 </div>
 
-## ✨ Features
+## ✨ 特性
 
-- 🚀 Advanced Pro components for enterprise scenarios, built on top of `antdv-next`.
-- 📦 A set of high-quality Vue3 components out of the box
-- 🧩 Native theming — components participate in the `antdv-next` CSS-in-JS theme and token system.
-- 🛡 Written in TypeScript with predictable static types.
-- ⚙️ Tree-shakable ESM modules, consistent with `antdv-next`.
+- 🚀 面向企业级场景的进阶组件，构建于 `antdv-next` 之上。
+- 📦 开箱即用的高质量 Vue3 组件，并持续扩充。
+- 🧩 原生主题支持 —— 组件深度融入 `antdv-next` 的 CSS-in-JS 主题与 token 体系。
+- 🛡 使用 TypeScript 开发，提供完整的类型定义文件。
+- ⚙️ 与 `antdv-next` 一致的 Tree-shaking ESM 模块。
 
-## 🖥 Environment Support
+## 🖥 兼容环境
 
-- Modern browsers
-- Server-side Rendering
+- 现代浏览器
+- 支持服务端渲染
 - [Electron](https://www.electronjs.org/)
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="Edge" width="24px" height="24px" /><br>Edge](https://godban.github.io/browsers-support-badges/) | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /><br>Firefox](https://godban.github.io/browsers-support-badges/) | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /><br>Chrome](https://godban.github.io/browsers-support-badges/) | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /><br>Safari](https://godban.github.io/browsers-support-badges/) | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/electron/electron_48x48.png" alt="Electron" width="24px" height="24px" /><br>Electron](https://godban.github.io/browsers-support-badges/) |
 | --- | --- | --- | --- | --- |
 | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
 
-## 📦 Install
+## 📦 安装
 
 ```bash
 npm install @antdv-next/pro
@@ -56,34 +56,34 @@ pnpm add @antdv-next/pro
 bun add @antdv-next/pro
 ```
 
-> `@antdv-next/pro` requires `antdv-next` (>= 1.3.0) and `vue` (>= 3.2.0) as peer dependencies.
+> `@antdv-next/pro` 需要 `antdv-next`（>= 1.3.0）与 `vue`（>= 3.2.0）作为 peer 依赖一并安装。
 
-## ✅ Unit Test Coverage
+## ✅ 单元测试覆盖率
 
-- Run coverage locally: `pnpm test:coverage`
-- Coverage output directory: `coverage/`
+- 本地生成覆盖率：`pnpm test:coverage`
+- 覆盖率输出目录：`coverage/`
 
-## Acknowledgements
+## 鸣谢
 
-@antdv-next/pro is inspired by and built upon the following open-source projects.
+@antdv-next/pro 在设计与实现过程中参考、借鉴并使用了以下优秀的开源项目，在此表示感谢。
 
 - [Ant Design](https://ant.design/)
 - [Vue.js](https://vuejs.org/)
 - [antdv-next](https://github.com/antdv-next/antdv-next)
 
-## Contribute
+## 贡献
 
-We warmly welcome you to participate in our open source project.
+非常欢迎您参与到我们的开源项目中来~
 
-**Pull Request:**
+**PR流程：**
 
-1. Fork the repository.
-2. Create your own branch: `git checkout -b feat-xxxx`.
-3. Commit your changes: `git commit -am 'feat(function): add xxxxx'`.
-4. Push your branch: `git push origin feat-xxxx`.
-5. Submit a pull request.
+1. Fork 代码!
+2. 创建自己的分支: `git checkout -b feat-xxxx`
+3. 提交你的修改: `git commit -am 'feat(function): add xxxxx'`
+4. 推送您的分支: `git push origin feat-xxxx`
+5. 提交`pull request`
 
-Thank you to all the people who already contributed to @antdv-next/pro!
+感谢所有为 @antdv-next/pro 做出贡献的小伙伴儿们！
 
 <a href="https://github.com/antdv-next/antdv-next-pro/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=antdv-next/antdv-next-pro&max=100&columns=15" />
