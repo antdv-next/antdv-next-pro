@@ -19,6 +19,7 @@ const { t } = useLocale()
 interface ComponentItem {
   key: string
   label: string
+  tag?: string
 }
 
 interface MenuGroup {
@@ -100,7 +101,22 @@ onMounted(() => {
           <template v-for="comp in group.children" :key="comp.key">
             <a-col :xs="24" :sm="12" :lg="8" :xl="6">
               <RouterLink :to="locale === 'zh-CN' ? `${comp.key}-cn` : comp.key" style="text-decoration: none; color: inherit;">
-                <a-card size="small" class="components-overview-card">
+                <a-badge-ribbon v-if="comp.tag" color="green" :text="comp.tag">
+                  <a-card size="small" class="components-overview-card">
+                    <template #title>
+                      <div class="components-overview-title">
+                        {{ siderLocales?.[comp.key]?.[locale] ?? comp.label }}
+                      </div>
+                    </template>
+                    <div class="components-overview-img">
+                      <img
+                        :src="darkMode ? covers?.[getComponentName(comp.key)]?.coverDark : covers?.[getComponentName(comp.key)]?.cover"
+                        :alt="siderLocales?.[comp.key]?.[locale] ?? comp.label"
+                      >
+                    </div>
+                  </a-card>
+                </a-badge-ribbon>
+                <a-card v-else size="small" class="components-overview-card">
                   <template #title>
                     <div class="components-overview-title">
                       {{ siderLocales?.[comp.key]?.[locale] ?? comp.label }}

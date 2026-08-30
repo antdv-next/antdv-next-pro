@@ -6,5 +6,8 @@ export default {
     // Navigation
     navigation: '导航',
     scrollbar: 'Scrollbar 滚动条',
+    // Data Display
+    dataDisplay: '数据展示',
+    heatmap: 'Heatmap 热力图',
   },
 } as const

@@ -24,6 +24,11 @@
       "import": "./dist/scrollbar/index.js",
       "default": "./dist/scrollbar/index.js"
     },
+    "./heatmap": {
+      "types": "./dist/heatmap/index.d.ts",
+      "import": "./dist/heatmap/index.js",
+      "default": "./dist/heatmap/index.js"
+    },
     "./dist/*": {
       "types": "./dist/*.d.ts",
       "import": "./dist/*.js",

@@ -1,8 +1,9 @@
 import type { ComputedRef, InjectionKey, Ref } from 'vue'
-import type { ScrollbarConfig } from './define'
+import type { HeatmapConfig, ScrollbarConfig } from './define'
 import { computed, inject, provide, ref } from 'vue'
 
 export interface ProConfigContextProps {
+  heatmap?: HeatmapConfig
   scrollbar?: ScrollbarConfig
 }
 

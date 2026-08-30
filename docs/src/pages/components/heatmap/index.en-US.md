@@ -1,0 +1,72 @@
+---
+category: Pro Components
+title: Heatmap
+description: Display date-aggregated data density in a calendar grid.
+demo:
+  cols: 1
+group:
+  title: Data Display
+  order: 1
+---
+
+## When To Use
+
+- Display daily aggregates such as activity, traffic, orders, or alerts.
+- Compare data density over time through discrete color levels.
+
+## Examples
+
+<demo-group>
+  <demo src="./demo/basic.vue">Basic</demo>
+  <demo src="./demo/colors.vue">Color levels</demo>
+  <demo src="./demo/interaction.vue">Tooltip and cell events</demo>
+  <demo src="./demo/semantic.vue">Semantic styling</demo>
+</demo-group>
+
+## API
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| data | Date data. `null`, an omitted value, and a missing entry mean no data; `0` is valid data. | `HeatmapData` | - |
+| range | Display range. `recent` is 365 days ending on the current UTC date. | `'recent' \| number \| HeatmapRange` | `'recent'` |
+| firstDayOfWeek | First day of a week, where `0` is Sunday. | `0 \| 1 \| ... \| 6` | `0` |
+| showMonthLabels | Show month labels. | `boolean` | `true` |
+| showWeekLabels | Show week labels. | `boolean` | `true` |
+| showColorIndicator | Show the color indicator. | `boolean` | `true` |
+| fillCalendarLeading | Fill dates before the range start in the same week. | `boolean` | `false` |
+| size | Cell size. | `'small' \| 'medium' \| 'large'` | `'medium'` |
+| xGap / yGap | Horizontal and vertical cell gaps. | `number \| string` | `3` |
+| colorTheme | Included color theme. | `'green' \| 'blue' \| 'orange' \| 'purple' \| 'red'` | - |
+| activeColors | Custom active color scale. | `string[]` | - |
+| minimumColor | Custom color for the minimum valid value. | `string` | - |
+| tooltip | Show a Tooltip or provide Tooltip options. | `boolean \| TooltipProps` | `false` |
+| classes | Customize semantic classes with an object or function. | `HeatmapClassNamesType` | - |
+| styles | Customize semantic inline styles with an object or function. | `HeatmapStylesType` | - |
+
+### Events
+
+| Event | Description | Type |
+| --- | --- | --- |
+| cell-click | Triggered by clicking a cell with a valid value, or pressing Enter/Space on it. | `(item: HeatmapDataItem, event: MouseEvent \| KeyboardEvent) => void` |
+
+### Slots
+
+| Slot | Description |
+| --- | --- |
+| footer | Bottom-left extension content. |
+| indicator | Replace the complete color indicator. |
+| indicator-leading-text | Leading text for the default indicator. |
+| indicator-trailing-text | Trailing text for the default indicator. |
+| tooltip | Customize Tooltip content with `HeatmapTooltipSlotProps`. |
+
+## Semantic DOM
+
+<demo src="./demo/_semantic.vue" simplify></demo>
+
+Date cells expose `data-level` and `data-empty` for finer style control.
+
+## Design Tokens
+
+Customize Heatmap with `theme.components.Heatmap`. Its defaults derive from global Tokens for color, typography, radius, sizing, and focus styles.
+
+<ComponentTokenTable component="Heatmap" />

@@ -1,5 +1,6 @@
 import type { ThemeConfig } from 'antdv-next/config-provider/context'
 import type { CSSProperties } from 'vue'
+import type { HeatmapConfig } from '../heatmap/types'
 
 export type ScrollbarVisibility = 'auto' | 'always' | 'hidden'
 export type ScrollbarMotion = 'fade' | 'slide'
@@ -30,6 +31,7 @@ export interface ProConfigProviderProps {
   virtual?: boolean
   popupMatchSelectWidth?: boolean
   popupOverflow?: 'viewport' | 'scroll'
+  heatmap?: HeatmapConfig
   scrollbar?: ScrollbarConfig
 }
 
@@ -40,3 +42,5 @@ export interface ProConfigProviderSlots {
 export interface ProConfigProviderEmits {
   [key: string]: (...args: any[]) => void
 }
+
+export type { HeatmapConfig }

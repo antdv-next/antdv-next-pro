@@ -67,6 +67,10 @@ export default defineConfig({
         replacement: path.resolve(baseUrl, '../packages/pro/src/scrollbar/index.tsx'),
       },
       {
+        find: /^@antdv-next\/pro\/heatmap$/,
+        replacement: path.resolve(baseUrl, '../packages/pro/src/heatmap/index.ts'),
+      },
+      {
         find: /^@antdv-next\/pro$/,
         replacement: path.resolve(baseUrl, '../packages/pro/src/index.ts'),
       },
