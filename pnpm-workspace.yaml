@@ -1,8 +1,14 @@
+cleanupUnusedCatalogs: true
 
+shellEmulator: true
 packages:
   - packages/*
   - playground
   - docs
+
+overrides:
+  '@v-c/resize-observer': catalog:vc
+  '@v-c/util': catalog:vc
 
 catalog:
   '@vitest/coverage-v8': ^4.1.9
@@ -80,14 +86,6 @@ catalogs:
   vc:
     '@v-c/resize-observer': ^1.1.2
     '@v-c/util': ^1.0.19
-cleanupUnusedCatalogs: true
-
 onlyBuiltDependencies:
   - esbuild
   - less
-
-overrides:
-  '@v-c/resize-observer': catalog:vc
-  '@v-c/util': catalog:vc
-
-shellEmulator: true
