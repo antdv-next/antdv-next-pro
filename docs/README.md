@@ -19,7 +19,10 @@ pnpm -F @antdv-next/pro build:token  # regenerate Pro token metadata and values
   `index.zh-CN.md`, `index.en-US.md`, `demo/*.vue`, `locales.ts`
   (semantic-DOM labels). `_*.vue` demos use docs-site helpers
   (`SemanticPreview`) and are excluded from unit tests.
-- `plugins/` — markdown/demo Vite plugins (md → vue SFC, `virtual:demos`).
+- `plugins/` — pro-specific vite plugin (virtual `antd.css` import); the
+  markdown/demo pipeline (`md → vue SFC`, `virtual:demos`) comes from the
+  shared [`@antdv-next/docs-plugins`](https://github.com/antdv-next/docs-plugins)
+  package (see `vite.config.ts`).
 - `src/config/menu/` — sidebar & header menus (hardcoded; update when adding
   a component, together with `src/locales/*/menu-components.ts`).
 - `scripts/gen-search.ts` — builds the FlexSearch index consumed by the
