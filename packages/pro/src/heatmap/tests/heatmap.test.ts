@@ -76,7 +76,7 @@ describe('Heatmap', () => {
     const root = wrapper.find('.ant-heatmap')
     expect(root.classes()).toContain('heatmap-root')
     expect(root.attributes('style')).toContain('padding: 4px')
-    expect(wrapper.findAll('.heatmap-cell')).toHaveLength(3)
+    expect(wrapper.findAll('.heatmap-cell')).toHaveLength(7)
     expect(wrapper.findComponent(Tooltip).exists()).toBe(true)
 
     await wrapper.find('[data-level="1"]').trigger('keydown', { key: 'Enter' })
