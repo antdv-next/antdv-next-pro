@@ -1,15 +1,14 @@
 import * as path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { mdPlugin, postcssIsolateStyles } from '@antdv-next/docs-plugins'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import Unocss from 'unocss/vite'
 import { defineConfig } from 'vite'
 import dayjsPlugin from 'vite-plugin-dayjs'
-import { tsxResolveTypes } from 'vite-plugin-tsx-resolve-types'
 
+import { tsxResolveTypes } from 'vite-plugin-tsx-resolve-types'
 import virtualAntdCss from './plugins/css-plugin'
-import { mdPlugin } from './plugins/markdown'
-import { postcssIsolateStyles } from './plugins/markdown/isolateStyles.ts'
 
 const baseUrl = fileURLToPath(new URL('.', import.meta.url))
 const docsBuildTarget = [
@@ -36,7 +35,6 @@ export default defineConfig({
       include: [/\.vue$/, /\.md$/],
     }),
     Unocss(),
-    // prefetch(),
   ],
   server: {
     port: 3322,
