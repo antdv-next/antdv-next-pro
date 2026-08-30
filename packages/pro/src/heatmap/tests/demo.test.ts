@@ -1,3 +1,4 @@
+import enUS from 'antdv-next/locale/en_US'
 import { afterAll, beforeAll } from 'vitest'
 import { resetMockDate, setMockDate } from '../../../../../tests/utils'
 import demoTest from '/@tests/shared/demoTest'
@@ -10,4 +11,4 @@ afterAll(() => {
   resetMockDate()
 })
 
-demoTest('heatmap')
+demoTest('heatmap', { locale: enUS })
