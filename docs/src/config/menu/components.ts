@@ -73,4 +73,12 @@ export const components: AntdvMenuItem[] = [
       { key: '/components/heatmap', label: '/components/heatmap', tag: '1.1.0' },
     ],
   },
+  {
+    key: 'other',
+    label: 'other',
+    type: 'group',
+    children: [
+      { key: '/components/config-provider', label: '/components/config-provider' },
+    ],
+  },
 ]

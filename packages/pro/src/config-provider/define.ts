@@ -1,6 +1,7 @@
-import type { ThemeConfig } from 'antdv-next/config-provider/context'
+import type { ConfigProviderProps } from 'antdv-next/config-provider'
 import type { CSSProperties } from 'vue'
 import type { HeatmapConfig } from '../heatmap/types'
+import type { ProLocale } from '../locale/types'
 
 export type ScrollbarVisibility = 'auto' | 'always' | 'hidden'
 export type ScrollbarMotion = 'fade' | 'slide'
@@ -17,30 +18,24 @@ export interface ScrollbarConfig {
   styles?: Record<string, CSSProperties>
 }
 
-export interface ProConfigProviderProps {
-  prefixCls?: string
-  iconPrefixCls?: string
-  direction?: 'ltr' | 'rtl'
-  theme?: ThemeConfig
-  componentSize?: 'small' | 'middle' | 'large'
-  componentDisabled?: boolean
-  getPopupContainer?: (triggerNode?: HTMLElement) => HTMLElement
-  getTargetContainer?: () => HTMLElement | Window
-  csp?: { nonce?: string }
-  renderEmpty?: (...args: any[]) => any
-  virtual?: boolean
-  popupMatchSelectWidth?: boolean
-  popupOverflow?: 'viewport' | 'scroll'
+export interface ProConfigContextProps {
   heatmap?: HeatmapConfig
   scrollbar?: ScrollbarConfig
 }
 
-export interface ProConfigProviderSlots {
-  default?: () => any
+export const PRO_CONFIG_KEYS = ['heatmap', 'scrollbar'] as const satisfies readonly (keyof ProConfigContextProps)[]
+
+export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'>, ProConfigContextProps {
+  locale?: ProLocale
 }
 
-export interface ProConfigProviderEmits {
-  [key: string]: (...args: any[]) => void
+export interface ProConfigProviderSlots {
+  renderEmpty?: NonNullable<ConfigProviderProps['renderEmpty']>
+  transformCellText?: NonNullable<ConfigProviderProps['transformCellText']>
+  default?: () => any
+  [key: string]: any
 }
+
+export type ProConfigProviderEmits = Record<string, any>
 
 export type { HeatmapConfig }

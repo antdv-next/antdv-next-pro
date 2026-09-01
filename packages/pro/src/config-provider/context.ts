@@ -1,11 +1,8 @@
 import type { ComputedRef, InjectionKey, Ref } from 'vue'
-import type { HeatmapConfig, ScrollbarConfig } from './define'
+import type { ProConfigContextProps } from './define'
 import { computed, inject, provide, ref } from 'vue'
 
-export interface ProConfigContextProps {
-  heatmap?: HeatmapConfig
-  scrollbar?: ScrollbarConfig
-}
+export type { ProConfigContextProps } from './define'
 
 const EMPTY_OBJECT = {}
 const ProConfigKey: InjectionKey<Ref<ProConfigContextProps>> = Symbol('ProConfigContext')

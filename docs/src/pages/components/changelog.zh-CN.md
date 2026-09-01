@@ -3,6 +3,16 @@ title: 组件更新日志
 sourceFile: components/changelog.zh-CN.md
 ---
 
+## V1.0.2
+
+发布日期：2026-09-01
+
+本版本新增 ProConfigProvider 全局配置能力，并提供与 antdv-next 保持一致的 locale wrapper。
+
+**✨ 新功能 Features**
+
+* feat(config-provider)：新增 ProConfigProvider，继承 Antdv ConfigProvider 配置，并提供可按公开 locale 路径导入的语言包包装器。
+
 ## V1.0.0
 
 发布日期：2026-08-29

@@ -1,7 +1,7 @@
 {
   "name": "@antdv-next/pro",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Ant Design Vue3 Pro component library",
   "author": {
     "email": "aibayanyu@gamil.com",
@@ -28,6 +28,16 @@
       "types": "./dist/heatmap/index.d.ts",
       "import": "./dist/heatmap/index.js",
       "default": "./dist/heatmap/index.js"
+    },
+    "./locale": {
+      "types": "./dist/locale/index.d.ts",
+      "import": "./dist/locale/index.js",
+      "default": "./dist/locale/index.js"
+    },
+    "./locale/*": {
+      "types": "./dist/locale/*.d.ts",
+      "import": "./dist/locale/*.js",
+      "default": "./dist/locale/*.js"
     },
     "./dist/*": {
       "types": "./dist/*.d.ts",
