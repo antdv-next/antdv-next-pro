@@ -3,6 +3,16 @@ title: Component Changelog
 sourceFile: components/changelog.en-US.md
 ---
 
+## V1.0.2
+
+Release Date: 2026-09-01
+
+This release adds ProConfigProvider and locale wrappers that mirror antdv-next locale objects.
+
+**✨ Features**
+
+* feat(config-provider): add ProConfigProvider with the Antdv ConfigProvider surface and locale wrappers available through public locale import paths.
+
 ## V1.0.0
 
 Release Date: 2026-08-29

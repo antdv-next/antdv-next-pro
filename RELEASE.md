@@ -25,9 +25,19 @@ changelog 页面是**纯手工维护的 markdown**，不依赖任何生成工具
 
 侧边菜单「更新日志」旁的版本 tag 会自动读取 `@antdv-next/pro` 包版本（`docs/src/config/menu/components.ts`），发版后无需手工修改。
 
+### 版本范围确认
+
+发版整理只以当前 `main` 分支为准，不读取其他本地分支、未合入的功能分支或工作区中的未合并内容。以待发布版本的上一个 tag 作为起点，检查该 tag 之后到 `main` 当前提交之间的历史：
+
+```bash
+git log "@antdv-next/pro@x.y.z"..main --no-merges --format="%h %ad %s" --date=short
+```
+
+其中 `x.y.z` 替换为上一个已发布版本。发布提交本身通常是 `chore(release)`，按下方规则排除。若提交没有关联 PR 或 PR 未提供「📝 Change Log」区块，只能依据实际提交和代码变更整理事实描述，不补写不存在的功能或修复。
+
 步骤：
 
-1. 浏览自上次发版以来合并到 `main` 的 PR，从每个 PR 的「📝 Change Log」区块提取条目（中英文各一条）
+1. 按“版本范围确认”中的命令检查自上次发版以来合并到 `main` 的提交，再从对应 PR 的「📝 Change Log」区块提取条目（中英文各一条）
 2. **只记录两类变更**（其余 commit——`docs` / `chore` / `ci` / `build` / `refactor` / `style` / `test` / `perf`——不写入 changelog）：
 
    | 分类标题（中 / 英） | 覆盖的 commit 类型 |
