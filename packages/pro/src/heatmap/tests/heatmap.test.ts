@@ -64,7 +64,7 @@ describe('Heatmap utilities', () => {
 })
 
 describe('Heatmap', () => {
-  it('renders data cells, semantic styles, tooltip, and keyboard click events', async () => {
+  it('renders data cells, semantic styles, tooltip, and clickable data cells', async () => {
     const wrapper = mount(Heatmap, {
       props: {
         range: { start: jan1, end: jan3 },
@@ -84,7 +84,10 @@ describe('Heatmap', () => {
     expect(wrapper.findAll('.heatmap-cell')).toHaveLength(7)
     expect(wrapper.findComponent(Tooltip).exists()).toBe(true)
 
-    await wrapper.find('[data-level="1"]').trigger('keydown', { key: 'Enter' })
+    const firstDataCell = wrapper.find('[data-level="1"]')
+    expect(firstDataCell.element.tagName).toBe('BUTTON')
+    expect(firstDataCell.attributes('type')).toBe('button')
+    await firstDataCell.trigger('click')
     expect(wrapper.emitted('cell-click')?.[0]?.[0]).toMatchObject({ timestamp: jan1, value: 0 })
   })
 
@@ -98,19 +101,43 @@ describe('Heatmap', () => {
     })
 
     const cells = wrapper.findAll('.heatmap-cell')
-    await cells[2]!.trigger('click')
-    await cells[2]!.trigger('keydown', { key: 'Enter' })
-    await cells[2]!.trigger('keydown', { key: ' ' })
+    const explicitNoDataCell = cells[2]!
+    expect(explicitNoDataCell.element.tagName).toBe('BUTTON')
+    expect(explicitNoDataCell.attributes('type')).toBe('button')
+    await explicitNoDataCell.trigger('click')
 
     const cellClicks = wrapper.emitted('cell-click')!
-    expect(cellClicks).toHaveLength(3)
-    for (const [item] of cellClicks) {
-      expect(item).toMatchObject({ timestamp: jan2, value: null })
-    }
+    expect(cellClicks).toHaveLength(1)
+    expect(cellClicks[0]?.[0]).toMatchObject({ timestamp: jan2, value: null })
 
     await cells[3]!.trigger('click')
-    await cells[0]!.trigger('keydown', { key: 'Enter' })
-    expect(wrapper.emitted('cell-click')).toHaveLength(3)
+    await cells[0]!.trigger('click')
+    expect(wrapper.emitted('cell-click')).toHaveLength(1)
+  })
+
+  it('labels the calendar and limits button semantics to supplied data items', () => {
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan3 },
+        data: [{ timestamp: jan1, value: 0 }],
+        classes: { cell: 'heatmap-cell' },
+      },
+    })
+
+    expect(wrapper.find('table').attributes('aria-label')).toBe('Heatmap')
+    expect(wrapper.find('th.ant-heatmap-week-label[scope="row"]').exists()).toBe(true)
+    expect(wrapper.findAll('td.ant-heatmap-week-label')).toHaveLength(4)
+    expect(wrapper.find('.ant-heatmap-indicator-color').attributes('role')).toBe('img')
+    expect(wrapper.find('.ant-heatmap-indicator-color').attributes('aria-label')).toBe('Level 1')
+
+    const cells = wrapper.findAll('.heatmap-cell')
+    expect(cells[1]!.element.tagName).toBe('BUTTON')
+    expect(cells[1]!.attributes('type')).toBe('button')
+    expect(cells[1]!.attributes('aria-label')).toContain('Level')
+
+    expect(cells[3]!.element.tagName).toBe('DIV')
+    expect(cells[3]!.attributes('aria-label')).toBeUndefined()
+    expect(cells[3]!.element.parentElement?.getAttribute('aria-label')).toContain('No data')
   })
 
   it('uses Heatmap defaults from ProConfigProvider and merges semantic configuration', async () => {

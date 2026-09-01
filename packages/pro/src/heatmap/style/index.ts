@@ -91,10 +91,13 @@ const genHeatmapStyle: GenerateStyle<HeatmapToken, CSSObject> = (token) => {
         display: 'block',
         width: token.cellSize,
         height: token.cellSize,
+        border: 0,
+        padding: 0,
         borderRadius: token.cellRadius,
         backgroundColor: token.emptyCellColor,
         cursor: 'default',
         outline: 'none',
+        font: 'inherit',
         transition: `background-color ${token.motionDurationMid}`,
 
         '&[data-level="1"]': { backgroundColor: token.minimumColor },
@@ -105,7 +108,10 @@ const genHeatmapStyle: GenerateStyle<HeatmapToken, CSSObject> = (token) => {
         '&[data-empty="true"]': {
           backgroundColor: token.emptyCellColor,
         },
-        '&[tabindex="0"]:focus-visible': {
+        '&[type="button"]': {
+          cursor: 'pointer',
+        },
+        '&:focus-visible': {
           outline: `2px solid ${token.focusOutlineColor}`,
           outlineOffset: 2,
         },

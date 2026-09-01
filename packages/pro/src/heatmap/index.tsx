@@ -124,8 +124,8 @@ const Heatmap = defineComponent<
       timeZone: 'UTC',
     }))
     const localeText = computed(() => localeCode.value?.toLowerCase().startsWith('zh')
-      ? { less: '少', more: '多', noData: '无数据', level: '等级' }
-      : { less: 'Less', more: 'More', noData: 'No data', level: 'Level' })
+      ? { heatmap: '热力图', less: '少', more: '多', noData: '无数据', level: '等级' }
+      : { heatmap: 'Heatmap', less: 'Less', more: 'More', noData: 'No data', level: 'Level' })
 
     const weekLabels = computed(() => Array.from({ length: 7 }, (_, index) => {
       const day = Date.UTC(2023, 0, 1 + ((mergedFirstDayOfWeek.value + index) % 7))
@@ -201,6 +201,8 @@ const Heatmap = defineComponent<
                 key={index}
                 class={`${prefixCls.value}-indicator-color`}
                 data-level={index + 1}
+                role="img"
+                aria-label={`${localeText.value.level} ${index + 1}`}
                 style={usesCustomColors.value ? { backgroundColor: color } : undefined}
               />
             ))}
@@ -214,7 +216,8 @@ const Heatmap = defineComponent<
       const cellStyle = usesCustomColors.value && cell.level > 0
         ? { backgroundColor: resolvedColors.value[cell.level - 1] }
         : undefined
-      const canFocus = !cell.placeholder
+      const isInteractive = Boolean(cell.item)
+      const cellLabel = cell.date ? formatTooltip(cell) : undefined
       const slotProps = cell.date
         ? { timestamp: cell.timestamp!, value: cell.value, date: cell.date, level: cell.level }
         : undefined
@@ -223,27 +226,22 @@ const Heatmap = defineComponent<
           emit('cell-click', cell.item, event)
         }
       }
-      const onKeydown = (event: KeyboardEvent) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault()
-          if (cell.item) {
-            emit('cell-click', cell.item, event)
-          }
-        }
+      const cellProps = {
+        class: clsx(`${prefixCls.value}-cell`, mergedClassNames.value.cell),
+        style: [mergedStyles.value.cell, cellStyle],
+        'data-level': cell.level,
+        'data-empty': cell.value === null ? 'true' : 'false',
       }
-      const node = (
-        <div
-          class={clsx(`${prefixCls.value}-cell`, mergedClassNames.value.cell)}
-          style={[mergedStyles.value.cell, cellStyle]}
-          data-level={cell.level}
-          data-empty={cell.value === null ? 'true' : 'false'}
-          tabindex={canFocus ? 0 : undefined}
-          role={canFocus ? 'button' : undefined}
-          aria-label={canFocus ? formatTooltip(cell) : undefined}
-          onClick={onClick}
-          onKeydown={onKeydown}
-        />
-      )
+      const node = isInteractive
+        ? (
+            <button
+              type="button"
+              {...cellProps}
+              aria-label={cellLabel}
+              onClick={onClick}
+            />
+          )
+        : <div {...cellProps} />
       const tooltip = mergedTooltip.value
       const content = !cell.placeholder && tooltip !== false && slotProps
         ? (
@@ -258,7 +256,11 @@ const Heatmap = defineComponent<
         : node
 
       return (
-        <td key={`${row}-${column}`} class={`${prefixCls.value}-cell-container`}>
+        <td
+          key={`${row}-${column}`}
+          class={`${prefixCls.value}-cell-container`}
+          aria-label={!isInteractive ? cellLabel : undefined}
+        >
           {content}
         </td>
       )
@@ -280,7 +282,7 @@ const Heatmap = defineComponent<
             style={mergedStyles.value.content}
           >
             <div class={`${prefixCls.value}-content-inner`}>
-              <table class={`${prefixCls.value}-table`} style={tableStyle.value}>
+              <table class={`${prefixCls.value}-table`} style={tableStyle.value} aria-label={localeText.value.heatmap}>
                 {mergedShowMonthLabels.value && (
                   <thead>
                     <tr>
@@ -304,7 +306,9 @@ const Heatmap = defineComponent<
                 <tbody>
                   {calendar.value.map((row, rowIndex) => (
                     <tr key={rowIndex}>
-                      {mergedShowWeekLabels.value && <th class={`${prefixCls.value}-week-label`}>{rowIndex % 2 ? weekLabels.value[rowIndex] : ''}</th>}
+                      {mergedShowWeekLabels.value && (rowIndex % 2
+                        ? <th class={`${prefixCls.value}-week-label`} scope="row">{weekLabels.value[rowIndex]}</th>
+                        : <td class={`${prefixCls.value}-week-label`} />)}
                       {row.map((cell, columnIndex) => renderCell(cell, rowIndex, columnIndex))}
                     </tr>
                   ))}
