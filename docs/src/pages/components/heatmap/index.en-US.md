@@ -27,8 +27,8 @@ group:
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| data | Date data. `null`, an omitted value, and a missing entry mean no data; `0` is valid data. | `HeatmapData` | - |
-| range | Display range. `recent` is 365 days ending on the current UTC date. | `'recent' \| number \| HeatmapRange` | `'recent'` |
+| data | Date data. `null`, an omitted value, and a missing entry mean no data; `0` is valid data. The last valid item for a UTC date wins. | `HeatmapData` | - |
+| range | Display range. `recent` is 365 days ending on the current UTC date; a number represents a UTC calendar year. Object ranges are normalized chronologically. | `'recent' \| number \| HeatmapRange` | `'recent'` |
 | firstDayOfWeek | First day of a week, where `0` is Sunday. | `0 \| 1 \| ... \| 6` | `0` |
 | showMonthLabels | Show month labels. | `boolean` | `true` |
 | showWeekLabels | Show week labels. | `boolean` | `true` |
@@ -39,7 +39,7 @@ group:
 | colorTheme | Included color theme. | `'green' \| 'blue' \| 'orange' \| 'purple' \| 'red'` | - |
 | activeColors | Custom active color scale. | `string[]` | - |
 | minimumColor | Custom color for the minimum valid value. | `string` | - |
-| tooltip | Show a Tooltip or provide Tooltip options. | `boolean \| TooltipProps` | `false` |
+| tooltip | Show a Tooltip or provide Tooltip options. Use the tooltip slot for per-cell content. | `boolean \| TooltipProps` | `false` |
 | classes | Customize semantic classes with an object or function. | `HeatmapClassNamesType` | - |
 | styles | Customize semantic inline styles with an object or function. | `HeatmapStylesType` | - |
 
@@ -47,7 +47,7 @@ group:
 
 | Event | Description | Type |
 | --- | --- | --- |
-| cell-click | Triggered by clicking a cell with a valid value, or pressing Enter/Space on it. | `(item: HeatmapDataItem, event: MouseEvent \| KeyboardEvent) => void` |
+| cell-click | Triggered by clicking a supplied data-item cell, including a no-data item, or pressing Enter/Space on it. | `(item: HeatmapDataItem, event: MouseEvent \| KeyboardEvent) => void` |
 
 ### Slots
 

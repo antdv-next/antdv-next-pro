@@ -219,14 +219,14 @@ const Heatmap = defineComponent<
         ? { timestamp: cell.timestamp!, value: cell.value, date: cell.date, level: cell.level }
         : undefined
       const onClick = (event: MouseEvent) => {
-        if (cell.item && typeof cell.item.value === 'number') {
+        if (cell.item) {
           emit('cell-click', cell.item, event)
         }
       }
       const onKeydown = (event: KeyboardEvent) => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault()
-          if (cell.item && typeof cell.item.value === 'number') {
+          if (cell.item) {
             emit('cell-click', cell.item, event)
           }
         }

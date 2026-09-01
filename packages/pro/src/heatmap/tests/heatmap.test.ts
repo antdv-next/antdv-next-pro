@@ -83,6 +83,31 @@ describe('Heatmap', () => {
     expect(wrapper.emitted('cell-click')?.[0]?.[0]).toMatchObject({ timestamp: jan1, value: 0 })
   })
 
+  it('emits cell-click for explicit no-data items but not missing or placeholder cells', async () => {
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan3 },
+        data: [{ timestamp: jan2, value: null }],
+        classes: { cell: 'heatmap-cell' },
+      },
+    })
+
+    const cells = wrapper.findAll('.heatmap-cell')
+    await cells[2]!.trigger('click')
+    await cells[2]!.trigger('keydown', { key: 'Enter' })
+    await cells[2]!.trigger('keydown', { key: ' ' })
+
+    const cellClicks = wrapper.emitted('cell-click')!
+    expect(cellClicks).toHaveLength(3)
+    for (const [item] of cellClicks) {
+      expect(item).toMatchObject({ timestamp: jan2, value: null })
+    }
+
+    await cells[3]!.trigger('click')
+    await cells[0]!.trigger('keydown', { key: 'Enter' })
+    expect(wrapper.emitted('cell-click')).toHaveLength(3)
+  })
+
   it('uses Heatmap defaults from ProConfigProvider and merges semantic configuration', async () => {
     const wrapper = mount(ProConfigProvider, {
       props: {
