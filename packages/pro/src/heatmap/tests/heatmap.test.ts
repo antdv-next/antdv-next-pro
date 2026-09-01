@@ -50,11 +50,16 @@ describe('Heatmap utilities', () => {
     expect(withLeading[1]![0]).toMatchObject({ placeholder: false, value: 0, level: 1 })
   })
 
-  it('assigns no-data, minimum, and active color levels', () => {
-    expect(getColorLevel(null, 0, 8, 4)).toBe(0)
-    expect(getColorLevel(0, 0, 8, 4)).toBe(1)
-    expect(getColorLevel(2, 0, 8, 4)).toBe(2)
-    expect(getColorLevel(8, 0, 8, 4)).toBe(5)
+  it('assigns equal-width color levels with a lowest valid-value range', () => {
+    expect(getColorLevel(null, 0, 100, 4)).toBe(0)
+    expect(getColorLevel(0, 0, 100, 4)).toBe(1)
+    expect(getColorLevel(19.99, 0, 100, 4)).toBe(1)
+    expect(getColorLevel(20, 0, 100, 4)).toBe(2)
+    expect(getColorLevel(40, 0, 100, 4)).toBe(3)
+    expect(getColorLevel(60, 0, 100, 4)).toBe(4)
+    expect(getColorLevel(80, 0, 100, 4)).toBe(5)
+    expect(getColorLevel(100, 0, 100, 4)).toBe(5)
+    expect(getColorLevel(8, 8, 8, 4)).toBe(1)
   })
 })
 

@@ -37,8 +37,8 @@ group:
 | size | Cell size. | `'small' \| 'medium' \| 'large'` | `'medium'` |
 | xGap / yGap | Horizontal and vertical cell gaps. | `number \| string` | `3` |
 | colorTheme | Included color theme. | `'green' \| 'blue' \| 'orange' \| 'purple' \| 'red'` | - |
-| activeColors | Custom active color scale. | `string[]` | - |
-| minimumColor | Custom color for the minimum valid value. | `string` | - |
+| activeColors | Custom colors for valid value levels above the lowest level. | `string[]` | - |
+| minimumColor | Custom color for the lowest valid value level. | `string` | - |
 | tooltip | Show a Tooltip or provide Tooltip options. Use the tooltip slot for per-cell content. | `boolean \| TooltipProps` | `false` |
 | classes | Customize semantic classes with an object or function. | `HeatmapClassNamesType` | - |
 | styles | Customize semantic inline styles with an object or function. | `HeatmapStylesType` | - |

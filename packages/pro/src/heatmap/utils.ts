@@ -82,11 +82,14 @@ export function getColorLevel(value: number | null, minimum: number, maximum: nu
   if (value === null) {
     return 0
   }
-  if (maximum <= minimum || value <= minimum) {
+  if (maximum <= minimum || activeColorCount <= 0) {
     return 1
   }
 
-  return Math.min(Math.ceil(((value - minimum) / (maximum - minimum)) * activeColorCount) + 1, activeColorCount + 1)
+  const totalColorCount = activeColorCount + 1
+  const ratio = Math.min(Math.max((value - minimum) / (maximum - minimum), 0), 1)
+
+  return Math.min(Math.floor(ratio * totalColorCount) + 1, totalColorCount)
 }
 
 export function createCalendar(
