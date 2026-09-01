@@ -65,4 +65,12 @@ export const components: AntdvMenuItem[] = [
       { key: '/components/scrollbar', label: '/components/scrollbar' },
     ],
   },
+  {
+    key: 'other',
+    label: 'other',
+    type: 'group',
+    children: [
+      { key: '/components/config-provider', label: '/components/config-provider' },
+    ],
+  },
 ]
