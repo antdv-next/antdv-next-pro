@@ -9,12 +9,12 @@ group:
   order: 1
 ---
 
-## When To Use
+## When To Use {#when-to-use}
 
 - Display daily aggregates such as activity, traffic, orders, or alerts.
 - Compare data density over time through discrete color levels.
 
-## Examples
+## Examples {#examples}
 
 <demo-group>
   <demo src="./demo/basic.vue">Basic</demo>
@@ -23,7 +23,7 @@ group:
   <demo src="./demo/semantic.vue">Semantic styling</demo>
 </demo-group>
 
-## API
+## API {#api}
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
@@ -43,13 +43,13 @@ group:
 | classes | Customize semantic classes with an object or function. | `HeatmapClassNamesType` | - |
 | styles | Customize semantic inline styles with an object or function. | `HeatmapStylesType` | - |
 
-### Events
+### Events {#events}
 
 | Event | Description | Type |
 | --- | --- | --- |
 | cell-click | Triggered by clicking a supplied data-item cell, including a no-data item, or pressing Enter/Space on it. | `(item: HeatmapDataItem, event: MouseEvent \| KeyboardEvent) => void` |
 
-### Slots
+### Slots {#slots}
 
 | Slot | Description |
 | --- | --- |
@@ -59,13 +59,13 @@ group:
 | indicator-trailing-text | Trailing text for the default indicator. |
 | tooltip | Customize Tooltip content with `HeatmapTooltipSlotProps`. |
 
-## Semantic DOM
+## Semantic DOM {#semantic-dom}
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
 Date cells expose `data-level` and `data-empty` for finer style control.
 
-## Design Tokens
+## Design Tokens {#design-tokens}
 
 Customize Heatmap with `theme.components.Heatmap`. Its defaults derive from global Tokens for color, typography, radius, sizing, and focus styles.
 

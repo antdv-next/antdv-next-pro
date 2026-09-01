@@ -10,12 +10,12 @@ group:
   order: 1
 ---
 
-## 何时使用
+## 何时使用 {#when-to-use}
 
 - 展示用户活跃度、访问量、订单量或告警数量等按日聚合的数据。
 - 需要用颜色等级快速比较一段时间内的数据密度。
 
-## 代码演示
+## 代码演示 {#examples}
 
 <demo-group>
   <demo src="./demo/basic.vue">基础用法</demo>
@@ -24,7 +24,7 @@ group:
   <demo src="./demo/semantic.vue">语义化样式</demo>
 </demo-group>
 
-## API
+## API {#api}
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -44,13 +44,13 @@ group:
 | classes | 自定义语义化 class，支持对象或函数 | `HeatmapClassNamesType` | - |
 | styles | 自定义语义化 style，支持对象或函数 | `HeatmapStylesType` | - |
 
-### 事件
+### 事件 {#events}
 
 | 事件 | 说明 | 类型 |
 | --- | --- | --- |
 | cell-click | 点击有数据项的日期单元格（包括无数据项），或在其上按 Enter/空格时触发 | `(item: HeatmapDataItem, event: MouseEvent \| KeyboardEvent) => void` |
 
-### 插槽
+### 插槽 {#slots}
 
 | 插槽 | 说明 |
 | --- | --- |
@@ -60,13 +60,13 @@ group:
 | indicator-trailing-text | 默认指示器后置文字 |
 | tooltip | 自定义 Tooltip 内容，参数为 `HeatmapTooltipSlotProps` |
 
-## 语义化 DOM
+## 语义化 DOM {#semantic-dom}
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
 日期单元格带有 `data-level` 和 `data-empty` 状态属性，可用于细化样式。
 
-## 主题 Token
+## 主题 Token {#design-tokens}
 
 Heatmap 支持通过 `theme.components.Heatmap` 自定义组件样式 Token。默认颜色、标签、圆角、尺寸和焦点样式均从全局 Token 派生。
 
