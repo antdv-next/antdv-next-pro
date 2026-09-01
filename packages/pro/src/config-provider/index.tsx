@@ -11,31 +11,18 @@ const ProConfigProvider = defineComponent<
   SlotsType<ProConfigProviderSlots>
 >(
   (props, { slots }) => {
+    const antProps = computed(() => {
+      const rest = { ...props }
+      delete rest.scrollbar
+      return rest
+    })
     const proConfig = computed(() => ({
       scrollbar: props.scrollbar,
     }))
 
     useProConfigProvider(proConfig)
 
-    return () => (
-      <AntConfigProvider
-        prefixCls={props.prefixCls}
-        iconPrefixCls={props.iconPrefixCls}
-        direction={props.direction}
-        theme={props.theme}
-        componentSize={props.componentSize as any}
-        componentDisabled={props.componentDisabled}
-        getPopupContainer={props.getPopupContainer}
-        getTargetContainer={props.getTargetContainer}
-        csp={props.csp}
-        renderEmpty={props.renderEmpty as any}
-        virtual={props.virtual}
-        popupMatchSelectWidth={props.popupMatchSelectWidth}
-        popupOverflow={props.popupOverflow}
-      >
-        {slots.default?.()}
-      </AntConfigProvider>
-    )
+    return () => <AntConfigProvider {...antProps.value} v-slots={slots as any} />
   },
   {
     name: 'ApConfigProvider',

@@ -1,5 +1,7 @@
-import type { ThemeConfig } from 'antdv-next/config-provider/context'
+import type { ConfigProviderProps } from 'antdv-next/config-provider'
+import type { ConfigProviderEmits, ConfigProviderSlots } from 'antdv-next/dist/config-provider/define'
 import type { CSSProperties } from 'vue'
+import type { ProLocale } from '../locale/types'
 
 export type ScrollbarVisibility = 'auto' | 'always' | 'hidden'
 export type ScrollbarMotion = 'fade' | 'slide'
@@ -16,27 +18,13 @@ export interface ScrollbarConfig {
   styles?: Record<string, CSSProperties>
 }
 
-export interface ProConfigProviderProps {
-  prefixCls?: string
-  iconPrefixCls?: string
-  direction?: 'ltr' | 'rtl'
-  theme?: ThemeConfig
-  componentSize?: 'small' | 'middle' | 'large'
-  componentDisabled?: boolean
-  getPopupContainer?: (triggerNode?: HTMLElement) => HTMLElement
-  getTargetContainer?: () => HTMLElement | Window
-  csp?: { nonce?: string }
-  renderEmpty?: (...args: any[]) => any
-  virtual?: boolean
-  popupMatchSelectWidth?: boolean
-  popupOverflow?: 'viewport' | 'scroll'
+export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'> {
+  locale?: ProLocale
   scrollbar?: ScrollbarConfig
 }
 
-export interface ProConfigProviderSlots {
+export interface ProConfigProviderSlots extends ConfigProviderSlots {
   default?: () => any
 }
 
-export interface ProConfigProviderEmits {
-  [key: string]: (...args: any[]) => void
-}
+export type ProConfigProviderEmits = ConfigProviderEmits

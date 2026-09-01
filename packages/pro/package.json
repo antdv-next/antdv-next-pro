@@ -24,6 +24,16 @@
       "import": "./dist/scrollbar/index.js",
       "default": "./dist/scrollbar/index.js"
     },
+    "./locale": {
+      "types": "./dist/locale/index.d.ts",
+      "import": "./dist/locale/index.js",
+      "default": "./dist/locale/index.js"
+    },
+    "./locale/*": {
+      "types": "./dist/locale/*.d.ts",
+      "import": "./dist/locale/*.js",
+      "default": "./dist/locale/*.js"
+    },
     "./dist/*": {
       "types": "./dist/*.d.ts",
       "import": "./dist/*.js",
