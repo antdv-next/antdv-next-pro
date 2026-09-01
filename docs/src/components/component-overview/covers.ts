@@ -10,4 +10,8 @@ export const covers: Covers = {
     cover: '/component-overview/scrollbar.svg',
     coverDark: '/component-overview/scrollbar-dark.svg',
   },
+  InputTag: {
+    cover: '/component-overview/scrollbar.svg',
+    coverDark: '/component-overview/scrollbar-dark.svg',
+  },
 }

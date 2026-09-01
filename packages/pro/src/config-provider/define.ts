@@ -17,11 +17,23 @@ export interface ScrollbarConfig {
   styles?: Record<string, CSSProperties>
 }
 
-export interface ProConfigContextProps {
-  scrollbar?: ScrollbarConfig
+export interface InputTagConfig {
+  maxCount?: number
+  tokenSeparators?: string[]
+  allowDuplicate?: boolean
+  allowClear?: boolean
+  class?: string
+  style?: CSSProperties
+  classes?: Record<string, string> | ((info: { props: any }) => Record<string, string>)
+  styles?: Record<string, CSSProperties> | ((info: { props: any }) => Record<string, CSSProperties>)
 }
 
-export const PRO_CONFIG_KEYS = ['scrollbar'] as const satisfies readonly (keyof ProConfigContextProps)[]
+export interface ProConfigContextProps {
+  scrollbar?: ScrollbarConfig
+  inputTag?: InputTagConfig
+}
+
+export const PRO_CONFIG_KEYS = ['scrollbar', 'inputTag'] as const satisfies readonly (keyof ProConfigContextProps)[]
 
 export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'>, ProConfigContextProps {
   locale?: ProLocale
