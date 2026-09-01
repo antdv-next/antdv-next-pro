@@ -9,7 +9,7 @@ group:
   order: 99
 ---
 
-## When To Use
+## When To Use {#when-to-use}
 
 `ProConfigProvider` wraps the `antdv-next` `ConfigProvider`. It forwards the complete Antdv ConfigProvider surface and adds a shared configuration entry for Pro components.
 
@@ -18,7 +18,7 @@ group:
 
 After global installation the component is registered as `ap-config-provider`. You can also import `ProConfigProvider` from `@antdv-next/pro` and register it locally.
 
-## Usage
+## Usage {#usage}
 
 ```vue
 <script setup lang="ts">
@@ -38,7 +38,7 @@ import enUS from '@antdv-next/pro/locale/en_US'
 
 Locale wrappers mirror the objects from `antdv-next/locale/*` and can be imported from `@antdv-next/pro/locale/*`. `ProConfigProvider` does not change the public behavior of the Antdv ConfigProvider.
 
-## Relationship With ConfigProvider
+## Relationship With ConfigProvider {#relationship-with-configprovider}
 
 `ProConfigProvider` composes the `antdv-next` `ConfigProvider`, so it accepts and forwards the complete Antdv ConfigProvider prop surface. When Pro components are used, place `ap-config-provider` at the application root so Antdv base components and Pro components share one configuration.
 
@@ -64,7 +64,7 @@ You can also nest them in the opposite order to override Antdv values for a loca
 
 Usually you do not need two providers at the application root. Nest them when a page or subtree needs a local override.
 
-## Example Code
+## Example Code {#examples}
 
 Most applications need one provider at the root. Locale, theme, and component defaults can be combined:
 
@@ -106,9 +106,9 @@ Customize empty content with a slot:
 </ap-config-provider>
 ```
 
-## API
+## API {#api}
 
-### ProConfigProvider Props
+### ProConfigProvider Props {#proconfigprovider-props}
 
 All properties are identical to the `antdv-next` `ConfigProvider`. See [Antdv ConfigProvider](https://www.antdv-next.com/components/config-provider) for the complete component configuration surface (`button`, `table`, `input`, `select`, and more).
 
@@ -128,7 +128,7 @@ All properties are identical to the `antdv-next` `ConfigProvider`. See [Antdv Co
 | popupMatchSelectWidth | Match popup width to Select width | `boolean` | `true` |
 | popupOverflow | Popup overflow strategy | `'viewport' \| 'scroll'` | `'viewport'` |
 
-### Slots
+### Slots {#slots}
 
 | Slot | Description |
 | --- | --- |
@@ -136,6 +136,6 @@ All properties are identical to the `antdv-next` `ConfigProvider`. See [Antdv Co
 | renderEmpty | Custom empty state for Table, List, and other components; receives the component name |
 | transformCellText | Transform Table cell text as a prop or named slot; receives `{ text, column, record, index }` |
 
-### Nesting Rules
+### Nesting Rules {#nesting-rules}
 
 Providers follow the Antdv ConfigProvider inheritance rules: values omitted by an inner provider are resolved from an outer provider or defaults, while explicitly set inner values apply only to that subtree.

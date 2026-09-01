@@ -10,7 +10,7 @@ group:
   order: 99
 ---
 
-## 何时使用
+## 何时使用 {#when-to-use}
 
 `ProConfigProvider` 是 `antdv-next` `ConfigProvider` 的 Pro 包装层。它会透传所有 Antdv ConfigProvider 配置，并额外提供 Pro 组件的全局配置入口。
 
@@ -19,7 +19,7 @@ group:
 
 全局安装后组件名为 `ap-config-provider`，也可以从 `@antdv-next/pro` 导入 `ProConfigProvider` 后局部注册。
 
-## 使用方式
+## 使用方式 {#usage}
 
 ```vue
 <script setup lang="ts">
@@ -39,7 +39,7 @@ import zhCN from '@antdv-next/pro/locale/zh_CN'
 
 Locale wrapper 与 `antdv-next/locale/*` 保持一致，可按需从 `@antdv-next/pro/locale/*` 引入。`ProConfigProvider` 不会改变 Antdv ConfigProvider 的公开行为。
 
-## 与 ConfigProvider 的关系
+## 与 ConfigProvider 的关系 {#relationship-with-configprovider}
 
 `ProConfigProvider` 内部组合了 `antdv-next` 的 `ConfigProvider`，因此它可以接收并透传 Antdv ConfigProvider 的全部属性。使用 Pro 组件时，通常在应用根部直接使用 `ap-config-provider`，Antdv 基础组件和 Pro 组件会共享同一份配置。
 
@@ -65,7 +65,7 @@ Locale wrapper 与 `antdv-next/locale/*` 保持一致，可按需从 `@antdv-nex
 
 一般不需要在应用根部重复包裹两个 Provider，只有在需要为局部页面覆盖配置时才进行嵌套。
 
-## 代码示例
+## 代码示例 {#examples}
 
 应用根部通常只需要一个 Provider。locale、主题和组件默认值可以组合配置：
 
@@ -107,9 +107,9 @@ import zhCN from '@antdv-next/pro/locale/zh_CN'
 </ap-config-provider>
 ```
 
-## API
+## API {#api}
 
-### ProConfigProvider Props
+### ProConfigProvider Props {#proconfigprovider-props}
 
 以下属性与 `antdv-next` `ConfigProvider` 完全一致。完整的组件级配置（如 `button`、`table`、`input`、`select` 等）请参考 [Antdv ConfigProvider](https://www.antdv-next.com/components/config-provider-cn)。
 
@@ -129,7 +129,7 @@ import zhCN from '@antdv-next/pro/locale/zh_CN'
 | popupMatchSelectWidth | 弹层宽度是否匹配 Select | `boolean` | `true` |
 | popupOverflow | 弹层溢出策略 | `'viewport' \| 'scroll'` | `'viewport'` |
 
-### Slots
+### Slots {#slots}
 
 | 插槽 | 说明 |
 | --- | --- |
@@ -137,6 +137,6 @@ import zhCN from '@antdv-next/pro/locale/zh_CN'
 | renderEmpty | 自定义 Table、List 等组件的空状态，可接收组件名称 |
 | transformCellText | 转换 Table 单元格文本，可作为属性或命名插槽使用，接收 `{ text, column, record, index }` |
 
-### 嵌套规则
+### 嵌套规则 {#nesting-rules}
 
 Provider 使用 Antdv ConfigProvider 的继承规则：外层未设置的值由更外层 Provider 或默认值补齐；内层显式设置的值只对当前子树生效。

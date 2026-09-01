@@ -9,14 +9,14 @@ group:
   order: 1
 ---
 
-## When To Use
+## When To Use {#when-to-use}
 
 - When the native scrollbar is visually too heavy for dense Pro layouts.
 - When you need a fixed-height navigation or content area with both vertical and horizontal scrolling.
 - When you want semantic `classes` and `styles` control for the scrollbar structure.
 - When you want auto-mode overlays to disappear after the pointer leaves the content area for a while.
 
-## Examples
+## Examples {#examples}
 
 <demo-group>
   <demo src="./demo/basic.vue">Basic</demo>
@@ -27,7 +27,7 @@ group:
   <demo src="./demo/semantic.vue">Semantic styling</demo>
 </demo-group>
 
-## API
+## API {#api}
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
@@ -39,13 +39,13 @@ group:
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | `ScrollbarClassNamesType` | - |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function. | `ScrollbarStylesType` | - |
 
-### Events
+### Events {#events}
 
 | Event | Description | Type |
 | --- | --- | --- |
 | scroll | Triggered when the native scroll container scrolls | `(event: Event) => void` |
 
-### Methods
+### Methods {#methods}
 
 The component `ref` exposes the following instance API:
 
@@ -54,11 +54,11 @@ The component `ref` exposes the following instance API:
 | scrollTo | Scroll to a target position with native `ScrollToOptions` or `(left, top)` arguments | `(options: ScrollToOptions) => void; (left: number, top?: number) => void` |
 | containerRef | Native scroll container reference | `ShallowRef<HTMLElement \| undefined>` |
 
-## Semantic DOM
+## Semantic DOM {#semantic-dom}
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-## Design Tokens
+## Design Tokens {#design-tokens}
 
 Customize Scrollbar styles through `theme.components.Scrollbar`:
 

@@ -24,6 +24,8 @@ declare module 'virtual:demos' {
     loadSource: (signal?: AbortSignal) => Promise<DemoSourceData>
   }
 
+  export function loadDemo(id: string): Promise<DemoModule | null>
+
   const demos: Record<string, DemoModule>
   export default demos
 }
