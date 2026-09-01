@@ -169,6 +169,36 @@ describe('ProConfigProvider', () => {
     })
   })
 
+  it('updates forwarded props and Pro config when props change', async () => {
+    const wrapper = mount(ProConfigProvider, {
+      props: {
+        direction: 'ltr',
+        scrollbar: { class: 'initial-scrollbar' },
+      },
+      slots: {
+        default: () => h(ContextProbe),
+      },
+    })
+    const antProvider = wrapper.findComponent(AntConfigProvider)
+
+    expect(antProvider.props()).toMatchObject({ direction: 'ltr' })
+    expect(readContext(wrapper)).toMatchObject({
+      direction: 'ltr',
+      scrollbarClass: 'initial-scrollbar',
+    })
+
+    await wrapper.setProps({
+      direction: 'rtl',
+      scrollbar: { class: 'updated-scrollbar' },
+    })
+
+    expect(antProvider.props()).toMatchObject({ direction: 'rtl' })
+    expect(readContext(wrapper)).toMatchObject({
+      direction: 'rtl',
+      scrollbarClass: 'updated-scrollbar',
+    })
+  })
+
   it('forwards the default and ConfigProvider named slots', () => {
     const wrapper = mount(ProConfigProvider, {
       slots: {

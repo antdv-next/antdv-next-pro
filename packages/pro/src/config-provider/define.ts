@@ -1,5 +1,4 @@
 import type { ConfigProviderProps } from 'antdv-next/config-provider'
-import type { ConfigProviderEmits, ConfigProviderSlots } from 'antdv-next/dist/config-provider/define'
 import type { CSSProperties } from 'vue'
 import type { ProLocale } from '../locale/types'
 
@@ -18,13 +17,21 @@ export interface ScrollbarConfig {
   styles?: Record<string, CSSProperties>
 }
 
-export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'> {
-  locale?: ProLocale
+export interface ProConfigContextProps {
   scrollbar?: ScrollbarConfig
 }
 
-export interface ProConfigProviderSlots extends ConfigProviderSlots {
-  default?: () => any
+export const PRO_CONFIG_KEYS = ['scrollbar'] as const satisfies readonly (keyof ProConfigContextProps)[]
+
+export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'>, ProConfigContextProps {
+  locale?: ProLocale
 }
 
-export type ProConfigProviderEmits = ConfigProviderEmits
+export interface ProConfigProviderSlots {
+  renderEmpty?: NonNullable<ConfigProviderProps['renderEmpty']>
+  transformCellText?: NonNullable<ConfigProviderProps['transformCellText']>
+  default?: () => any
+  [key: string]: any
+}
+
+export type ProConfigProviderEmits = Record<string, any>

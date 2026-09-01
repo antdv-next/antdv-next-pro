@@ -1,8 +1,9 @@
 import type { App, SlotsType } from 'vue'
-import type { ProConfigProviderEmits, ProConfigProviderProps, ProConfigProviderSlots } from './define'
+import type { ProConfigContextProps, ProConfigProviderEmits, ProConfigProviderProps, ProConfigProviderSlots } from './define'
 import AntConfigProvider from 'antdv-next/config-provider'
 import { computed, defineComponent } from 'vue'
 import { useProConfigProvider } from './context'
+import { PRO_CONFIG_KEYS } from './define'
 
 const ProConfigProvider = defineComponent<
   ProConfigProviderProps,
@@ -11,18 +12,18 @@ const ProConfigProvider = defineComponent<
   SlotsType<ProConfigProviderSlots>
 >(
   (props, { slots }) => {
-    const antProps = computed(() => {
-      const rest = { ...props }
-      delete rest.scrollbar
-      return rest
-    })
-    const proConfig = computed(() => ({
-      scrollbar: props.scrollbar,
-    }))
+    const proConfig = computed(() => Object.fromEntries(
+      PRO_CONFIG_KEYS.map(key => [key, props[key]]),
+    ) as ProConfigContextProps)
 
     useProConfigProvider(proConfig)
 
-    return () => <AntConfigProvider {...antProps.value} v-slots={slots as any} />
+    return () => {
+      const antProps = Object.fromEntries(
+        Object.entries(props).filter(([key]) => !PRO_CONFIG_KEYS.includes(key as typeof PRO_CONFIG_KEYS[number])),
+      )
+      return <AntConfigProvider {...antProps} v-slots={slots as any} />
+    }
   },
   {
     name: 'ApConfigProvider',
