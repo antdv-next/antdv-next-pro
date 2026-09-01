@@ -10,11 +10,11 @@ group:
   order: 2
 ---
 
-## 何时使用
+## 何时使用 {#when-to-use}
 
 适合录入邮箱、关键词、分类等字符串标签。
 
-## 代码演示
+## 代码演示 {#examples}
 
 <demo-group>
   <demo src="./demo/basic.vue">基础用法</demo>
@@ -23,7 +23,7 @@ group:
   <demo src="./demo/readonly.vue">只读与语义化</demo>
 </demo-group>
 
-## API
+## API {#api}
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -36,10 +36,10 @@ group:
 | disabled / readonly | 禁用或只读 | `boolean` | `false` |
 | classes / styles | 语义化结构样式 | `InputTagClassNamesType` / `InputTagStylesType` | - |
 
-### 事件
+### 事件 {#events}
 
 支持 `update:value`、`change`、`update:inputValue`、`inputChange`、`add`、`remove`、`clear`、`pressEnter`、`focus`、`blur`。
 
-### 主题 Token
+### 主题 Token {#design-tokens}
 
 通过 `theme.components.InputTag` 配置 `tagGap` 和 `inputMinWidth`。

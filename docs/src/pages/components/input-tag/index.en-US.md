@@ -9,11 +9,11 @@ group:
   order: 2
 ---
 
-## When To Use
+## When To Use {#when-to-use}
 
 Use it to enter string tags such as emails, keywords, or categories.
 
-## Examples
+## Examples {#examples}
 
 <demo-group>
   <demo src="./demo/basic.vue">Basic</demo>
@@ -22,7 +22,7 @@ Use it to enter string tags such as emails, keywords, or categories.
   <demo src="./demo/readonly.vue">Readonly and semantic</demo>
 </demo-group>
 
-## API
+## API {#api}
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
@@ -35,10 +35,10 @@ Use it to enter string tags such as emails, keywords, or categories.
 | disabled / readonly | Disable or make readonly | `boolean` | `false` |
 | classes / styles | Semantic structure styling | `InputTagClassNamesType` / `InputTagStylesType` | - |
 
-### Events
+### Events {#events}
 
 Supports `update:value`, `change`, `update:inputValue`, `inputChange`, `add`, `remove`, `clear`, `pressEnter`, `focus`, and `blur`.
 
-### Design Tokens
+### Design Tokens {#design-tokens}
 
 Customize `tagGap` and `inputMinWidth` through `theme.components.InputTag`.
