@@ -10,14 +10,14 @@ group:
   order: 1
 ---
 
-## 何时使用
+## 何时使用 {#when-to-use}
 
 - 当原生滚动条在高密度 Pro 布局里显得过重时。
 - 当你需要一个定高的导航区或内容区，并同时支持横向与纵向滚动时。
 - 当你希望通过语义化 `classes` 和 `styles` 精细控制滚动条结构样式时。
 - 当你希望 `auto` 模式下在用户移出内容区域一段时间后自动隐藏滚动条时。
 
-## 代码演示
+## 代码演示 {#examples}
 
 <demo-group>
   <demo src="./demo/basic.vue">基础用法</demo>
@@ -28,7 +28,7 @@ group:
   <demo src="./demo/semantic.vue">语义化样式</demo>
 </demo-group>
 
-## API
+## API {#api}
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -40,13 +40,13 @@ group:
 | classes | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | `ScrollbarClassNamesType` | - |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | `ScrollbarStylesType` | - |
 
-### 事件
+### 事件 {#events}
 
 | 事件 | 说明 | 类型 |
 | --- | --- | --- |
 | scroll | 原生滚动容器滚动时触发 | `(event: Event) => void` |
 
-### 方法
+### 方法 {#methods}
 
 组件 `ref` 会暴露以下实例能力：
 
@@ -55,11 +55,11 @@ group:
 | scrollTo | 滚动到目标位置，支持原生 `ScrollToOptions` 或 `(left, top)` 调用 | `(options: ScrollToOptions) => void; (left: number, top?: number) => void` |
 | containerRef | 原生滚动容器引用 | `ShallowRef<HTMLElement \| undefined>` |
 
-## 语义化 DOM
+## 语义化 DOM {#semantic-dom}
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-## 主题 Token
+## 主题 Token {#design-tokens}
 
 Scrollbar 支持通过 `theme.components.Scrollbar` 自定义组件样式 Token：
 
