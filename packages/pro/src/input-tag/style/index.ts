@@ -26,7 +26,7 @@ const genInputTagStyle: GenerateStyle<InputTagToken, CSSObject> = (token) => {
       },
 
       [`& ${antCls}-input`]: {
-        flex: `1 1 ${inputMinWidth}px`,
+        flex: '1 1 0',
         minWidth: inputMinWidth,
         width: 'auto',
         paddingInline: 0,
@@ -42,6 +42,25 @@ const genInputTagStyle: GenerateStyle<InputTagToken, CSSObject> = (token) => {
 
       '&-tag': {
         marginInlineEnd: 0,
+      },
+
+      '&-tag-dragging': {
+        opacity: 0.5,
+      },
+
+      '&-tag-drag-over': {
+        outline: `1px dashed ${token.colorPrimary}`,
+      },
+
+      '&-collapse': {
+        marginInlineEnd: 0,
+        cursor: 'pointer',
+      },
+
+      '&-collapse-content': {
+        display: 'inline-flex',
+        flexWrap: 'wrap',
+        gap: tagGap,
       },
 
       '&-suffix': {

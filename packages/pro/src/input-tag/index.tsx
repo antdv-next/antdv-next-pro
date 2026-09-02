@@ -4,7 +4,7 @@ import type { App, ComputedRef, CSSProperties, ShallowRef, SlotsType } from 'vue
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semantic'
 import type { InputTagConfig } from '../config-provider'
 import { clsx, useMergedState } from '@v-c/util'
-import { Input as AInput, Tag as ATag } from 'antdv-next'
+import { Input as AInput, Tag as ATag, Tooltip as ATooltip } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
 import { useDisabledContext } from 'antdv-next/config-provider/DisabledContext'
 import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
@@ -29,6 +29,7 @@ export type InputTagInputProps = Omit<
   | 'onChange'
   | 'onPressEnter'
   | 'onKeydown'
+  | 'onKeyup'
   | 'onCompositionstart'
   | 'onCompositionend'
   | 'onUpdate:value'
@@ -76,13 +77,19 @@ export interface InputTagProps {
   tokenSeparators?: string[]
   allowDuplicate?: boolean
   allowClear?: boolean
+  trigger?: 'enter' | 'space'
+  saveOnBlur?: boolean
+  draggable?: boolean
+  collapseTags?: boolean
+  collapseTagsTooltip?: boolean
+  maxCollapseTags?: number
   inputProps?: InputTagInputProps
   tagProps?: InputTagTagProps
   classes?: InputTagClassNamesType
   styles?: InputTagStylesType
 }
 
-export type InputTagChangeTrigger = 'enter' | 'token-separator' | 'paste' | 'tag-remove' | 'backspace' | 'clear'
+export type InputTagChangeTrigger = 'enter' | 'space' | 'blur' | 'drag' | 'token-separator' | 'paste' | 'tag-remove' | 'backspace' | 'clear'
 
 export interface InputTagChangeInfo {
   trigger: InputTagChangeTrigger
@@ -98,6 +105,7 @@ export interface InputTagEmits {
   remove: (value: string, info: { index: number, trigger: 'tag-remove' | 'backspace', event?: Event }) => void
   clear: (event: MouseEvent) => void
   pressEnter: (inputValue: string, event: KeyboardEvent) => void
+  dragTag: (oldIndex: number, newIndex: number, value: string, event?: DragEvent) => void
   focus: (event: FocusEvent) => void
   blur: (event: FocusEvent) => void
   [key: string]: (...args: any[]) => void
@@ -133,18 +141,15 @@ function createSeparatorRegExp(separators: string[]) {
   return values.length ? new RegExp(values.map(escapeRegExp).join('|'), 'g') : undefined
 }
 
-function splitInput(value: string, separators: string[], preserveTrailing: boolean) {
+function splitInput(value: string, separators: string[]) {
   const regexp = createSeparatorRegExp(separators)
   if (!regexp) {
     return { values: value.trim() ? [value.trim()] : [], rest: '' }
   }
 
-  const parts = value.split(regexp)
-  const endsWithSeparator = separators.some(separator => separator && value.endsWith(separator))
-  const rest = preserveTrailing && !endsWithSeparator ? (parts.pop() ?? '') : ''
   return {
-    values: parts.map(part => part.trim()).filter(Boolean),
-    rest: rest.trimStart(),
+    values: value.split(regexp).map(part => part.trim()).filter(Boolean),
+    rest: '',
   }
 }
 
@@ -162,8 +167,8 @@ const InputTag = defineComponent<
     const [hashId, cssVarCls] = useStyle(prefixCls, rootCls)
     const inputRef = shallowRef<InputRef>()
     const composing = ref(false)
-    const pastePending = ref(false)
-    const pendingInputUpdate = ref<string | null>(null)
+    const draggingIndex = ref<number | null>(null)
+    const dragOverIndex = ref<number | null>(null)
 
     const mergedDisabled = computed(() => props.disabled ?? disabledContext.value ?? false)
     const mergedReadonly = computed(() => props.readonly ?? false)
@@ -171,6 +176,8 @@ const InputTag = defineComponent<
     const mergedSeparators = computed(() => props.tokenSeparators ?? proConfig.value.tokenSeparators ?? [])
     const mergedAllowDuplicate = computed(() => props.allowDuplicate ?? proConfig.value.allowDuplicate ?? false)
     const mergedAllowClear = computed(() => props.allowClear ?? proConfig.value.allowClear ?? false)
+    const mergedTrigger = computed(() => props.trigger ?? 'enter')
+    const mergedSaveOnBlur = computed(() => props.saveOnBlur ?? false)
     const mergedInputProps = computed(() => props.inputProps ?? {})
 
     const valueRef = computed(() => props.value) as ComputedRef<InputTagValue>
@@ -258,12 +265,12 @@ const InputTag = defineComponent<
       return accepted
     }
 
-    function commitInput(trigger: InputTagChangeTrigger, event?: Event, preserveTrailing = false, sourceValue?: string) {
+    function commitInput(trigger: InputTagChangeTrigger, event?: Event) {
       if (mergedDisabled.value || mergedReadonly.value)
         return
 
-      const input = sourceValue ?? mergedInputValue.value
-      const { values, rest } = splitInput(input, mergedSeparators.value, preserveTrailing)
+      const input = mergedInputValue.value
+      const { values, rest } = splitInput(input, mergedSeparators.value)
       const accepted = acceptValues(values)
       if (accepted.length) {
         const next = [...mergedValue.value, ...accepted]
@@ -292,34 +299,12 @@ const InputTag = defineComponent<
       const value = target?.value ?? ''
       if (mergedDisabled.value || mergedReadonly.value)
         return
-      if (composing.value) {
-        updateInputValue(value, event, true)
-        return
-      }
-      const hasSeparator = Boolean(createSeparatorRegExp(mergedSeparators.value)?.test(value))
-      if (hasSeparator) {
-        const trigger = pastePending.value ? 'paste' : 'token-separator'
-        pastePending.value = false
-        pendingInputUpdate.value = value
-        commitInput(trigger, event, true, value)
-      }
-      else {
-        pastePending.value = false
-        updateInputValue(value, event, true)
-      }
+      updateInputValue(value, event, true)
     }
 
     function handleInputValueUpdate(value: string) {
-      if (pendingInputUpdate.value === value) {
-        pendingInputUpdate.value = null
-        return
-      }
       if (!composing.value)
         setMergedInputValue(value)
-    }
-
-    function handlePaste() {
-      pastePending.value = true
     }
 
     function handleCompositionStart(event: CompositionEvent) {
@@ -330,9 +315,6 @@ const InputTag = defineComponent<
     function handleCompositionEnd(event: CompositionEvent) {
       composing.value = false
       emit('compositionend' as any, event)
-      const currentValue = (event.target as HTMLInputElement | null)?.value
-      if (currentValue && createSeparatorRegExp(mergedSeparators.value)?.test(currentValue))
-        commitInput('token-separator', event, true, currentValue)
     }
 
     function handleKeydown(event: KeyboardEvent) {
@@ -342,13 +324,83 @@ const InputTag = defineComponent<
       }
     }
 
+    function handleKeyup(event: KeyboardEvent) {
+      if (event.isComposing || composing.value || mergedDisabled.value || mergedReadonly.value)
+        return
+      if (mergedTrigger.value !== 'space' || (event.key !== ' ' && event.code !== 'Space'))
+        return
+      event.preventDefault()
+      event.stopPropagation()
+      const input = mergedInputValue.value
+      commitInput('space', event)
+      if (!input.trim())
+        updateInputValue('', event, true)
+    }
+
     function handlePressEnter(event: KeyboardEvent) {
       if (event.isComposing || composing.value || mergedDisabled.value || mergedReadonly.value)
         return
-      event.preventDefault()
       const input = mergedInputValue.value
-      commitInput('enter', event, false)
+      if (mergedTrigger.value === 'enter') {
+        event.preventDefault()
+        commitInput('enter', event)
+      }
       emit('pressEnter', input, event)
+    }
+
+    function handleBlur(event: FocusEvent) {
+      if (mergedSaveOnBlur.value)
+        commitInput('blur', event)
+      emit('blur', event)
+    }
+
+    function handleDragStart(index: number, event: DragEvent) {
+      if (!props.draggable || mergedDisabled.value || mergedReadonly.value)
+        return
+      draggingIndex.value = index
+      dragOverIndex.value = index
+      if (event.dataTransfer) {
+        event.dataTransfer.effectAllowed = 'move'
+        event.dataTransfer.setData('text/plain', String(index))
+      }
+    }
+
+    function handleDragOver(index: number, event: DragEvent) {
+      if (draggingIndex.value === null || index === draggingIndex.value)
+        return
+      event.preventDefault()
+      if (event.dataTransfer)
+        event.dataTransfer.dropEffect = 'move'
+      dragOverIndex.value = index
+    }
+
+    function handleDrop(index: number, event: DragEvent) {
+      event.preventDefault()
+      const oldIndex = draggingIndex.value
+      if (oldIndex === null || oldIndex === index) {
+        handleDragEnd()
+        return
+      }
+      const next = [...mergedValue.value]
+      const [value] = next.splice(oldIndex, 1)
+      if (value === undefined) {
+        handleDragEnd()
+        return
+      }
+      const newIndex = oldIndex < index ? index - 1 : index
+      if (newIndex === oldIndex) {
+        handleDragEnd()
+        return
+      }
+      next.splice(newIndex, 0, value)
+      updateTagValue(next, 'drag', event)
+      emit('dragTag', oldIndex, newIndex, value, event)
+      handleDragEnd()
+    }
+
+    function handleDragEnd() {
+      draggingIndex.value = null
+      dragOverIndex.value = null
     }
 
     function handleClear(event: MouseEvent) {
@@ -365,13 +417,28 @@ const InputTag = defineComponent<
     function renderTag(value: string, index: number) {
       const closable = !mergedDisabled.value && !mergedReadonly.value
       const onClose = (event: MouseEvent) => removeTag(index, 'tag-remove', event)
+      const draggable = Boolean(props.draggable && closable)
+      const dragClass = {
+        [`${prefixCls.value}-tag-dragging`]: draggingIndex.value === index,
+        [`${prefixCls.value}-tag-drag-over`]: dragOverIndex.value === index && draggingIndex.value !== index,
+      }
+      const dragAttrs = draggable
+        ? {
+            draggable: true,
+            onDragstart: (event: DragEvent) => handleDragStart(index, event),
+            onDragover: (event: DragEvent) => handleDragOver(index, event),
+            onDrop: (event: DragEvent) => handleDrop(index, event),
+            onDragend: handleDragEnd,
+          }
+        : {}
       const slotProps = { value, index, closable, onClose }
       const custom = slots.tag?.(slotProps)
       if (custom) {
         return h('span', {
           key: `${value}-${index}`,
-          class: mergedClassNames.value.tag,
+          class: clsx(mergedClassNames.value.tag, dragClass),
           style: mergedStyles.value.tag,
+          ...dragAttrs,
         }, custom)
       }
       return h(ATag, {
@@ -379,8 +446,9 @@ const InputTag = defineComponent<
         key: `${value}-${index}`,
         closable,
         disabled: mergedDisabled.value,
-        class: clsx((props.tagProps as any)?.class, mergedClassNames.value.tag),
+        class: clsx((props.tagProps as any)?.class, mergedClassNames.value.tag, dragClass),
         style: [((props.tagProps as any)?.style), mergedStyles.value.tag],
+        ...dragAttrs,
         onClose,
       } as any, { default: () => value })
     }
@@ -394,12 +462,31 @@ const InputTag = defineComponent<
     expose(api)
 
     return () => {
+      const visibleValues = props.collapseTags
+        ? mergedValue.value.slice(0, Math.max(0, props.maxCollapseTags ?? 1))
+        : mergedValue.value
+      const collapsedValues = props.collapseTags
+        ? mergedValue.value.slice(Math.max(0, props.maxCollapseTags ?? 1))
+        : []
+      const collapsedTag = collapsedValues.length
+        ? h(ATag, {
+            closable: false,
+            disabled: mergedDisabled.value,
+            class: `${prefixCls.value}-collapse`,
+          } as any, { default: () => `+ ${collapsedValues.length}` })
+        : null
+      const collapseContent = collapsedValues.length
+        ? h('div', { class: `${prefixCls.value}-collapse-content` }, collapsedValues.map((value, index) => renderTag(value, index + visibleValues.length)))
+        : null
       const content = h('span', {
         class: clsx(`${prefixCls.value}-content`, mergedClassNames.value.content),
         style: mergedStyles.value.content,
       }, [
         slots.prefix?.(),
-        ...mergedValue.value.map(renderTag),
+        ...visibleValues.map(renderTag),
+        collapseContent && props.collapseTagsTooltip
+          ? h(ATooltip, { title: collapseContent, placement: 'top' }, { default: () => collapsedTag })
+          : collapsedTag,
       ])
       const canClear = mergedAllowClear.value && !mergedDisabled.value && !mergedReadonly.value
         && (mergedValue.value.length > 0 || Boolean(mergedInputValue.value))
@@ -413,10 +500,8 @@ const InputTag = defineComponent<
             onClick: handleClear,
           }, slots.clearIcon?.() ?? h('span', { 'aria-hidden': 'true' }, '×'))
         : null
-      const suffix = h('span', {
-        class: clsx(`${prefixCls.value}-suffix`, mergedClassNames.value.suffix),
-        style: mergedStyles.value.suffix,
-      }, [clearButton, slots.suffix?.()])
+      const suffixContent = slots.suffix?.()
+      const suffix = clearButton || suffixContent ? [clearButton, suffixContent] : undefined
 
       const inputAttrs = {
         ...omitClassAndStyle(attrs as Record<string, any>),
@@ -427,7 +512,7 @@ const InputTag = defineComponent<
         suffix,
         class: mergedClassName.value,
         style: mergedStyle.value,
-        placeholder: props.placeholder,
+        placeholder: mergedValue.value.length || mergedInputValue.value ? undefined : props.placeholder,
         autoFocus: props.autoFocus,
         disabled: mergedDisabled.value,
         readonly: mergedReadonly.value,
@@ -440,7 +525,7 @@ const InputTag = defineComponent<
           ...((typeof mergedInputProps.value.classes === 'object' && mergedInputProps.value.classes) || {}),
           root: clsx((mergedInputProps.value.classes as any)?.root, mergedClassNames.value.root),
           input: clsx((mergedInputProps.value.classes as any)?.input, mergedClassNames.value.input),
-          suffix: clsx((mergedInputProps.value.classes as any)?.suffix, mergedClassNames.value.suffix),
+          suffix: clsx(`${prefixCls.value}-suffix`, (mergedInputProps.value.classes as any)?.suffix, mergedClassNames.value.suffix),
         },
         styles: {
           ...((typeof mergedInputProps.value.styles === 'object' && mergedInputProps.value.styles) || {}),
@@ -450,13 +535,13 @@ const InputTag = defineComponent<
         },
         'onUpdate:value': handleInputValueUpdate,
         onInput: handleInput,
-        onPaste: handlePaste,
         onKeydown: handleKeydown,
         onPressEnter: handlePressEnter,
         onCompositionstart: handleCompositionStart,
         onCompositionend: handleCompositionEnd,
         onFocus: (event: FocusEvent) => emit('focus', event),
-        onBlur: (event: FocusEvent) => emit('blur', event),
+        onKeyup: handleKeyup,
+        onBlur: handleBlur,
       }
 
       return h(AInput, inputAttrs as any)
