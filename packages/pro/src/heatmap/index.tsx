@@ -125,20 +125,12 @@ const Heatmap = defineComponent<
       day: 'numeric',
       timeZone: 'UTC',
     }))
-    const localeText = computed(() => {
-      const locale = antConfig.value.locale as ProLocale | undefined
-      const heatmapLocale = locale?.Heatmap
-      const defaultText = localeCode.value?.toLowerCase().startsWith('zh')
-        ? { heatmap: '热力图', less: '少', more: '多', noData: '无数据', level: '等级' }
-        : { heatmap: 'Heatmap', less: 'Less', more: 'More', noData: 'No data', level: 'Level' }
-
-      return {
-        heatmap: heatmapLocale?.label ?? defaultText.heatmap,
-        less: heatmapLocale?.less ?? defaultText.less,
-        more: heatmapLocale?.more ?? defaultText.more,
-        noData: heatmapLocale?.noData ?? locale?.Table?.emptyText ?? locale?.Empty?.description ?? defaultText.noData,
-        level: heatmapLocale?.level ?? defaultText.level,
-      }
+    const localeText = computed(() => (antConfig.value.locale as ProLocale | undefined)?.Heatmap ?? {
+      label: 'Heatmap',
+      less: 'Less',
+      more: 'More',
+      noData: 'No data',
+      level: 'Level',
     })
 
     const weekLabels = computed(() => Array.from({ length: 7 }, (_, index) => {
@@ -305,7 +297,7 @@ const Heatmap = defineComponent<
             style={mergedStyles.value.content}
           >
             <div class={`${prefixCls.value}-content-inner`}>
-              <table class={`${prefixCls.value}-table`} style={tableStyle.value} aria-label={localeText.value.heatmap}>
+              <table class={`${prefixCls.value}-table`} style={tableStyle.value} aria-label={localeText.value.label}>
                 {mergedShowMonthLabels.value && (
                   <thead>
                     <tr>
