@@ -26,39 +26,43 @@ group:
 
 ## API {#api}
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| data | 日期数据。`null`、省略值或缺少条目为无数据；`0` 为有效数据。同一 UTC 日期存在多个有效条目时，以最后一个为准。 | `HeatmapData` | - |
-| range | 展示范围。`recent` 为以当天 UTC 为终点的 365 天；数字表示一个 UTC 日历年。对象范围会按时间先后自动归一化。 | `'recent' \| number \| HeatmapRange` | `'recent'` |
-| firstDayOfWeek | 一周开始日，`0` 为周日 | `0 \| 1 \| ... \| 6` | `0` |
-| showMonthLabels | 是否显示月份标签 | `boolean` | `true` |
-| showWeekLabels | 是否显示星期标签 | `boolean` | `true` |
-| showColorIndicator | 是否显示颜色等级指示器 | `boolean` | `true` |
-| fillCalendarLeading | 是否填充范围起点前的同周日期 | `boolean` | `false` |
-| size | 单元格尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` |
-| xGap / yGap | 水平/垂直单元格间距 | `number \| string` | `3` |
-| colorTheme | 内置颜色主题 | `'green' \| 'blue' \| 'orange' \| 'purple' \| 'red'` | - |
-| activeColors | 自定义高于最低档位的有效数值颜色等级 | `string[]` | - |
-| minimumColor | 自定义最低有效数值档位颜色 | `string` | - |
-| tooltip | 是否显示 Tooltip，或传入 Tooltip 配置；需要按单元格生成内容时，请使用 tooltip 插槽。 | `boolean \| TooltipProps` | `false` |
-| classes | 自定义语义化 class，支持对象或函数 | `HeatmapClassNamesType` | - |
-| styles | 自定义语义化 style，支持对象或函数 | `HeatmapStylesType` | - |
+### 属性 {#properties}
+
+| 属性 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| prefixCls | 组件样式前缀 | `string` | - | - | × |
+| rootClass | 组件根元素 class | `string` | - | - | × |
+| data | 日期数据。`null`、省略值或缺少条目为无数据；`0` 为有效数据。同一 UTC 日期存在多个有效条目时，以最后一个为准。 | `HeatmapData` | - | - | × |
+| range | 展示范围。`recent` 为以当天 UTC 为终点的 365 天；数字表示一个 UTC 日历年。对象范围会按时间先后自动归一化。 | `'recent' \| number \| HeatmapRange` | `'recent'` | - | × |
+| firstDayOfWeek | 一周开始日，`0` 为周日 | `0 \| 1 \| ... \| 6` | `0` | - | ✓ |
+| showMonthLabels | 是否显示月份标签 | `boolean` | `true` | - | ✓ |
+| showWeekLabels | 是否显示星期标签 | `boolean` | `true` | - | ✓ |
+| showColorIndicator | 是否显示颜色等级指示器 | `boolean` | `true` | - | ✓ |
+| fillCalendarLeading | 是否填充范围起点前的同周日期 | `boolean` | `false` | - | ✓ |
+| size | 单元格尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` | - | ✓ |
+| xGap / yGap | 水平/垂直单元格间距 | `number \| string` | `3` | - | ✓ |
+| colorTheme | 内置颜色主题 | `'green' \| 'blue' \| 'orange' \| 'purple' \| 'red'` | - | - | ✓ |
+| activeColors | 自定义高于最低档位的有效数值颜色等级 | `string[]` | - | - | ✓ |
+| minimumColor | 自定义最低有效数值档位颜色 | `string` | - | - | ✓ |
+| tooltip | 是否显示 Tooltip，或传入 Tooltip 配置；需要按单元格生成内容时，请使用 tooltip 插槽。 | `boolean \| TooltipProps` | `false` | - | ✓ |
+| classes | 自定义语义化 class，支持对象或函数 | `HeatmapClassNamesType` | - | - | ✓ |
+| styles | 自定义语义化 style，支持对象或函数 | `HeatmapStylesType` | - | - | ✓ |
 
 ### 事件 {#events}
 
-| 事件 | 说明 | 类型 |
-| --- | --- | --- |
-| cell-click | 点击有数据项的日期单元格（包括无数据项），或在其上按 Enter/空格时触发 | `(item: HeatmapDataItem, event: MouseEvent \| KeyboardEvent) => void` |
+| 事件 | 说明 | 类型 | 版本 |
+| --- | --- | --- | --- |
+| cell-click | 点击有数据项的日期单元格（包括无数据项），或在其上按 Enter/空格时触发 | `(item: HeatmapDataItem, event: MouseEvent \| KeyboardEvent) => void` | - |
 
 ### 插槽 {#slots}
 
-| 插槽 | 说明 |
-| --- | --- |
-| footer | 底部左侧扩展内容 |
-| indicator | 完整替换颜色指示器 |
-| indicator-leading-text | 默认指示器前置文字 |
-| indicator-trailing-text | 默认指示器后置文字 |
-| tooltip | 自定义 Tooltip 内容，参数为 `HeatmapTooltipSlotProps` |
+| 插槽 | 说明 | 类型 | 版本 |
+| --- | --- | --- | --- |
+| footer | 底部左侧扩展内容 | `() => any` | - |
+| indicator | 完整替换颜色指示器 | `() => any` | - |
+| indicator-leading-text | 默认指示器前置文字 | `() => any` | - |
+| indicator-trailing-text | 默认指示器后置文字 | `() => any` | - |
+| tooltip | 自定义 Tooltip 内容，参数为 `HeatmapTooltipSlotProps` | `(props: HeatmapTooltipSlotProps) => any` | - |
 
 ## 语义化 DOM {#semantic-dom}
 

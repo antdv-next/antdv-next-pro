@@ -29,7 +29,7 @@ group:
 
 ## API {#api}
 
-### Properties
+### Properties {#properties}
 
 | Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
 | --- | --- | --- | --- | --- | --- |

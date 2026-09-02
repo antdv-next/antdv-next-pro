@@ -30,7 +30,7 @@ group:
 
 ## API {#api}
 
-### 属性
+### 属性 {#properties}
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
