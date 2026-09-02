@@ -3,6 +3,7 @@ import { Tooltip } from 'antdv-next'
 import { describe, expect, it } from 'vitest'
 import { h, nextTick } from 'vue'
 import { ProConfigProvider } from '../../index'
+import zhCN from '../../locale/zh_CN'
 import Heatmap from '../index'
 import { createCalendar, getColorLevel, normalizeData, resolveRange } from '../utils'
 
@@ -138,6 +139,46 @@ describe('Heatmap', () => {
     expect(cells[3]!.element.tagName).toBe('DIV')
     expect(cells[3]!.attributes('aria-label')).toBeUndefined()
     expect(cells[3]!.element.parentElement?.getAttribute('aria-label')).toContain('No data')
+  })
+
+  it('uses Heatmap locale text and DatePicker date labels from ProConfigProvider', () => {
+    const locale = {
+      ...zhCN,
+      DatePicker: {
+        ...zhCN.DatePicker!,
+        lang: {
+          ...zhCN.DatePicker!.lang,
+          shortWeekDays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+          shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        },
+      },
+      Heatmap: {
+        label: '贡献热力图',
+        less: '低',
+        more: '高',
+        noData: '暂无贡献',
+        level: '贡献等级',
+      },
+    }
+    const wrapper = mount(ProConfigProvider, {
+      props: {
+        locale,
+      },
+      slots: {
+        default: () => h(Heatmap, {
+          range: { start: jan1, end: jan3 },
+          data: [{ timestamp: jan1, value: null }],
+        }),
+      },
+    })
+
+    expect(wrapper.find('table').attributes('aria-label')).toBe('贡献热力图')
+    expect(wrapper.find('.ant-heatmap-indicator').text()).toContain('低')
+    expect(wrapper.find('.ant-heatmap-indicator').text()).toContain('高')
+    expect(wrapper.find('.ant-heatmap-indicator-color').attributes('aria-label')).toBe('贡献等级 1')
+    expect(wrapper.find('th.ant-heatmap-week-label[scope="row"]').text()).toBe('周一')
+    expect(wrapper.find('.ant-heatmap-month-label').attributes('aria-label')).toBe('一月')
+    expect(wrapper.findAll('.ant-heatmap-cell-container')[2]!.attributes('aria-label')).toContain('暂无贡献')
   })
 
   it('uses Heatmap defaults from ProConfigProvider and merges semantic configuration', async () => {

@@ -1,4 +1,5 @@
 import type { App, CSSProperties, SlotsType } from 'vue'
+import type { ProLocale } from '../locale/types'
 import type {
   HeatmapClassNamesType,
   HeatmapColorTheme,
@@ -109,6 +110,7 @@ const Heatmap = defineComponent<
     ))
 
     const localeCode = computed(() => antConfig.value.locale?.locale)
+    const pickerLang = computed(() => antConfig.value.locale?.DatePicker?.lang ?? antConfig.value.locale?.Calendar?.lang)
     const weekdayFormatter = computed(() => new Intl.DateTimeFormat(localeCode.value, {
       weekday: 'short',
       timeZone: 'UTC',
@@ -123,12 +125,29 @@ const Heatmap = defineComponent<
       day: 'numeric',
       timeZone: 'UTC',
     }))
-    const localeText = computed(() => localeCode.value?.toLowerCase().startsWith('zh')
-      ? { heatmap: '热力图', less: '少', more: '多', noData: '无数据', level: '等级' }
-      : { heatmap: 'Heatmap', less: 'Less', more: 'More', noData: 'No data', level: 'Level' })
+    const localeText = computed(() => {
+      const locale = antConfig.value.locale as ProLocale | undefined
+      const heatmapLocale = locale?.Heatmap
+      const defaultText = localeCode.value?.toLowerCase().startsWith('zh')
+        ? { heatmap: '热力图', less: '少', more: '多', noData: '无数据', level: '等级' }
+        : { heatmap: 'Heatmap', less: 'Less', more: 'More', noData: 'No data', level: 'Level' }
+
+      return {
+        heatmap: heatmapLocale?.label ?? defaultText.heatmap,
+        less: heatmapLocale?.less ?? defaultText.less,
+        more: heatmapLocale?.more ?? defaultText.more,
+        noData: heatmapLocale?.noData ?? locale?.Table?.emptyText ?? locale?.Empty?.description ?? defaultText.noData,
+        level: heatmapLocale?.level ?? defaultText.level,
+      }
+    })
 
     const weekLabels = computed(() => Array.from({ length: 7 }, (_, index) => {
-      const day = Date.UTC(2023, 0, 1 + ((mergedFirstDayOfWeek.value + index) % 7))
+      const dayIndex = (mergedFirstDayOfWeek.value + index) % 7
+      const pickerWeekdays = pickerLang.value?.shortWeekDays
+      if (pickerWeekdays?.length === 7) {
+        return pickerWeekdays[dayIndex]!
+      }
+      const day = Date.UTC(2023, 0, 1 + dayIndex)
       return weekdayFormatter.value.format(new Date(day))
     }))
     const monthHeaderCells = computed(() => {
@@ -146,7 +165,11 @@ const Heatmap = defineComponent<
           continue
         }
         previousMonth = month
-        headers.push({ label: monthFormatter.value.format(cell.date), colspan: 1 })
+        const pickerMonths = pickerLang.value?.shortMonths
+        const label = pickerMonths?.length === 12
+          ? pickerMonths[cell.date.getUTCMonth()]!
+          : monthFormatter.value.format(cell.date)
+        headers.push({ label, colspan: 1 })
       }
 
       return headers
