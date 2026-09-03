@@ -1,3 +1,6 @@
+import type { HeatmapColorScale } from '../types'
+import { HEATMAP_COLOR_THEMES } from '../types'
+
 export interface ComponentToken {
   /**
    * @desc 无数据单元格颜色。
@@ -13,7 +16,7 @@ export interface ComponentToken {
    * @desc 默认活跃颜色等级。
    * @descEN Default active color scale.
    */
-  colorScale: string[]
+  colorScale: HeatmapColorScale
   /**
    * @desc 小尺寸单元格边长。
    * @descEN Small cell size.
@@ -65,7 +68,7 @@ export function prepareComponentToken(token: any): ComponentToken {
   return {
     emptyCellColor: token.colorFillTertiary,
     minimumColor: token.colorFillSecondary,
-    colorScale: ['#9be9a8', '#40c463', '#30a14e', '#216e39'],
+    colorScale: HEATMAP_COLOR_THEMES.green,
     cellSizeSM: 12,
     cellSize: 14,
     cellSizeLG: 16,

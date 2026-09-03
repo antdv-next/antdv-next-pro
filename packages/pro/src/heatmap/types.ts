@@ -10,7 +10,9 @@ export const HEATMAP_COLOR_THEMES = {
   red: ['#fecaca', '#f87171', '#dc2626', '#b91c1c'],
 } as const
 
+export const HEATMAP_ACTIVE_COLOR_COUNT = 4
 export type HeatmapColorTheme = keyof typeof HEATMAP_COLOR_THEMES
+export type HeatmapColorScale = readonly [string, string, string, string]
 export type HeatmapData = HeatmapDataItem[]
 export type HeatmapFirstDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6
 export type HeatmapSize = 'small' | 'medium' | 'large'
@@ -18,6 +20,12 @@ export type HeatmapSize = 'small' | 'medium' | 'large'
 export interface HeatmapDataItem {
   timestamp: number
   value?: number | null
+}
+
+export function isHeatmapColorScale(value: unknown): value is HeatmapColorScale {
+  return Array.isArray(value)
+    && value.length === HEATMAP_ACTIVE_COLOR_COUNT
+    && value.every(color => typeof color === 'string' && color.trim())
 }
 
 export interface HeatmapRange {
@@ -55,7 +63,7 @@ export interface HeatmapProps {
   xGap?: number | string
   yGap?: number | string
   colorTheme?: HeatmapColorTheme
-  activeColors?: string[]
+  activeColors?: HeatmapColorScale
   minimumColor?: string
   tooltip?: boolean | TooltipProps
   classes?: HeatmapClassNamesType
@@ -82,13 +90,13 @@ export interface HeatmapSlots {
 }
 
 export interface HeatmapEmits {
-  'cell-click': (item: HeatmapDataItem, event: MouseEvent | KeyboardEvent) => void
+  'cell-click': (item: HeatmapDataItem, event: MouseEvent) => void
   [key: string]: (...args: any[]) => void
 }
 
 export interface HeatmapConfig {
   colorTheme?: HeatmapColorTheme
-  activeColors?: string[]
+  activeColors?: HeatmapColorScale
   minimumColor?: string
   firstDayOfWeek?: HeatmapFirstDayOfWeek
   showMonthLabels?: boolean

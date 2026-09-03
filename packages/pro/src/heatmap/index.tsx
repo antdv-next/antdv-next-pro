@@ -2,6 +2,7 @@ import type { App, CSSProperties, SlotsType } from 'vue'
 import type { ProLocale } from '../locale/types'
 import type {
   HeatmapClassNamesType,
+  HeatmapColorScale,
   HeatmapColorTheme,
   HeatmapEmits,
   HeatmapProps,
@@ -19,7 +20,7 @@ import { computed, defineComponent } from 'vue'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
 import useStyle from './style'
-import { HEATMAP_COLOR_THEMES } from './types'
+import { HEATMAP_COLOR_THEMES, isHeatmapColorScale } from './types'
 import { createCalendar, formatGap, normalizeData, resolveRange } from './utils'
 
 const DEFAULT_ACTIVE_COLORS = HEATMAP_COLOR_THEMES.green
@@ -32,9 +33,14 @@ function omitClassAndStyle(attrs: Record<string, any>) {
   return nextAttrs
 }
 
-function normalizeColors(colors: string[] | undefined) {
-  const result = colors?.filter(color => typeof color === 'string' && color.trim()) ?? []
-  return result.length ? result : undefined
+function normalizeColors(colors: unknown): HeatmapColorScale | undefined {
+  if (colors === undefined || isHeatmapColorScale(colors)) {
+    return colors
+  }
+
+  if (import.meta.env?.DEV) {
+    console.warn('[Heatmap] `activeColors` must contain four non-empty color strings. Falling back to the theme or default color scale.')
+  }
 }
 
 function isColorTheme(value: unknown): value is HeatmapColorTheme {
@@ -106,7 +112,6 @@ const Heatmap = defineComponent<
       normalizeData(props.data),
       mergedFirstDayOfWeek.value,
       mergedFillCalendarLeading.value,
-      resolvedActiveColors.value.length,
     ))
 
     const localeCode = computed(() => antConfig.value.locale?.locale)
@@ -356,6 +361,7 @@ const Heatmap = defineComponent<
 
 export type {
   HeatmapClassNamesType,
+  HeatmapColorScale,
   HeatmapColorTheme,
   HeatmapConfig,
   HeatmapData,

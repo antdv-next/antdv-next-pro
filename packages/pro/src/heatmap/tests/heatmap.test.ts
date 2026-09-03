@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { Tooltip } from 'antdv-next'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { h, nextTick } from 'vue'
 import { ProConfigProvider } from '../../index'
 import zhCN from '../../locale/zh_CN'
@@ -34,33 +34,51 @@ describe('Heatmap utilities', () => {
     expect(resolveRange({ start: jan3, end: jan1 })).toEqual({ start: jan1, end: jan3 })
   })
 
+  it('accepts valid calendar years and warns once before falling back for invalid years', () => {
+    const now = jan3
+    const recent = { start: now - 364 * 24 * 60 * 60 * 1000, end: now }
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+
+    expect(resolveRange(1970, now)).toEqual({ start: Date.UTC(1970, 0, 1), end: Date.UTC(1970, 11, 31) })
+    expect(resolveRange(2100, now)).toEqual({ start: Date.UTC(2100, 0, 1), end: Date.UTC(2100, 11, 31) })
+    expect(resolveRange(1969, now)).toEqual(recent)
+    expect(resolveRange(1969, now)).toEqual(recent)
+    expect(resolveRange(2101, now)).toEqual(recent)
+    expect(resolveRange(2024.5, now)).toEqual(recent)
+    expect(resolveRange(Number.NaN, now)).toEqual(recent)
+    expect(warn).toHaveBeenCalledTimes(4)
+
+    warn.mockRestore()
+  })
+
   it('keeps missing days empty and only fills calendar-leading days when enabled', () => {
     const data = normalizeData([
       { timestamp: jan1, value: 0 },
       { timestamp: jan2, value: 8 },
-      { timestamp: Date.UTC(2023, 11, 31), value: 4 },
+      { timestamp: Date.UTC(2023, 11, 31), value: 100 },
     ])
     const range = { start: jan1, end: jan3 }
 
-    const withoutLeading = createCalendar(range, data, 0, false, 4)
-    const withLeading = createCalendar(range, data, 0, true, 4)
+    const withoutLeading = createCalendar(range, data, 0, false)
+    const withLeading = createCalendar(range, data, 0, true)
 
     expect(withoutLeading[0]![0]).toMatchObject({ placeholder: true, value: null })
     expect(withoutLeading[3]![0]).toMatchObject({ placeholder: false, value: null, level: 0 })
-    expect(withLeading[0]![0]).toMatchObject({ placeholder: false, value: 4 })
+    expect(withLeading[0]![0]).toMatchObject({ placeholder: false, value: 100, level: 5 })
     expect(withLeading[1]![0]).toMatchObject({ placeholder: false, value: 0, level: 1 })
+    expect(withLeading[2]![0]).toMatchObject({ placeholder: false, value: 8, level: 5 })
   })
 
   it('assigns equal-width color levels with a lowest valid-value range', () => {
-    expect(getColorLevel(null, 0, 100, 4)).toBe(0)
-    expect(getColorLevel(0, 0, 100, 4)).toBe(1)
-    expect(getColorLevel(19.99, 0, 100, 4)).toBe(1)
-    expect(getColorLevel(20, 0, 100, 4)).toBe(2)
-    expect(getColorLevel(40, 0, 100, 4)).toBe(3)
-    expect(getColorLevel(60, 0, 100, 4)).toBe(4)
-    expect(getColorLevel(80, 0, 100, 4)).toBe(5)
-    expect(getColorLevel(100, 0, 100, 4)).toBe(5)
-    expect(getColorLevel(8, 8, 8, 4)).toBe(1)
+    expect(getColorLevel(null, 0, 100)).toBe(0)
+    expect(getColorLevel(0, 0, 100)).toBe(1)
+    expect(getColorLevel(19.99, 0, 100)).toBe(1)
+    expect(getColorLevel(20, 0, 100)).toBe(2)
+    expect(getColorLevel(40, 0, 100)).toBe(3)
+    expect(getColorLevel(60, 0, 100)).toBe(4)
+    expect(getColorLevel(80, 0, 100)).toBe(5)
+    expect(getColorLevel(100, 0, 100)).toBe(5)
+    expect(getColorLevel(8, 8, 8)).toBe(1)
   })
 })
 
@@ -90,6 +108,7 @@ describe('Heatmap', () => {
     expect(firstDataCell.attributes('type')).toBe('button')
     await firstDataCell.trigger('click')
     expect(wrapper.emitted('cell-click')?.[0]?.[0]).toMatchObject({ timestamp: jan1, value: 0 })
+    expect(wrapper.emitted('cell-click')?.[0]?.[1]).toBeInstanceOf(MouseEvent)
   })
 
   it('emits cell-click for explicit no-data items but not missing or placeholder cells', async () => {
@@ -114,6 +133,30 @@ describe('Heatmap', () => {
     await cells[3]!.trigger('click')
     await cells[0]!.trigger('click')
     expect(wrapper.emitted('cell-click')).toHaveLength(1)
+  })
+
+  it('keeps calendar-leading data interactive without affecting range color levels', async () => {
+    const leadingDay = Date.UTC(2023, 11, 31)
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan3 },
+        fillCalendarLeading: true,
+        data: [
+          { timestamp: leadingDay, value: 100 },
+          { timestamp: jan1, value: 0 },
+          { timestamp: jan2, value: 8 },
+        ],
+        classes: { cell: 'heatmap-cell' },
+      },
+    })
+
+    const cells = wrapper.findAll('.heatmap-cell')
+    expect(cells[0]!.element.tagName).toBe('BUTTON')
+    expect(cells[0]!.attributes('data-level')).toBe('5')
+    expect(cells[2]!.attributes('data-level')).toBe('5')
+
+    await cells[0]!.trigger('click')
+    expect(wrapper.emitted('cell-click')?.[0]?.[0]).toMatchObject({ timestamp: leadingDay, value: 100 })
   })
 
   it('labels the calendar and limits button semantics to supplied data items', () => {
@@ -215,6 +258,20 @@ describe('Heatmap', () => {
     })
 
     expect(wrapper.findAll('.ant-heatmap-indicator-color')).toHaveLength(5)
+  })
+
+  it('falls back to a fixed color scale for invalid active colors', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan1 },
+        activeColors: ['#111111', '#222222'] as any,
+      },
+    })
+
+    expect(wrapper.findAll('.ant-heatmap-indicator-color')).toHaveLength(5)
+    expect(warn).toHaveBeenCalledTimes(1)
+    warn.mockRestore()
   })
 
   it('renders custom footer and indicator slots', () => {

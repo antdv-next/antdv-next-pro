@@ -32,7 +32,7 @@ group:
 | prefixCls | Component class prefix | `string` | - | - | × |
 | rootClass | Class applied to the component root | `string` | - | - | × |
 | data | Date data. `null`, an omitted value, and a missing entry mean no data; `0` is valid data. The last valid item for a UTC date wins. | `HeatmapData` | - | - | × |
-| range | Display range. `recent` is 365 days ending on the current UTC date; a number represents a UTC calendar year. Object ranges are normalized chronologically. | `'recent' \| number \| HeatmapRange` | `'recent'` | - | × |
+| range | Display range. | `'recent' \| number \| HeatmapRange` | `'recent'` | - | × |
 | firstDayOfWeek | First day of a week, where `0` is Sunday. | `0 \| 1 \| ... \| 6` | `0` | - | ✓ |
 | showMonthLabels | Show month labels. | `boolean` | `true` | - | ✓ |
 | showWeekLabels | Show week labels. | `boolean` | `true` | - | ✓ |
@@ -41,7 +41,7 @@ group:
 | size | Cell size. | `'small' \| 'medium' \| 'large'` | `'medium'` | - | ✓ |
 | xGap / yGap | Horizontal and vertical cell gaps. | `number \| string` | `3` | - | ✓ |
 | colorTheme | Included color theme. | `'green' \| 'blue' \| 'orange' \| 'purple' \| 'red'` | - | - | ✓ |
-| activeColors | Custom colors for valid value levels above the lowest level. | `string[]` | - | - | ✓ |
+| activeColors | Four custom colors above the lowest level. | `HeatmapColorScale` | - | - | ✓ |
 | minimumColor | Custom color for the lowest valid value level. | `string` | - | - | ✓ |
 | tooltip | Show a Tooltip or provide Tooltip options. Use the tooltip slot for per-cell content. | `boolean \| TooltipProps` | `false` | - | ✓ |
 | classes | Customize semantic classes with an object or function. | `HeatmapClassNamesType` | - | - | ✓ |
@@ -51,7 +51,7 @@ group:
 
 | Event | Description | Type | Version |
 | --- | --- | --- | --- |
-| cell-click | Triggered by clicking a supplied data-item cell, including a no-data item, or pressing Enter/Space on it. | `(item: HeatmapDataItem, event: MouseEvent \| KeyboardEvent) => void` | - |
+| cell-click | Triggered when a supplied data-item cell, including a no-data item, is clicked or activated by keyboard. | `(item: HeatmapDataItem, event: MouseEvent) => void` | - |
 
 ### Slots {#slots}
 

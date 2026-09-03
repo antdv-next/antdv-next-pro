@@ -1,6 +1,8 @@
 import type { CSSObject } from '@antdv-next/cssinjs'
 import type { FullToken, GenerateStyle } from 'antdv-next/theme/internal'
+import type { HeatmapColorScale } from '../types'
 import { genStyleHooks } from 'antdv-next/theme/internal'
+import { HEATMAP_COLOR_THEMES, isHeatmapColorScale } from '../types'
 import { prepareComponentToken } from './token'
 
 export type { ComponentToken } from './token'
@@ -8,7 +10,7 @@ export type { ComponentToken } from './token'
 interface HeatmapToken extends FullToken<'Heatmap'> {
   emptyCellColor: string
   minimumColor: string
-  colorScale: string[]
+  colorScale: HeatmapColorScale
   cellSizeSM: number
   cellSize: number
   cellSizeLG: number
@@ -23,9 +25,13 @@ interface HeatmapToken extends FullToken<'Heatmap'> {
 const genHeatmapStyle: GenerateStyle<HeatmapToken, CSSObject> = (token) => {
   const { componentCls } = token
   // CSS variables cannot represent color arrays, so use the default scale while rendering CSS-variable styles.
-  const colorScale = Array.isArray(token.colorScale)
+  const colorScale = isHeatmapColorScale(token.colorScale)
     ? token.colorScale
-    : ['#9be9a8', '#40c463', '#30a14e', '#216e39']
+    : HEATMAP_COLOR_THEMES.green
+
+  if (!isHeatmapColorScale(token.colorScale) && import.meta.env?.DEV) {
+    console.warn('[Heatmap] `colorScale` token must contain four non-empty color strings. Falling back to the default color scale.')
+  }
 
   return {
     [componentCls]: {
