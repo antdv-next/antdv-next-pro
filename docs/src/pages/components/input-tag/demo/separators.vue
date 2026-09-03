@@ -1,9 +1,9 @@
 <docs lang="zh-CN">
-配置 `tokenSeparators` 后，按 Enter 确认时会按照分隔符拆分输入内容，并批量添加多个标签。
+配置 `tokenSeparators` 后，输入过程中遇到分隔符会立即拆分并添加标签；粘贴 `one, two, three` 这类内容也会自动拆分为多个标签。
 </docs>
 
 <docs lang="en-US">
-With `tokenSeparators` configured, press Enter to split the input by the configured separators and add multiple tags at once.
+With `tokenSeparators` configured, tags are split and added immediately when a separator is typed. Pasting content like `one, two, three` also splits it into multiple tags automatically.
 </docs>
 
 <script setup lang="ts">
@@ -13,5 +13,5 @@ const tags = ref<string[]>([])
 </script>
 
 <template>
-  <a-input-tag v-model:value="tags" :token-separators="[',', ' ']" placeholder="Type comma or space, then press Enter" />
+  <a-input-tag v-model:value="tags" :token-separators="[',', ' ']" placeholder="Type comma or space to add tags" />
 </template>

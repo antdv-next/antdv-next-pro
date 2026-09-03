@@ -29,7 +29,7 @@ Use it to enter string tags such as emails, keywords, or categories.
 
 ## API {#api}
 
-### Properties
+### Properties {#properties}
 
 | Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
 | --- | --- | --- | --- | --- | --- |
@@ -61,9 +61,6 @@ Use it to enter string tags such as emails, keywords, or categories.
 | classes | Semantic structure classes | `InputTagClassNamesType` | - | - | ✓ |
 | styles | Semantic structure styles | `InputTagStylesType` | - | - | ✓ |
 
-`inputProps` supports non-conflicting Input properties such as `showCount`, `maxlength`, `autocomplete`, and `inputMode`. `tagProps` supports non-conflicting Tag properties such as `color`, `bordered`, `variant`, `icon`, and `closeIcon`.
-
-InputTag top-level properties control the component state. Therefore, `value`, `disabled`, `readonly`, `size`, `status`, `variant`, `allowClear`, `prefix`, `suffix`, and related input events in `inputProps` cannot override InputTag's internal behavior.
 ### Events {#events}
 
 | Event | Description | Type | Version |
@@ -78,7 +75,7 @@ InputTag top-level properties control the component state. Therefore, `value`, `
 | focus | Triggered when the input receives focus | `(event: FocusEvent) => void` | - |
 | blur | Triggered when the input loses focus | `(event: FocusEvent) => void` | - |
 
-The `change` event's `info.trigger` identifies the change source: `enter`, `space`, `blur`, `drag`, `tag-remove`, `backspace`, or `clear`.
+The `change` event's `info.trigger` identifies the change source: `enter`, `space`, `blur`, `token-separator`, `drag`, `tag-remove`, `backspace`, or `clear`.
 
 ### Slots {#slots}
 
@@ -88,6 +85,9 @@ The `change` event's `info.trigger` identifies the change source: `enter`, `spac
 | suffix | Content at the end of the input | - | - |
 | clearIcon | Custom clear icon | - | - |
 | tag | Custom tag content | `{ value: string, index: number, closable: boolean, onClose: (event: MouseEvent) => void }` | - |
+
+> The `tag` slot only applies to tags in the main content area. When `collapseTagsTooltip` is enabled, collapsed tags inside the Tooltip are purely presentational and do **not** use the `tag` slot, but still apply `tagProps` and the `classes.tag` / `styles.tag` semantic styles.
+
 
 ### Methods {#methods}
 
@@ -107,3 +107,23 @@ The component `ref` exposes the following API:
 ## Design Token {#design-token}
 
 <ComponentTokenTable component="InputTag"></ComponentTokenTable>
+
+## FAQ {#faq}
+
+#### How does `tokenSeparators` work?
+
+Tags are split and committed immediately when a separator is typed, identified by the `token-separator` change trigger. For example, with `[',', ' ']` configured, typing `one, two,` creates the tags `one` and `two` in order; the separators themselves are not kept in the input.
+
+#### How does `allowDuplicate` detect duplicates?
+
+Duplicates are detected by strict string equality (case-sensitive). For example, `Vue` and `vue` are not considered duplicates and can coexist.
+
+#### How is the insertion position decided when dragging tags?
+
+With `draggable` enabled, hovering a dragged tag over a target tag inserts it based on the mouse position: the **left half** of the target inserts the tag before it, the **right half** inserts it after. An insertion indicator line is shown on the target tag while dragging.
+
+#### Which properties do `inputProps` / `tagProps` support?
+
+`inputProps` supports non-conflicting Input properties such as `showCount`, `maxlength`, `autocomplete`, and `inputMode`; `tagProps` supports non-conflicting Tag properties such as `color`, `bordered`, `variant`, `icon`, and `closeIcon`.
+
+InputTag top-level properties control the component state. Therefore, `value`, `disabled`, `readonly`, `size`, `status`, `variant`, `allowClear`, `prefix`, `suffix`, and related input events in `inputProps` cannot override InputTag's internal behavior.

@@ -3,11 +3,13 @@ import type { Variant } from 'antdv-next/config-provider/context'
 import type { App, ComputedRef, CSSProperties, ShallowRef, SlotsType } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semantic'
 import type { InputTagConfig } from '../config-provider'
+import type { ProLocale } from '../locale/types'
 import { clsx, useMergedState } from '@v-c/util'
 import { Input as AInput, Tag as ATag, Tooltip as ATooltip } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
 import { useDisabledContext } from 'antdv-next/config-provider/DisabledContext'
 import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
+import { useLocaleContext } from 'antdv-next/locale/index'
 import { computed, defineComponent, h, nextTick, ref, shallowRef } from 'vue'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
@@ -108,6 +110,8 @@ export interface InputTagEmits {
   dragTag: (oldIndex: number, newIndex: number, value: string, event?: DragEvent) => void
   focus: (event: FocusEvent) => void
   blur: (event: FocusEvent) => void
+  compositionstart: (event: CompositionEvent) => void
+  compositionend: (event: CompositionEvent) => void
   [key: string]: (...args: any[]) => void
 }
 
@@ -163,12 +167,17 @@ const InputTag = defineComponent<
     const { prefixCls, direction } = useBaseConfig('input-tag', props)
     const disabledContext = useDisabledContext()
     const proConfig = useProComponentConfig('inputTag')
+    const localeContext = useLocaleContext()
     const rootCls = useCSSVarCls(prefixCls)
     const [hashId, cssVarCls] = useStyle(prefixCls, rootCls)
     const inputRef = shallowRef<InputRef>()
     const composing = ref(false)
     const draggingIndex = ref<number | null>(null)
     const dragOverIndex = ref<number | null>(null)
+    const dropPosition = ref<'before' | 'after' | null>(null)
+
+    const clearLabel = computed(() => (localeContext.locale.value as ProLocale | undefined)?.InputTag?.clear ?? 'Clear')
+    const showMoreLabel = computed(() => (localeContext.locale.value as ProLocale | undefined)?.InputTag?.showMore ?? 'Show all tags')
 
     const mergedDisabled = computed(() => props.disabled ?? disabledContext.value ?? false)
     const mergedReadonly = computed(() => props.readonly ?? false)
@@ -190,6 +199,10 @@ const InputTag = defineComponent<
       value: inputValueRef,
       defaultValue: () => props.defaultInputValue ?? '',
     })
+
+    // 输入框只读：组件 readonly 或已达到 maxCount 上限
+    const inputReadonly = computed(() => mergedReadonly.value
+      || (mergedMaxCount.value !== undefined && mergedValue.value.length >= mergedMaxCount.value))
 
     const mergedSemanticProps = computed<InputTagProps>(() => ({
       ...props,
@@ -265,12 +278,7 @@ const InputTag = defineComponent<
       return accepted
     }
 
-    function commitInput(trigger: InputTagChangeTrigger, event?: Event) {
-      if (mergedDisabled.value || mergedReadonly.value)
-        return
-
-      const input = mergedInputValue.value
-      const { values, rest } = splitInput(input, mergedSeparators.value)
+    function commitTokens(values: string[], trigger: InputTagChangeTrigger, event?: Event) {
       const accepted = acceptValues(values)
       if (accepted.length) {
         const next = [...mergedValue.value, ...accepted]
@@ -279,6 +287,16 @@ const InputTag = defineComponent<
           emit('add', value, { index: mergedValue.value.length + offset, event })
         })
       }
+      return accepted
+    }
+
+    function commitInput(trigger: InputTagChangeTrigger, event?: Event) {
+      if (mergedDisabled.value || inputReadonly.value)
+        return
+
+      const input = mergedInputValue.value
+      const { values, rest } = splitInput(input, mergedSeparators.value)
+      const accepted = commitTokens(values, trigger, event)
       if (values.length && (accepted.length || rest !== input))
         updateInputValue(rest, event, true)
     }
@@ -297,8 +315,27 @@ const InputTag = defineComponent<
     function handleInput(event: Event) {
       const target = event.target as HTMLInputElement
       const value = target?.value ?? ''
-      if (mergedDisabled.value || mergedReadonly.value)
+      if (mergedDisabled.value || inputReadonly.value)
         return
+
+      // 输入过程中遇到分隔符：立即拆分并提交，分隔符之后的内容保留在输入框
+      const separators = mergedSeparators.value
+      if (!composing.value && !(event as InputEvent).isComposing && separators.length && value) {
+        const regexp = createSeparatorRegExp(separators)
+        if (regexp) {
+          const parts = value.split(regexp)
+          if (parts.length > 1) {
+            const rest = parts.pop() ?? ''
+            const values = parts.map(part => part.trim()).filter(Boolean)
+            commitTokens(values, 'token-separator', event)
+            // 同步 DOM 值，避免内部 Input 后续基于旧值触发 update:value 覆盖
+            target.value = rest
+            updateInputValue(rest, event, true)
+            return
+          }
+        }
+      }
+
       updateInputValue(value, event, true)
     }
 
@@ -359,6 +396,7 @@ const InputTag = defineComponent<
         return
       draggingIndex.value = index
       dragOverIndex.value = index
+      dropPosition.value = null
       if (event.dataTransfer) {
         event.dataTransfer.effectAllowed = 'move'
         event.dataTransfer.setData('text/plain', String(index))
@@ -372,6 +410,10 @@ const InputTag = defineComponent<
       if (event.dataTransfer)
         event.dataTransfer.dropEffect = 'move'
       dragOverIndex.value = index
+      const target = event.currentTarget as HTMLElement | null
+      dropPosition.value = target && event.clientX < target.getBoundingClientRect().left + target.getBoundingClientRect().width / 2
+        ? 'before'
+        : 'after'
     }
 
     function handleDrop(index: number, event: DragEvent) {
@@ -387,7 +429,10 @@ const InputTag = defineComponent<
         handleDragEnd()
         return
       }
-      const newIndex = oldIndex < index ? index - 1 : index
+      // 拖到目标 Tag 左半区 -> 插入到目标之前；右半区 -> 插入到目标之后
+      const newIndex = dropPosition.value === 'after'
+        ? (oldIndex < index ? index : index + 1)
+        : (oldIndex < index ? index - 1 : index)
       if (newIndex === oldIndex) {
         handleDragEnd()
         return
@@ -401,6 +446,7 @@ const InputTag = defineComponent<
     function handleDragEnd() {
       draggingIndex.value = null
       dragOverIndex.value = null
+      dropPosition.value = null
     }
 
     function handleClear(event: MouseEvent) {
@@ -420,7 +466,8 @@ const InputTag = defineComponent<
       const draggable = Boolean(props.draggable && closable)
       const dragClass = {
         [`${prefixCls.value}-tag-dragging`]: draggingIndex.value === index,
-        [`${prefixCls.value}-tag-drag-over`]: dragOverIndex.value === index && draggingIndex.value !== index,
+        [`${prefixCls.value}-tag-drag-before`]: dragOverIndex.value === index && dropPosition.value === 'before',
+        [`${prefixCls.value}-tag-drag-after`]: dragOverIndex.value === index && dropPosition.value === 'after',
       }
       const dragAttrs = draggable
         ? {
@@ -453,6 +500,20 @@ const InputTag = defineComponent<
       } as any, { default: () => value })
     }
 
+    /**
+     * 纯展示版本的 Tag，仅用于 collapse 展开的 Tooltip 内容。
+     * 与 renderTag 不同，不包含 closable / draggable / slots.tag 等交互逻辑，
+     * 避免 Tooltip 内出现删除按钮、拖拽等可交互元素。
+     */
+    function renderStaticTag(value: string, index: number) {
+      return h(ATag, {
+        ...(props.tagProps ?? {}),
+        key: `${value}-${index}`,
+        class: clsx((props.tagProps as any)?.class, mergedClassNames.value.tag),
+        style: [((props.tagProps as any)?.style), mergedStyles.value.tag],
+      } as any, { default: () => value })
+    }
+
     const api: InputTagRef = {
       focus: options => inputRef.value?.focus?.(options),
       blur: () => inputRef.value?.blur?.(),
@@ -473,10 +534,13 @@ const InputTag = defineComponent<
             closable: false,
             disabled: mergedDisabled.value,
             class: `${prefixCls.value}-collapse`,
+            tabindex: 0,
+            role: 'button',
+            'aria-label': showMoreLabel.value,
           } as any, { default: () => `+ ${collapsedValues.length}` })
         : null
       const collapseContent = collapsedValues.length
-        ? h('div', { class: `${prefixCls.value}-collapse-content` }, collapsedValues.map((value, index) => renderTag(value, index + visibleValues.length)))
+        ? h('div', { class: `${prefixCls.value}-collapse-content` }, collapsedValues.map((value, index) => renderStaticTag(value, index + visibleValues.length)))
         : null
       const content = h('span', {
         class: clsx(`${prefixCls.value}-content`, mergedClassNames.value.content),
@@ -485,7 +549,7 @@ const InputTag = defineComponent<
         slots.prefix?.(),
         ...visibleValues.map(renderTag),
         collapseContent && props.collapseTagsTooltip
-          ? h(ATooltip, { title: collapseContent, placement: 'top' }, { default: () => collapsedTag })
+          ? h(ATooltip, { title: collapseContent, placement: 'top', trigger: ['hover', 'focus'] }, { default: () => collapsedTag })
           : collapsedTag,
       ])
       const canClear = mergedAllowClear.value && !mergedDisabled.value && !mergedReadonly.value
@@ -495,7 +559,7 @@ const InputTag = defineComponent<
             type: 'button',
             class: clsx(`${prefixCls.value}-clear`, mergedClassNames.value.clear),
             style: mergedStyles.value.clear,
-            'aria-label': 'Clear',
+            'aria-label': clearLabel.value,
             onMousedown: (event: MouseEvent) => event.preventDefault(),
             onClick: handleClear,
           }, slots.clearIcon?.() ?? h('span', { 'aria-hidden': 'true' }, '×'))
@@ -515,12 +579,12 @@ const InputTag = defineComponent<
         placeholder: mergedValue.value.length || mergedInputValue.value ? undefined : props.placeholder,
         autoFocus: props.autoFocus,
         disabled: mergedDisabled.value,
-        readonly: mergedReadonly.value,
+        readonly: inputReadonly.value,
         size: props.size,
         status: props.status,
         variant: props.variant,
         allowClear: false,
-        'data-readonly': mergedReadonly.value ? 'true' : undefined,
+        'data-readonly': inputReadonly.value ? 'true' : undefined,
         classes: {
           ...((typeof mergedInputProps.value.classes === 'object' && mergedInputProps.value.classes) || {}),
           root: clsx((mergedInputProps.value.classes as any)?.root, mergedClassNames.value.root),

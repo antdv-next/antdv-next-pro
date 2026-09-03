@@ -30,7 +30,7 @@ group:
 
 ## API {#api}
 
-### 属性
+### 属性 {#properties}
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
@@ -62,9 +62,6 @@ group:
 | classes | 语义化结构 class | `InputTagClassNamesType` | - | - | ✓ |
 | styles | 语义化结构样式 | `InputTagStylesType` | - | - | ✓ |
 
-`inputProps` 支持内部 Input 的非冲突属性，例如 `showCount`、`maxlength`、`autocomplete` 和 `inputMode`。`tagProps` 支持内部 Tag 的非冲突属性，例如 `color`、`bordered`、`variant`、`icon` 和 `closeIcon`。
-
-InputTag 顶层属性优先控制组件状态；因此 `inputProps` 中的 `value`、`disabled`、`readonly`、`size`、`status`、`variant`、`allowClear`、`prefix`、`suffix` 以及相关输入事件不会覆盖 InputTag 的内部行为。
 ### 事件 {#events}
 
 | 事件 | 说明 | 类型 | 版本 |
@@ -79,7 +76,7 @@ InputTag 顶层属性优先控制组件状态；因此 `inputProps` 中的 `valu
 | focus | 输入框获得焦点时触发 | `(event: FocusEvent) => void` | - |
 | blur | 输入框失去焦点时触发 | `(event: FocusEvent) => void` | - |
 
-`change` 事件的 `info.trigger` 用于标识变化来源，包括 `enter`、`space`、`blur`、`drag`、`tag-remove`、`backspace` 和 `clear`。
+`change` 事件的 `info.trigger` 用于标识变化来源，包括 `enter`、`space`、`blur`、`token-separator`、`drag`、`tag-remove`、`backspace` 和 `clear`。
 
 ### 插槽 {#slots}
 
@@ -89,6 +86,9 @@ InputTag 顶层属性优先控制组件状态；因此 `inputProps` 中的 `valu
 | suffix | 输入框末尾的内容 | - | - |
 | clearIcon | 自定义清空图标 | - | - |
 | tag | 自定义标签内容 | `{ value: string, index: number, closable: boolean, onClose: (event: MouseEvent) => void }` | - |
+
+> `tag` 插槽仅作用于主内容区的标签。开启 `collapseTagsTooltip` 后，Tooltip 内展示的折叠标签为纯展示内容，**不会**应用 `tag` 插槽，但仍会应用 `tagProps` 以及 `classes.tag` / `styles.tag` 语义化样式。
+
 
 ### 方法 {#methods}
 
@@ -108,3 +108,23 @@ InputTag 顶层属性优先控制组件状态；因此 `inputProps` 中的 `valu
 ## 主题变量（Design Token）{#design-token}
 
 <ComponentTokenTable component="InputTag"></ComponentTokenTable>
+
+## FAQ {#faq}
+
+#### `tokenSeparators` 是如何工作的？
+
+输入过程中遇到分隔符会立即拆分并提交标签，触发来源标识为 `token-separator`。例如配置 `[',', ' ']` 后，输入 `one, two,` 会依次生成 `one` 和 `two` 两个标签，分隔符本身不会保留在输入框中。
+
+#### `allowDuplicate` 如何判断两个标签是否重复？
+
+基于严格字符串相等（区分大小写）。例如 `Vue` 与 `vue` 不视为重复，可以同时存在。
+
+#### 拖拽标签时如何决定插入位置？
+
+开启 `draggable` 后，拖拽标签悬停在目标标签上时，根据鼠标位于目标标签的**左半区还是右半区**决定插入位置：左半区插入到目标之前，右半区插入到目标之后。拖拽过程中目标标签会显示对应的插入位置指示线。
+
+#### `inputProps` / `tagProps` 支持哪些属性？
+
+`inputProps` 支持内部 Input 的非冲突属性，例如 `showCount`、`maxlength`、`autocomplete` 和 `inputMode`；`tagProps` 支持内部 Tag 的非冲突属性，例如 `color`、`bordered`、`variant`、`icon` 和 `closeIcon`。
+
+InputTag 顶层属性优先控制组件状态，因此 `inputProps` 中的 `value`、`disabled`、`readonly`、`size`、`status`、`variant`、`allowClear`、`prefix`、`suffix` 以及相关输入事件不会覆盖 InputTag 的内部行为。

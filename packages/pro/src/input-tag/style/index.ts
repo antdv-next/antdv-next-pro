@@ -48,8 +48,13 @@ const genInputTagStyle: GenerateStyle<InputTagToken, CSSObject> = (token) => {
         opacity: 0.5,
       },
 
-      '&-tag-drag-over': {
-        outline: `1px dashed ${token.colorPrimary}`,
+      // 插入位置指示：左半区 -> 目标前，右半区 -> 目标后
+      '&-tag-drag-before': {
+        boxShadow: `-2px 0 0 0 ${token.colorPrimary}`,
+      },
+
+      '&-tag-drag-after': {
+        boxShadow: `2px 0 0 0 ${token.colorPrimary}`,
       },
 
       '&-collapse': {
