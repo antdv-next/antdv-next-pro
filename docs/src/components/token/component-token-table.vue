@@ -135,6 +135,7 @@ const columns = computed(() => [
     title: t('components.componentTokenTable.value'),
     dataIndex: 'value',
     key: 'value',
+    width: 280,
   },
 ])
 

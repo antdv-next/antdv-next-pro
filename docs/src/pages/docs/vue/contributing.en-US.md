@@ -4,19 +4,19 @@ title: Contributing
 
 This guide will help you contribute to `@antdv-next/pro`. Please take a few minutes to read it before opening an issue or a pull request.
 
-## Code of Conduct
+## Code of Conduct {#code-of-conduct}
 
 We follow the same [Code of Conduct](https://github.com/antdv-next/antdv-next/blob/main/CODE_OF_CONDUCT.md) as the Antdv Next community.
 
-## Open Development
+## Open Development {#open-development}
 
 All development happens on [GitHub](https://github.com/antdv-next/antdv-next-pro). Pull requests from both team members and community contributors go through the same review flow.
 
-## Branch Management
+## Branch Management {#branch-management}
 
 We maintain a single long-lived `main` branch. All changes (bug fixes or features) should be developed on a feature branch (`feat-xxx` / `fix-xxx`) based on `main` and merged via a pull request. Releases are published by maintainers from `main` (see [RELEASE.md](https://github.com/antdv-next/antdv-next-pro/blob/main/RELEASE.md)).
 
-## First-time contributors
+## First-time contributors {#first-time-contributors}
 
 Not sure how to open a pull request on GitHub? This [guide](https://segmentfault.com/a/1190000000736629) (Chinese) is a good start.
 
@@ -24,7 +24,7 @@ We label some easy bugs and small features with [good first issues](https://gith
 
 Before working on an issue, check the comments to make sure nobody else is already on it; if you want to take over an abandoned one, leave a comment first.
 
-## Pull Requests
+## Pull Requests {#pull-requests}
 
 **Before sending a Pull Request**, please make sure you followed these steps:
 
@@ -38,7 +38,7 @@ Before working on an issue, check the comments to make sure nobody else is alrea
 - PR titles follow conventional commits (`feat` / `fix` / `docs` …) and are validated by CI;
 - the **"📝 Change Log" section is mandatory** (one line each in English and Chinese) — it is the only source for manually curating release notes (only component-behavior `feat` / `fix` entries are recorded; see the [Changelog page](/components/changelog)).
 
-## Development Workflow
+## Development Workflow {#development-workflow}
 
 This is a monorepo managed with [pnpm workspaces](https://pnpm.io/workspaces) — make sure pnpm (node >= 22) is installed and configured.
 
@@ -54,7 +54,7 @@ This is a monorepo managed with [pnpm workspaces](https://pnpm.io/workspaces) �
 
 > Commit messages must follow conventional commits (`feat` / `fix` / `docs` …) — the `commit-msg` hook validates the format; the `pre-commit` hook runs lint-staged on staged files. See [verify-commit.js](https://github.com/antdv-next/antdv-next-pro/blob/main/scripts/verify-commit.js) for the accepted format.
 
-## Acknowledgements
+## Acknowledgements {#acknowledgements}
 
 Thank you to everyone contributing code and documentation to `@antdv-next/pro`!
 

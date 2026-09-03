@@ -1,13 +1,18 @@
+import type { Locale } from 'antdv-next/locale/index'
 import { readdirSync } from 'node:fs'
 import { basename, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import ConfigProvider from 'antdv-next/config-provider'
 import { beforeAll, describe, expect, it } from 'vitest'
+import { h } from 'vue'
 import { mount } from '../utils'
 
 const testDir = dirname(fileURLToPath(import.meta.url))
 const rootDir = resolve(testDir, '../..')
 
 interface DemoTestOptions {
+  /** Locale provided to demos through Ant Design's ConfigProvider. */
+  locale?: Locale
   /** Skip all demos or specific demo names (without .vue extension) */
   skip?: boolean | string[]
 }
@@ -48,14 +53,21 @@ export default function demoTest(component: string, options: DemoTestOptions = {
       testFn(`renders ${name} correctly`, async () => {
         const { default: Demo } = await import(/* @vite-ignore */ resolve(demoDir, file))
 
-        const wrapper = mount(Demo, {
+        const mountOptions = {
           global: {
             plugins: [antd, pro],
           },
           attachTo: document.body,
-        })
+        }
+        const wrapper = options.locale
+          ? mount(ConfigProvider, {
+              ...mountOptions,
+              props: { locale: options.locale },
+              slots: { default: () => h(Demo) },
+            })
+          : mount(Demo, mountOptions)
 
-        expect(wrapper.element).toMatchSnapshot()
+        expect(options.locale ? wrapper.findComponent(Demo).element : wrapper.element).toMatchSnapshot()
         wrapper.unmount()
       }, 30000)
     })

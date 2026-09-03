@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { theme } from 'antdv-next'
+import { prepareComponentToken as prepareHeatmapToken } from '../../src/heatmap/style/token'
 import { prepareComponentToken } from '../../src/scrollbar/style/token'
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
@@ -10,7 +11,8 @@ const outputPath = path.resolve(repoRoot, 'docs/src/assets/token.json')
 
 async function main() {
   const globalToken = theme.getDesignToken()
-  const componentToken = prepareComponentToken(globalToken)
+  const scrollbarToken = prepareComponentToken(globalToken)
+  const heatmapToken = prepareHeatmapToken(globalToken)
 
   const output = {
     Scrollbar: {
@@ -24,7 +26,26 @@ async function main() {
         'motionDurationMid',
         'motionEaseOutCirc',
       ],
-      component: componentToken,
+      component: scrollbarToken,
+    },
+    Heatmap: {
+      global: [
+        'colorFillTertiary',
+        'colorFillSecondary',
+        'colorTextSecondary',
+        'colorPrimary',
+        'borderRadiusSM',
+        'fontSizeSM',
+        'fontWeightStrong',
+        'lineHeightSM',
+        'marginSM',
+        'marginXS',
+        'marginXXS',
+        'paddingXS',
+        'paddingXXS',
+        'motionDurationMid',
+      ],
+      component: heatmapToken,
     },
   }
 

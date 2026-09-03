@@ -6,7 +6,7 @@ import { aquaBlue, atomDark } from '@codesandbox/sandpack-themes'
 import { useClipboard, useDebounceFn } from '@vueuse/core'
 import antdvPkg from 'antdv-next/package.json'
 import { SandpackProvider } from 'sandpack-vue3'
-import demos from 'virtual:demos'
+import { loadDemo } from 'virtual:demos'
 import { computed, defineAsyncComponent, markRaw, nextTick, onBeforeUnmount, shallowRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import CodeEditorBridge from '@/components/code-demo/code-editor-bridge.vue'
@@ -37,7 +37,15 @@ const { src, compact, background, simplify, debug } = defineProps<{
 
 // Debug demos are visible while developing but stripped from the production docs.
 const hidden = computed(() => Boolean(debug) && import.meta.env.PROD)
-const demo = computed<DemoModule | undefined>(() => demos[src])
+const demo = shallowRef<DemoModule | undefined>()
+
+watch(() => src, (currentSrc) => {
+  demo.value = undefined
+  void loadDemo(currentSrc).then((loadedDemo) => {
+    if (src === currentSrc)
+      demo.value = loadedDemo ?? undefined
+  })
+}, { immediate: true })
 
 // 按需加载的源码数据
 const sourceData = shallowRef<DemoSourceData | null>(null)

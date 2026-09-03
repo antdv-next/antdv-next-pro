@@ -6,7 +6,7 @@ Before you start, we recommend learning [Vue](https://vuejs.org/) first and havi
 
 ---
 
-## Installation
+## Installation {#installation}
 
 <InstallDependencies
   npm='$ npm i @antdv-next/pro'
@@ -17,11 +17,11 @@ Before you start, we recommend learning [Vue](https://vuejs.org/) first and havi
 
 > `@antdv-next/pro` requires `antdv-next` (>= 1.3.0) and `vue` (>= 3.2.0) as peer dependencies — make sure they are installed as well.
 
-## Your first example
+## Your first example {#your-first-example}
 
 Take [Scrollbar](/components/scrollbar) as an example: custom scrollbars appear on demand when content overflows, with `auto` / `visible` / `hidden` visibility modes.
 
-### Local import
+### Local import {#local-import}
 
 ```vue
 <script setup lang="ts">
@@ -38,7 +38,7 @@ import { Scrollbar } from '@antdv-next/pro'
 </template>
 ```
 
-### Global registration
+### Global registration {#global-registration}
 
 Register once at the entry and use `<a-scrollbar>` directly:
 
@@ -49,13 +49,13 @@ import Pro from '@antdv-next/pro'
 createApp(App).use(Pro).mount('#app')
 ```
 
-## On-demand loading
+## On-demand loading {#on-demand-loading}
 
 `@antdv-next/pro` supports tree shaking based on ES modules out of the box: `import { Scrollbar } from '@antdv-next/pro'` only bundles what you actually use — no extra configuration required.
 
 If you prefer automatic on-demand imports in templates via [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components), you can write your own resolver or simply keep explicit imports — both approaches match the on-demand expectation.
 
-## Explore more
+## Explore more {#explore-more}
 
 - Browse all components in the [Components Overview](/components/overview); every component page ships runnable demos and a full API reference
 - Visit the [GitHub repository](https://github.com/antdv-next/antdv-next-pro) to contribute code or report issues

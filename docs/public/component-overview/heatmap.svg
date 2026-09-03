@@ -1,0 +1,17 @@
+<svg width="160" height="104" viewBox="0 0 160 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><rect id="cell" width="7" height="7" rx="2"/></defs>
+  <g transform="translate(-6 -8) scale(1.3)">
+  <g fill="#F0F0F0">
+    <use href="#cell" x="20" y="18"/><use href="#cell" x="30" y="18"/><use href="#cell" x="40" y="18"/><use href="#cell" x="50" y="18"/><use href="#cell" x="60" y="18"/><use href="#cell" x="70" y="18"/><use href="#cell" x="80" y="18"/><use href="#cell" x="90" y="18"/><use href="#cell" x="100" y="18"/><use href="#cell" x="110" y="18"/>
+    <use href="#cell" x="20" y="28"/><use href="#cell" x="30" y="28"/><use href="#cell" x="40" y="28"/><use href="#cell" x="50" y="28"/><use href="#cell" x="60" y="28"/><use href="#cell" x="70" y="28"/><use href="#cell" x="80" y="28"/><use href="#cell" x="90" y="28"/><use href="#cell" x="100" y="28"/><use href="#cell" x="110" y="28"/>
+    <use href="#cell" x="20" y="38"/><use href="#cell" x="30" y="38"/><use href="#cell" x="40" y="38"/><use href="#cell" x="50" y="38"/><use href="#cell" x="60" y="38"/><use href="#cell" x="70" y="38"/><use href="#cell" x="80" y="38"/><use href="#cell" x="90" y="38"/><use href="#cell" x="100" y="38"/><use href="#cell" x="110" y="38"/>
+    <use href="#cell" x="20" y="48"/><use href="#cell" x="30" y="48"/><use href="#cell" x="40" y="48"/><use href="#cell" x="50" y="48"/><use href="#cell" x="60" y="48"/><use href="#cell" x="70" y="48"/><use href="#cell" x="80" y="48"/><use href="#cell" x="90" y="48"/><use href="#cell" x="100" y="48"/><use href="#cell" x="110" y="48"/>
+    <use href="#cell" x="20" y="58"/><use href="#cell" x="30" y="58"/><use href="#cell" x="40" y="58"/><use href="#cell" x="50" y="58"/><use href="#cell" x="60" y="58"/><use href="#cell" x="70" y="58"/><use href="#cell" x="80" y="58"/><use href="#cell" x="90" y="58"/><use href="#cell" x="100" y="58"/><use href="#cell" x="110" y="58"/>
+  </g>
+  <g fill="#D9F7BE"><use href="#cell" x="40" y="18"/><use href="#cell" x="70" y="28"/><use href="#cell" x="100" y="28"/><use href="#cell" x="30" y="48"/><use href="#cell" x="90" y="58"/></g>
+  <g fill="#95DE64"><use href="#cell" x="60" y="18"/><use href="#cell" x="50" y="38"/><use href="#cell" x="80" y="48"/><use href="#cell" x="100" y="58"/></g>
+  <g fill="#52C41A"><use href="#cell" x="80" y="28"/><use href="#cell" x="40" y="48"/><use href="#cell" x="70" y="58"/></g>
+  <g fill="#237804"><use href="#cell" x="90" y="18"/><use href="#cell" x="60" y="38"/><use href="#cell" x="110" y="48"/></g>
+  <g><use href="#cell" x="70" y="78" fill="#F0F0F0"/><use href="#cell" x="80" y="78" fill="#D9F7BE"/><use href="#cell" x="90" y="78" fill="#95DE64"/><use href="#cell" x="100" y="78" fill="#52C41A"/><use href="#cell" x="110" y="78" fill="#237804"/></g>
+  </g>
+</svg>

@@ -20,6 +20,7 @@ export const defaultComponents: DefaultComponentDefinition[] = [
       { name: 'virtual', description: 'Whether virtual scrolling is enabled.', type: 'boolean' },
       { name: 'popupMatchSelectWidth', description: 'Whether popup width matches the select width.', type: 'boolean' },
       { name: 'popupOverflow', description: 'Popup overflow strategy.', type: '\'viewport\' | \'scroll\'' },
+      { name: 'heatmap', description: 'Default Heatmap configuration.', type: 'HeatmapConfig' },
       { name: 'scrollbar', description: 'Default Scrollbar configuration.', type: 'ScrollbarConfig' },
     ],
     slots: [
