@@ -537,6 +537,13 @@ const InputTag = defineComponent<
             tabindex: 0,
             role: 'button',
             'aria-label': showMoreLabel.value,
+            // role=button 的键盘契约：Enter/Space 与 click 等效
+            onKeydown: (event: KeyboardEvent) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                ;(event.currentTarget as HTMLElement | null)?.click()
+              }
+            },
           } as any, { default: () => `+ ${collapsedValues.length}` })
         : null
       const collapseContent = collapsedValues.length
@@ -549,7 +556,7 @@ const InputTag = defineComponent<
         slots.prefix?.(),
         ...visibleValues.map(renderTag),
         collapseContent && props.collapseTagsTooltip
-          ? h(ATooltip, { title: collapseContent, placement: 'top', trigger: ['hover', 'focus'] }, { default: () => collapsedTag })
+          ? h(ATooltip, { title: collapseContent, placement: 'top', trigger: ['hover', 'focus', 'click'] }, { default: () => collapsedTag })
           : collapsedTag,
       ])
       const canClear = mergedAllowClear.value && !mergedDisabled.value && !mergedReadonly.value

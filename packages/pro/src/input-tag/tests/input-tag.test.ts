@@ -434,6 +434,53 @@ describe('InputTag', () => {
     expect(tooltip!.querySelectorAll('.ant-tag').length).toBeGreaterThan(0)
   })
 
+  it('toggles the collapse tooltip with click, Enter, and Space', async () => {
+    const wrapper = mount(InputTag, {
+      props: {
+        defaultValue: ['one', 'two', 'three', 'four'],
+        collapseTags: true,
+        collapseTagsTooltip: true,
+        maxCollapseTags: 2,
+      },
+    })
+
+    // 清理前面测试残留的 tooltip（rc-trigger 关闭后 popup 仍保留在 body）
+    document.body.querySelectorAll('.ant-tooltip').forEach(node => node.remove())
+
+    const collapsedTag = wrapper.find('.ant-input-tag-collapse')
+
+    async function tooltipVisible() {
+      const tooltip = document.body.querySelector('.ant-tooltip')
+      if (!tooltip)
+        return false
+      const style = (tooltip as HTMLElement).getAttribute('style') ?? ''
+      return !style.includes('display: none') && tooltip.querySelectorAll('.ant-tag').length > 0
+    }
+
+    // 初始关闭
+    expect(await tooltipVisible()).toBe(false)
+
+    // Enter 打开
+    await collapsedTag.trigger('keydown', { key: 'Enter' })
+    await new Promise(resolve => setTimeout(resolve, 300))
+    expect(await tooltipVisible()).toBe(true)
+
+    // Enter 关闭
+    await collapsedTag.trigger('keydown', { key: 'Enter' })
+    await new Promise(resolve => setTimeout(resolve, 300))
+    expect(await tooltipVisible()).toBe(false)
+
+    // Space 打开
+    await collapsedTag.trigger('keydown', { key: ' ' })
+    await new Promise(resolve => setTimeout(resolve, 300))
+    expect(await tooltipVisible()).toBe(true)
+
+    // click 关闭
+    await collapsedTag.trigger('click')
+    await new Promise(resolve => setTimeout(resolve, 300))
+    expect(await tooltipVisible()).toBe(false)
+  })
+
   it('removes the last tag with backspace and clears all values', async () => {
     const onClear = vi.fn()
     const wrapper = mount(InputTag, {
