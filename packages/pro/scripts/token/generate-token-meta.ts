@@ -17,7 +17,10 @@ interface TokenMetaItem {
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(scriptDir, '../../../..')
 const packageRoot = path.resolve(repoRoot, 'packages/pro')
-const sourcePath = path.resolve(packageRoot, 'src/scrollbar/style/token.ts')
+const sourcePaths = {
+  Scrollbar: path.resolve(packageRoot, 'src/scrollbar/style/token.ts'),
+  InputTag: path.resolve(packageRoot, 'src/input-tag/style/token.ts'),
+}
 const globalTokenSourceDir = path.resolve(
   packageRoot,
   'node_modules/antdv-next/dist/theme/interface',
@@ -25,6 +28,8 @@ const globalTokenSourceDir = path.resolve(
 const outputPath = path.resolve(repoRoot, 'docs/src/assets/token-meta.json')
 
 const globalTokenNames = [
+  'marginXXS',
+  'controlHeight',
   'colorFillTertiary',
   'colorTextTertiary',
   'colorTextSecondary',
@@ -88,35 +93,31 @@ async function getGlobalTokenMeta() {
 }
 
 async function main() {
-  const source = await fs.readFile(sourcePath, 'utf8')
-  const sourceFile = ts.createSourceFile(sourcePath, source, ts.ScriptTarget.Latest, true)
-  const component = sourceFile.statements.find(
-    statement => ts.isInterfaceDeclaration(statement) && statement.name.text === 'ComponentToken',
-  )
+  const global = await getGlobalTokenMeta()
 
-  if (!component || !ts.isInterfaceDeclaration(component))
-    throw new Error(`ComponentToken interface not found in ${sourcePath}`)
-
-  const tokens: TokenMetaItem[] = component.members
-    .filter(ts.isPropertySignature)
-    .map((member) => {
-      const token = member.name.getText(sourceFile)
-      return {
-        source: 'Scrollbar',
-        token,
+  const components: Record<string, TokenMetaItem[]> = {}
+  for (const [sourceName, sourcePath] of Object.entries(sourcePaths)) {
+    const source = await fs.readFile(sourcePath, 'utf8')
+    const sourceFile = ts.createSourceFile(sourcePath, source, ts.ScriptTarget.Latest, true)
+    const component = sourceFile.statements.find(
+      statement => ts.isInterfaceDeclaration(statement) && statement.name.text === 'ComponentToken',
+    )
+    if (!component || !ts.isInterfaceDeclaration(component))
+      throw new Error(`ComponentToken interface not found in ${sourcePath}`)
+    components[sourceName] = component.members
+      .filter(ts.isPropertySignature)
+      .map(member => ({
+        source: sourceName,
+        token: member.name.getText(sourceFile),
         type: member.type?.getText(sourceFile) || 'any',
         desc: getTagText(member, 'desc'),
         descEn: getTagText(member, 'descEN'),
-      }
-    })
-
-  const global = await getGlobalTokenMeta()
+      }))
+  }
 
   const output = {
     global,
-    components: {
-      Scrollbar: tokens,
-    },
+    components,
   }
 
   await fs.writeFile(outputPath, `${JSON.stringify(output, null, 2)}\n`, 'utf8')

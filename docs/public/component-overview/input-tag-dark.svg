@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="104px" viewBox="0 0 160 104" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <title>InputTag</title>
+  <rect x="8" y="8" width="144" height="88" rx="6" fill="#141414" stroke="#303030"/>
+  <rect x="16" y="36" width="128" height="32" rx="6" fill="#141414" stroke="#424242"/>
+  <rect x="22" y="43" width="36" height="18" rx="4" fill="#303030" stroke="#434343"/>
+  <rect x="63" y="43" width="56" height="18" rx="4" fill="#303030" stroke="#434343"/>
+  <path d="M129 45V59" stroke="#4096FF" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

@@ -9,5 +9,8 @@ export default {
     // Navigation
     navigation: '导航',
     scrollbar: 'Scrollbar 滚动条',
+    // Data entry
+    dataEntry: '数据录入',
+    inputTag: 'InputTag 标签输入',
   },
 } as const
