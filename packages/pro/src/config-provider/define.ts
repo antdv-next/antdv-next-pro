@@ -1,5 +1,6 @@
 import type { ConfigProviderProps } from 'antdv-next/config-provider'
 import type { CSSProperties } from 'vue'
+import type { CronConfig } from '../cron/types'
 import type { ProLocale } from '../locale/types'
 
 export type ScrollbarVisibility = 'auto' | 'always' | 'hidden'
@@ -18,10 +19,11 @@ export interface ScrollbarConfig {
 }
 
 export interface ProConfigContextProps {
+  cron?: CronConfig
   scrollbar?: ScrollbarConfig
 }
 
-export const PRO_CONFIG_KEYS = ['scrollbar'] as const satisfies readonly (keyof ProConfigContextProps)[]
+export const PRO_CONFIG_KEYS = ['cron', 'scrollbar'] as const satisfies readonly (keyof ProConfigContextProps)[]
 
 export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'>, ProConfigContextProps {
   locale?: ProLocale
@@ -35,3 +37,5 @@ export interface ProConfigProviderSlots {
 }
 
 export type ProConfigProviderEmits = Record<string, any>
+
+export type { CronConfig }

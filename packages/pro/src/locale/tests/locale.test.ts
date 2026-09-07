@@ -18,7 +18,6 @@ const proLocaleModules = import.meta.glob('../*.ts', { eager: true, import: 'def
 
 const selectedLocales = [
   ['ar_EG', arEG],
-  ['en_US', enUS],
   ['fr_FR', frFR],
 ] as const
 
@@ -33,7 +32,7 @@ describe('Pro locale', () => {
     expect(proLocaleNames).toHaveLength(72)
   })
 
-  it('keeps every upstream locale object and its locale field', async () => {
+  it('keeps every upstream locale entry and its locale field', async () => {
     for (const localeName of expectedLocaleNames) {
       const locale = proLocaleModules[`../${localeName}.ts`]
       expect(locale?.locale).toEqual(expect.any(String))
@@ -51,7 +50,15 @@ describe('Pro locale', () => {
     expect(arEG).toBe(upstreamLocales[0].default)
     expect(enUS).toBe(upstreamLocales[1].default)
     expect(frFR).toBe(upstreamLocales[2].default)
-    expect(enUS).toMatchObject(upstreamLocales[1].default)
+    expect(proLocaleModules['../en_US.ts']).toMatchObject(upstreamLocales[1].default)
+    expect(proLocaleModules['../en_US.ts']).not.toBe(enUS)
+  })
+
+  it('adds Cron messages to the supported Pro locale wrappers', () => {
+    expect(proLocaleModules['../en_US.ts']?.Cron?.fields.second).toBe('Second')
+    expect(proLocaleModules['../zh_CN.ts']?.Cron?.fields.second).toBe('秒')
+    expect(proLocaleModules['../zh_HK.ts']?.Cron?.fields.minute).toBe('分鐘')
+    expect(proLocaleModules['../zh_TW.ts']?.Cron?.fields.minute).toBe('分鐘')
   })
 
   it('is assignable to the antdv-next Locale type', () => {

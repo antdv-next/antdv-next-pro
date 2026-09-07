@@ -1,0 +1,84 @@
+---
+category: Pro Components
+title: Cron
+subtitle: Cron 表达式编辑器
+description: 用于编辑 Quartz Cron 表达式的面板组件。
+demo:
+  cols: 1
+group:
+  title: 数据录入
+  order: 1
+---
+
+## 何时使用
+
+- 配置定时任务、报表、数据同步或消息推送。
+- 希望用户以可视化方式编辑 Quartz 表达式，而不必记住完整语法。
+
+## 代码演示
+
+<demo-group>
+  <demo src="./demo/basic.vue">基础用法</demo>
+  <demo src="./demo/presets.vue">Preset 和预览</demo>
+  <demo src="./demo/semantic.vue">语义化样式</demo>
+</demo-group>
+
+## API
+
+### 属性
+
+| 参数 | 说明 | 类型 | 默认值 | [全局配置](/components/config-provider-cn#component-config) |
+| --- | --- | --- | --- | --- |
+| value | 受控的 Quartz 表达式 | `string` | - | - |
+| showYear | 使用七字段 Quartz 格式 | `boolean` | `false` | ✓ |
+| disabled | 禁用全部交互 | `boolean` | `false` | ✓ |
+| readonly | 可选择和复制表达式，但不能编辑 | `boolean` | `false` | ✓ |
+| size | 组件尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
+| preview | 展示说明和本地时区的下一次执行时间 | `boolean` | `false` | ✓ |
+| presets | 常用表达式快捷项 | `CronPreset[]` | `[]` | ✓ |
+| classes | 语义化 class 定制 | `CronClassNamesType` | - | ✓ |
+| styles | 语义化 style 定制 | `CronStylesType` | - | ✓ |
+
+### 事件
+
+| 事件 | 说明 | 类型 |
+| --- | --- | --- |
+| update:value | 仅在产生合法表达式后触发 | `(value: string) => void` |
+| change | 合法值有效变更时触发 | `(value: string) => void` |
+| input | 每次直接输入时触发，包括临时非法值 | `(value: string) => void` |
+| validate | 校验状态变化时触发 | `(result: CronValidateResult) => void` |
+
+## Quartz 格式
+
+默认固定使用六字段：`秒 分 时 日 月 周`。开启 `showYear` 后必须使用七字段，最后一项为年。第一版仅支持 `*`、`?`、`/`、`-`、`,`；日和周字段必须且只能有一个 `?`。
+
+组件不会识别或兼容五字段 Linux Cron。
+
+## 国际化
+
+Cron 与 DatePicker 一样读取 `ConfigProvider` 的 locale，无需单独设置语言属性。使用 Pro locale 包装器可同时配置 Antdv Next 与 Cron；dayjs 的语言包仍需由应用显式引入：
+
+```vue
+<script setup lang="ts">
+import zhCN from '@antdv-next/pro/locale/zh_CN'
+import 'dayjs/locale/zh-cn'
+</script>
+
+<template>
+  <ap-config-provider :locale="zhCN">
+    <a-cron v-model:value="value" preview />
+  </ap-config-provider>
+</template>
+```
+
+预览时间使用 dayjs 实例级 locale，并复用 `locale.DatePicker.lang.fieldDateTimeFormat`；组件不会修改全局 `dayjs.locale()`。
+
+## 语义化 DOM
+
+<demo src="./demo/_semantic.vue" simplify></demo>
+
+## 主题 Token
+
+通过 `theme.components.Cron` 定制组件 Token：
+
+<ComponentTokenTable component="Cron" />

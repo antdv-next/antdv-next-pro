@@ -37,7 +37,7 @@ import zhCN from '@antdv-next/pro/locale/zh_CN'
 </template>
 ```
 
-Locale wrapper 与 `antdv-next/locale/*` 保持一致，可按需从 `@antdv-next/pro/locale/*` 引入。`ProConfigProvider` 不会改变 Antdv ConfigProvider 的公开行为。
+Locale wrapper 保留 `antdv-next/locale/*` 的全部配置，并补充 Pro 组件文案，可按需从 `@antdv-next/pro/locale/*` 引入。`ProConfigProvider` 不会改变 Antdv ConfigProvider 的公开行为。
 
 ## 与 ConfigProvider 的关系 {#relationship-with-configprovider}
 

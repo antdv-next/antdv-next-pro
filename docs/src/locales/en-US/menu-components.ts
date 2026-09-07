@@ -6,6 +6,9 @@ export default {
     // Other
     other: 'Other',
     configProvider: 'ProConfigProvider',
+    // Data Entry
+    dataEntry: 'Data Entry',
+    cron: 'Cron Expression Editor',
     // Navigation
     navigation: 'Navigation',
     scrollbar: 'Scrollbar',
