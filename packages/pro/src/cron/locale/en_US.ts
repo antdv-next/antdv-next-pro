@@ -32,7 +32,6 @@ const locale: CronLocale = {
   fieldValues: '{field} values',
   nextRun: 'Next run: {value}',
   noFutureRun: 'No future run',
-  required: 'Cron expression is required',
   everySeconds: 'Every {value} seconds',
   everyMinutes: 'Every {value} minutes',
   everyDayAt: 'Every day at {value}',

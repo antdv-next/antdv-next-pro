@@ -15,9 +15,10 @@ import type {
   CronValidateResult,
 } from './types'
 import { clsx } from '@v-c/util'
-import { Button, Input, InputNumber, Segmented, Select } from 'antdv-next'
+import { Button, Input, InputNumber, Segmented, Select, useConfig } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
 import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
+import { useFormItemInputContext, useFormItemInputContextProvider } from 'antdv-next/dist/form/context'
 import { useLocaleContext } from 'antdv-next/locale/index'
 import dayjs from 'dayjs'
 import { computed, defineComponent, ref, watch } from 'vue'
@@ -48,8 +49,10 @@ const FIELD_LIMITS: Record<CronFieldName, readonly [number, number]> = {
   year: [1, 9999],
 }
 
-const MONTH_OPTIONS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'].map(value => ({ label: value, value }))
-const WEEK_OPTIONS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(value => ({ label: value, value }))
+const MONTH_VALUES = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+const WEEK_VALUES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+const MONTH_OPTIONS = MONTH_VALUES.map(value => ({ label: value, value }))
+const WEEK_OPTIONS = WEEK_VALUES.map(value => ({ label: value, value }))
 const MODE_VALUES: CronFieldMode[] = ['every', 'interval', 'specified', 'range', 'list']
 
 function getDefaultLocale(localeCode?: string): CronLocale {
@@ -68,25 +71,39 @@ function omitClassAndStyle(attrs: Record<string, any>) {
   return nextAttrs
 }
 
-function getNumericParts(value: string, fallback: number): number[] {
-  return value.split(/[,/\-]/).map(item => Number(item)).filter(Number.isFinite).concat(fallback)
+function getNumericParts(value: string, fallback: number, names?: string[]): number[] {
+  return value.split(/[,/\-]/).map((item) => {
+    const aliasIndex = names?.indexOf(item.toUpperCase()) ?? -1
+    return aliasIndex >= 0 ? aliasIndex + 1 : Number(item)
+  }).filter(Number.isFinite).concat(fallback)
 }
 
-function getNamedValues(value: string) {
-  return value.split(',').filter(item => /^[A-Z]{3}$/.test(item))
+function getNamedValues(value: string, names: string[]) {
+  return value.split(',').map((item) => {
+    const normalized = item.trim().toUpperCase()
+    const numeric = Number(normalized)
+    if (Number.isInteger(numeric) && numeric >= 1 && numeric <= names.length)
+      return names[numeric - 1]
+    return names.includes(normalized) ? normalized : undefined
+  }).filter((item): item is string => item !== undefined)
 }
 
 const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>(
   (props, { attrs, emit, slots }) => {
     const { prefixCls, direction } = useBaseConfig('cron', props)
+    const { componentDisabled, componentSize } = useConfig()
+    const formItemInputContext = useFormItemInputContext()
     const localeContext = useLocaleContext()
     const proConfig = useProComponentConfig('cron')
     const rootCls = useCSSVarCls(prefixCls)
     const [hashId, cssVarCls] = useStyle(prefixCls, rootCls)
     const mergedShowYear = computed(() => props.showYear ?? proConfig.value.showYear ?? false)
-    const mergedDisabled = computed(() => props.disabled ?? proConfig.value.disabled ?? false)
+    const mergedDisabled = computed(() => props.disabled ?? proConfig.value.disabled ?? componentDisabled.value ?? false)
     const mergedReadonly = computed(() => props.readonly ?? proConfig.value.readonly ?? false)
-    const mergedSize = computed(() => props.size ?? proConfig.value.size ?? 'medium')
+    const mergedSize = computed(() => {
+      const contextSize = componentSize.value === 'middle' ? 'medium' : componentSize.value
+      return props.size ?? proConfig.value.size ?? contextSize ?? 'medium'
+    })
     const mergedPreview = computed(() => props.preview ?? proConfig.value.preview ?? false)
     const mergedPresets = computed(() => props.presets ?? proConfig.value.presets ?? [])
     const localeCode = computed(() => localeContext.locale.value?.locale ?? 'en')
@@ -96,7 +113,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     }))
     const dateTimeFormat = computed(() => {
       const pickerLocale = localeContext.locale.value?.DatePicker?.lang
-      return pickerLocale?.fieldDateTimeFormat ?? pickerLocale?.dateTimeFormat ?? 'YYYY-MM-DD HH:mm:ss'
+      return pickerLocale?.fieldDateTimeFormat ?? 'YYYY-MM-DD HH:mm:ss'
     })
     const modeOptions = computed(() => MODE_VALUES.map(value => ({ label: locale.value.modes[value], value })))
     const editable = computed(() => !mergedDisabled.value && !mergedReadonly.value)
@@ -104,6 +121,9 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     const fields = ref<CronFields>(createDefaultFields(mergedShowYear.value))
     const activeField = ref<CronFieldName>('minute')
     const validation = ref<CronValidateResult>({ status: draftExpression.value ? 'invalid' : 'empty' })
+    const mergedStatus = computed(() => validation.value.status === 'invalid'
+      ? 'error'
+      : props.status ?? formItemInputContext.value.status)
 
     const mergedSemanticProps = computed<CronProps>(() => ({
       ...props,
@@ -111,6 +131,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       disabled: mergedDisabled.value,
       readonly: mergedReadonly.value,
       size: mergedSize.value,
+      status: mergedStatus.value,
       preview: mergedPreview.value,
       presets: mergedPresets.value,
     }))
@@ -124,6 +145,10 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       : ['second', 'minute', 'hour', 'day', 'month', 'week'])
     const activeValue = computed(() => fields.value[activeField.value] ?? '')
     const activeMode = computed(() => getFieldMode(activeValue.value))
+    useFormItemInputContextProvider(computed(() => ({
+      ...formItemInputContext.value,
+      status: mergedStatus.value,
+    })))
     const preview = computed(() => validation.value.status === 'valid' && mergedPreview.value
       ? getPreview(draftExpression.value, mergedShowYear.value, locale.value)
       : undefined)
@@ -134,6 +159,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       cssVarCls.value,
       rootCls.value,
       { [`${prefixCls.value}-rtl`]: direction.value === 'rtl' },
+      { [`${prefixCls.value}-status-${mergedStatus.value}`]: mergedStatus.value },
       proConfig.value.class,
       props.rootClass,
       mergedClassNames.value.root,
@@ -153,16 +179,18 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       if (source === 'input')
         emit('input', expression)
       const result = updateValidation(expression)
-      if (result.status !== 'valid' || !result.expression)
-        return
-      const parsed = parseExpression(result.expression, mergedShowYear.value, locale.value)
-      if (!parsed)
-        return
-      fields.value = parsed
-      draftExpression.value = result.expression
-      if (result.expression !== props.value) {
-        emit('update:value', result.expression)
-        emit('change', result.expression)
+      let nextExpression = expression
+      if (result.status === 'valid' && result.expression) {
+        const parsed = parseExpression(result.expression, mergedShowYear.value, locale.value)
+        if (parsed) {
+          fields.value = parsed
+          nextExpression = result.expression
+          draftExpression.value = nextExpression
+        }
+      }
+      if (nextExpression !== props.value) {
+        emit('update:value', nextExpression)
+        emit('change', nextExpression)
       }
     }
 
@@ -197,7 +225,8 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       const [min, max] = FIELD_LIMITS[field]
       const value = activeValue.value
       const mode = activeMode.value
-      const values = getNumericParts(value, min)
+      const names = field === 'month' ? MONTH_VALUES : field === 'week' ? WEEK_VALUES : undefined
+      const values = getNumericParts(value, min, names)
       const numberProps = { min, max, size: mergedSize.value, disabled: !editable.value, controls: false }
       if (mode === 'every') {
         if (field === 'day' || field === 'week') {
@@ -223,8 +252,8 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
           </>
         )
       }
-      if (mode === 'specified' && (field === 'month' || field === 'week')) {
-        return <Select mode="multiple" value={getNamedValues(value)} options={field === 'month' ? MONTH_OPTIONS : WEEK_OPTIONS} size={mergedSize.value} disabled={!editable.value} aria-label={formatCronMessage(locale.value.fieldValues, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, Array.isArray(nextValue) ? nextValue.join(',') : String(nextValue ?? ''))} />
+      if ((mode === 'specified' || mode === 'list') && names) {
+        return <Select mode="multiple" value={getNamedValues(value, names)} options={field === 'month' ? MONTH_OPTIONS : WEEK_OPTIONS} size={mergedSize.value} disabled={!editable.value} aria-label={formatCronMessage(locale.value.fieldValues, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, Array.isArray(nextValue) ? nextValue.join(',') : String(nextValue ?? ''))} />
       }
       if (mode === 'specified') {
         return <InputNumber {...numberProps} value={values[0]} aria-label={formatCronMessage(locale.value.fieldValue, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, String(nextValue ?? min))} />
@@ -242,8 +271,8 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     }, { immediate: true })
 
     return () => (
-      <div class={rootClassName.value} style={rootStyle.value} data-size={mergedSize.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-readonly={mergedReadonly.value ? 'true' : 'false'} aria-readonly={mergedReadonly.value || undefined} {...omitClassAndStyle(attrs as Record<string, any>)}>
-        <Input value={draftExpression.value} size={mergedSize.value} readonly={mergedReadonly.value} disabled={mergedDisabled.value} status={validation.value.status === 'invalid' ? 'error' : undefined} class={mergedClassNames.value.input} style={mergedStyles.value.input} aria-label={locale.value.expression} onUpdate:value={handleExpressionInput} />
+      <div class={rootClassName.value} style={rootStyle.value} data-size={mergedSize.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-readonly={mergedReadonly.value ? 'true' : 'false'} data-status={mergedStatus.value || undefined} aria-readonly={mergedReadonly.value || undefined} {...omitClassAndStyle(attrs as Record<string, any>)}>
+        <Input value={draftExpression.value} size={mergedSize.value} readonly={mergedReadonly.value} disabled={mergedDisabled.value} class={mergedClassNames.value.input} style={mergedStyles.value.input} aria-label={locale.value.expression} onUpdate:value={handleExpressionInput} />
         <div class={clsx(`${prefixCls.value}-fields`, mergedClassNames.value.fields)} style={mergedStyles.value.fields}>
           <div class={`${prefixCls.value}-field-tabs`} role="tablist" aria-label={locale.value.fieldList}>
             {displayedFields.value.map(field => <Button key={field} type="text" size="small" disabled={mergedDisabled.value} class={clsx(`${prefixCls.value}-field-tab`, { [`${prefixCls.value}-field-tab-active`]: activeField.value === field })} data-field={field} aria-selected={activeField.value === field} onClick={() => (activeField.value = field)}>{locale.value.fields[field]}</Button>)}
@@ -268,7 +297,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
             )}
           </div>
         )}
-        {validation.value.status !== 'valid' && <div class={clsx(`${prefixCls.value}-error`, mergedClassNames.value.error)} style={mergedStyles.value.error} role="alert">{slots.error?.(validation.value) ?? validation.value.errors?.map(error => error.message).join('; ') ?? locale.value.required}</div>}
+        {validation.value.status === 'invalid' && <div class={clsx(`${prefixCls.value}-error`, mergedClassNames.value.error)} style={mergedStyles.value.error} role="alert">{slots.error?.(validation.value) ?? validation.value.errors?.map(error => error.message).join('; ') ?? locale.value.validation.invalidExpression}</div>}
       </div>
     )
   },
@@ -277,6 +306,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
 
 ;(Cron as any).install = (app: App) => app.component(Cron.name, Cron)
 
-export type { CronClassNamesType, CronConfig, CronEmits, CronError, CronFieldMode, CronFieldName, CronFields, CronFieldSlotProps, CronLocale, CronPreset, CronPreviewResult, CronProps, CronSemanticClassNames, CronSemanticName, CronSemanticStyles, CronSize, CronSlots, CronStylesType, CronValidateResult, CronValidateStatus } from './types'
+export type { CronClassNamesType, CronConfig, CronEmits, CronError, CronFieldMode, CronFieldName, CronFields, CronFieldSlotProps, CronLocale, CronPreset, CronPreviewResult, CronProps, CronSemanticClassNames, CronSemanticName, CronSemanticStyles, CronSize, CronSlots, CronStatus, CronStylesType, CronValidateResult, CronValidateStatus } from './types'
 export default Cron
 export { Cron }
+export { validateExpression as validateCronExpression } from './utils'

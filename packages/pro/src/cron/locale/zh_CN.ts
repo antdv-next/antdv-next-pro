@@ -32,7 +32,6 @@ const locale: CronLocale = {
   fieldValues: '{field}值',
   nextRun: '下次执行：{value}',
   noFutureRun: '无后续执行时间',
-  required: '请输入 Cron 表达式',
   everySeconds: '每 {value} 秒',
   everyMinutes: '每 {value} 分钟',
   everyDayAt: '每天 {value}',

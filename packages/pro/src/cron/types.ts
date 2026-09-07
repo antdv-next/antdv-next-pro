@@ -6,6 +6,7 @@ export const CRON_FIELD_NAMES = ['second', 'minute', 'hour', 'day', 'month', 'we
 export type CronFieldName = (typeof CRON_FIELD_NAMES)[number]
 export type CronFieldMode = 'every' | 'interval' | 'specified' | 'range' | 'list'
 export type CronSize = 'small' | 'medium' | 'large'
+export type CronStatus = '' | 'error' | 'success' | 'validating' | 'warning'
 export type CronValidateStatus = 'valid' | 'invalid' | 'empty'
 
 export interface CronLocale {
@@ -26,7 +27,6 @@ export interface CronLocale {
   fieldValues: string
   nextRun: string
   noFutureRun: string
-  required: string
   everySeconds: string
   everyMinutes: string
   everyDayAt: string
@@ -108,6 +108,7 @@ export interface CronProps {
   disabled?: boolean
   readonly?: boolean
   size?: CronSize
+  status?: CronStatus
   preview?: boolean
   presets?: CronPreset[]
   classes?: CronClassNamesType
@@ -119,8 +120,8 @@ export type CronClassNamesType = SemanticClassNamesType<CronProps, CronSemanticC
 export type CronStylesType = SemanticStylesType<CronProps, CronSemanticStyles>
 
 export interface CronEmits {
-  'update:value': (value: string | undefined) => void
-  change: (value: string | undefined) => void
+  'update:value': (value: string) => void
+  change: (value: string) => void
   input: (value: string) => void
   validate: (result: CronValidateResult) => void
   [key: string]: (...args: any[]) => void

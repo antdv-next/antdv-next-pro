@@ -33,6 +33,7 @@ group:
 | disabled | Disable all interaction | `boolean` | `false` | ✓ |
 | readonly | Keep the expression selectable but prevent edits | `boolean` | `false` | ✓ |
 | size | Control size | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
+| status | Set validation status explicitly; follows Form.Item by default | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - |
 | preview | Show the description and next local execution time | `boolean` | `false` | ✓ |
 | presets | Quick expression choices | `CronPreset[]` | `[]` | ✓ |
 | classes | Semantic class customization | `CronClassNamesType` | - | ✓ |
@@ -42,10 +43,36 @@ group:
 
 | Event | Description | Type |
 | --- | --- | --- |
-| update:value | Triggered only after a valid expression is produced | `(value: string) => void` |
-| change | Triggered with an effective valid change | `(value: string) => void` |
+| update:value | Triggered when the expression changes, including temporary invalid and empty values | `(value: string) => void` |
+| change | Triggered when the expression value effectively changes | `(value: string) => void` |
 | input | Triggered for every manual input, including invalid drafts | `(value: string) => void` |
 | validate | Triggered when validation state changes | `(result: CronValidateResult) => void` |
+
+### Form.Item
+
+`v-model:value` always matches the content displayed in the input, so a Form.Item validator receives temporary invalid values. Cron provides Quartz syntax feedback, while Form.Item remains responsible for `required` and business rules:
+
+```vue
+<script setup lang="ts">
+import { validateCronExpression } from '@antdv-next/pro'
+
+const rules = [
+  { required: true, message: 'Enter a Cron expression' },
+  {
+    validator: async (_rule: unknown, value: string) => {
+      if (value && validateCronExpression(value).status !== 'valid')
+        throw new Error('Invalid Cron expression')
+    },
+  },
+]
+</script>
+
+<template>
+  <a-form-item name="cron" :rules="rules">
+    <a-cron v-model:value="form.cron" />
+  </a-form-item>
+</template>
+```
 
 ### Slots
 
@@ -58,13 +85,13 @@ group:
 
 ## Quartz Format
 
-Cron accepts exactly six fields by default: `second minute hour day month week`. Set `showYear` to use the required seventh `year` field. The V1 editor supports `*`, `?`, `/`, `-`, and `,`; day and week must contain exactly one `?`.
+Cron accepts exactly six fields by default: `second minute hour day month week`. Set `showYear` to use the required seventh `year` field. The V1 editor supports `*`, `?`, `/`, `-`, and `,`; day and week must contain exactly one `?`. `L`, `W`, and `#` are not supported yet.
 
 It intentionally does not infer or accept the five-field Linux cron format.
 
 ## Internationalization
 
-Like DatePicker, Cron reads the locale from `ConfigProvider`; it does not need a separate locale prop. Use a Pro locale wrapper to configure Antdv Next and Cron together, and import the matching dayjs locale in the application:
+Like DatePicker, Cron reads the locale from `ConfigProvider`; it does not need a separate locale prop. All 72 locales shipped by Antdv Next have matching Pro locale wrappers with Cron messages. Use a Pro locale wrapper to configure Antdv Next and Cron together, and import the matching dayjs locale in the application:
 
 ```vue
 <script setup lang="ts">
@@ -79,7 +106,7 @@ import 'dayjs/locale/en'
 </template>
 ```
 
-The preview uses an instance-level dayjs locale and reuses `locale.DatePicker.lang.fieldDateTimeFormat`; the component never changes global `dayjs.locale()`.
+The preview uses an instance-level dayjs locale and reuses `locale.DatePicker.lang.fieldDateTimeFormat`; the component never changes global `dayjs.locale()`. A plain Antdv Next locale without `Cron` messages falls back to English for the Cron interface.
 
 ## Semantic DOM
 

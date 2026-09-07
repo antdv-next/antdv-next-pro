@@ -34,6 +34,7 @@ group:
 | disabled | 禁用全部交互 | `boolean` | `false` | ✓ |
 | readonly | 可选择和复制表达式，但不能编辑 | `boolean` | `false` | ✓ |
 | size | 组件尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
+| status | 手动设置校验状态，默认跟随 Form.Item | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - |
 | preview | 展示说明和本地时区的下一次执行时间 | `boolean` | `false` | ✓ |
 | presets | 常用表达式快捷项 | `CronPreset[]` | `[]` | ✓ |
 | classes | 语义化 class 定制 | `CronClassNamesType` | - | ✓ |
@@ -43,20 +44,46 @@ group:
 
 | 事件 | 说明 | 类型 |
 | --- | --- | --- |
-| update:value | 仅在产生合法表达式后触发 | `(value: string) => void` |
-| change | 合法值有效变更时触发 | `(value: string) => void` |
+| update:value | 表达式内容变化时触发，包括临时非法值和空值 | `(value: string) => void` |
+| change | 表达式内容有效变更时触发 | `(value: string) => void` |
 | input | 每次直接输入时触发，包括临时非法值 | `(value: string) => void` |
 | validate | 校验状态变化时触发 | `(result: CronValidateResult) => void` |
 
+### Form.Item
+
+`v-model:value` 始终与输入框中显示的内容保持一致，因此 Form.Item 的 validator 可以获取临时非法值。Cron 负责 Quartz 语法反馈；`required` 和业务规则仍由 Form.Item 管理：
+
+```vue
+<script setup lang="ts">
+import { validateCronExpression } from '@antdv-next/pro'
+
+const rules = [
+  { required: true, message: '请输入 Cron 表达式' },
+  {
+    validator: async (_rule: unknown, value: string) => {
+      if (value && validateCronExpression(value).status !== 'valid')
+        throw new Error('Cron 表达式不合法')
+    },
+  },
+]
+</script>
+
+<template>
+  <a-form-item name="cron" :rules="rules">
+    <a-cron v-model:value="form.cron" />
+  </a-form-item>
+</template>
+```
+
 ## Quartz 格式
 
-默认固定使用六字段：`秒 分 时 日 月 周`。开启 `showYear` 后必须使用七字段，最后一项为年。第一版仅支持 `*`、`?`、`/`、`-`、`,`；日和周字段必须且只能有一个 `?`。
+默认固定使用六字段：`秒 分 时 日 月 周`。开启 `showYear` 后必须使用七字段，最后一项为年。第一版仅支持 `*`、`?`、`/`、`-`、`,`；日和周字段必须且只能有一个 `?`。`L`、`W`、`#` 暂不支持。
 
 组件不会识别或兼容五字段 Linux Cron。
 
 ## 国际化
 
-Cron 与 DatePicker 一样读取 `ConfigProvider` 的 locale，无需单独设置语言属性。使用 Pro locale 包装器可同时配置 Antdv Next 与 Cron；dayjs 的语言包仍需由应用显式引入：
+Cron 与 DatePicker 一样读取 `ConfigProvider` 的 locale，无需单独设置语言属性。Antdv Next 提供的 72 个语言入口均有对应的 Pro locale 包装器并包含 Cron 文案。使用 Pro locale 包装器可同时配置 Antdv Next 与 Cron；dayjs 的语言包仍需由应用显式引入：
 
 ```vue
 <script setup lang="ts">
@@ -71,7 +98,7 @@ import 'dayjs/locale/zh-cn'
 </template>
 ```
 
-预览时间使用 dayjs 实例级 locale，并复用 `locale.DatePicker.lang.fieldDateTimeFormat`；组件不会修改全局 `dayjs.locale()`。
+预览时间使用 dayjs 实例级 locale，并复用 `locale.DatePicker.lang.fieldDateTimeFormat`；组件不会修改全局 `dayjs.locale()`。若直接传入不含 `Cron` 文案的 Antdv Next 原始语言包，Cron 界面会回退为英文。
 
 ## 语义化 DOM
 

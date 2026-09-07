@@ -27,6 +27,14 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
     border: `${token.lineWidth}px ${token.lineType} ${token.containerBorderColor}`,
     borderRadius: token.borderRadius,
 
+    '&-status-error': {
+      borderColor: token.colorError,
+    },
+
+    '&-status-warning': {
+      borderColor: token.colorWarning,
+    },
+
     '&-fields': {
       display: 'grid',
       gap: token.fieldGap,

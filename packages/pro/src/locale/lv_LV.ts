@@ -1,6 +1,10 @@
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/lv_LV'
+import cronLocale from '../cron/locale/lv_LV'
 
-const proLocale = locale satisfies ProLocale
+const proLocale = {
+  ...locale,
+  Cron: cronLocale,
+} satisfies ProLocale
 
 export default proLocale
