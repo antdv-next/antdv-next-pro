@@ -187,6 +187,95 @@ describe('Scrollbar', () => {
     expect(wrapper.find('.ant-scrollbar-thumb-x').classes()).toContain('scrollbar-thumb-x')
   })
 
+  it.each([
+    [
+      'vertical',
+      'ant-scrollbar-container-fade-vertical',
+      [
+        '--scrollbar-fade-size: 32px',
+        '--scrollbar-fade-overflow-top: 10px',
+        '--scrollbar-fade-overflow-bottom: 130px',
+      ],
+    ],
+    [
+      'horizontal',
+      'ant-scrollbar-container-fade-horizontal',
+      [
+        '--scrollbar-fade-size: 32px',
+        '--scrollbar-fade-overflow-left: 12px',
+        '--scrollbar-fade-overflow-right: 128px',
+      ],
+    ],
+    [
+      'both',
+      'ant-scrollbar-container-fade-both',
+      [
+        '--scrollbar-fade-size: 32px',
+        '--scrollbar-fade-overflow-top: 10px',
+        '--scrollbar-fade-overflow-bottom: 130px',
+        '--scrollbar-fade-overflow-left: 12px',
+        '--scrollbar-fade-overflow-right: 128px',
+      ],
+    ],
+  ])('applies scroll fade class for %s', async (scrollFade, expectedClass, styleAssertions) => {
+    const wrapper = mount(Scrollbar, {
+      props: {
+        scrollFade: scrollFade as 'vertical' | 'horizontal' | 'both',
+        scrollFadeSize: 32,
+      },
+    })
+
+    const container = wrapper.find('.ant-scrollbar-container')
+    mockScrollMetrics(container.element, {
+      clientHeight: 100,
+      scrollHeight: 240,
+      scrollTop: 10,
+      clientWidth: 100,
+      scrollWidth: 240,
+      scrollLeft: 12,
+    })
+
+    await container.trigger('scroll')
+    await nextTick()
+
+    const content = wrapper.find('.ant-scrollbar-container')
+    expect(content.classes()).toContain(expectedClass)
+    styleAssertions.forEach((styleAssertion) => {
+      expect(content.attributes('style')).toContain(styleAssertion)
+    })
+  })
+
+  it('uses scroll fade from ProConfigProvider', async () => {
+    const wrapper = mount(ProConfigProvider, {
+      props: {
+        scrollbar: {
+          scrollFade: 'both',
+          scrollFadeSize: 24,
+        },
+      },
+      slots: {
+        default: () => h(Scrollbar),
+      },
+    })
+
+    const container = wrapper.find('.ant-scrollbar-container')
+    mockScrollMetrics(container.element, {
+      clientHeight: 100,
+      scrollHeight: 240,
+      scrollTop: 10,
+      clientWidth: 100,
+      scrollWidth: 240,
+      scrollLeft: 12,
+    })
+
+    await container.trigger('scroll')
+    await nextTick()
+
+    const content = wrapper.find('.ant-scrollbar-container')
+    expect(content.classes()).toContain('ant-scrollbar-container-fade-both')
+    expect(content.attributes('style')).toContain('--scrollbar-fade-size: 24px')
+  })
+
   it('supports semantic classes and styles as functions', async () => {
     const classes = vi.fn((info: { props: any }) => ({
       root: 'custom-root',

@@ -23,6 +23,7 @@ group:
   <demo src="./demo/basic.vue">基础用法</demo>
   <demo src="./demo/visibility.vue">显隐模式</demo>
   <demo src="./demo/motion.vue">显隐动画</demo>
+  <demo src="./demo/fade.vue">垂直渐隐</demo>
   <demo src="./demo/sider.vue">导航侧栏</demo>
   <demo src="./demo/controller.vue">事件与滚动控制</demo>
   <demo src="./demo/semantic.vue">语义化样式</demo>
@@ -41,6 +42,8 @@ group:
 | visibilityY | 纵向滚动条显隐策略 | `'auto' \| 'always' \| 'hidden'` | - | - | ✓ |
 | hideDelay | `auto` 模式下移出内容区域后自动隐藏滚动条的延时，单位为毫秒 | `number` | `1200` | - | ✓ |
 | motion | 滚动条轨道显隐动画，`fade` 为淡入淡出，`slide` 为从右侧滑入、向右侧滑出 | `'fade' \| 'slide'` | `'fade'` | - | ✓ |
+| scrollFade | 内容边缘渐隐方向，不传则关闭 | `'vertical' \| 'horizontal' \| 'both'` | - | - | ✓ |
+| scrollFadeSize | 内容边缘渐隐长度，单位像素 | `number` | `40` | - | ✓ |
 | classes | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | `ScrollbarClassNamesType` | - | - | ✓ |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | `ScrollbarStylesType` | - | - | ✓ |
 
