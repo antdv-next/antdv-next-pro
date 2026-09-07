@@ -13,9 +13,7 @@ const verticalRows = Array.from({ length: 14 }, (_, index) => `Row ${index + 1}`
 <template>
   <div style="display: flex; flex-direction: column; gap: 24px;">
     <section>
-      <h3 style="margin: 0 0 12px; font-size: 16px;">
-        Vertical
-      </h3>
+      <h3 style="margin: 0 0 12px; font-size: 16px;" v-text="'Vertical'" />
       <a-scrollbar scroll-fade="vertical" :scroll-fade-size="72" style="height: 180px; border: 1px solid var(--ant-color-border); border-radius: 12px;">
         <div style="display: flex; flex-direction: column; gap: 16px; padding: 16px;">
           <p v-for="row in verticalRows" :key="row" style="margin: 0;">
