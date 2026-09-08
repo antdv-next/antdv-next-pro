@@ -24,9 +24,7 @@ import dayjs from 'dayjs'
 import { computed, defineComponent, ref, watch } from 'vue'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
-import enUS from './locale/en_US'
-import zhCN from './locale/zh_CN'
-import zhTW from './locale/zh_TW'
+import enUSLocale from '../locale/en_US'
 import useStyle from './style'
 import {
   createDefaultFields,
@@ -38,6 +36,8 @@ import {
   updateField,
   validateExpression,
 } from './utils'
+
+let cronIdSeed = 0
 
 const FIELD_LIMITS: Record<CronFieldName, readonly [number, number]> = {
   second: [0, 59],
@@ -54,15 +54,7 @@ const WEEK_VALUES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 const MONTH_OPTIONS = MONTH_VALUES.map(value => ({ label: value, value }))
 const WEEK_OPTIONS = WEEK_VALUES.map(value => ({ label: value, value }))
 const MODE_VALUES: CronFieldMode[] = ['every', 'interval', 'specified', 'range', 'list']
-
-function getDefaultLocale(localeCode?: string): CronLocale {
-  const normalizedLocaleCode = localeCode?.toLowerCase().replace('_', '-')
-  if (normalizedLocaleCode === 'zh-cn')
-    return zhCN
-  if (normalizedLocaleCode === 'zh-hk' || normalizedLocaleCode === 'zh-tw')
-    return zhTW
-  return enUS
-}
+const enUS = enUSLocale.Cron!
 
 function omitClassAndStyle(attrs: Record<string, any>) {
   const nextAttrs = { ...attrs }
@@ -108,7 +100,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     const mergedPresets = computed(() => props.presets ?? proConfig.value.presets ?? [])
     const localeCode = computed(() => localeContext.locale.value?.locale ?? 'en')
     const locale = computed<CronLocale>(() => ({
-      ...getDefaultLocale(localeCode.value),
+      ...enUS,
       ...((localeContext.locale.value as ProLocale | undefined)?.Cron ?? {}),
     }))
     const dateTimeFormat = computed(() => {
@@ -152,6 +144,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     const preview = computed(() => validation.value.status === 'valid' && mergedPreview.value
       ? getPreview(draftExpression.value, mergedShowYear.value, locale.value)
       : undefined)
+    const cronId = `cron-${++cronIdSeed}`
     const rootClassName = computed(() => clsx(
       prefixCls.value,
       `${prefixCls.value}-${mergedSize.value}`,
@@ -175,6 +168,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     }
 
     function applyExpression(expression: string, source: 'input' | 'editor') {
+      const previousValidation = validation.value
       draftExpression.value = expression
       if (source === 'input')
         emit('input', expression)
@@ -184,13 +178,16 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
         const parsed = parseExpression(result.expression, mergedShowYear.value, locale.value)
         if (parsed) {
           fields.value = parsed
-          nextExpression = result.expression
-          draftExpression.value = nextExpression
+          if (source === 'editor') {
+            nextExpression = result.expression
+            draftExpression.value = nextExpression
+          }
         }
       }
       if (nextExpression !== props.value) {
         emit('update:value', nextExpression)
-        emit('change', nextExpression)
+        if (result.status === 'valid' && (previousValidation.status !== 'valid' || previousValidation.expression !== result.expression))
+          emit('change', nextExpression)
       }
     }
 
@@ -218,6 +215,15 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
         list: `${min},${Math.min(min + 1, max)}`,
       }
       applyFieldValue(activeField.value, values[mode])
+    }
+
+    function handleFieldTabKeydown(field: CronFieldName, event: KeyboardEvent) {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
+        return
+      event.preventDefault()
+      const index = displayedFields.value.indexOf(field)
+      const offset = event.key === 'ArrowRight' ? 1 : -1
+      activeField.value = displayedFields.value[(index + offset + displayedFields.value.length) % displayedFields.value.length]!
     }
 
     function renderFieldControls() {
@@ -275,9 +281,14 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
         <Input value={draftExpression.value} size={mergedSize.value} readonly={mergedReadonly.value} disabled={mergedDisabled.value} class={mergedClassNames.value.input} style={mergedStyles.value.input} aria-label={locale.value.expression} onUpdate:value={handleExpressionInput} />
         <div class={clsx(`${prefixCls.value}-fields`, mergedClassNames.value.fields)} style={mergedStyles.value.fields}>
           <div class={`${prefixCls.value}-field-tabs`} role="tablist" aria-label={locale.value.fieldList}>
-            {displayedFields.value.map(field => <Button key={field} type="text" size="small" disabled={mergedDisabled.value} class={clsx(`${prefixCls.value}-field-tab`, { [`${prefixCls.value}-field-tab-active`]: activeField.value === field })} data-field={field} aria-selected={activeField.value === field} onClick={() => (activeField.value = field)}>{locale.value.fields[field]}</Button>)}
+            {displayedFields.value.map((field) => {
+              const tabId = `${cronId}-tab-${field}`
+              const panelId = `${cronId}-panel-${field}`
+              const active = activeField.value === field
+              return <Button key={field} {...({ id: tabId, role: 'tab' } as any)} type="text" size="small" disabled={mergedDisabled.value} class={clsx(`${prefixCls.value}-field-tab`, { [`${prefixCls.value}-field-tab-active`]: active })} data-field={field} aria-selected={active} aria-controls={panelId} tabIndex={active ? 0 : -1} onClick={() => (activeField.value = field)} onKeydown={(event: KeyboardEvent) => handleFieldTabKeydown(field, event)}>{locale.value.fields[field]}</Button>
+            })}
           </div>
-          <div class={clsx(`${prefixCls.value}-field`, mergedClassNames.value.field)} style={mergedStyles.value.field} data-field={activeField.value} data-mode={activeMode.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-invalid={validation.value.status === 'invalid' ? 'true' : 'false'}>
+          <div id={`${cronId}-panel-${activeField.value}`} class={clsx(`${prefixCls.value}-field`, mergedClassNames.value.field)} style={mergedStyles.value.field} role="tabpanel" aria-labelledby={`${cronId}-tab-${activeField.value}`} data-field={activeField.value} data-mode={activeMode.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-invalid={validation.value.status === 'invalid' ? 'true' : 'false'}>
             {slots.field?.({ field: activeField.value, value: activeValue.value, disabled: mergedDisabled.value, readonly: mergedReadonly.value }) ?? (
               <>
                 <Segmented options={modeOptions.value} value={activeMode.value} size={mergedSize.value} disabled={!editable.value} onUpdate:value={nextValue => setFieldMode(nextValue as CronFieldMode)} />

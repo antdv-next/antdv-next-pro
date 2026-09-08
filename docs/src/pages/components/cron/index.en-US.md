@@ -44,13 +44,15 @@ group:
 | Event | Description | Type |
 | --- | --- | --- |
 | update:value | Triggered when the expression changes, including temporary invalid and empty values | `(value: string) => void` |
-| change | Triggered when the expression value effectively changes | `(value: string) => void` |
+| change | Triggered when a valid expression is entered or recovered after an invalid draft; repeated valid values do not trigger it | `(value: string) => void` |
 | input | Triggered for every manual input, including invalid drafts | `(value: string) => void` |
-| validate | Triggered when validation state changes | `(result: CronValidateResult) => void` |
+| validate | Triggered after each expression validation and reports the current result | `(result: CronValidateResult) => void` |
 
 ### Form.Item
 
 `v-model:value` always matches the content displayed in the input, so a Form.Item validator receives temporary invalid values. Cron provides Quartz syntax feedback, while Form.Item remains responsible for `required` and business rules:
+
+Direct input keeps the text entered by the user, while validation and field parsing use its canonical form. `size="medium"` is Cron's public name for the Antdv `middle` size and is also the default mapping from the global component size.
 
 ```vue
 <script setup lang="ts">

@@ -22,9 +22,13 @@ exports[`cron demo > renders basic correctly 1`] = `
       role="tablist"
     >
       <button
+        aria-controls="cron-1-panel-second"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="second"
+        id="cron-1-tab-second"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -47,9 +51,13 @@ exports[`cron demo > renders basic correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-1-panel-minute"
         aria-selected="true"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab ant-cron-field-tab-active"
         data-field="minute"
+        id="cron-1-tab-minute"
+        role="tab"
+        tabindex="0"
         type="button"
       >
         <transition-stub
@@ -72,9 +80,13 @@ exports[`cron demo > renders basic correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-1-panel-hour"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="hour"
+        id="cron-1-tab-hour"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -97,9 +109,13 @@ exports[`cron demo > renders basic correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-1-panel-day"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="day"
+        id="cron-1-tab-day"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -122,9 +138,13 @@ exports[`cron demo > renders basic correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-1-panel-month"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="month"
+        id="cron-1-tab-month"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -147,9 +167,13 @@ exports[`cron demo > renders basic correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-1-panel-week"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="week"
+        id="cron-1-tab-week"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -173,11 +197,14 @@ exports[`cron demo > renders basic correctly 1`] = `
       </button>
     </div>
     <div
+      aria-labelledby="cron-1-tab-minute"
       class="ant-cron-field"
       data-disabled="false"
       data-field="minute"
       data-invalid="false"
       data-mode="specified"
+      id="cron-1-panel-minute"
+      role="tabpanel"
     >
       <div
         aria-label="segmented control"
@@ -323,9 +350,13 @@ exports[`cron demo > renders presets correctly 1`] = `
       role="tablist"
     >
       <button
+        aria-controls="cron-2-panel-second"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="second"
+        id="cron-2-tab-second"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -348,9 +379,13 @@ exports[`cron demo > renders presets correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-2-panel-minute"
         aria-selected="true"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab ant-cron-field-tab-active"
         data-field="minute"
+        id="cron-2-tab-minute"
+        role="tab"
+        tabindex="0"
         type="button"
       >
         <transition-stub
@@ -373,9 +408,13 @@ exports[`cron demo > renders presets correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-2-panel-hour"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="hour"
+        id="cron-2-tab-hour"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -398,9 +437,13 @@ exports[`cron demo > renders presets correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-2-panel-day"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="day"
+        id="cron-2-tab-day"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -423,9 +466,13 @@ exports[`cron demo > renders presets correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-2-panel-month"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="month"
+        id="cron-2-tab-month"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -448,9 +495,13 @@ exports[`cron demo > renders presets correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-2-panel-week"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="week"
+        id="cron-2-tab-week"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -474,11 +525,14 @@ exports[`cron demo > renders presets correctly 1`] = `
       </button>
     </div>
     <div
+      aria-labelledby="cron-2-tab-minute"
       class="ant-cron-field"
       data-disabled="false"
       data-field="minute"
       data-invalid="false"
       data-mode="interval"
+      id="cron-2-panel-minute"
+      role="tabpanel"
     >
       <div
         aria-label="segmented control"
@@ -699,7 +753,7 @@ exports[`cron demo > renders presets correctly 1`] = `
       Every 5 minutes
     </span>
     <span>
-      Next run: 2026-09-08 00:25:00
+      Next run: 2026-09-08 00:05:00
     </span>
   </div>
   <!---->
@@ -729,9 +783,13 @@ exports[`cron demo > renders semantic correctly 1`] = `
       role="tablist"
     >
       <button
+        aria-controls="cron-3-panel-second"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="second"
+        id="cron-3-tab-second"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -754,9 +812,13 @@ exports[`cron demo > renders semantic correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-3-panel-minute"
         aria-selected="true"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab ant-cron-field-tab-active"
         data-field="minute"
+        id="cron-3-tab-minute"
+        role="tab"
+        tabindex="0"
         type="button"
       >
         <transition-stub
@@ -779,9 +841,13 @@ exports[`cron demo > renders semantic correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-3-panel-hour"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="hour"
+        id="cron-3-tab-hour"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -804,9 +870,13 @@ exports[`cron demo > renders semantic correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-3-panel-day"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="day"
+        id="cron-3-tab-day"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -829,9 +899,13 @@ exports[`cron demo > renders semantic correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-3-panel-month"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="month"
+        id="cron-3-tab-month"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -854,9 +928,13 @@ exports[`cron demo > renders semantic correctly 1`] = `
         <!---->
       </button>
       <button
+        aria-controls="cron-3-panel-week"
         aria-selected="false"
         class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
         data-field="week"
+        id="cron-3-tab-week"
+        role="tab"
+        tabindex="-1"
         type="button"
       >
         <transition-stub
@@ -880,11 +958,14 @@ exports[`cron demo > renders semantic correctly 1`] = `
       </button>
     </div>
     <div
+      aria-labelledby="cron-3-tab-minute"
       class="ant-cron-field"
       data-disabled="false"
       data-field="minute"
       data-invalid="false"
       data-mode="specified"
+      id="cron-3-panel-minute"
+      role="tabpanel"
     >
       <div
         aria-label="segmented control"

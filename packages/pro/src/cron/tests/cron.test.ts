@@ -24,7 +24,7 @@ describe('Cron', () => {
     await input.setValue('0 0 9 * * *')
     expect(wrapper.emitted('input')).toEqual([['0 0 9 * * *']])
     expect(wrapper.emitted('update:value')).toEqual([['0 0 9 * * *']])
-    expect(wrapper.emitted('change')).toEqual([['0 0 9 * * *']])
+    expect(wrapper.emitted('change')).toBeUndefined()
     expect(wrapper.emitted('validate')?.slice(-1)[0]?.[0]).toMatchObject({ status: 'invalid' })
 
     await input.setValue('')
@@ -36,6 +36,52 @@ describe('Cron', () => {
     expect(wrapper.emitted('update:value')?.slice(-1)).toEqual([['0 0 9 * * ?']])
     expect(wrapper.emitted('change')?.slice(-1)).toEqual([['0 0 9 * * ?']])
     expect(wrapper.emitted('validate')?.slice(-1)[0]?.[0]).toMatchObject({ status: 'valid' })
+  })
+
+  it('emits change only for valid state transitions', async () => {
+    const wrapper = mount(Cron)
+    const input = wrapper.find('input')
+
+    await input.setValue('0 0 9 * * ?')
+    await input.setValue('invalid')
+    await input.setValue('still invalid')
+    await input.setValue('0 0 9 * * ?')
+
+    expect(wrapper.emitted('update:value')).toEqual([
+      ['0 0 9 * * ?'],
+      ['invalid'],
+      ['still invalid'],
+      ['0 0 9 * * ?'],
+    ])
+    expect(wrapper.emitted('change')).toEqual([
+      ['0 0 9 * * ?'],
+      ['0 0 9 * * ?'],
+    ])
+  })
+
+  it('does not emit duplicate change events for the same valid expression', async () => {
+    const wrapper = mount(Cron)
+    const input = wrapper.find('input')
+
+    await input.setValue('0 0 9 * * ?')
+    await input.setValue('0 0 9 * * ?')
+
+    expect(wrapper.emitted('change')).toEqual([['0 0 9 * * ?']])
+  })
+
+  it('keeps raw direct input while validating its canonical expression', async () => {
+    const wrapper = mount(Cron)
+    const input = wrapper.find('input')
+    const rawExpression = ' 0  0  9 * * ? '
+
+    await input.setValue(rawExpression)
+
+    expect(wrapper.find('input').element.value).toBe(rawExpression)
+    expect(wrapper.emitted('update:value')).toEqual([[rawExpression]])
+    expect(wrapper.emitted('validate')?.slice(-1)[0]?.[0]).toMatchObject({
+      status: 'valid',
+      expression: '0 0 9 * * ?',
+    })
   })
 
   it('applies a preset through the same valid change path', async () => {
@@ -105,9 +151,9 @@ describe('Cron', () => {
       },
     })
 
-    expect(wrapper.find('[data-field="second"]').text()).toBe('秒')
-    expect(wrapper.find('.ant-cron-preview').text()).toContain('每 5 分钟')
-    expect(wrapper.find('.ant-cron-preview').text()).toMatch(/下次执行：\d{4}年\d{2}月\d{2}日/)
+    expect(wrapper.find('[data-field="second"]').text()).toBe('Second')
+    expect(wrapper.find('.ant-cron-preview').text()).toContain('Every 5 minutes')
+    expect(wrapper.find('.ant-cron-preview').text()).toMatch(/Next run: \d{4}年\d{2}月\d{2}日/)
   })
 
   it('ignores the deprecated DatePicker date-time format and uses the picker default', () => {
@@ -151,7 +197,7 @@ describe('Cron', () => {
     expect(dynamicWrapper.find('[data-field="second"]').text()).toBe('Second')
     activeLocale.value = zhCN
     await nextTick()
-    expect(dynamicWrapper.find('[data-field="second"]').text()).toBe('秒')
+    expect(dynamicWrapper.find('[data-field="second"]').text()).toBe('Second')
 
     const nestedWrapper = mount(ConfigProvider, {
       props: { locale: zhCN },
@@ -237,5 +283,18 @@ describe('Cron', () => {
     await wrapper.setProps({ value: '0 0 9 ? JAN,MAR MON' })
     expect(wrapper.find('.ant-cron-field[data-field="month"]').attributes('data-mode')).toBe('list')
     expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['JAN', 'MAR'])
+  })
+
+  it('renders an accessible field tab interface', async () => {
+    const wrapper = mount(Cron)
+    const tabs = wrapper.findAll('[role="tab"]')
+    const panel = wrapper.find('[role="tabpanel"]')
+
+    expect(tabs).toHaveLength(6)
+    expect(tabs[1]!.attributes('aria-controls')).toBe(panel.attributes('id'))
+    expect(panel.attributes('aria-labelledby')).toBe(tabs[1]!.attributes('id'))
+
+    await tabs[1]!.trigger('keydown', { key: 'ArrowRight' })
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('hour')
   })
 })

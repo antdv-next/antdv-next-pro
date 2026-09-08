@@ -45,13 +45,15 @@ group:
 | 事件 | 说明 | 类型 |
 | --- | --- | --- |
 | update:value | 表达式内容变化时触发，包括临时非法值和空值 | `(value: string) => void` |
-| change | 表达式内容有效变更时触发 | `(value: string) => void` |
+| change | 输入有效表达式或从非法草稿恢复为有效表达式时触发；相同的有效值不会重复触发 | `(value: string) => void` |
 | input | 每次直接输入时触发，包括临时非法值 | `(value: string) => void` |
-| validate | 校验状态变化时触发 | `(result: CronValidateResult) => void` |
+| validate | 每次执行表达式校验后触发，并同步当前校验结果 | `(result: CronValidateResult) => void` |
 
 ### Form.Item
 
 `v-model:value` 始终与输入框中显示的内容保持一致，因此 Form.Item 的 validator 可以获取临时非法值。Cron 负责 Quartz 语法反馈；`required` 和业务规则仍由 Form.Item 管理：
+
+直接输入会保留用户正在编辑的原文，校验和字段解析使用规范化后的表达式。`size="medium"` 是 Cron 的公开尺寸名称，对应 Antdv 的 `middle`，也是全局组件尺寸映射后的默认值。
 
 ```vue
 <script setup lang="ts">

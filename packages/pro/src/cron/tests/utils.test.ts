@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import zhCN from '../locale/zh_CN'
+import zhCNLocale from '../../locale/zh_CN'
 import {
   createDefaultFields,
   formatExpression,
@@ -10,6 +10,8 @@ import {
 } from '../utils'
 
 describe('Cron utilities', () => {
+  const zhCN = zhCNLocale.Cron!
+
   it('parses and formats the Quartz six-field format', () => {
     const expression = '0 0/5 * * * ?'
 

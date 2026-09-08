@@ -1,8 +1,9 @@
 import type { CronError, CronFieldMode, CronFieldName, CronFields, CronLocale, CronPreviewResult, CronValidateResult } from './types'
 import { Cron } from 'croner'
-import enUS from './locale/en_US'
+import enUSLocale from '../locale/en_US'
 
 const FIELD_ORDER: CronFieldName[] = ['second', 'minute', 'hour', 'day', 'month', 'week', 'year']
+const enUS = enUSLocale.Cron!
 const MONTHS: Record<string, number> = {
   JAN: 1,
   FEB: 2,
