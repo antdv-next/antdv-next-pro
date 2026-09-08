@@ -1,6 +1,58 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/el_GR'
-import cronLocale from '../cron/locale/el_GR'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'Δεύτερο',
+    minute: 'Λεπτό',
+    hour: 'Ώρα',
+    day: 'Ημέρα',
+    month: 'Μήνας',
+    week: 'Εβδομάδα',
+    year: 'Έτος',
+  },
+  modes: {
+    every: 'Κάθε',
+    interval: 'Διάστημα',
+    specified: 'Καθορίστηκε',
+    range: 'Εύρος',
+    list: 'Λίστα',
+  },
+  any: 'Οποιοδήποτε',
+  notSpecified: 'Δεν διευκρινίζεται',
+  every: 'κάθε',
+  everyField: 'Κάθε {field}',
+  to: 'έως',
+  expression: 'Έκφραση Cron',
+  fieldList: 'Πεδία Cron',
+  fieldStart: '{field} έναρξη',
+  fieldInterval: '{field} διάστημα',
+  fieldRangeStart: '{field} έναρξη εύρους',
+  fieldRangeEnd: '{field} τέλος εύρους',
+  fieldValue: 'τιμή {field}',
+  fieldValues: '{field} τιμές',
+  nextRun: 'Επόμενη εκτέλεση: {value}',
+  noFutureRun: 'Καμία μελλοντική εκτέλεση',
+  everySeconds: 'Κάθε {value} δευτερόλεπτα',
+  everyMinutes: 'Κάθε {value} λεπτά',
+  everyDayAt: 'Κάθε μέρα στις {value}',
+  customSchedule: 'Προσαρμοσμένο πρόγραμμα',
+  validation: {
+    invalidStep: 'Μη έγκυρη έκφραση βήματος',
+    stepOutOfRange: 'Το βήμα πρέπει να είναι μια θετική τιμή εντός του εύρους πεδίου',
+    invalidRange: 'Μη έγκυρη έκφραση εύρους',
+    valueOutOfRange: 'Η τιμή πρέπει να είναι μεταξύ {min} και {max}',
+    rangeOrder: 'Η αρχή εύρους δεν πρέπει να είναι μεγαλύτερη από το τέλος εύρους',
+    fieldRequired: 'Το πεδίο είναι υποχρεωτικό',
+    questionMarkField: 'Το ερωτηματικό υποστηρίζεται μόνο για πεδία ημέρας και εβδομάδας',
+    questionMarkAlone: 'Το ερωτηματικό πρέπει να είναι η μόνη τιμή πεδίου',
+    unsupportedCharacter: 'Μη υποστηριζόμενος χαρακτήρας στο πεδίο',
+    expectedFields: 'Αναμενόμενα {count} πεδία για την επιλεγμένη μορφή Quartz',
+    dayWeekQuestionMark: 'Σε μια έκφραση Quartz, είτε το πεδίο ημέρας είτε το πεδίο εβδομάδας πρέπει να είναι ?, αλλά όχι και τα δύο',
+    invalidExpression: 'Μη έγκυρη έκφραση cron',
+  },
+}
 
 const proLocale = {
   ...locale,

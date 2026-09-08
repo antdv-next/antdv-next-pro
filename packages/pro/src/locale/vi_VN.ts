@@ -1,6 +1,58 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/vi_VN'
-import cronLocale from '../cron/locale/vi_VN'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'Giây',
+    minute: 'Phút',
+    hour: 'Giờ',
+    day: 'Ngày',
+    month: 'Tháng',
+    week: 'Tuần',
+    year: 'Năm',
+  },
+  modes: {
+    every: 'Mỗi',
+    interval: 'Khoảng thời gian',
+    specified: 'Chỉ định',
+    range: 'Phạm vi',
+    list: 'Danh sách',
+  },
+  any: 'Bất kỳ',
+  notSpecified: 'Không xác định',
+  every: 'mỗi',
+  everyField: 'Mỗi {field}',
+  to: 'đến',
+  expression: 'Biểu thức cron',
+  fieldList: 'Trường cron',
+  fieldStart: '{field} bắt đầu',
+  fieldInterval: 'khoảng {field}',
+  fieldRangeStart: '{field} phạm vi bắt đầu',
+  fieldRangeEnd: 'Cuối phạm vi {field}',
+  fieldValue: '{field}',
+  fieldValues: '{field} giá trị',
+  nextRun: 'Lần chạy tiếp theo: {value}',
+  noFutureRun: 'Không có hoạt động nào trong tương lai',
+  everySeconds: 'Cứ sau {value} giây',
+  everyMinutes: 'Cứ sau {value} phút',
+  everyDayAt: 'Hàng ngày lúc {value}',
+  customSchedule: 'Lịch trình tùy chỉnh',
+  validation: {
+    invalidStep: 'Biểu thức bước không hợp lệ',
+    stepOutOfRange: 'Bước phải là giá trị dương trong phạm vi trường',
+    invalidRange: 'Biểu thức phạm vi không hợp lệ',
+    valueOutOfRange: 'Giá trị phải nằm trong khoảng từ {min} đến {max}',
+    rangeOrder: 'Điểm bắt đầu của phạm vi không được lớn hơn điểm cuối của phạm vi',
+    fieldRequired: 'Trường này là bắt buộc',
+    questionMarkField: 'Dấu chấm hỏi chỉ được hỗ trợ cho các trường ngày và tuần',
+    questionMarkAlone: 'Dấu chấm hỏi phải là giá trị trường duy nhất',
+    unsupportedCharacter: 'Ký tự không được hỗ trợ trong trường',
+    expectedFields: 'Các trường {count} được yêu cầu cho định dạng Quartz đã chọn',
+    dayWeekQuestionMark: 'Trong biểu thức Quartz, trường ngày hoặc trường tuần phải là ?, nhưng không phải cả hai',
+    invalidExpression: 'Biểu thức cron không hợp lệ',
+  },
+}
 
 const proLocale = {
   ...locale,

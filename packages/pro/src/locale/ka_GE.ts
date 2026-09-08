@@ -1,6 +1,58 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/ka_GE'
-import cronLocale from '../cron/locale/ka_GE'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'მეორე',
+    minute: 'წუთი',
+    hour: 'საათი',
+    day: 'დღე',
+    month: 'თვე',
+    week: 'კვირა',
+    year: 'წელი',
+  },
+  modes: {
+    every: 'ყოველი',
+    interval: 'ინტერვალი',
+    specified: 'მითითებულია',
+    range: 'დიაპაზონი',
+    list: 'სია',
+  },
+  any: 'ნებისმიერი',
+  notSpecified: 'არ არის მითითებული',
+  every: 'ყოველი',
+  everyField: 'ყოველ {field}',
+  to: '-მდე',
+  expression: 'კრონის გამომეტყველება',
+  fieldList: 'კრონის ველები',
+  fieldStart: '{field} დაწყება',
+  fieldInterval: '{field} ინტერვალი',
+  fieldRangeStart: '{field} დიაპაზონის დაწყება',
+  fieldRangeEnd: '{field} დიაპაზონის დასასრული',
+  fieldValue: '{field} მნიშვნელობა',
+  fieldValues: '{field} მნიშვნელობები',
+  nextRun: 'შემდეგი გაშვება: {value}',
+  noFutureRun: 'მომავალი გაშვება არ არის',
+  everySeconds: 'ყოველ {value} წამში',
+  everyMinutes: 'ყოველ {value} წუთში',
+  everyDayAt: 'ყოველდღე {value}-ზე',
+  customSchedule: 'მორგებული განრიგი',
+  validation: {
+    invalidStep: 'არასწორი ნაბიჯის გამოხატულება',
+    stepOutOfRange: 'ნაბიჯი უნდა იყოს დადებითი მნიშვნელობა ველის დიაპაზონში',
+    invalidRange: 'დიაპაზონის არასწორი გამოხატულება',
+    valueOutOfRange: 'მნიშვნელობა უნდა იყოს {min}-დან {max}-მდე',
+    rangeOrder: 'დიაპაზონის დასაწყისი არ უნდა იყოს დიაპაზონის დასასრულზე მეტი',
+    fieldRequired: 'ველი აუცილებელია',
+    questionMarkField: 'კითხვის ნიშანი მხარდაჭერილია მხოლოდ დღის და კვირის ველებისთვის',
+    questionMarkAlone: 'კითხვის ნიშანი უნდა იყოს ველის ერთადერთი მნიშვნელობა',
+    unsupportedCharacter: 'მხარდაუჭერელი სიმბოლო ველში',
+    expectedFields: 'მოსალოდნელია {count} ველი არჩეული კვარცის ფორმატისთვის',
+    dayWeekQuestionMark: 'კვარცის გამოხატულებაში, დღის ველი ან კვირის ველი უნდა იყოს ?, მაგრამ არა ორივე',
+    invalidExpression: 'არასწორი cron გამოხატულება',
+  },
+}
 
 const proLocale = {
   ...locale,

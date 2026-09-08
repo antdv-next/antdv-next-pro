@@ -1,6 +1,58 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/en_US'
-import cronLocale from '../cron/locale/en_US'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'Second',
+    minute: 'Minute',
+    hour: 'Hour',
+    day: 'Day',
+    month: 'Month',
+    week: 'Week',
+    year: 'Year',
+  },
+  modes: {
+    every: 'Every',
+    interval: 'Interval',
+    specified: 'Specified',
+    range: 'Range',
+    list: 'List',
+  },
+  any: 'Any',
+  notSpecified: 'Not specified',
+  every: 'every',
+  everyField: 'Every {field}',
+  to: 'to',
+  expression: 'Cron expression',
+  fieldList: 'Cron fields',
+  fieldStart: '{field} start',
+  fieldInterval: '{field} interval',
+  fieldRangeStart: '{field} range start',
+  fieldRangeEnd: '{field} range end',
+  fieldValue: '{field} value',
+  fieldValues: '{field} values',
+  nextRun: 'Next run: {value}',
+  noFutureRun: 'No future run',
+  everySeconds: 'Every {value} seconds',
+  everyMinutes: 'Every {value} minutes',
+  everyDayAt: 'Every day at {value}',
+  customSchedule: 'Custom schedule',
+  validation: {
+    invalidStep: 'Invalid step expression',
+    stepOutOfRange: 'Step must be a positive value within the field range',
+    invalidRange: 'Invalid range expression',
+    valueOutOfRange: 'Value must be between {min} and {max}',
+    rangeOrder: 'Range start must not be greater than range end',
+    fieldRequired: 'Field is required',
+    questionMarkField: 'Question mark is only supported for day and week fields',
+    questionMarkAlone: 'Question mark must be the only field value',
+    unsupportedCharacter: 'Unsupported character in field',
+    expectedFields: 'Expected {count} fields for the selected Quartz format',
+    dayWeekQuestionMark: 'Exactly one of day and week must be ? in a Quartz expression',
+    invalidExpression: 'Invalid cron expression',
+  },
+}
 
 const proLocale = {
   ...locale,

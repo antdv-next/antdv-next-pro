@@ -1,6 +1,58 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/kn_IN'
-import cronLocale from '../cron/locale/kn_IN'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'ಎರಡನೇ',
+    minute: 'ನಿಮಿಷ',
+    hour: 'ಗಂಟೆ',
+    day: 'ದಿನ',
+    month: 'ತಿಂಗಳು',
+    week: 'ವಾರ',
+    year: 'ವರ್ಷ',
+  },
+  modes: {
+    every: 'ಪ್ರತಿ',
+    interval: 'ಮಧ್ಯಂತರ',
+    specified: 'ನಿರ್ದಿಷ್ಟಪಡಿಸಲಾಗಿದೆ',
+    range: 'ಶ್ರೇಣಿ',
+    list: 'ಪಟ್ಟಿ',
+  },
+  any: 'ಯಾವುದೇ',
+  notSpecified: 'ನಿರ್ದಿಷ್ಟಪಡಿಸಲಾಗಿಲ್ಲ',
+  every: 'ಪ್ರತಿ',
+  everyField: 'ಪ್ರತಿ {field}',
+  to: 'ಗೆ',
+  expression: 'ಕ್ರಾನ್ ಅಭಿವ್ಯಕ್ತಿ',
+  fieldList: 'ಕ್ರಾನ್ ಕ್ಷೇತ್ರಗಳು',
+  fieldStart: '{field} ಆರಂಭ',
+  fieldInterval: '{field} ಮಧ್ಯಂತರ',
+  fieldRangeStart: '{field} ಶ್ರೇಣಿಯ ಪ್ರಾರಂಭ',
+  fieldRangeEnd: '{field} ಶ್ರೇಣಿಯ ಅಂತ್ಯ',
+  fieldValue: '{field} ಮೌಲ್ಯ',
+  fieldValues: '{field} ಮೌಲ್ಯಗಳು',
+  nextRun: 'ಮುಂದಿನ ಓಟ: {value}',
+  noFutureRun: 'ಭವಿಷ್ಯದ ರನ್ ಇಲ್ಲ',
+  everySeconds: 'ಪ್ರತಿ {value} ಸೆಕೆಂಡುಗಳು',
+  everyMinutes: 'ಪ್ರತಿ {value} ನಿಮಿಷಗಳು',
+  everyDayAt: 'ಪ್ರತಿದಿನ {value} ಕ್ಕೆ',
+  customSchedule: 'ಕಸ್ಟಮ್ ವೇಳಾಪಟ್ಟಿ',
+  validation: {
+    invalidStep: 'ಅಮಾನ್ಯ ಹಂತದ ಅಭಿವ್ಯಕ್ತಿ',
+    stepOutOfRange: 'ಕ್ಷೇತ್ರ ವ್ಯಾಪ್ತಿಯೊಳಗೆ ಹಂತವು ಧನಾತ್ಮಕ ಮೌಲ್ಯವಾಗಿರಬೇಕು',
+    invalidRange: 'ಅಮಾನ್ಯ ಶ್ರೇಣಿಯ ಅಭಿವ್ಯಕ್ತಿ',
+    valueOutOfRange: 'ಮೌಲ್ಯವು {min} ಮತ್ತು {max} ನಡುವೆ ಇರಬೇಕು',
+    rangeOrder: 'ಶ್ರೇಣಿಯ ಪ್ರಾರಂಭವು ಶ್ರೇಣಿಯ ಅಂತ್ಯಕ್ಕಿಂತ ಹೆಚ್ಚಿರಬಾರದು',
+    fieldRequired: 'ಫೀಲ್ಡ್ ಅಗತ್ಯವಿದೆ',
+    questionMarkField: 'ಪ್ರಶ್ನೆ ಗುರುತು ದಿನ ಮತ್ತು ವಾರದ ಕ್ಷೇತ್ರಗಳಿಗೆ ಮಾತ್ರ ಬೆಂಬಲಿತವಾಗಿದೆ',
+    questionMarkAlone: 'ಪ್ರಶ್ನೆ ಗುರುತು ಮಾತ್ರ ಕ್ಷೇತ್ರ ಮೌಲ್ಯವಾಗಿರಬೇಕು',
+    unsupportedCharacter: 'ಕ್ಷೇತ್ರದಲ್ಲಿ ಬೆಂಬಲವಿಲ್ಲದ ಅಕ್ಷರ',
+    expectedFields: 'ಆಯ್ಕೆಮಾಡಿದ ಕ್ವಾರ್ಟ್ಜ್ ಫಾರ್ಮ್ಯಾಟ್‌ಗಾಗಿ ನಿರೀಕ್ಷಿತ {count} ಕ್ಷೇತ್ರಗಳು',
+    dayWeekQuestionMark: 'ಕ್ವಾರ್ಟ್ಜ್ ಅಭಿವ್ಯಕ್ತಿಯಲ್ಲಿ, ದಿನದ ಕ್ಷೇತ್ರ ಅಥವಾ ವಾರದ ಕ್ಷೇತ್ರವು ? ಆಗಿರಬೇಕು, ಆದರೆ ಎರಡೂ ಅಲ್ಲ',
+    invalidExpression: 'ಅಮಾನ್ಯ ಕ್ರಾನ್ ಅಭಿವ್ಯಕ್ತಿ',
+  },
+}
 
 const proLocale = {
   ...locale,

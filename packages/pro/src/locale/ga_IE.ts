@@ -1,6 +1,58 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/ga_IE'
-import cronLocale from '../cron/locale/ga_IE'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'Dara',
+    minute: 'Nóiméad',
+    hour: 'Uair',
+    day: 'Lá',
+    month: 'Mí',
+    week: 'Seachtain',
+    year: 'Bliain',
+  },
+  modes: {
+    every: 'Gach',
+    interval: 'Eatramh',
+    specified: 'Sonraithe',
+    range: 'Raon',
+    list: 'Liosta',
+  },
+  any: 'Aon',
+  notSpecified: 'Gan sonrú',
+  every: 'gach',
+  everyField: 'Gach {field}',
+  to: 'chuig',
+  expression: 'Cron abairt',
+  fieldList: 'réimsí Cron',
+  fieldStart: '{field} tosú',
+  fieldInterval: '{field} eatramh',
+  fieldRangeStart: '{field} raon tús',
+  fieldRangeEnd: '{field} deireadh raon',
+  fieldValue: '{field} luach',
+  fieldValues: '{field} luach',
+  nextRun: 'An chéad rith eile: {value}',
+  noFutureRun: 'Gan rith amach anseo',
+  everySeconds: 'Gach {value} soicind',
+  everyMinutes: 'Gach {value} nóiméad',
+  everyDayAt: 'Gach lá ag {value}',
+  customSchedule: 'Sceideal saincheaptha',
+  validation: {
+    invalidStep: 'Slonn céime neamhbhailí',
+    stepOutOfRange: 'Caithfidh luach dearfach a bheith sa chéim laistigh de raon na páirce',
+    invalidRange: 'Slonn raoin neamhbhailí',
+    valueOutOfRange: 'Caithfidh luach a bheith idir {min} agus {max}',
+    rangeOrder: 'Níor cheart go mbeadh tús an raoin níos mó ná deireadh an raoin',
+    fieldRequired: 'Tá páirc ag teastáil',
+    questionMarkField: 'Ní thacaítear ach le comhartha ceiste do réimsí lae agus seachtaine',
+    questionMarkAlone: 'Ní mór gurb é an comhartha ceiste an t-aon luach réimse',
+    unsupportedCharacter: 'Carachtar gan tacaíocht sa réimse',
+    expectedFields: 'Bhíothas ag súil le {count} réimse don fhormáid Grianchloch roghnaithe',
+    dayWeekQuestionMark: 'I slonn Grianchloch, caithfidh an réimse lae nó an réimse seachtaine a bheith ?, ach ní an dá',
+    invalidExpression: 'Slonn neamhbhailí cron',
+  },
+}
 
 const proLocale = {
   ...locale,

@@ -1,6 +1,58 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/zh_TW'
-import cronLocale from '../cron/locale/zh_TW'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: '秒',
+    minute: '分鐘',
+    hour: '小時',
+    day: '日',
+    month: '月',
+    week: '星期',
+    year: '年',
+  },
+  modes: {
+    every: '每',
+    interval: '間隔',
+    specified: '指定',
+    range: '範圍',
+    list: '清單',
+  },
+  any: '任意',
+  notSpecified: '不指定',
+  every: '每',
+  everyField: '每{field}',
+  to: '至',
+  expression: 'Cron 表達式',
+  fieldList: 'Cron 欄位',
+  fieldStart: '{field}起始值',
+  fieldInterval: '{field}間隔',
+  fieldRangeStart: '{field}範圍起始值',
+  fieldRangeEnd: '{field}範圍結束值',
+  fieldValue: '{field}值',
+  fieldValues: '{field}值',
+  nextRun: '下次執行：{value}',
+  noFutureRun: '無後續執行時間',
+  everySeconds: '每 {value} 秒',
+  everyMinutes: '每 {value} 分鐘',
+  everyDayAt: '每天 {value}',
+  customSchedule: '自訂排程',
+  validation: {
+    invalidStep: '步長表達式無效',
+    stepOutOfRange: '步長必須為欄位範圍內的正數',
+    invalidRange: '範圍表達式無效',
+    valueOutOfRange: '值必須在 {min} 到 {max} 之間',
+    rangeOrder: '範圍起始值不能大於結束值',
+    fieldRequired: '欄位不能為空',
+    questionMarkField: '問號僅支援日和星期欄位',
+    questionMarkAlone: '問號必須是欄位的唯一值',
+    unsupportedCharacter: '欄位中包含不支援的字元',
+    expectedFields: '目前 Quartz 格式需要 {count} 個欄位',
+    dayWeekQuestionMark: 'Quartz 表達式的日和星期欄位必須且只能有一個問號',
+    invalidExpression: 'Cron 表達式無效',
+  },
+}
 
 const proLocale = {
   ...locale,

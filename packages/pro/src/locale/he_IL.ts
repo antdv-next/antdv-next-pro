@@ -1,6 +1,58 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/he_IL'
-import cronLocale from '../cron/locale/he_IL'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'שניה',
+    minute: 'דקה',
+    hour: 'שעה',
+    day: 'יום',
+    month: 'חודש',
+    week: 'שבוע',
+    year: 'שנה',
+  },
+  modes: {
+    every: 'כל',
+    interval: 'מרווח',
+    specified: 'צוין',
+    range: 'טווח',
+    list: 'רשימה',
+  },
+  any: 'כל',
+  notSpecified: 'לא צוין',
+  every: 'כל',
+  everyField: 'כל {field}',
+  to: 'ל',
+  expression: 'הבעת קרון',
+  fieldList: 'שדות קרון',
+  fieldStart: '{field} התחל',
+  fieldInterval: 'מרווח {field}',
+  fieldRangeStart: '{field}',
+  fieldRangeEnd: 'סוף טווח {field}',
+  fieldValue: '{field}',
+  fieldValues: '{field} ערכים',
+  nextRun: 'ההרצה הבאה: {value}',
+  noFutureRun: 'אין ריצה עתידית',
+  everySeconds: 'כל {value} שניות',
+  everyMinutes: 'כל {value} דקות',
+  everyDayAt: 'כל יום בשעה {value}',
+  customSchedule: 'לוח זמנים מותאם אישית',
+  validation: {
+    invalidStep: 'ביטוי צעד לא חוקי',
+    stepOutOfRange: 'שלב חייב להיות ערך חיובי בטווח השדה',
+    invalidRange: 'ביטוי טווח לא חוקי',
+    valueOutOfRange: 'הערך חייב להיות בין {min} ל-{max}',
+    rangeOrder: 'תחילת הטווח לא יכולה להיות גדולה מסוף הטווח',
+    fieldRequired: 'נדרש שדה',
+    questionMarkField: 'סימן שאלה נתמך רק עבור שדות יום ושבוע',
+    questionMarkAlone: 'סימן שאלה חייב להיות ערך השדה היחיד',
+    unsupportedCharacter: 'תו לא נתמך בשדה',
+    expectedFields: 'צפויים {count} שדות עבור פורמט הקוורץ שנבחר',
+    dayWeekQuestionMark: 'בביטוי קוורץ, שדה היום או שדה השבוע חייבים להיות ?, אך לא שניהם',
+    invalidExpression: 'ביטוי cron לא חוקי',
+  },
+}
 
 const proLocale = {
   ...locale,

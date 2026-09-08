@@ -1,6 +1,58 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/cs_CZ'
-import cronLocale from '../cron/locale/cs_CZ'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'sekunda',
+    minute: 'minuta',
+    hour: 'hodina',
+    day: 'den',
+    month: 'Měsíc',
+    week: 'týden',
+    year: 'rok',
+  },
+  modes: {
+    every: 'Každý',
+    interval: 'Interval',
+    specified: 'Zadáno',
+    range: 'Rozsah',
+    list: 'Seznam',
+  },
+  any: 'Jakýkoli',
+  notSpecified: 'Neuvedeno',
+  every: 'každý',
+  everyField: 'Každých {field}',
+  to: 'až',
+  expression: 'Cron výraz',
+  fieldList: 'Cron pole',
+  fieldStart: '{field}',
+  fieldInterval: '{field} interval',
+  fieldRangeStart: '{field} začátek rozsahu',
+  fieldRangeEnd: '{field} konec rozsahu',
+  fieldValue: '{field}',
+  fieldValues: '{field} hodnot',
+  nextRun: 'Další spuštění: {value}',
+  noFutureRun: 'Žádný budoucí běh',
+  everySeconds: 'Každých {value} sekund',
+  everyMinutes: 'Každých {value} minut',
+  everyDayAt: 'Každý den v {value}',
+  customSchedule: 'Vlastní rozvrh',
+  validation: {
+    invalidStep: 'Neplatný výraz kroku',
+    stepOutOfRange: 'Krok musí být kladná hodnota v rozsahu pole',
+    invalidRange: 'Neplatný výraz rozsahu',
+    valueOutOfRange: 'Hodnota musí být mezi {min} a {max}',
+    rangeOrder: 'Začátek rozsahu nesmí být větší než konec rozsahu',
+    fieldRequired: 'Pole je povinné',
+    questionMarkField: 'Otazník je podporován pouze pro pole dne a týdne',
+    questionMarkAlone: 'Otazník musí být jedinou hodnotou pole',
+    unsupportedCharacter: 'Nepodporovaný znak v poli',
+    expectedFields: 'Očekávaných polí: {count} pro vybraný formát Quartz',
+    dayWeekQuestionMark: 'Ve výrazu Quartz musí být buď pole dne nebo pole týdne ?, ale ne obojí',
+    invalidExpression: 'Neplatný cron výraz',
+  },
+}
 
 const proLocale = {
   ...locale,

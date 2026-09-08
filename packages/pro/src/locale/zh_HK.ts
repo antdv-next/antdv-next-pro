@@ -1,10 +1,10 @@
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/zh_HK'
-import cronLocale from '../cron/locale/zh_TW'
+import sourceLocale from './zh_TW'
 
 const proLocale = {
   ...locale,
-  Cron: cronLocale,
+  Cron: sourceLocale.Cron,
 } satisfies ProLocale
 
 export default proLocale

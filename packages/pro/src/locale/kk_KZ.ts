@@ -1,6 +1,58 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/kk_KZ'
-import cronLocale from '../cron/locale/kk_KZ'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'секунд',
+    minute: 'Минут',
+    hour: 'Сағат',
+    day: 'Күн',
+    month: 'Ай',
+    week: 'Апта',
+    year: 'Жыл',
+  },
+  modes: {
+    every: 'Әр',
+    interval: 'аралық',
+    specified: 'Көрсетілген',
+    range: 'Ауқым',
+    list: 'Тізім',
+  },
+  any: 'Кез келген',
+  notSpecified: 'Көрсетілмеген',
+  every: 'сайын',
+  everyField: '{field} сайын',
+  to: 'дейін',
+  expression: 'Крон өрнегі',
+  fieldList: 'Cron өрістері',
+  fieldStart: '{field} басталуы',
+  fieldInterval: '{field} интервал',
+  fieldRangeStart: '{field} диапазонның басталуы',
+  fieldRangeEnd: '{field} ауқым соңы',
+  fieldValue: '{field} мәні',
+  fieldValues: '{field} мән',
+  nextRun: 'Келесі жүгіріс: {value}',
+  noFutureRun: 'Болашақта жүгіру жоқ',
+  everySeconds: '{value} секунд сайын',
+  everyMinutes: '{value} минут сайын',
+  everyDayAt: 'Күн сайын сағат {value}',
+  customSchedule: 'Арнайы кесте',
+  validation: {
+    invalidStep: 'Қадам өрнегі жарамсыз',
+    stepOutOfRange: 'Қадам өріс ауқымында оң мән болуы керек',
+    invalidRange: 'Ауқым өрнегі жарамсыз',
+    valueOutOfRange: 'Мән {min} және {max} арасында болуы керек',
+    rangeOrder: 'Ауқымның басталуы ауқым соңынан үлкен болмауы керек',
+    fieldRequired: 'Өріс міндетті түрде',
+    questionMarkField: 'Сұрақ белгісіне тек күн және апта өрістері үшін қолдау көрсетіледі',
+    questionMarkAlone: 'Сұрақ белгісі жалғыз өріс мәні болуы керек',
+    unsupportedCharacter: 'Өрістегі қолдау көрсетілмейтін таңба',
+    expectedFields: 'Таңдалған кварц пішімі үшін күтілетін {count} өріс',
+    dayWeekQuestionMark: 'Кварц өрнегінде күн немесе апта өрісі ? болуы керек, бірақ екеуі де емес',
+    invalidExpression: 'Cron өрнегі жарамсыз',
+  },
+}
 
 const proLocale = {
   ...locale,
