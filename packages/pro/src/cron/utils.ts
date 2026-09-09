@@ -247,6 +247,7 @@ export function getPreview(expression: string, showYear = false, locale: CronLoc
     expression: validation.expression,
     description: describeExpression(fields, locale),
     nextRunAt: cron.nextRun() ?? undefined,
+    nextRuns: cron.nextRuns(3),
   }
 }
 

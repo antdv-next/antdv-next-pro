@@ -51,8 +51,6 @@ const FIELD_LIMITS: Record<CronFieldName, readonly [number, number]> = {
 
 const MONTH_VALUES = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 const WEEK_VALUES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-const MONTH_OPTIONS = MONTH_VALUES.map(value => ({ label: value, value }))
-const WEEK_OPTIONS = WEEK_VALUES.map(value => ({ label: value, value }))
 const MODE_VALUES: CronFieldMode[] = ['every', 'interval', 'specified', 'range', 'list']
 const enUS = enUSLocale.Cron!
 
@@ -70,14 +68,32 @@ function getNumericParts(value: string, fallback: number, names?: string[]): num
   }).filter(Number.isFinite).concat(fallback)
 }
 
-function getNamedValues(value: string, names: string[]) {
-  return value.split(',').map((item) => {
+function getSelectedValues(value: string, names?: string[]): string[] {
+  if (!value || value === '*' || value === '?')
+    return []
+  return value.split(',').flatMap(item => item.split('/')[0]!.split('-')).map((item) => {
     const normalized = item.trim().toUpperCase()
+    if (names?.includes(normalized))
+      return normalized
     const numeric = Number(normalized)
-    if (Number.isInteger(numeric) && numeric >= 1 && numeric <= names.length)
-      return names[numeric - 1]
-    return names.includes(normalized) ? normalized : undefined
-  }).filter((item): item is string => item !== undefined)
+    if (Number.isInteger(numeric))
+      return names?.[numeric - 1] ?? normalized
+    return normalized
+  }).filter(Boolean)
+}
+
+function formatFieldValue(field: CronFieldName, value: string, locale?: CronLocale) {
+  const numericValue = Number(value)
+  const aliases = field === 'month' ? MONTH_VALUES : field === 'week' ? WEEK_VALUES : undefined
+  const normalized = aliases && Number.isInteger(numericValue) ? aliases[numericValue - 1] ?? value : value
+  return locale?.valueLabels?.[field]?.[normalized] ?? (field === 'second' || field === 'minute' || field === 'hour' ? normalized.padStart(2, '0') : normalized)
+}
+
+function formatDescriptionValue(field: CronFieldName, value: string, locale: CronLocale) {
+  const numericValue = Number(value)
+  const aliases = field === 'month' ? MONTH_VALUES : field === 'week' ? WEEK_VALUES : undefined
+  const normalized = aliases && Number.isInteger(numericValue) ? aliases[numericValue - 1] ?? value : value
+  return locale.valueLabels?.[field]?.[normalized] ?? normalized
 }
 
 const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>(
@@ -107,7 +123,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       const pickerLocale = localeContext.locale.value?.DatePicker?.lang
       return pickerLocale?.fieldDateTimeFormat ?? 'YYYY-MM-DD HH:mm:ss'
     })
-    const modeOptions = computed(() => MODE_VALUES.map(value => ({ label: locale.value.modes[value], value })))
+    const modeOptions = computed(() => MODE_VALUES.filter(value => value !== 'list').map(value => ({ label: locale.value.modes[value], value })))
     const editable = computed(() => !mergedDisabled.value && !mergedReadonly.value)
     const draftExpression = ref(props.value ?? '')
     const fields = ref<CronFields>(createDefaultFields(mergedShowYear.value))
@@ -135,8 +151,14 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     const displayedFields = computed<CronFieldName[]>(() => mergedShowYear.value
       ? ['second', 'minute', 'hour', 'day', 'month', 'week', 'year']
       : ['second', 'minute', 'hour', 'day', 'month', 'week'])
+    const cronId = `cron-${++cronIdSeed}`
     const activeValue = computed(() => fields.value[activeField.value] ?? '')
-    const activeMode = computed(() => getFieldMode(activeValue.value))
+    const activeMode = computed<CronFieldMode>(() => {
+      const mode = getFieldMode(activeValue.value)
+      if (mode === 'interval' && activeValue.value.startsWith('*/'))
+        return 'every'
+      return mode === 'list' ? 'specified' : mode
+    })
     useFormItemInputContextProvider(computed(() => ({
       ...formItemInputContext.value,
       status: mergedStatus.value,
@@ -144,7 +166,6 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     const preview = computed(() => validation.value.status === 'valid' && mergedPreview.value
       ? getPreview(draftExpression.value, mergedShowYear.value, locale.value)
       : undefined)
-    const cronId = `cron-${++cronIdSeed}`
     const rootClassName = computed(() => clsx(
       prefixCls.value,
       `${prefixCls.value}-${mergedSize.value}`,
@@ -226,6 +247,62 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       activeField.value = displayedFields.value[(index + offset + displayedFields.value.length) % displayedFields.value.length]!
     }
 
+    function getFieldDescriptionTemplate(field: CronFieldName, mode: Exclude<CronFieldMode, 'list'>, type: 'editor' | 'preview') {
+      return locale.value.fieldDescriptions?.[field]?.[mode]?.[type] ?? enUS.fieldDescriptions![field]?.[mode]?.[type] ?? ''
+    }
+
+    function getFieldDescriptionValues(field: CronFieldName, value: string) {
+      const [min, max] = FIELD_LIMITS[field]
+      const names = field === 'month' ? MONTH_VALUES : field === 'week' ? WEEK_VALUES : undefined
+      const values = getNumericParts(value, min, names)
+      const interval = Number(value.split('/')[1])
+      const selectedValues = getSelectedValues(value, names)
+        .map(item => formatDescriptionValue(field, item, locale.value))
+        .join(locale.value.valueSeparator ?? ', ')
+      return {
+        start: formatDescriptionValue(field, String(values[0] ?? min), locale.value),
+        end: formatDescriptionValue(field, String(values[1] ?? max), locale.value),
+        step: Number.isFinite(interval) && interval > 0 ? interval : 1,
+        values: selectedValues || formatDescriptionValue(field, String(min), locale.value),
+      }
+    }
+
+    function getModeDescription(mode: CronFieldMode) {
+      const field = activeField.value
+      const resolvedMode = mode === 'list' ? 'specified' : mode
+      return formatCronMessage(getFieldDescriptionTemplate(field, resolvedMode, 'preview'), getFieldDescriptionValues(field, activeValue.value))
+    }
+
+    function renderEditorTemplate(template: string, slots: Record<string, any>) {
+      return template.split(/(\{(?:start|step|end)\})/).filter(Boolean).map((part, index) => {
+        const slot = slots[part.slice(1, -1)]
+        return <span key={`${part}-${index}`}>{slot ?? part}</span>
+      })
+    }
+
+    function renderSpecifiedSelect(field: CronFieldName, value: string, names?: string[]) {
+      const [min, max] = FIELD_LIMITS[field]
+      const optionValues = names ?? (field === 'year' ? [] : Array.from({ length: max - min + 1 }, (_, index) => String(index + min)))
+      const options = optionValues.map(item => ({ value: item, label: formatFieldValue(field, item, locale.value) }))
+      const mode = field === 'year' ? 'tags' : 'multiple'
+      return (
+        <Select
+          mode={mode}
+          value={getSelectedValues(value, names)}
+          options={options}
+          size={mergedSize.value}
+          disabled={!editable.value}
+          showSearch
+          maxTagCount={3}
+          tokenSeparators={field === 'year' ? [','] : undefined}
+          class={`${prefixCls.value}-specific-select`}
+          placeholder={formatCronMessage(locale.value.fieldValues, { field: locale.value.fields[field] })}
+          aria-label={formatCronMessage(locale.value.fieldValues, { field: locale.value.fields[field] })}
+          onUpdate:value={nextValue => applyFieldValue(field, Array.isArray(nextValue) ? nextValue.map(item => String(item)).join(',') : String(nextValue ?? ''))}
+        />
+      )
+    }
+
     function renderFieldControls() {
       const field = activeField.value
       const [min, max] = FIELD_LIMITS[field]
@@ -234,35 +311,41 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       const names = field === 'month' ? MONTH_VALUES : field === 'week' ? WEEK_VALUES : undefined
       const values = getNumericParts(value, min, names)
       const numberProps = { min, max, size: mergedSize.value, disabled: !editable.value, controls: false }
+      const resolvedMode = mode === 'list' ? 'specified' : mode
+      const editorTemplate = getFieldDescriptionTemplate(field, resolvedMode, 'editor')
       if (mode === 'every') {
         if (field === 'day' || field === 'week') {
-          return <Segmented options={[{ label: locale.value.any, value: '*' }, { label: locale.value.notSpecified, value: '?' }]} value={value} disabled={!editable.value} onUpdate:value={nextValue => applyFieldValue(field, String(nextValue))} />
+          return (
+            <>
+              {formatCronMessage(editorTemplate, getFieldDescriptionValues(field, value))}
+              <Segmented options={[{ label: locale.value.any, value: '*' }, { label: locale.value.notSpecified, value: '?' }]} value={value} disabled={!editable.value} onUpdate:value={nextValue => applyFieldValue(field, String(nextValue))} />
+            </>
+          )
         }
-        return <span>{formatCronMessage(locale.value.everyField, { field: locale.value.fields[field] })}</span>
+        const interval = value.startsWith('*/') ? Number(value.slice(2)) : 1
+        return renderEditorTemplate(editorTemplate, {
+          step: <InputNumber {...numberProps} min={1} max={max - min + 1} value={Number.isFinite(interval) && interval > 0 ? interval : 1} aria-label={formatCronMessage(locale.value.fieldInterval, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, Number(nextValue ?? 1) === 1 ? '*' : `*/${nextValue ?? 1}`)} />,
+        })
       }
       if (mode === 'interval') {
-        return (
-          <>
-            <InputNumber {...numberProps} value={values[0]} aria-label={formatCronMessage(locale.value.fieldStart, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${nextValue ?? min}/${values[1] ?? 1}`)} />
-            <span>{locale.value.every}</span>
-            <InputNumber {...numberProps} min={1} max={max - min + 1} value={values[1] ?? 1} aria-label={formatCronMessage(locale.value.fieldInterval, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${values[0] ?? min}/${nextValue ?? 1}`)} />
-          </>
-        )
+        return renderEditorTemplate(editorTemplate, {
+          start: <InputNumber {...numberProps} value={values[0]} aria-label={formatCronMessage(locale.value.fieldStart, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${nextValue ?? min}/${values[1] ?? 1}`)} />,
+          step: <InputNumber {...numberProps} min={1} max={max - min + 1} value={values[1] ?? 1} aria-label={formatCronMessage(locale.value.fieldInterval, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${values[0] ?? min}/${nextValue ?? 1}`)} />,
+        })
       }
       if (mode === 'range') {
+        return renderEditorTemplate(editorTemplate, {
+          start: <InputNumber {...numberProps} value={values[0]} aria-label={formatCronMessage(locale.value.fieldRangeStart, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${nextValue ?? min}-${values[1] ?? max}`)} />,
+          end: <InputNumber {...numberProps} value={values[1] ?? max} aria-label={formatCronMessage(locale.value.fieldRangeEnd, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${values[0] ?? min}-${nextValue ?? max}`)} />,
+        })
+      }
+      if (mode === 'specified' || mode === 'list') {
         return (
           <>
-            <InputNumber {...numberProps} value={values[0]} aria-label={formatCronMessage(locale.value.fieldRangeStart, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${nextValue ?? min}-${values[1] ?? max}`)} />
-            <span>{locale.value.to}</span>
-            <InputNumber {...numberProps} value={values[1] ?? max} aria-label={formatCronMessage(locale.value.fieldRangeEnd, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${values[0] ?? min}-${nextValue ?? max}`)} />
+            {formatCronMessage(editorTemplate, getFieldDescriptionValues(field, value))}
+            {renderSpecifiedSelect(field, value, names)}
           </>
         )
-      }
-      if ((mode === 'specified' || mode === 'list') && names) {
-        return <Select mode="multiple" value={getNamedValues(value, names)} options={field === 'month' ? MONTH_OPTIONS : WEEK_OPTIONS} size={mergedSize.value} disabled={!editable.value} aria-label={formatCronMessage(locale.value.fieldValues, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, Array.isArray(nextValue) ? nextValue.join(',') : String(nextValue ?? ''))} />
-      }
-      if (mode === 'specified') {
-        return <InputNumber {...numberProps} value={values[0]} aria-label={formatCronMessage(locale.value.fieldValue, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, String(nextValue ?? min))} />
       }
       return <Input value={value} size={mergedSize.value} disabled={!editable.value} aria-label={formatCronMessage(locale.value.fieldValues, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, String(nextValue ?? ''))} />
     }
@@ -280,21 +363,44 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       <div class={rootClassName.value} style={rootStyle.value} data-size={mergedSize.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-readonly={mergedReadonly.value ? 'true' : 'false'} data-status={mergedStatus.value || undefined} aria-readonly={mergedReadonly.value || undefined} {...omitClassAndStyle(attrs as Record<string, any>)}>
         <Input value={draftExpression.value} size={mergedSize.value} readonly={mergedReadonly.value} disabled={mergedDisabled.value} class={mergedClassNames.value.input} style={mergedStyles.value.input} aria-label={locale.value.expression} onUpdate:value={handleExpressionInput} />
         <div class={clsx(`${prefixCls.value}-fields`, mergedClassNames.value.fields)} style={mergedStyles.value.fields}>
-          <div class={`${prefixCls.value}-field-tabs`} role="tablist" aria-label={locale.value.fieldList}>
+          <div class={clsx(`${prefixCls.value}-field-tabs`, mergedClassNames.value.navigation)} style={mergedStyles.value.navigation} role="tablist" aria-orientation="vertical" aria-label={locale.value.fieldList}>
             {displayedFields.value.map((field) => {
               const tabId = `${cronId}-tab-${field}`
               const panelId = `${cronId}-panel-${field}`
               const active = activeField.value === field
-              return <Button key={field} {...({ id: tabId, role: 'tab' } as any)} type="text" size="small" disabled={mergedDisabled.value} class={clsx(`${prefixCls.value}-field-tab`, { [`${prefixCls.value}-field-tab-active`]: active })} data-field={field} aria-selected={active} aria-controls={panelId} tabIndex={active ? 0 : -1} onClick={() => (activeField.value = field)} onKeydown={(event: KeyboardEvent) => handleFieldTabKeydown(field, event)}>{locale.value.fields[field]}</Button>
+              return (
+                <span
+                  key={field}
+                  id={tabId}
+                  role="tab"
+                  class={clsx(`${prefixCls.value}-field-tab`, `${prefixCls.value}-field-tab-label`, { [`${prefixCls.value}-field-tab-active`]: active })}
+                  data-field={field}
+                  aria-selected={active}
+                  aria-controls={panelId}
+                  aria-disabled={mergedDisabled.value || undefined}
+                  tabindex={mergedDisabled.value || !active ? -1 : 0}
+                  onClick={() => {
+                    if (!mergedDisabled.value)
+                      activeField.value = field
+                  }}
+                  onKeydown={(event: KeyboardEvent) => handleFieldTabKeydown(field, event)}
+                >
+                  {locale.value.fields[field]}
+                </span>
+              )
             })}
           </div>
-          <div id={`${cronId}-panel-${activeField.value}`} class={clsx(`${prefixCls.value}-field`, mergedClassNames.value.field)} style={mergedStyles.value.field} role="tabpanel" aria-labelledby={`${cronId}-tab-${activeField.value}`} data-field={activeField.value} data-mode={activeMode.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-invalid={validation.value.status === 'invalid' ? 'true' : 'false'}>
-            {slots.field?.({ field: activeField.value, value: activeValue.value, disabled: mergedDisabled.value, readonly: mergedReadonly.value }) ?? (
-              <>
-                <Segmented options={modeOptions.value} value={activeMode.value} size={mergedSize.value} disabled={!editable.value} onUpdate:value={nextValue => setFieldMode(nextValue as CronFieldMode)} />
-                <div class={`${prefixCls.value}-controls`}>{renderFieldControls()}</div>
-              </>
-            )}
+          <div class={clsx(`${prefixCls.value}-editor`, mergedClassNames.value.editor)} style={mergedStyles.value.editor}>
+            <div id={`${cronId}-panel-${activeField.value}`} class={clsx(`${prefixCls.value}-field`, mergedClassNames.value.field)} style={mergedStyles.value.field} role="tabpanel" aria-labelledby={`${cronId}-tab-${activeField.value}`} data-field={activeField.value} data-mode={activeMode.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-invalid={validation.value.status === 'invalid' ? 'true' : 'false'}>
+              {slots.field?.({ field: activeField.value, value: activeValue.value, disabled: mergedDisabled.value, readonly: mergedReadonly.value }) ?? (
+                <>
+                  <div class={`${prefixCls.value}-field-title`}>{locale.value.fields[activeField.value]}</div>
+                  <Segmented options={modeOptions.value} value={activeMode.value} size={mergedSize.value} disabled={!editable.value} onUpdate:value={nextValue => setFieldMode(nextValue as CronFieldMode)} />
+                  <div class={`${prefixCls.value}-controls`}>{renderFieldControls()}</div>
+                  <div class={`${prefixCls.value}-field-control-summary`}>{getModeDescription(activeMode.value)}</div>
+                </>
+              )}
+            </div>
           </div>
         </div>
         {mergedPresets.value.length > 0 && <div class={clsx(`${prefixCls.value}-presets`, mergedClassNames.value.presets)} style={mergedStyles.value.presets}>{slots.presets?.() ?? mergedPresets.value.map(preset => <Button key={preset.value} size="small" disabled={!editable.value} onClick={() => applyExpression(preset.value, 'editor')}>{preset.label}</Button>)}</div>}
@@ -303,7 +409,9 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
             {slots.preview?.(preview.value) ?? (
               <>
                 <span>{preview.value.description}</span>
-                <span>{preview.value.nextRunAt ? formatCronMessage(locale.value.nextRun, { value: dayjs(preview.value.nextRunAt).locale(localeCode.value).format(dateTimeFormat.value) }) : locale.value.noFutureRun}</span>
+                {preview.value.nextRuns?.length
+                  ? <ul class={`${prefixCls.value}-preview-list`}>{preview.value.nextRuns.map(run => <li key={run.getTime()}>{formatCronMessage(locale.value.nextRun, { value: dayjs(run).locale(localeCode.value).format(dateTimeFormat.value) })}</li>)}</ul>
+                  : <span>{locale.value.noFutureRun}</span>}
               </>
             )}
           </div>
@@ -317,7 +425,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
 
 ;(Cron as any).install = (app: App) => app.component(Cron.name, Cron)
 
-export type { CronClassNamesType, CronConfig, CronEmits, CronError, CronFieldMode, CronFieldName, CronFields, CronFieldSlotProps, CronLocale, CronPreset, CronPreviewResult, CronProps, CronSemanticClassNames, CronSemanticName, CronSemanticStyles, CronSize, CronSlots, CronStatus, CronStylesType, CronValidateResult, CronValidateStatus } from './types'
+export type { CronClassNamesType, CronConfig, CronEmits, CronError, CronFieldDescriptions, CronFieldMode, CronFieldModeDescription, CronFieldName, CronFields, CronFieldSlotProps, CronLocale, CronPreset, CronPreviewResult, CronProps, CronSemanticClassNames, CronSemanticName, CronSemanticStyles, CronSize, CronSlots, CronStatus, CronStylesType, CronValidateResult, CronValidateStatus } from './types'
 export default Cron
 export { Cron }
 export { validateExpression as validateCronExpression } from './utils'

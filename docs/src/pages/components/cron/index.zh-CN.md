@@ -35,7 +35,7 @@ group:
 | readonly | 可选择和复制表达式，但不能编辑 | `boolean` | `false` | ✓ |
 | size | 组件尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
 | status | 手动设置校验状态，默认跟随 Form.Item | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - |
-| preview | 展示说明和本地时区的下一次执行时间 | `boolean` | `false` | ✓ |
+| preview | 展示说明和本地时区的未来执行时间 | `boolean` | `false` | ✓ |
 | presets | 常用表达式快捷项 | `CronPreset[]` | `[]` | ✓ |
 | classes | 语义化 class 定制 | `CronClassNamesType` | - | ✓ |
 | styles | 语义化 style 定制 | `CronStylesType` | - | ✓ |
@@ -83,6 +83,8 @@ const rules = [
 
 组件不会识别或兼容五字段 Linux Cron。
 
+所有字段的“指定”模式均使用铺满宽度的多选下拉框。年份还支持通过标签输入自定义值，月份和星期选项会显示标准名称。
+
 ## 国际化
 
 Cron 与 DatePicker 一样读取 `ConfigProvider` 的 locale，无需单独设置语言属性。Antdv Next 提供的 72 个语言入口均有对应的 Pro locale 包装器并包含 Cron 文案。使用 Pro locale 包装器可同时配置 Antdv Next 与 Cron；dayjs 的语言包仍需由应用显式引入：
@@ -100,7 +102,7 @@ import 'dayjs/locale/zh-cn'
 </template>
 ```
 
-预览时间使用 dayjs 实例级 locale，并复用 `locale.DatePicker.lang.fieldDateTimeFormat`；组件不会修改全局 `dayjs.locale()`。若直接传入不含 `Cron` 文案的 Antdv Next 原始语言包，Cron 界面会回退为英文。
+表达式有效时，输入框下方会显示人类可读描述。开启 `preview` 后，面板底部默认展示未来 3 次执行时间。预览时间使用 dayjs 实例级 locale，并复用 `locale.DatePicker.lang.fieldDateTimeFormat`；组件不会修改全局 `dayjs.locale()`。若直接传入不含 `Cron` 文案的 Antdv Next 原始语言包，Cron 界面会回退为英文。
 
 ## 语义化 DOM
 

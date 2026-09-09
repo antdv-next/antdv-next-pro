@@ -34,7 +34,7 @@ group:
 | readonly | Keep the expression selectable but prevent edits | `boolean` | `false` | ✓ |
 | size | Control size | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
 | status | Set validation status explicitly; follows Form.Item by default | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - |
-| preview | Show the description and next local execution time | `boolean` | `false` | ✓ |
+| preview | Show the description and future local execution times | `boolean` | `false` | ✓ |
 | presets | Quick expression choices | `CronPreset[]` | `[]` | ✓ |
 | classes | Semantic class customization | `CronClassNamesType` | - | ✓ |
 | styles | Semantic style customization | `CronStylesType` | - | ✓ |
@@ -91,6 +91,8 @@ Cron accepts exactly six fields by default: `second minute hour day month week`.
 
 It intentionally does not infer or accept the five-field Linux cron format.
 
+The specified mode uses a full-width multi-select control for every field. The year field also accepts custom values through tags input, while month and weekday options display their standard names.
+
 ## Internationalization
 
 Like DatePicker, Cron reads the locale from `ConfigProvider`; it does not need a separate locale prop. All 72 locales shipped by Antdv Next have matching Pro locale wrappers with Cron messages. Use a Pro locale wrapper to configure Antdv Next and Cron together, and import the matching dayjs locale in the application:
@@ -108,7 +110,7 @@ import 'dayjs/locale/en'
 </template>
 ```
 
-The preview uses an instance-level dayjs locale and reuses `locale.DatePicker.lang.fieldDateTimeFormat`; the component never changes global `dayjs.locale()`. A plain Antdv Next locale without `Cron` messages falls back to English for the Cron interface.
+Valid expressions show a human-readable description below the input. With `preview`, the panel shows the next three execution times by default. The preview uses an instance-level dayjs locale and reuses `locale.DatePicker.lang.fieldDateTimeFormat`; the component never changes global `dayjs.locale()`. A plain Antdv Next locale without `Cron` messages falls back to English for the Cron interface.
 
 ## Semantic DOM
 

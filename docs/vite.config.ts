@@ -65,6 +65,10 @@ export default defineConfig({
         replacement: path.resolve(baseUrl, '../packages/pro/src/scrollbar/index.tsx'),
       },
       {
+        find: /^@antdv-next\/pro\/locale\/(.+)$/,
+        replacement: path.resolve(baseUrl, '../packages/pro/src/locale/$1.ts'),
+      },
+      {
         find: /^@antdv-next\/pro$/,
         replacement: path.resolve(baseUrl, '../packages/pro/src/index.ts'),
       },

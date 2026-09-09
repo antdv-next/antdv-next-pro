@@ -14,309 +14,288 @@ exports[`cron demo > renders basic correctly 1`] = `
     value="0 0 9 * * ?"
   />
   <div
+    class="ant-cron-description"
+  >
+    Every day at 09:00
+  </div>
+  <div
     class="ant-cron-fields"
   >
     <div
       aria-label="Cron fields"
+      aria-orientation="vertical"
       class="ant-cron-field-tabs"
       role="tablist"
     >
-      <button
+      <span
         aria-controls="cron-1-panel-second"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="second"
         id="cron-1-tab-second"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Second
-        </span>
-        <!---->
-      </button>
-      <button
+        Second
+      </span>
+      <span
         aria-controls="cron-1-panel-minute"
         aria-selected="true"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab ant-cron-field-tab-active"
+        class="ant-cron-field-tab ant-cron-field-tab-label ant-cron-field-tab-active"
         data-field="minute"
         id="cron-1-tab-minute"
         role="tab"
         tabindex="0"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Minute
-        </span>
-        <!---->
-      </button>
-      <button
+        Minute
+      </span>
+      <span
         aria-controls="cron-1-panel-hour"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="hour"
         id="cron-1-tab-hour"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Hour
-        </span>
-        <!---->
-      </button>
-      <button
+        Hour
+      </span>
+      <span
         aria-controls="cron-1-panel-day"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="day"
         id="cron-1-tab-day"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Day
-        </span>
-        <!---->
-      </button>
-      <button
+        Day
+      </span>
+      <span
         aria-controls="cron-1-panel-month"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="month"
         id="cron-1-tab-month"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Month
-        </span>
-        <!---->
-      </button>
-      <button
+        Month
+      </span>
+      <span
         aria-controls="cron-1-panel-week"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="week"
         id="cron-1-tab-week"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Week
-        </span>
-        <!---->
-      </button>
+        Week
+      </span>
     </div>
     <div
-      aria-labelledby="cron-1-tab-minute"
-      class="ant-cron-field"
-      data-disabled="false"
-      data-field="minute"
-      data-invalid="false"
-      data-mode="specified"
-      id="cron-1-panel-minute"
-      role="tabpanel"
+      class="ant-cron-editor"
     >
       <div
-        aria-label="segmented control"
-        aria-orientation="horizontal"
-        class="ant-segmented css-var-root css-var-root"
-        role="radiogroup"
-        size="medium"
-        tabindex="0"
+        aria-labelledby="cron-1-tab-minute"
+        class="ant-cron-field"
+        data-disabled="false"
+        data-field="minute"
+        data-invalid="false"
+        data-mode="specified"
+        id="cron-1-panel-minute"
+        role="tabpanel"
       >
         <div
-          class="ant-segmented-group"
+          class="ant-cron-field-title"
         >
-          <!---->
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Every"
-            >
-              Every
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Interval"
-            >
-              Interval
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item ant-segmented-item-selected"
-          >
-            <input
-              checked=""
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Specified"
-            >
-              Specified
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Range"
-            >
-              Range
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="List"
-            >
-              List
-            </div>
-          </label>
+          Minute
         </div>
-      </div>
-      <div
-        class="ant-cron-controls"
-      >
         <div
-          class="ant-input-number ant-input-number-mode-input css-var-root ant-input-number-css-var ant-input-number-outlined ant-input-number-without-controls"
+          aria-label="segmented control"
+          aria-orientation="horizontal"
+          class="ant-segmented css-var-root css-var-root"
+          role="radiogroup"
+          size="medium"
+          tabindex="0"
+        >
+          <div
+            class="ant-segmented-group"
+          >
+            <!---->
+            <label
+              class="ant-segmented-item"
+            >
+              <input
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Every"
+              >
+                Every
+              </div>
+            </label>
+            <label
+              class="ant-segmented-item"
+            >
+              <input
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Interval"
+              >
+                Interval
+              </div>
+            </label>
+            <label
+              class="ant-segmented-item ant-segmented-item-selected"
+            >
+              <input
+                checked=""
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Specified"
+              >
+                Specified
+              </div>
+            </label>
+            <label
+              class="ant-segmented-item"
+            >
+              <input
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Range"
+              >
+                Range
+              </div>
+            </label>
+          </div>
+        </div>
+        <div
+          class="ant-cron-field-mode-description"
+        >
+          Specified: Minute values
+        </div>
+        <div
+          class="ant-cron-controls"
         >
           <!---->
-          <!---->
-          <input
-            aria-label="Minute value"
-            aria-valuemax="59"
-            aria-valuemin="0"
-            aria-valuenow="0"
-            autocomplete="off"
-            class="ant-input-number-input"
-            role="spinbutton"
-            step="1"
-            value="0"
-          />
-          <!---->
-          <!---->
+          <div
+            aria-label="Minute values"
+            class="ant-select ant-select-outlined ant-cron-specific-select css-var-root ant-select-css-var ant-select-multiple ant-select-show-arrow ant-select-show-search"
+            size="medium"
+          >
+            <!---->
+            <div
+              class="ant-select-content"
+            >
+              <!---->
+              <div
+                class="ant-select-content-item"
+                style="opacity: 1;"
+              >
+                <span
+                  class="ant-select-selection-item"
+                  title="00"
+                >
+                  <span
+                    class="ant-select-selection-item-content"
+                  >
+                    00
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    class="ant-select-selection-item-remove"
+                    style="user-select: none;"
+                    unselectable="on"
+                  >
+                    <span
+                      aria-label="close"
+                      class="anticon anticon-close"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        data-icon="close"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7 57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7 287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0 010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0 010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512 454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+              </div>
+              <!---->
+              <div
+                class="ant-select-content-item ant-select-content-item-suffix"
+                style="opacity: 1;"
+              >
+                <input
+                  aria-autocomplete="list"
+                  aria-controls="test-id_list"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-owns="test-id_list"
+                  autocomplete="off"
+                  class="ant-select-input"
+                  id="test-id"
+                  role="combobox"
+                  type="search"
+                  value=""
+                />
+              </div>
+              <!---->
+            </div>
+            <div
+              class="ant-select-suffix"
+            >
+              <span
+                aria-label="down"
+                class="anticon anticon-down"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="down"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                  />
+                </svg>
+              </span>
+              <!---->
+            </div>
+            <!---->
+            <!---->
+          </div>
           <!---->
         </div>
       </div>
@@ -342,333 +321,230 @@ exports[`cron demo > renders presets correctly 1`] = `
     value="0 */5 * * * ?"
   />
   <div
+    class="ant-cron-description"
+  >
+    Every 5 minutes
+  </div>
+  <div
     class="ant-cron-fields"
   >
     <div
       aria-label="Cron fields"
+      aria-orientation="vertical"
       class="ant-cron-field-tabs"
       role="tablist"
     >
-      <button
+      <span
         aria-controls="cron-2-panel-second"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="second"
         id="cron-2-tab-second"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Second
-        </span>
-        <!---->
-      </button>
-      <button
+        Second
+      </span>
+      <span
         aria-controls="cron-2-panel-minute"
         aria-selected="true"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab ant-cron-field-tab-active"
+        class="ant-cron-field-tab ant-cron-field-tab-label ant-cron-field-tab-active"
         data-field="minute"
         id="cron-2-tab-minute"
         role="tab"
         tabindex="0"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Minute
-        </span>
-        <!---->
-      </button>
-      <button
+        Minute
+      </span>
+      <span
         aria-controls="cron-2-panel-hour"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="hour"
         id="cron-2-tab-hour"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Hour
-        </span>
-        <!---->
-      </button>
-      <button
+        Hour
+      </span>
+      <span
         aria-controls="cron-2-panel-day"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="day"
         id="cron-2-tab-day"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Day
-        </span>
-        <!---->
-      </button>
-      <button
+        Day
+      </span>
+      <span
         aria-controls="cron-2-panel-month"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="month"
         id="cron-2-tab-month"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Month
-        </span>
-        <!---->
-      </button>
-      <button
+        Month
+      </span>
+      <span
         aria-controls="cron-2-panel-week"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="week"
         id="cron-2-tab-week"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Week
-        </span>
-        <!---->
-      </button>
+        Week
+      </span>
     </div>
     <div
-      aria-labelledby="cron-2-tab-minute"
-      class="ant-cron-field"
-      data-disabled="false"
-      data-field="minute"
-      data-invalid="false"
-      data-mode="interval"
-      id="cron-2-panel-minute"
-      role="tabpanel"
+      class="ant-cron-editor"
     >
       <div
-        aria-label="segmented control"
-        aria-orientation="horizontal"
-        class="ant-segmented css-var-root css-var-root"
-        role="radiogroup"
-        size="medium"
-        tabindex="0"
+        aria-labelledby="cron-2-tab-minute"
+        class="ant-cron-field"
+        data-disabled="false"
+        data-field="minute"
+        data-invalid="false"
+        data-mode="interval"
+        id="cron-2-panel-minute"
+        role="tabpanel"
       >
         <div
-          class="ant-segmented-group"
+          class="ant-cron-field-title"
         >
-          <!---->
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Every"
-            >
-              Every
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item ant-segmented-item-selected"
-          >
-            <input
-              checked=""
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Interval"
-            >
-              Interval
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Specified"
-            >
-              Specified
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Range"
-            >
-              Range
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="List"
-            >
-              List
-            </div>
-          </label>
+          Minute
         </div>
-      </div>
-      <div
-        class="ant-cron-controls"
-      >
         <div
-          class="ant-input-number ant-input-number-mode-input css-var-root ant-input-number-css-var ant-input-number-outlined ant-input-number-without-controls"
+          aria-label="segmented control"
+          aria-orientation="horizontal"
+          class="ant-segmented css-var-root css-var-root"
+          role="radiogroup"
+          size="medium"
+          tabindex="0"
         >
-          <!---->
-          <!---->
-          <input
-            aria-label="Minute start"
-            aria-valuemax="59"
-            aria-valuemin="0"
-            aria-valuenow="5"
-            autocomplete="off"
-            class="ant-input-number-input"
-            role="spinbutton"
-            step="1"
-            value="5"
-          />
-          <!---->
-          <!---->
-          <!---->
+          <div
+            class="ant-segmented-group"
+          >
+            <!---->
+            <label
+              class="ant-segmented-item"
+            >
+              <input
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Every"
+              >
+                Every
+              </div>
+            </label>
+            <label
+              class="ant-segmented-item ant-segmented-item-selected"
+            >
+              <input
+                checked=""
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Interval"
+              >
+                Interval
+              </div>
+            </label>
+            <label
+              class="ant-segmented-item"
+            >
+              <input
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Specified"
+              >
+                Specified
+              </div>
+            </label>
+            <label
+              class="ant-segmented-item"
+            >
+              <input
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Range"
+              >
+                Range
+              </div>
+            </label>
+          </div>
         </div>
-        <span>
-          every
-        </span>
         <div
-          class="ant-input-number ant-input-number-mode-input css-var-root ant-input-number-css-var ant-input-number-outlined ant-input-number-without-controls ant-input-number-out-of-range"
+          class="ant-cron-field-mode-description"
         >
-          <!---->
-          <!---->
-          <input
-            aria-label="Minute interval"
-            aria-valuemax="60"
-            aria-valuemin="1"
-            aria-valuenow="0"
-            autocomplete="off"
-            class="ant-input-number-input"
-            role="spinbutton"
-            step="1"
-            value="0"
-          />
-          <!---->
-          <!---->
-          <!---->
+          Interval: Every Minute
+        </div>
+        <div
+          class="ant-cron-controls"
+        >
+          <div
+            class="ant-input-number ant-input-number-mode-input css-var-root ant-input-number-css-var ant-input-number-outlined ant-input-number-without-controls"
+          >
+            <!---->
+            <!---->
+            <input
+              aria-label="Minute start"
+              aria-valuemax="59"
+              aria-valuemin="0"
+              aria-valuenow="5"
+              autocomplete="off"
+              class="ant-input-number-input"
+              role="spinbutton"
+              step="1"
+              value="5"
+            />
+            <!---->
+            <!---->
+            <!---->
+          </div>
+          <span>
+            every
+          </span>
+          <div
+            class="ant-input-number ant-input-number-mode-input css-var-root ant-input-number-css-var ant-input-number-outlined ant-input-number-without-controls ant-input-number-out-of-range"
+          >
+            <!---->
+            <!---->
+            <input
+              aria-label="Minute interval"
+              aria-valuemax="60"
+              aria-valuemin="1"
+              aria-valuenow="0"
+              autocomplete="off"
+              class="ant-input-number-input"
+              role="spinbutton"
+              step="1"
+              value="0"
+            />
+            <!---->
+            <!---->
+            <!---->
+          </div>
         </div>
       </div>
     </div>
@@ -752,9 +628,19 @@ exports[`cron demo > renders presets correctly 1`] = `
     <span>
       Every 5 minutes
     </span>
-    <span>
-      Next run: 2026-09-08 00:05:00
-    </span>
+    <ul
+      class="ant-cron-preview-list"
+    >
+      <li>
+        Next run: 2026-09-08 00:05:00
+      </li>
+      <li>
+        Next run: 2026-09-08 00:10:00
+      </li>
+      <li>
+        Next run: 2026-09-08 00:15:00
+      </li>
+    </ul>
   </div>
   <!---->
 </div>
@@ -774,310 +660,289 @@ exports[`cron demo > renders semantic correctly 1`] = `
     value="0 0 18 ? * MON,FRI"
   />
   <div
+    class="ant-cron-description"
+  >
+    Custom schedule
+  </div>
+  <div
     class="ant-cron-fields"
     style="max-width: 680px;"
   >
     <div
       aria-label="Cron fields"
+      aria-orientation="vertical"
       class="ant-cron-field-tabs"
       role="tablist"
     >
-      <button
+      <span
         aria-controls="cron-3-panel-second"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="second"
         id="cron-3-tab-second"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Second
-        </span>
-        <!---->
-      </button>
-      <button
+        Second
+      </span>
+      <span
         aria-controls="cron-3-panel-minute"
         aria-selected="true"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab ant-cron-field-tab-active"
+        class="ant-cron-field-tab ant-cron-field-tab-label ant-cron-field-tab-active"
         data-field="minute"
         id="cron-3-tab-minute"
         role="tab"
         tabindex="0"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Minute
-        </span>
-        <!---->
-      </button>
-      <button
+        Minute
+      </span>
+      <span
         aria-controls="cron-3-panel-hour"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="hour"
         id="cron-3-tab-hour"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Hour
-        </span>
-        <!---->
-      </button>
-      <button
+        Hour
+      </span>
+      <span
         aria-controls="cron-3-panel-day"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="day"
         id="cron-3-tab-day"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Day
-        </span>
-        <!---->
-      </button>
-      <button
+        Day
+      </span>
+      <span
         aria-controls="cron-3-panel-month"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="month"
         id="cron-3-tab-month"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Month
-        </span>
-        <!---->
-      </button>
-      <button
+        Month
+      </span>
+      <span
         aria-controls="cron-3-panel-week"
         aria-selected="false"
-        class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-cron-field-tab"
+        class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="week"
         id="cron-3-tab-week"
         role="tab"
         tabindex="-1"
-        type="button"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
-        >
-          <!---->
-        </transition-stub>
-        <span>
-          Week
-        </span>
-        <!---->
-      </button>
+        Week
+      </span>
     </div>
     <div
-      aria-labelledby="cron-3-tab-minute"
-      class="ant-cron-field"
-      data-disabled="false"
-      data-field="minute"
-      data-invalid="false"
-      data-mode="specified"
-      id="cron-3-panel-minute"
-      role="tabpanel"
+      class="ant-cron-editor"
     >
       <div
-        aria-label="segmented control"
-        aria-orientation="horizontal"
-        class="ant-segmented css-var-root css-var-root"
-        role="radiogroup"
-        size="medium"
-        tabindex="0"
+        aria-labelledby="cron-3-tab-minute"
+        class="ant-cron-field"
+        data-disabled="false"
+        data-field="minute"
+        data-invalid="false"
+        data-mode="specified"
+        id="cron-3-panel-minute"
+        role="tabpanel"
       >
         <div
-          class="ant-segmented-group"
+          class="ant-cron-field-title"
         >
-          <!---->
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Every"
-            >
-              Every
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Interval"
-            >
-              Interval
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item ant-segmented-item-selected"
-          >
-            <input
-              checked=""
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Specified"
-            >
-              Specified
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="Range"
-            >
-              Range
-            </div>
-          </label>
-          <label
-            class="ant-segmented-item"
-          >
-            <input
-              class="ant-segmented-item-input"
-              name="v-0"
-              type="radio"
-            />
-            <div
-              class="ant-segmented-item-label"
-              title="List"
-            >
-              List
-            </div>
-          </label>
+          Minute
         </div>
-      </div>
-      <div
-        class="ant-cron-controls"
-      >
         <div
-          class="ant-input-number ant-input-number-mode-input css-var-root ant-input-number-css-var ant-input-number-outlined ant-input-number-without-controls"
+          aria-label="segmented control"
+          aria-orientation="horizontal"
+          class="ant-segmented css-var-root css-var-root"
+          role="radiogroup"
+          size="medium"
+          tabindex="0"
+        >
+          <div
+            class="ant-segmented-group"
+          >
+            <!---->
+            <label
+              class="ant-segmented-item"
+            >
+              <input
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Every"
+              >
+                Every
+              </div>
+            </label>
+            <label
+              class="ant-segmented-item"
+            >
+              <input
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Interval"
+              >
+                Interval
+              </div>
+            </label>
+            <label
+              class="ant-segmented-item ant-segmented-item-selected"
+            >
+              <input
+                checked=""
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Specified"
+              >
+                Specified
+              </div>
+            </label>
+            <label
+              class="ant-segmented-item"
+            >
+              <input
+                class="ant-segmented-item-input"
+                name="v-0"
+                type="radio"
+              />
+              <div
+                class="ant-segmented-item-label"
+                title="Range"
+              >
+                Range
+              </div>
+            </label>
+          </div>
+        </div>
+        <div
+          class="ant-cron-field-mode-description"
+        >
+          Specified: Minute values
+        </div>
+        <div
+          class="ant-cron-controls"
         >
           <!---->
-          <!---->
-          <input
-            aria-label="Minute value"
-            aria-valuemax="59"
-            aria-valuemin="0"
-            aria-valuenow="0"
-            autocomplete="off"
-            class="ant-input-number-input"
-            role="spinbutton"
-            step="1"
-            value="0"
-          />
-          <!---->
-          <!---->
+          <div
+            aria-label="Minute values"
+            class="ant-select ant-select-outlined ant-cron-specific-select css-var-root ant-select-css-var ant-select-multiple ant-select-show-arrow ant-select-show-search"
+            size="medium"
+          >
+            <!---->
+            <div
+              class="ant-select-content"
+            >
+              <!---->
+              <div
+                class="ant-select-content-item"
+                style="opacity: 1;"
+              >
+                <span
+                  class="ant-select-selection-item"
+                  title="00"
+                >
+                  <span
+                    class="ant-select-selection-item-content"
+                  >
+                    00
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    class="ant-select-selection-item-remove"
+                    style="user-select: none;"
+                    unselectable="on"
+                  >
+                    <span
+                      aria-label="close"
+                      class="anticon anticon-close"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        data-icon="close"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7 57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7 287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0 010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0 010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512 454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+              </div>
+              <!---->
+              <div
+                class="ant-select-content-item ant-select-content-item-suffix"
+                style="opacity: 1;"
+              >
+                <input
+                  aria-autocomplete="list"
+                  aria-controls="test-id_list"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  aria-owns="test-id_list"
+                  autocomplete="off"
+                  class="ant-select-input"
+                  id="test-id"
+                  role="combobox"
+                  type="search"
+                  value=""
+                />
+              </div>
+              <!---->
+            </div>
+            <div
+              class="ant-select-suffix"
+            >
+              <span
+                aria-label="down"
+                class="anticon anticon-down"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="down"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                  />
+                </svg>
+              </span>
+              <!---->
+            </div>
+            <!---->
+            <!---->
+          </div>
           <!---->
         </div>
       </div>
@@ -1090,9 +955,19 @@ exports[`cron demo > renders semantic correctly 1`] = `
     <span>
       Custom schedule
     </span>
-    <span>
-      Next run: 2026-09-08 18:00:00
-    </span>
+    <ul
+      class="ant-cron-preview-list"
+    >
+      <li>
+        Next run: 2026-09-08 18:00:00
+      </li>
+      <li>
+        Next run: 2026-09-09 18:00:00
+      </li>
+      <li>
+        Next run: 2026-09-10 18:00:00
+      </li>
+    </ul>
   </div>
   <!---->
 </div>

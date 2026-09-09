@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest'
 import { defineComponent, h, nextTick, reactive, ref } from 'vue'
 import { useProConfigProvider } from '../../config-provider/context'
 import proFrFR from '../../locale/fr_FR'
+import proZhCN from '../../locale/zh_CN'
 import Cron from '../index'
 import { validateExpression } from '../utils'
 
@@ -151,7 +152,7 @@ describe('Cron', () => {
       },
     })
 
-    expect(wrapper.find('[data-field="second"]').text()).toBe('Second')
+    expect(wrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
     expect(wrapper.find('.ant-cron-preview').text()).toContain('Every 5 minutes')
     expect(wrapper.find('.ant-cron-preview').text()).toMatch(/Next run: \d{4}年\d{2}月\d{2}日/)
   })
@@ -183,7 +184,7 @@ describe('Cron', () => {
       },
     })
 
-    expect(wrapper.find('[data-field="second"]').text()).toBe('Seconde')
+    expect(wrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Seconde')
     expect(wrapper.find('.ant-cron-preview').text()).toContain('Toutes les 5 minutes')
   })
 
@@ -194,10 +195,10 @@ describe('Cron', () => {
     }))
     const dynamicWrapper = mount(DynamicLocale)
 
-    expect(dynamicWrapper.find('[data-field="second"]').text()).toBe('Second')
+    expect(dynamicWrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
     activeLocale.value = zhCN
     await nextTick()
-    expect(dynamicWrapper.find('[data-field="second"]').text()).toBe('Second')
+    expect(dynamicWrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
 
     const nestedWrapper = mount(ConfigProvider, {
       props: { locale: zhCN },
@@ -207,13 +208,13 @@ describe('Cron', () => {
         }),
       },
     })
-    expect(nestedWrapper.find('[data-field="second"]').text()).toBe('Second')
+    expect(nestedWrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
 
     const fallbackWrapper = mount(ConfigProvider, {
       props: { locale: frFR },
       slots: { default: () => h(Cron, { value: '0 */5 * * * ?' }) },
     })
-    expect(fallbackWrapper.find('[data-field="second"]').text()).toBe('Second')
+    expect(fallbackWrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
   })
 
   it('integrates draft values, validation, and reset with Form.Item', async () => {
@@ -275,14 +276,46 @@ describe('Cron', () => {
     expect(wrapper.find('input').attributes('disabled')).toBeDefined()
   })
 
-  it('keeps numeric and named month lists visible in the same selector', async () => {
+  it('applies the Cron size to the root layout', () => {
+    for (const size of ['small', 'medium', 'large'] as const) {
+      const wrapper = mount(Cron, { props: { size } })
+      const cron = wrapper.find('.ant-cron')
+      expect(cron.attributes('data-size')).toBe(size)
+      expect(cron.classes()).toContain(`ant-cron-${size}`)
+    }
+  })
+
+  it('keeps numeric and named month lists visible in the Select', async () => {
     const wrapper = mount(Cron, { props: { value: '0 0 9 ? 1 MON' } })
-    await wrapper.find('button[data-field="month"]').trigger('click')
-    expect(wrapper.find('.ant-select-selection-item').text()).toBe('JAN')
+    await wrapper.find('[data-field="month"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toContain('JAN')
 
     await wrapper.setProps({ value: '0 0 9 ? JAN,MAR MON' })
-    expect(wrapper.find('.ant-cron-field[data-field="month"]').attributes('data-mode')).toBe('list')
+    expect(wrapper.find('.ant-cron-field[data-field="month"]').attributes('data-mode')).toBe('specified')
     expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['JAN', 'MAR'])
+  })
+
+  it('uses full-width Select controls for every specified field', async () => {
+    const wrapper = mount(Cron, { props: { value: '0 0 9 15 1 ?' } })
+
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+
+    await wrapper.find('[data-field="second"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+
+    await wrapper.find('[data-field="hour"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+
+    await wrapper.find('[data-field="day"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+
+    await wrapper.find('[data-field="month"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+
+    const weekWrapper = mount(Cron, { props: { value: '0 0 9 ? * MON' } })
+    await weekWrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(weekWrapper.find('.ant-cron-specific-select').exists()).toBe(true)
   })
 
   it('renders an accessible field tab interface', async () => {
@@ -291,10 +324,31 @@ describe('Cron', () => {
     const panel = wrapper.find('[role="tabpanel"]')
 
     expect(tabs).toHaveLength(6)
+    expect(wrapper.find('[role="tablist"]').attributes('aria-label')).toBe('Cron fields')
+    expect(tabs[0]!.element.tagName).toBe('SPAN')
     expect(tabs[1]!.attributes('aria-controls')).toBe(panel.attributes('id'))
     expect(panel.attributes('aria-labelledby')).toBe(tabs[1]!.attributes('id'))
 
     await tabs[1]!.trigger('keydown', { key: 'ArrowRight' })
     expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('hour')
+  })
+
+  it('renders clear inline mode summaries without legacy description blocks', async () => {
+    const mountCron = (value: string) => mount(ConfigProvider, {
+      props: { locale: proZhCN },
+      slots: { default: () => h(Cron, { value }) },
+    })
+    let wrapper = mountCron('0 */5 9 * * ?')
+
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每 5 分钟执行一次')
+    expect((wrapper.find('.ant-cron-controls input').element as HTMLInputElement).value).toBe('5')
+    expect(wrapper.find('.ant-cron-description').exists()).toBe(false)
+    expect(wrapper.find('.ant-cron-field-mode-description').exists()).toBe(false)
+
+    wrapper = mountCron('0 10,20,30 9 * * ?')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('在第 10、20、30 分钟执行')
+
+    wrapper = mountCron('0 10-30 9 * * ?')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('第 10～30 分钟内每分钟执行')
   })
 })

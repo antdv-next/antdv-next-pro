@@ -9,6 +9,13 @@ export type CronSize = 'small' | 'medium' | 'large'
 export type CronStatus = '' | 'error' | 'success' | 'validating' | 'warning'
 export type CronValidateStatus = 'valid' | 'invalid' | 'empty'
 
+export interface CronFieldModeDescription {
+  editor: string
+  preview: string
+}
+
+export type CronFieldDescriptions = Partial<Record<CronFieldName, Partial<Record<Exclude<CronFieldMode, 'list'>, CronFieldModeDescription>>>>
+
 export interface CronLocale {
   fields: Record<CronFieldName, string>
   modes: Record<CronFieldMode, string>
@@ -16,6 +23,9 @@ export interface CronLocale {
   notSpecified: string
   every: string
   everyField: string
+  fieldDescriptions?: CronFieldDescriptions
+  valueLabels?: Partial<Record<CronFieldName, Record<string, string>>>
+  valueSeparator?: string
   to: string
   expression: string
   fieldList: string
@@ -72,6 +82,7 @@ export interface CronPreviewResult {
   expression: string
   description?: string
   nextRunAt?: Date
+  nextRuns?: Date[]
 }
 
 export interface CronPreset {
@@ -84,6 +95,8 @@ export interface CronSemanticClassNames {
   root?: string
   input?: string
   fields?: string
+  navigation?: string
+  editor?: string
   field?: string
   presets?: string
   preview?: string
@@ -94,6 +107,8 @@ export interface CronSemanticStyles {
   root?: CSSProperties
   input?: CSSProperties
   fields?: CSSProperties
+  navigation?: CSSProperties
+  editor?: CSSProperties
   field?: CSSProperties
   presets?: CSSProperties
   preview?: CSSProperties

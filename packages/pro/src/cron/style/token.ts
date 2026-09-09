@@ -7,6 +7,9 @@ export interface ComponentToken {
   previewBg: string
   errorColor: string
   fieldGap: number
+  fieldTabHeight: number
+  fieldTabPaddingInline: number
+  fieldPanelPadding: number
 }
 
 export function prepareComponentToken(token: any): ComponentToken {
@@ -19,5 +22,8 @@ export function prepareComponentToken(token: any): ComponentToken {
     previewBg: token.colorFillTertiary,
     errorColor: token.colorError,
     fieldGap: token.marginXS,
+    fieldTabHeight: token.controlHeight,
+    fieldTabPaddingInline: token.paddingSM,
+    fieldPanelPadding: token.paddingSM,
   }
 }

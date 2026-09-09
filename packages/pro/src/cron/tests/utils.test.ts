@@ -68,6 +68,8 @@ describe('Cron utilities', () => {
 
     expect(preview.description).toBe('Every 5 minutes')
     expect(preview.nextRunAt).toBeInstanceOf(Date)
+    expect(preview.nextRuns).toHaveLength(3)
+    expect(preview.nextRuns?.every(value => value instanceof Date)).toBe(true)
   })
 
   it('localizes descriptions and validation errors', () => {
