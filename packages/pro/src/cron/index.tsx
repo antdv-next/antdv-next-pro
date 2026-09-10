@@ -542,21 +542,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
   {
     name: 'ACron',
     inheritAttrs: false,
-    props: {
-      prefixCls: String,
-      rootClass: String,
-      value: String,
-      format: String,
-      showYear: { type: Boolean, default: undefined },
-      disabled: { type: Boolean, default: undefined },
-      readonly: { type: Boolean, default: undefined },
-      size: String,
-      status: String,
-      preview: { type: Boolean, default: undefined },
-      presets: Array,
-      classes: [Object, Function],
-      styles: [Object, Function],
-    },
+    props: ['prefixCls', 'rootClass', 'value', 'format', 'showYear', 'disabled', 'readonly', 'size', 'status', 'preview', 'presets', 'classes', 'styles'],
   },
 )
 
