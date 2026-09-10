@@ -52,6 +52,16 @@ group:
 | input | Triggered for every manual input, including invalid drafts | `(value: string) => void` |
 | validate | Triggered after each expression validation and reports the current result | `(result: CronValidateResult) => void` |
 
+### CronError
+
+`validateCronExpression()` and the `validate` event return `errors` when the expression is invalid. Match `code`, not the localized `message`.
+
+| Property | Description | Type |
+| --- | --- | --- |
+| field | The invalid field; omitted for expression-level errors | `CronFieldName` |
+| code | Stable error code that does not change with locale | `CronErrorCode` |
+| message | Localized explanation | `string` |
+
 ### Form.Item
 
 `v-model:value` always matches the content displayed in the input, so a Form.Item validator receives temporary invalid values. Cron provides Quartz syntax feedback, while Form.Item remains responsible for `required` and business rules:

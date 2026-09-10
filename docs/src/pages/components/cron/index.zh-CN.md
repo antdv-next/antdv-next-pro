@@ -53,6 +53,16 @@ group:
 | input | 每次直接输入时触发，包括临时非法值 | `(value: string) => void` |
 | validate | 每次执行表达式校验后触发，并同步当前校验结果 | `(result: CronValidateResult) => void` |
 
+### CronError
+
+`validateCronExpression()` 和 `validate` 事件在表达式非法时返回 `errors`。请用 `code` 判断错误类型，不要依赖 `message` 文案。
+
+| 参数 | 说明 | 类型 |
+| --- | --- | --- |
+| field | 出错字段；整条表达式的错误为空 | `CronFieldName` |
+| code | 稳定错误码，不随 locale 变化 | `CronErrorCode` |
+| message | 本地化说明 | `string` |
+
 ### Form.Item
 
 `v-model:value` 始终与输入框中显示的内容保持一致，因此 Form.Item 的 validator 可以获取临时非法值。Cron 负责 Quartz 语法反馈；`required` 和业务规则仍由 Form.Item 管理：

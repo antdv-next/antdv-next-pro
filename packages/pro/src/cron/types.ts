@@ -86,8 +86,26 @@ export interface CronOptions {
   showYear?: boolean
 }
 
+export type CronErrorCode
+  = | 'INVALID_STEP'
+    | 'STEP_OUT_OF_RANGE'
+    | 'INVALID_RANGE'
+    | 'VALUE_OUT_OF_RANGE'
+    | 'RANGE_ORDER'
+    | 'FIELD_REQUIRED'
+    | 'QUESTION_MARK_FIELD'
+    | 'QUESTION_MARK_ALONE'
+    | 'UNSUPPORTED_CHARACTER'
+    | 'EXPECTED_FIELDS'
+    | 'EXPECTED_UNIX_FIELDS'
+    | 'DAY_WEEK_QUESTION_MARK'
+    | 'UNIX_QUESTION_MARK'
+    | 'UNSUPPORTED_SPECIAL'
+    | 'INVALID_EXPRESSION'
+
 export interface CronError {
   field?: CronFieldName
+  code: CronErrorCode
   message: string
 }
 

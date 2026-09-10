@@ -1,4 +1,4 @@
-import type { CronFieldName, CronFields, CronFormat, CronOptions } from './types'
+import type { CronFieldName, CronFields, CronFormat, CronOptions } from '../types'
 
 export const MONTH_VALUES = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'] as const
 export const WEEK_VALUES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'] as const

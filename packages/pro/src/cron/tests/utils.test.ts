@@ -91,6 +91,24 @@ describe('Cron utilities', () => {
     expect(validateExpression(expression).status).toBe('invalid')
   })
 
+  it.each([
+    ['* * * * *', {}, 'EXPECTED_FIELDS'],
+    ['0 0 9 * * ?', { format: 'unix' as const }, 'EXPECTED_UNIX_FIELDS'],
+    ['0 /5 * * * ?', {}, 'INVALID_STEP'],
+    ['0 */61 9 * * ?', {}, 'STEP_OUT_OF_RANGE'],
+    ['0 1-2-3 9 * * ?', {}, 'INVALID_RANGE'],
+    ['0 0 9 * 13 ?', {}, 'VALUE_OUT_OF_RANGE'],
+    ['0 0 17-9 * * ?', {}, 'RANGE_ORDER'],
+    ['0 ? 9 * * ?', {}, 'QUESTION_MARK_FIELD'],
+    ['0 0 9 1? * ?', {}, 'QUESTION_MARK_ALONE'],
+    ['0 0 9 * * *', {}, 'DAY_WEEK_QUESTION_MARK'],
+    ['0 9 * * ?', { format: 'unix' as const }, 'UNIX_QUESTION_MARK'],
+    ['0 0 9 L-3 * ?', {}, 'UNSUPPORTED_SPECIAL'],
+    ['0 9 * * 1@', { format: 'unix' as const }, 'UNSUPPORTED_CHARACTER'],
+  ])('reports a stable error code for %s', (expression, options, code) => {
+    expect(validateExpression(expression, options).errors?.[0]?.code).toBe(code)
+  })
+
   it('keeps the day and week fields valid when editing either field', () => {
     const fields = createDefaultFields()
     const day = updateField(fields, 'day', '?')
@@ -162,6 +180,10 @@ describe('Cron utilities', () => {
 
   it('localizes descriptions and validation errors', () => {
     expect(getPreview('0 */5 * * * ?', {}, zhCN).description).toBe('从 0 分钟开始，每 5 分钟执行')
-    expect(validateExpression('* * * * *', {}, zhCN).errors?.[0]?.message).toBe('当前 Quartz 格式需要 6 个字段')
+    expect(validateExpression('* * * * *', {}, zhCN).errors?.[0]).toMatchObject({
+      code: 'EXPECTED_FIELDS',
+      message: '当前 Quartz 格式需要 6 个字段',
+    })
+    expect(validateExpression('* * * * *').errors?.[0]?.code).toBe('EXPECTED_FIELDS')
   })
 })

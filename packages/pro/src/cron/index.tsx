@@ -28,16 +28,6 @@ import { computed, defineComponent, nextTick, ref, watch } from 'vue'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
 import enUSLocale from '../locale/en_US'
-import {
-  createDefaultFields,
-  getFieldLimits,
-  getFieldNames,
-  getWeekAliases,
-  MONTH_VALUES,
-  WEEK_VALUES,
-  weekNumberToName,
-} from './format'
-import { parseSpecial, serializeSpecial } from './special'
 import useStyle from './style'
 import {
   describeField,
@@ -49,6 +39,16 @@ import {
   updateField,
   validateExpression,
 } from './utils'
+import {
+  createDefaultFields,
+  getFieldLimits,
+  getFieldNames,
+  getWeekAliases,
+  MONTH_VALUES,
+  WEEK_VALUES,
+  weekNumberToName,
+} from './utils/format'
+import { parseSpecial, serializeSpecial } from './utils/special'
 
 let cronIdSeed = 0
 
@@ -576,7 +576,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
 
 ;(Cron as any).install = (app: App) => app.component(Cron.name, Cron)
 
-export type { CronClassNamesType, CronConfig, CronEditorMode, CronEmits, CronError, CronFieldDescriptions, CronFieldMode, CronFieldModeDescription, CronFieldName, CronFields, CronFieldSlotProps, CronFormat, CronLocale, CronOptions, CronPreset, CronPreviewResult, CronProps, CronSemanticClassNames, CronSemanticName, CronSemanticStyles, CronSize, CronSlots, CronStatus, CronStylesType, CronValidateResult, CronValidateStatus } from './types'
+export type { CronClassNamesType, CronConfig, CronEditorMode, CronEmits, CronError, CronErrorCode, CronFieldDescriptions, CronFieldMode, CronFieldModeDescription, CronFieldName, CronFields, CronFieldSlotProps, CronFormat, CronLocale, CronOptions, CronPreset, CronPreviewResult, CronProps, CronSemanticClassNames, CronSemanticName, CronSemanticStyles, CronSize, CronSlots, CronStatus, CronStylesType, CronValidateResult, CronValidateStatus } from './types'
 export default Cron
 export { Cron }
 export { validateExpression as validateCronExpression } from './utils'

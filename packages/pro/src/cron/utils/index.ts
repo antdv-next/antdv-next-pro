@@ -1,6 +1,6 @@
-import type { CronError, CronFieldMode, CronFieldName, CronFields, CronFormat, CronLocale, CronOptions, CronPreviewResult, CronValidateResult } from './types'
+import type { CronError, CronErrorCode, CronFieldMode, CronFieldName, CronFields, CronFormat, CronLocale, CronOptions, CronPreviewResult, CronValidateResult } from '../types'
 import { Cron } from 'croner'
-import enUSLocale from '../locale/en_US'
+import enUSLocale from '../../locale/en_US'
 import {
   getFieldLimits,
   getFieldNames,
@@ -49,50 +49,54 @@ export function formatCronMessage(template: string, values: Record<string, numbe
   return template.replace(/\{(\w+)\}/g, (_, key: string) => String(values[key] ?? `{${key}}`))
 }
 
-function validateSegment(segment: string, definition: FieldDefinition, locale: CronLocale): string | undefined {
+function fieldIssue(code: CronErrorCode, message: string): Pick<CronError, 'code' | 'message'> {
+  return { code, message }
+}
+
+function validateSegment(segment: string, definition: FieldDefinition, locale: CronLocale): Pick<CronError, 'code' | 'message'> | undefined {
   const [base, step] = segment.split('/')
   if (!base || (step !== undefined && segment.split('/').length !== 2))
-    return locale.validation.invalidStep
+    return fieldIssue('INVALID_STEP', locale.validation.invalidStep)
   if (step !== undefined) {
     const stepNumber = Number(step)
     if (!Number.isInteger(stepNumber) || stepNumber <= 0 || stepNumber > definition.max - definition.min + 1)
-      return locale.validation.stepOutOfRange
+      return fieldIssue('STEP_OUT_OF_RANGE', locale.validation.stepOutOfRange)
   }
   if (base === '*')
     return undefined
 
   const range = base.split('-')
   if (range.length > 2 || range.some(item => !item))
-    return locale.validation.invalidRange
+    return fieldIssue('INVALID_RANGE', locale.validation.invalidRange)
   const start = parseNumber(range[0]!, definition)
   const end = range.length === 2 ? parseNumber(range[1]!, definition) : start
   if (start === undefined || end === undefined)
-    return formatCronMessage(locale.validation.valueOutOfRange, { min: definition.min, max: definition.max })
+    return fieldIssue('VALUE_OUT_OF_RANGE', formatCronMessage(locale.validation.valueOutOfRange, { min: definition.min, max: definition.max }))
   if (start > end)
-    return locale.validation.rangeOrder
+    return fieldIssue('RANGE_ORDER', locale.validation.rangeOrder)
 }
 
-function validateField(value: string, name: CronFieldName, format: CronFormat, locale: CronLocale): string | undefined {
+function validateField(value: string, name: CronFieldName, format: CronFormat, locale: CronLocale): Pick<CronError, 'code' | 'message'> | undefined {
   const normalized = normalizeValue(value)
   const definition = getFieldDefinition(name, format)
   if (!normalized)
-    return locale.validation.fieldRequired
+    return fieldIssue('FIELD_REQUIRED', locale.validation.fieldRequired)
 
   if (normalized === '?') {
     if (format === 'unix')
-      return locale.validation.unixQuestionMark
-    return name === 'day' || name === 'week' ? undefined : locale.validation.questionMarkField
+      return fieldIssue('UNIX_QUESTION_MARK', locale.validation.unixQuestionMark)
+    return name === 'day' || name === 'week' ? undefined : fieldIssue('QUESTION_MARK_FIELD', locale.validation.questionMarkField)
   }
   if (normalized.includes('?'))
-    return locale.validation.questionMarkAlone
+    return fieldIssue('QUESTION_MARK_ALONE', locale.validation.questionMarkAlone)
 
   if (format === 'quartz' && isSpecialField(name) && parseSpecial(normalized, name))
     return undefined
   if (looksLikeSpecial(normalized))
-    return locale.validation.unsupportedSpecial
+    return fieldIssue('UNSUPPORTED_SPECIAL', locale.validation.unsupportedSpecial)
 
   if (format === 'unix' ? /[^\dA-Z*,/\-]/.test(normalized) : /[^\dA-Z*?,/\-]/.test(normalized))
-    return locale.validation.unsupportedCharacter
+    return fieldIssue('UNSUPPORTED_CHARACTER', locale.validation.unsupportedCharacter)
 
   return normalized.split(',').map(segment => validateSegment(segment, definition, locale)).find(Boolean)
 }
@@ -162,15 +166,18 @@ export function validateExpression(expression: string, options: CronOptions = {}
       : formatCronMessage(locale.validation.expectedFields, { count: expectedLength })
     return {
       status: 'invalid',
-      errors: [{ message }],
+      errors: [{
+        code: format === 'unix' ? 'EXPECTED_UNIX_FIELDS' : 'EXPECTED_FIELDS',
+        message,
+      }],
     }
   }
 
   const names = getFieldNames(options)
   const errors: CronError[] = parts.flatMap((value, index) => {
     const field = names[index]
-    const message = field ? validateField(value, field, format, locale) : undefined
-    return message && field ? [{ field, message }] : []
+    const issue = field ? validateField(value, field, format, locale) : undefined
+    return issue && field ? [{ field, ...issue }] : []
   })
 
   if (format === 'quartz') {
@@ -178,6 +185,7 @@ export function validateExpression(expression: string, options: CronOptions = {}
     const week = parts[5]!
     if ((day === '?') === (week === '?')) {
       errors.push({
+        code: 'DAY_WEEK_QUESTION_MARK',
         message: locale.validation.dayWeekQuestionMark,
       })
     }
@@ -192,7 +200,7 @@ export function validateExpression(expression: string, options: CronOptions = {}
   catch {
     return {
       status: 'invalid',
-      errors: [{ message: locale.validation.invalidExpression }],
+      errors: [{ code: 'INVALID_EXPRESSION', message: locale.validation.invalidExpression }],
     }
   }
 

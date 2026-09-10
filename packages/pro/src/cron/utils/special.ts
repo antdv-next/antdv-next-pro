@@ -1,4 +1,4 @@
-import type { CronFieldName } from './types'
+import type { CronFieldName } from '../types'
 import { QUARTZ_WEEK_ALIASES } from './format'
 
 export type CronSpecial

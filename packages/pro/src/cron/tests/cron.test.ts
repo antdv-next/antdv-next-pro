@@ -329,7 +329,7 @@ describe('Cron', () => {
     expect(tabs[1]!.attributes('aria-controls')).toBe(panel.attributes('id'))
     expect(panel.attributes('aria-labelledby')).toBe(tabs[1]!.attributes('id'))
 
-    tabs[1]!.element.focus()
+    ;(tabs[1]!.element as HTMLElement).focus()
     await tabs[1]!.trigger('keydown', { key: 'ArrowRight' })
     await nextTick()
     expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('hour')
