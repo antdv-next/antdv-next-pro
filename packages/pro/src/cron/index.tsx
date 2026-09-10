@@ -108,10 +108,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     const mergedShowYear = computed(() => props.showYear ?? proConfig.value.showYear ?? false)
     const mergedDisabled = computed(() => props.disabled ?? proConfig.value.disabled ?? componentDisabled.value ?? false)
     const mergedReadonly = computed(() => props.readonly ?? proConfig.value.readonly ?? false)
-    const mergedSize = computed(() => {
-      const contextSize = componentSize.value === 'middle' ? 'medium' : componentSize.value
-      return props.size ?? proConfig.value.size ?? contextSize ?? 'medium'
-    })
+    const mergedSize = computed(() => props.size ?? proConfig.value.size ?? componentSize.value ?? 'middle')
     const mergedPreview = computed(() => props.preview ?? proConfig.value.preview ?? false)
     const mergedPresets = computed(() => props.presets ?? proConfig.value.presets ?? [])
     const localeCode = computed(() => localeContext.locale.value?.locale ?? 'en')

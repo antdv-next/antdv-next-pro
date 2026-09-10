@@ -32,7 +32,7 @@ group:
 | showYear | Use the seven-field Quartz format | `boolean` | `false` | ✓ |
 | disabled | Disable all interaction | `boolean` | `false` | ✓ |
 | readonly | Keep the expression selectable but prevent edits | `boolean` | `false` | ✓ |
-| size | Control size | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
+| size | Control size | `'small' \| 'middle' \| 'large'` | `'middle'` | ✓ |
 | status | Set validation status explicitly; follows Form.Item by default | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - |
 | preview | Show the description and future local execution times | `boolean` | `false` | ✓ |
 | presets | Quick expression choices | `CronPreset[]` | `[]` | ✓ |
@@ -52,7 +52,7 @@ group:
 
 `v-model:value` always matches the content displayed in the input, so a Form.Item validator receives temporary invalid values. Cron provides Quartz syntax feedback, while Form.Item remains responsible for `required` and business rules:
 
-Direct input keeps the text entered by the user, while validation and field parsing use its canonical form. `size="medium"` is Cron's public name for the Antdv `middle` size and is also the default mapping from the global component size.
+Direct input keeps the text entered by the user, while validation and field parsing use its canonical form. `size` matches Antdv Next and accepts `'small' | 'middle' | 'large'`, defaulting to `'middle'`.
 
 ```vue
 <script setup lang="ts">

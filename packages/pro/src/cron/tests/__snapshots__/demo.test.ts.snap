@@ -2,10 +2,10 @@
 
 exports[`cron demo > renders basic correctly 1`] = `
 <div
-  class="ant-cron ant-cron-medium css-var-root ant-cron-css-var"
+  class="ant-cron ant-cron-middle css-var-root ant-cron-css-var"
   data-disabled="false"
   data-readonly="false"
-  data-size="medium"
+  data-size="middle"
 >
   <input
     aria-label="Cron expression"
@@ -115,7 +115,7 @@ exports[`cron demo > renders basic correctly 1`] = `
             aria-orientation="horizontal"
             class="ant-segmented css-var-root css-var-root"
             role="radiogroup"
-            size="medium"
+            size="middle"
             tabindex="0"
           >
             <div
@@ -194,7 +194,7 @@ exports[`cron demo > renders basic correctly 1`] = `
           <div
             aria-label="Minute values"
             class="ant-select ant-select-outlined ant-cron-specific-select css-var-root ant-select-css-var ant-select-multiple ant-select-show-arrow ant-select-show-search"
-            size="medium"
+            size="middle"
           >
             <!---->
             <div
@@ -309,10 +309,10 @@ exports[`cron demo > renders basic correctly 1`] = `
 
 exports[`cron demo > renders presets correctly 1`] = `
 <div
-  class="ant-cron ant-cron-medium css-var-root ant-cron-css-var"
+  class="ant-cron ant-cron-middle css-var-root ant-cron-css-var"
   data-disabled="false"
   data-readonly="false"
-  data-size="medium"
+  data-size="middle"
 >
   <input
     aria-label="Cron expression"
@@ -422,7 +422,7 @@ exports[`cron demo > renders presets correctly 1`] = `
             aria-orientation="horizontal"
             class="ant-segmented css-var-root css-var-root"
             role="radiogroup"
-            size="medium"
+            size="middle"
             tabindex="0"
           >
             <div
@@ -632,10 +632,10 @@ exports[`cron demo > renders presets correctly 1`] = `
 
 exports[`cron demo > renders semantic correctly 1`] = `
 <div
-  class="ant-cron ant-cron-medium css-var-root ant-cron-css-var"
+  class="ant-cron ant-cron-middle css-var-root ant-cron-css-var"
   data-disabled="false"
   data-readonly="false"
-  data-size="medium"
+  data-size="middle"
 >
   <input
     aria-label="Cron expression"
@@ -746,7 +746,7 @@ exports[`cron demo > renders semantic correctly 1`] = `
             aria-orientation="horizontal"
             class="ant-segmented css-var-root css-var-root"
             role="radiogroup"
-            size="medium"
+            size="middle"
             tabindex="0"
           >
             <div
@@ -825,7 +825,7 @@ exports[`cron demo > renders semantic correctly 1`] = `
           <div
             aria-label="Minute values"
             class="ant-select ant-select-outlined ant-cron-specific-select css-var-root ant-select-css-var ant-select-multiple ant-select-show-arrow ant-select-show-search"
-            size="medium"
+            size="middle"
           >
             <!---->
             <div
