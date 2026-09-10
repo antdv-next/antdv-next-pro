@@ -1,10 +1,133 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/zh_HK'
-import sourceLocale from './zh_TW'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: '秒',
+    minute: '分鐘',
+    hour: '小時',
+    day: '日',
+    month: '月',
+    week: '星期',
+    year: '年',
+  },
+  modes: {
+    every: '每',
+    interval: '間隔',
+    specified: '指定',
+    range: '範圍',
+  },
+  any: '任意',
+  notSpecified: '不指定',
+  every: '每',
+  everyField: '每{field}',
+  fieldDescriptions: {
+    second: {
+      every: { editor: '每 {step} 秒執行', preview: '每 {step} 秒執行一次' },
+      interval: { editor: '從 {start} 秒開始，每 {step} 秒執行', preview: '每分鐘從第 {start} 秒起，每隔 {step} 秒執行' },
+      specified: { editor: '在以下秒數執行：', preview: '每分鐘的第 {values} 秒執行' },
+      range: { editor: '從第 {start} 秒到第 {end} 秒執行', preview: '每分鐘第 {start}～{end} 秒執行' },
+    },
+    minute: {
+      every: { editor: '每 {step} 分鐘執行', preview: '每 {step} 分鐘執行一次' },
+      interval: { editor: '從 {start} 分鐘開始，每 {step} 分鐘執行', preview: '每小時從第 {start} 分鐘起，每隔 {step} 分鐘執行' },
+      specified: { editor: '在以下分鐘執行：', preview: '每小時的第 {values} 分鐘執行' },
+      range: { editor: '從第 {start} 分鐘到第 {end} 分鐘執行', preview: '每小時第 {start}～{end} 分鐘執行' },
+    },
+    hour: {
+      every: { editor: '每 {step} 小時執行', preview: '每 {step} 小時執行一次' },
+      interval: { editor: '從 {start} 點開始，每 {step} 小時執行', preview: '每天從 {start} 點起，每隔 {step} 小時執行' },
+      specified: { editor: '在以下時間執行：', preview: '每天 {values} 點執行' },
+      range: { editor: '從 {start} 點到 {end} 點執行', preview: '每天 {start}～{end} 點執行' },
+    },
+    day: {
+      every: { editor: '每天執行', preview: '每天執行一次' },
+      unspecified: { editor: '不指定日期', preview: '不指定日期，按星期執行' },
+      interval: { editor: '從每月第 {start} 日開始，每 {step} 天執行', preview: '每月從第 {start} 日起，每隔 {step} 天執行' },
+      specified: { editor: '在每月以下日期執行：', preview: '每月第 {values} 日執行' },
+      range: { editor: '每月第 {start}～{end} 日執行', preview: '每月第 {start}～{end} 日執行' },
+    },
+    month: {
+      every: { editor: '每月執行', preview: '每月執行一次' },
+      interval: { editor: '從 {start} 開始，每 {step} 個月執行', preview: '每年從 {start} 起，每隔 {step} 個月執行' },
+      specified: { editor: '在以下月份執行：', preview: '每年{values}執行' },
+      range: { editor: '從 {start} 到 {end} 執行', preview: '每年 {start}～{end} 執行' },
+    },
+    week: {
+      every: { editor: '每天執行', preview: '每天執行一次' },
+      unspecified: { editor: '不指定星期', preview: '不指定星期，按日期執行' },
+      interval: { editor: '從 {start} 開始，每隔 {step} 天執行', preview: '每週從 {start} 起，每隔 {step} 天執行' },
+      specified: { editor: '在以下星期執行：', preview: '每{values}執行' },
+      range: { editor: '每週{start}至{end}執行', preview: '每{start}至{end}執行' },
+    },
+    year: {
+      every: { editor: '每年執行', preview: '每年執行一次' },
+      interval: { editor: '從 {start} 年開始，每 {step} 年執行', preview: '從 {start} 年起，每隔 {step} 年執行' },
+      specified: { editor: '在以下年份執行：', preview: '在{values}年執行' },
+      range: { editor: '從 {start} 年到 {end} 年執行', preview: '從 {start} 年到 {end} 年執行' },
+    },
+  },
+  valueLabels: {
+    month: {
+      JAN: '1月',
+      FEB: '2月',
+      MAR: '3月',
+      APR: '4月',
+      MAY: '5月',
+      JUN: '6月',
+      JUL: '7月',
+      AUG: '8月',
+      SEP: '9月',
+      OCT: '10月',
+      NOV: '11月',
+      DEC: '12月',
+    },
+    week: {
+      SUN: '週日',
+      MON: '週一',
+      TUE: '週二',
+      WED: '週三',
+      THU: '週四',
+      FRI: '週五',
+      SAT: '週六',
+    },
+  },
+  valueSeparator: '、',
+  to: '至',
+  expression: 'Cron 表達式',
+  fieldList: 'Cron 欄位',
+  fieldStart: '{field}起始值',
+  fieldInterval: '{field}間隔',
+  fieldRangeStart: '{field}範圍起始值',
+  fieldRangeEnd: '{field}範圍結束值',
+  fieldValue: '{field}值',
+  fieldValues: '{field}值',
+  nextRun: '下次執行：{value}',
+  noFutureRun: '無後續執行時間',
+  everySeconds: '每 {value} 秒',
+  everyMinutes: '每 {value} 分鐘',
+  everyDayAt: '每天 {value}',
+  customSchedule: '自訂時間表',
+  validation: {
+    invalidStep: '步長表達式無效',
+    stepOutOfRange: '步長必須為欄位範圍內的正數',
+    invalidRange: '範圍表達式無效',
+    valueOutOfRange: '值必須在 {min} 到 {max} 之間',
+    rangeOrder: '範圍起始值不能大於結束值',
+    fieldRequired: '欄位不能為空',
+    questionMarkField: '問號僅支援日和星期欄位',
+    questionMarkAlone: '問號必須是欄位的唯一值',
+    unsupportedCharacter: '欄位中包含不支援的字元',
+    expectedFields: '目前 Quartz 格式需要 {count} 個欄位',
+    dayWeekQuestionMark: 'Quartz 表達式的日和星期欄位必須且只能有一個問號',
+    invalidExpression: 'Cron 表達式無效',
+  },
+}
 
 const proLocale = {
   ...locale,
-  Cron: sourceLocale.Cron,
+  Cron: cronLocale,
 } satisfies ProLocale
 
 export default proLocale

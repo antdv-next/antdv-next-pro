@@ -213,7 +213,7 @@ export function validateExpression(expression: string, showYear = false, locale:
 
 export function getFieldMode(value: string): CronFieldMode {
   if (value.includes(','))
-    return 'list'
+    return 'specified'
   if (value.includes('-'))
     return 'range'
   if (value.includes('/'))

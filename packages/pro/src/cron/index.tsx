@@ -51,7 +51,7 @@ const FIELD_LIMITS: Record<CronFieldName, readonly [number, number]> = {
 
 const MONTH_VALUES = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
 const WEEK_VALUES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-const MODE_VALUES: CronFieldMode[] = ['every', 'interval', 'specified', 'range', 'list']
+const MODE_VALUES: Exclude<CronFieldMode, 'unspecified'>[] = ['every', 'interval', 'specified', 'range']
 const enUS = enUSLocale.Cron!
 
 function omitClassAndStyle(attrs: Record<string, any>) {
@@ -153,17 +153,16 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       const mode = getFieldMode(activeValue.value)
       if (mode === 'interval' && activeValue.value.startsWith('*/') && activeField.value !== 'day' && activeField.value !== 'week')
         return 'every'
-      return mode === 'list' ? 'specified' : mode
+      return mode
     })
     const modeOptions = computed(() => {
-      const namedModes = MODE_VALUES.filter((value): value is Exclude<CronFieldMode, 'list' | 'unspecified'> => value !== 'list' && value !== 'unspecified')
-      const toOption = (value: Exclude<CronFieldMode, 'list'>) => ({
+      const toOption = (value: CronFieldMode) => ({
         label: value === 'unspecified' ? locale.value.notSpecified : locale.value.modes[value],
         value,
       })
       if (activeField.value === 'day' || activeField.value === 'week')
-        return [toOption('every'), toOption('unspecified'), ...namedModes.filter(value => value !== 'every').map(toOption)]
-      return namedModes.map(toOption)
+        return [toOption('every'), toOption('unspecified'), ...MODE_VALUES.filter(value => value !== 'every').map(toOption)]
+      return MODE_VALUES.map(toOption)
     })
     useFormItemInputContextProvider(computed(() => ({
       ...formItemInputContext.value,
@@ -240,7 +239,6 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
         interval: `${fallback === '*' ? min : getNumericParts(fallback, min)[0]}/${Math.min(5, max - min + 1)}`,
         specified: String(min),
         range: `${min}-${Math.min(min + 1, max)}`,
-        list: `${min},${Math.min(min + 1, max)}`,
       }
       applyFieldValue(activeField.value, values[mode])
     }
@@ -254,7 +252,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       activeField.value = displayedFields.value[(index + offset + displayedFields.value.length) % displayedFields.value.length]!
     }
 
-    function getFieldDescriptionTemplate(field: CronFieldName, mode: Exclude<CronFieldMode, 'list'>, type: 'editor' | 'preview') {
+    function getFieldDescriptionTemplate(field: CronFieldName, mode: CronFieldMode, type: 'editor' | 'preview') {
       return locale.value.fieldDescriptions?.[field]?.[mode]?.[type] ?? enUS.fieldDescriptions![field]?.[mode]?.[type] ?? ''
     }
 
@@ -276,8 +274,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
 
     function getModeDescription(mode: CronFieldMode) {
       const field = activeField.value
-      const resolvedMode = mode === 'list' ? 'specified' : mode
-      return formatCronMessage(getFieldDescriptionTemplate(field, resolvedMode, 'preview'), getFieldDescriptionValues(field, activeValue.value))
+      return formatCronMessage(getFieldDescriptionTemplate(field, mode, 'preview'), getFieldDescriptionValues(field, activeValue.value))
     }
 
     function renderEditorTemplate(template: string, slots: Record<string, any>) {
@@ -318,8 +315,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       const names = field === 'month' ? MONTH_VALUES : field === 'week' ? WEEK_VALUES : undefined
       const values = getNumericParts(value, min, names)
       const numberProps = { min, max, size: mergedSize.value, disabled: !editable.value, controls: false }
-      const resolvedMode = mode === 'list' ? 'specified' : mode
-      const editorTemplate = getFieldDescriptionTemplate(field, resolvedMode, 'editor')
+      const editorTemplate = getFieldDescriptionTemplate(field, mode, 'editor')
       if (mode === 'unspecified' || (mode === 'every' && (field === 'day' || field === 'week')))
         return formatCronMessage(editorTemplate, getFieldDescriptionValues(field, value))
       if (mode === 'every') {
@@ -340,7 +336,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
           end: <InputNumber {...numberProps} value={values[1] ?? max} aria-label={formatCronMessage(locale.value.fieldRangeEnd, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${values[0] ?? min}-${nextValue ?? max}`)} />,
         })
       }
-      if (mode === 'specified' || mode === 'list') {
+      if (mode === 'specified') {
         return (
           <>
             {formatCronMessage(editorTemplate, getFieldDescriptionValues(field, value))}

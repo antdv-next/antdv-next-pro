@@ -1,10 +1,133 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/fr_BE'
-import sourceLocale from './fr_FR'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'Seconde',
+    minute: 'Minute',
+    hour: 'Heure',
+    day: 'Jour',
+    month: 'Mois',
+    week: 'Semaine',
+    year: 'Année',
+  },
+  modes: {
+    every: 'Chaque',
+    interval: 'Intervalle',
+    specified: 'Spécifié',
+    range: 'Portée',
+  },
+  any: 'N\'importe lequel',
+  notSpecified: 'Non précisé',
+  every: 'tous les',
+  everyField: 'Tous les {field}',
+  fieldDescriptions: {
+    second: {
+      every: { editor: 'Exécuter toutes les {step} secondes', preview: 'Exécuter toutes les {step} secondes' },
+      interval: { editor: 'Commencer à seconde {start}, puis exécuter toutes les {step} secondes', preview: 'chaque minute, exécuter à partir de seconde {start} toutes les {step} secondes' },
+      specified: { editor: 'Exécuter à ces secondes :', preview: 'Exécuter aux secondes {values} chaque minute' },
+      range: { editor: 'Exécuter de seconde {start} à seconde {end}', preview: 'Exécuter de seconde {start} à seconde {end} chaque minute' },
+    },
+    minute: {
+      every: { editor: 'Exécuter toutes les {step} minutes', preview: 'Exécuter toutes les {step} minutes' },
+      interval: { editor: 'Commencer à minute {start}, puis exécuter toutes les {step} minutes', preview: 'chaque heure, exécuter à partir de minute {start} toutes les {step} minutes' },
+      specified: { editor: 'Exécuter à ces minutes :', preview: 'Exécuter aux minutes {values} chaque heure' },
+      range: { editor: 'Exécuter de minute {start} à minute {end}', preview: 'Exécuter de minute {start} à minute {end} chaque heure' },
+    },
+    hour: {
+      every: { editor: 'Exécuter toutes les {step} heures', preview: 'Exécuter toutes les {step} heures' },
+      interval: { editor: 'Commencer à {start}:00, puis exécuter toutes les {step} heures', preview: 'Chaque jour, exécuter à partir de {start}:00 toutes les {step} heures' },
+      specified: { editor: 'Exécuter à ces heures :', preview: 'Exécuter à {values}:00 chaque jour' },
+      range: { editor: 'Exécuter de {start}:00 à {end}:00', preview: 'Exécuter de {start}:00 à {end}:00 chaque jour' },
+    },
+    day: {
+      every: { editor: 'Exécuter tous les jours', preview: 'Exécuter tous les jours' },
+      unspecified: { editor: 'Ne pas spécifier de date', preview: 'Date non spécifiée ; suivre le champ semaine' },
+      interval: { editor: 'Commencer le jour {start} de chaque mois, puis exécuter tous les {step} jours', preview: 'Chaque mois, exécuter à partir du jour {start} tous les {step} jours' },
+      specified: { editor: 'Exécuter ces jours de chaque mois :', preview: 'Exécuter les jours {values} de chaque mois' },
+      range: { editor: 'Exécuter du jour {start} au jour {end} de chaque mois', preview: 'Exécuter du jour {start} au jour {end} de chaque mois' },
+    },
+    month: {
+      every: { editor: 'Exécuter tous les mois', preview: 'Exécuter tous les mois' },
+      interval: { editor: 'Commencer en {start}, puis exécuter tous les {step} mois', preview: 'Chaque année, exécuter à partir de {start} tous les {step} mois' },
+      specified: { editor: 'Exécuter ces mois-ci :', preview: 'Exécuter en {values} chaque année' },
+      range: { editor: 'Exécuter de {start} à {end}', preview: 'Exécuter de {start} à {end} chaque année' },
+    },
+    week: {
+      every: { editor: 'Exécuter tous les jours', preview: 'Exécuter tous les jours' },
+      unspecified: { editor: 'Ne pas spécifier de jour de la semaine', preview: 'Semaine non spécifiée ; suivre le champ jour' },
+      interval: { editor: 'Commencer le {start}, puis exécuter tous les {step} jours', preview: 'Chaque semaine, exécuter à partir de {start} tous les {step} jours' },
+      specified: { editor: 'Exécuter ces jours de la semaine :', preview: 'Exécuter chaque {values}' },
+      range: { editor: 'Exécuter de {start} à {end} chaque semaine', preview: 'Exécuter de {start} à {end} chaque semaine' },
+    },
+    year: {
+      every: { editor: 'Exécuter tous les ans', preview: 'Exécuter tous les ans' },
+      interval: { editor: 'Commencer en {start}, puis exécuter tous les {step} ans', preview: 'Exécuter à partir de {start} tous les {step} ans' },
+      specified: { editor: 'Exécuter ces années-ci :', preview: 'Exécuter en {values}' },
+      range: { editor: 'Exécuter de {start} à {end}', preview: 'Exécuter de {start} à {end}' },
+    },
+  },
+  valueLabels: {
+    month: {
+      JAN: 'janv.',
+      FEB: 'févr.',
+      MAR: 'mars',
+      APR: 'avr.',
+      MAY: 'mai',
+      JUN: 'juin',
+      JUL: 'juil.',
+      AUG: 'août',
+      SEP: 'sept.',
+      OCT: 'oct.',
+      NOV: 'nov.',
+      DEC: 'déc.',
+    },
+    week: {
+      SUN: 'dim.',
+      MON: 'lun.',
+      TUE: 'mar.',
+      WED: 'mer.',
+      THU: 'jeu.',
+      FRI: 'ven.',
+      SAT: 'sam.',
+    },
+  },
+  valueSeparator: ', ',
+  to: 'à',
+  expression: 'Expression Cron',
+  fieldList: 'Champs Cron',
+  fieldStart: '{field} début',
+  fieldInterval: '{field} intervalle',
+  fieldRangeStart: '{field} début de plage',
+  fieldRangeEnd: '{field} fin de plage',
+  fieldValue: '{field} valeur',
+  fieldValues: '{field} valeurs',
+  nextRun: 'Prochaine exécution : {value}',
+  noFutureRun: 'Aucune exécution future',
+  everySeconds: 'Toutes les {value} secondes',
+  everyMinutes: 'Toutes les {value} minutes',
+  everyDayAt: 'Tous les jours à {value}',
+  customSchedule: 'Horaire personnalisé',
+  validation: {
+    invalidStep: 'Expression d\'étape non valide',
+    stepOutOfRange: 'Le pas doit être une valeur positive dans la plage du champ',
+    invalidRange: 'Expression de plage non valide',
+    valueOutOfRange: 'La valeur doit être comprise entre {min} et {max}',
+    rangeOrder: 'Le début de la plage ne doit pas être supérieur à la fin de la plage',
+    fieldRequired: 'Le champ est obligatoire',
+    questionMarkField: 'Le point d\'interrogation n\'est pris en charge que pour les champs jour et semaine',
+    questionMarkAlone: 'Le point d\'interrogation doit être la seule valeur du champ',
+    unsupportedCharacter: 'Caractère non pris en charge dans le champ',
+    expectedFields: 'champs {count} attendus pour le format Quartz sélectionné',
+    dayWeekQuestionMark: 'Dans une expression Quartz, le champ jour ou le champ semaine doit être ?, mais pas les deux.',
+    invalidExpression: 'Expression cron invalide',
+  },
+}
 
 const proLocale = {
   ...locale,
-  Cron: sourceLocale.Cron,
+  Cron: cronLocale,
 } satisfies ProLocale
 
 export default proLocale

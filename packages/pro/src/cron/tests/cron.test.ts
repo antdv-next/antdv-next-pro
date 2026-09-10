@@ -289,11 +289,11 @@ describe('Cron', () => {
     const wrapper = mount(Cron, { props: { value: '0 0 9 ? 1 MON' } })
     await wrapper.find('[data-field="month"].ant-cron-field-tab-label').trigger('click')
     expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
-    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toContain('JAN')
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toContain('Jan')
 
     await wrapper.setProps({ value: '0 0 9 ? JAN,MAR MON' })
     expect(wrapper.find('.ant-cron-field[data-field="month"]').attributes('data-mode')).toBe('specified')
-    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['JAN', 'MAR'])
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['Jan', 'Mar'])
   })
 
   it('uses full-width Select controls for every specified field', async () => {

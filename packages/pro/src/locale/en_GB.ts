@@ -1,10 +1,133 @@
+import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/en_GB'
-import sourceLocale from './en_US'
+
+const cronLocale: CronLocale = {
+  fields: {
+    second: 'Second',
+    minute: 'Minute',
+    hour: 'Hour',
+    day: 'Day',
+    month: 'Month',
+    week: 'Week',
+    year: 'Year',
+  },
+  modes: {
+    every: 'Every',
+    interval: 'Interval',
+    specified: 'Specified',
+    range: 'Range',
+  },
+  any: 'Any',
+  notSpecified: 'Not specified',
+  every: 'every',
+  everyField: 'Every {field}',
+  fieldDescriptions: {
+    second: {
+      every: { editor: 'Execute every {step} seconds', preview: 'Execute every {step} seconds' },
+      interval: { editor: 'Start at second {start}, then execute every {step} seconds', preview: 'Every minute, execute from second {start} every {step} seconds' },
+      specified: { editor: 'Execute at these seconds:', preview: 'Execute at seconds {values} of every minute' },
+      range: { editor: 'Execute from second {start} to second {end}', preview: 'Execute from second {start} to second {end} of every minute' },
+    },
+    minute: {
+      every: { editor: 'Execute every {step} minutes', preview: 'Execute every {step} minutes' },
+      interval: { editor: 'Start at minute {start}, then execute every {step} minutes', preview: 'Every hour, execute from minute {start} every {step} minutes' },
+      specified: { editor: 'Execute at these minutes:', preview: 'Execute at minutes {values} of every hour' },
+      range: { editor: 'Execute from minute {start} to minute {end}', preview: 'Execute from minute {start} to minute {end} of every hour' },
+    },
+    hour: {
+      every: { editor: 'Execute every {step} hours', preview: 'Execute every {step} hours' },
+      interval: { editor: 'Start at {start}:00, then execute every {step} hours', preview: 'Every day, execute from {start}:00 every {step} hours' },
+      specified: { editor: 'Execute at these times:', preview: 'Execute at {values}:00 every day' },
+      range: { editor: 'Execute from {start}:00 to {end}:00', preview: 'Execute from {start}:00 to {end}:00 every day' },
+    },
+    day: {
+      every: { editor: 'Execute every day', preview: 'Execute every day' },
+      unspecified: { editor: 'Do not specify a date', preview: 'Day not specified; follow the week field' },
+      interval: { editor: 'Start on day {start} of each month, then execute every {step} days', preview: 'Each month, execute from day {start} every {step} days' },
+      specified: { editor: 'Execute on these days of each month:', preview: 'Execute on days {values} of each month' },
+      range: { editor: 'Execute from day {start} to day {end} of each month', preview: 'Execute from day {start} to day {end} of each month' },
+    },
+    month: {
+      every: { editor: 'Execute every month', preview: 'Execute every month' },
+      interval: { editor: 'Start in month {start}, then execute every {step} months', preview: 'Every year, execute from month {start} every {step} months' },
+      specified: { editor: 'Execute in these months:', preview: 'Execute in months {values} every year' },
+      range: { editor: 'Execute from month {start} to month {end}', preview: 'Execute from month {start} to month {end} every year' },
+    },
+    week: {
+      every: { editor: 'Execute every day', preview: 'Execute every day' },
+      unspecified: { editor: 'Do not specify a weekday', preview: 'Week not specified; follow the day field' },
+      interval: { editor: 'Start on {start}, then execute every {step} days', preview: 'Every week, execute from {start} every {step} days' },
+      specified: { editor: 'Execute on these weekdays:', preview: 'Execute every {values}' },
+      range: { editor: 'Execute from {start} to {end} every week', preview: 'Execute from {start} to {end} every week' },
+    },
+    year: {
+      every: { editor: 'Execute every year', preview: 'Execute every year' },
+      interval: { editor: 'Start in year {start}, then execute every {step} years', preview: 'Execute from year {start} every {step} years' },
+      specified: { editor: 'Execute in these years:', preview: 'Execute in years {values}' },
+      range: { editor: 'Execute from year {start} to year {end}', preview: 'Execute from year {start} to year {end}' },
+    },
+  },
+  valueLabels: {
+    month: {
+      JAN: 'Jan',
+      FEB: 'Feb',
+      MAR: 'Mar',
+      APR: 'Apr',
+      MAY: 'May',
+      JUN: 'Jun',
+      JUL: 'Jul',
+      AUG: 'Aug',
+      SEP: 'Sep',
+      OCT: 'Oct',
+      NOV: 'Nov',
+      DEC: 'Dec',
+    },
+    week: {
+      SUN: 'Sun',
+      MON: 'Mon',
+      TUE: 'Tue',
+      WED: 'Wed',
+      THU: 'Thu',
+      FRI: 'Fri',
+      SAT: 'Sat',
+    },
+  },
+  valueSeparator: ', ',
+  to: 'to',
+  expression: 'Cron expression',
+  fieldList: 'Cron fields',
+  fieldStart: '{field} start',
+  fieldInterval: '{field} interval',
+  fieldRangeStart: '{field} range start',
+  fieldRangeEnd: '{field} range end',
+  fieldValue: '{field} value',
+  fieldValues: '{field} values',
+  nextRun: 'Next run: {value}',
+  noFutureRun: 'No future run',
+  everySeconds: 'Every {value} seconds',
+  everyMinutes: 'Every {value} minutes',
+  everyDayAt: 'Every day at {value}',
+  customSchedule: 'Customised schedule',
+  validation: {
+    invalidStep: 'Invalid step expression',
+    stepOutOfRange: 'Step must be a positive value within the field range',
+    invalidRange: 'Invalid range expression',
+    valueOutOfRange: 'Value must be between {min} and {max}',
+    rangeOrder: 'Range start must not be greater than range end',
+    fieldRequired: 'Field is required',
+    questionMarkField: 'Question mark is only supported for day and week fields',
+    questionMarkAlone: 'Question mark must be the only field value',
+    unsupportedCharacter: 'Unsupported character in field',
+    expectedFields: 'Expected {count} fields for the selected Quartz format',
+    dayWeekQuestionMark: 'Exactly one of day and week must be ? in a Quartz expression',
+    invalidExpression: 'Invalid cron expression',
+  },
+}
 
 const proLocale = {
   ...locale,
-  Cron: sourceLocale.Cron,
+  Cron: cronLocale,
 } satisfies ProLocale
 
 export default proLocale

@@ -64,6 +64,7 @@ describe('Cron utilities', () => {
     expect(week.day).toBe('?')
     expect(getFieldMode('?')).toBe('unspecified')
     expect(getFieldMode('*')).toBe('every')
+    expect(getFieldMode('1,3,5')).toBe('specified')
   })
 
   it('uses Croner to calculate a next execution time', () => {

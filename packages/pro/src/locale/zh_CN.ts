@@ -17,7 +17,6 @@ const cronLocale: CronLocale = {
     interval: '间隔',
     specified: '指定',
     range: '范围',
-    list: '列表',
   },
   any: '任意',
   notSpecified: '不指定',

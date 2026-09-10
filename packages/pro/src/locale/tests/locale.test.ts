@@ -1,5 +1,4 @@
 import type { Locale as AntLocale } from 'antdv-next/locale/index'
-import type { CronLocale } from '../../cron/types'
 import type { ProLocale } from '../types'
 import { readdirSync } from 'node:fs'
 import { createRequire } from 'node:module'
@@ -18,17 +17,17 @@ const expectedLocaleNames = readdirSync(upstreamLocaleDirectory)
   .sort()
 const proLocaleModules = import.meta.glob('../*.ts', { eager: true, import: 'default' }) as Record<string, ProLocale | undefined>
 
-function flattenCronLocale(locale: CronLocale): Record<string, string> {
+function flattenCronLocale(locale: unknown, prefix = ''): Record<string, string> {
   const messages: Record<string, string> = {}
+  if (!locale || typeof locale !== 'object')
+    return messages
   for (const [key, value] of Object.entries(locale)) {
+    const path = prefix ? `${prefix}.${key}` : key
     if (typeof value === 'string') {
-      messages[key] = value
+      messages[path] = value
       continue
     }
-    for (const [nestedKey, message] of Object.entries(value)) {
-      if (typeof message === 'string')
-        messages[`${key}.${nestedKey}`] = message
-    }
+    Object.assign(messages, flattenCronLocale(value, path))
   }
   return messages
 }

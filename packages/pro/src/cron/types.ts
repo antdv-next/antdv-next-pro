@@ -4,7 +4,7 @@ import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semant
 export const CRON_FIELD_NAMES = ['second', 'minute', 'hour', 'day', 'month', 'week', 'year'] as const
 
 export type CronFieldName = (typeof CRON_FIELD_NAMES)[number]
-export type CronFieldMode = 'every' | 'interval' | 'specified' | 'range' | 'list' | 'unspecified'
+export type CronFieldMode = 'every' | 'interval' | 'specified' | 'range' | 'unspecified'
 export type CronSize = 'small' | 'middle' | 'large'
 export type CronStatus = '' | 'error' | 'success' | 'validating' | 'warning'
 export type CronValidateStatus = 'valid' | 'invalid' | 'empty'
@@ -14,7 +14,7 @@ export interface CronFieldModeDescription {
   preview: string
 }
 
-export type CronFieldDescriptions = Partial<Record<CronFieldName, Partial<Record<Exclude<CronFieldMode, 'list'>, CronFieldModeDescription>>>>
+export type CronFieldDescriptions = Partial<Record<CronFieldName, Partial<Record<CronFieldMode, CronFieldModeDescription>>>>
 
 export interface CronLocale {
   fields: Record<CronFieldName, string>
