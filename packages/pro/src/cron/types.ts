@@ -4,7 +4,9 @@ import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semant
 export const CRON_FIELD_NAMES = ['second', 'minute', 'hour', 'day', 'month', 'week', 'year'] as const
 
 export type CronFieldName = (typeof CRON_FIELD_NAMES)[number]
-export type CronFieldMode = 'every' | 'interval' | 'specified' | 'range' | 'unspecified'
+export type CronFormat = 'quartz' | 'unix'
+export type CronEditorMode = 'every' | 'interval' | 'specified' | 'range'
+export type CronFieldMode = CronEditorMode | 'unspecified' | 'special'
 export type CronSize = 'small' | 'medium' | 'large'
 export type CronStatus = '' | 'error' | 'success' | 'validating' | 'warning'
 export type CronValidateStatus = 'valid' | 'invalid' | 'empty'
@@ -18,7 +20,7 @@ export type CronFieldDescriptions = Partial<Record<CronFieldName, Partial<Record
 
 export interface CronLocale {
   fields: Record<CronFieldName, string>
-  modes: Record<Exclude<CronFieldMode, 'unspecified'>, string>
+  modes: Record<CronEditorMode, string> & { special?: string }
   any: string
   notSpecified: string
   every: string
@@ -41,6 +43,14 @@ export interface CronLocale {
   everyMinutes: string
   everyDayAt: string
   customSchedule: string
+  specialLastDay?: string
+  specialLastWeekday?: string
+  specialNearestWeekday?: string
+  specialLastDayOfWeek?: string
+  specialNthDayOfWeek?: string
+  specialLast?: string
+  specialNth?: string
+  nthLabels?: Record<string, string>
   validation: {
     invalidStep: string
     stepOutOfRange: string
@@ -52,19 +62,27 @@ export interface CronLocale {
     questionMarkAlone: string
     unsupportedCharacter: string
     expectedFields: string
+    expectedUnixFields?: string
     dayWeekQuestionMark: string
+    unixQuestionMark?: string
+    unsupportedSpecial?: string
     invalidExpression: string
   }
 }
 
 export interface CronFields {
-  second: string
+  second?: string
   minute: string
   hour: string
   day: string
   month: string
   week: string
   year?: string
+}
+
+export interface CronOptions {
+  format?: CronFormat
+  showYear?: boolean
 }
 
 export interface CronError {
@@ -119,6 +137,7 @@ export interface CronProps {
   prefixCls?: string
   rootClass?: string
   value?: string
+  format?: CronFormat
   showYear?: boolean
   disabled?: boolean
   readonly?: boolean
@@ -157,6 +176,7 @@ export interface CronSlots {
 }
 
 export interface CronConfig {
+  format?: CronFormat
   showYear?: boolean
   disabled?: boolean
   readonly?: boolean

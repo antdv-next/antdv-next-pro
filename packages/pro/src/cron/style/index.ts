@@ -184,6 +184,17 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
       width: '100%',
     },
 
+    '&-special': {
+      display: 'grid',
+      gap: token.marginXS,
+      width: '100%',
+    },
+
+    '&-special-week': {
+      minWidth: 120,
+      maxWidth: 220,
+    },
+
     [`&-small ${token.componentCls}-field-tab`]: {
       minHeight: token.controlHeightSM,
       paddingInline: token.paddingXS,

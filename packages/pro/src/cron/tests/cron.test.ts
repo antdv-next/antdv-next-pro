@@ -374,4 +374,49 @@ describe('Cron', () => {
     expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('unspecified')
     expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('不指定日期，按星期执行')
   })
+
+  it('renders unix five fields and keeps both day and week specified', async () => {
+    const wrapper = mount(Cron, {
+      props: {
+        format: 'unix',
+        value: '0 9 1 * 1',
+      },
+    })
+
+    expect(wrapper.find('.ant-cron').attributes('data-format')).toBe('unix')
+    expect(wrapper.findAll('[role="tab"]')).toHaveLength(5)
+    expect(wrapper.find('[data-field="second"]').exists()).toBe(false)
+    expect(wrapper.find('input').element.value).toBe('0 9 1 * 1')
+
+    await wrapper.find('[data-field="day"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('specified')
+    await wrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('specified')
+  })
+
+  it('ignores showYear when format is unix', () => {
+    const wrapper = mount(Cron, {
+      props: {
+        format: 'unix',
+        showYear: true,
+        value: '* * * * *',
+      },
+    })
+
+    expect(wrapper.findAll('[role="tab"]')).toHaveLength(5)
+    expect(wrapper.find('[data-field="year"]').exists()).toBe(false)
+  })
+
+  it('edits quartz special day and week syntax', async () => {
+    const wrapper = mount(Cron, { props: { value: '0 0 9 L * ?' } })
+    await wrapper.find('[data-field="day"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('special')
+    expect(wrapper.find('.ant-cron-special').exists()).toBe(true)
+
+    const weekWrapper = mount(Cron, { props: { value: '0 0 9 ? * 6#3' } })
+    await weekWrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(weekWrapper.find('.ant-cron-field').attributes('data-mode')).toBe('special')
+    expect(weekWrapper.find('.ant-cron-special').exists()).toBe(true)
+    expect(weekWrapper.find('.ant-cron-field-control-summary').text()).toContain('3rd')
+  })
 })

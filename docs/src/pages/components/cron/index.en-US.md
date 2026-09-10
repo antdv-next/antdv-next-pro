@@ -1,7 +1,7 @@
 ---
 category: Pro Components
 title: Cron
-description: A panel editor for Quartz cron expressions.
+description: A panel editor for Quartz and Unix cron expressions.
 demo:
   cols: 1
 group:
@@ -12,12 +12,15 @@ group:
 ## When To Use
 
 - Configure a recurring task, report, synchronization, or notification.
-- Let users edit a Quartz six-field expression without memorizing its syntax.
+- Let users edit a Quartz or Unix cron expression without memorizing its syntax.
 
 ## Examples
 
 <demo-group>
   <demo src="./demo/basic.vue">Basic</demo>
+  <demo src="./demo/format.vue">Cron format</demo>
+  <demo src="./demo/special.vue">Special syntax</demo>
+  <demo src="./demo/form.vue">Form</demo>
   <demo src="./demo/presets.vue">Presets and preview</demo>
   <demo src="./demo/semantic.vue">Semantic styling</demo>
 </demo-group>
@@ -28,7 +31,8 @@ group:
 
 | Property | Description | Type | Default | Global Config |
 | --- | --- | --- | --- | --- |
-| value | Controlled Quartz expression | `string` | - | - |
+| value | Controlled cron expression | `string` | - | - |
+| format | Cron dialect | `'quartz' \| 'unix'` | `'quartz'` | ✓ |
 | showYear | Use the seven-field Quartz format | `boolean` | `false` | ✓ |
 | disabled | Disable all interaction | `boolean` | `false` | ✓ |
 | readonly | Keep the expression selectable but prevent edits | `boolean` | `false` | ✓ |
@@ -85,11 +89,27 @@ const rules = [
 | preview | Replace the preview area |
 | error | Replace validation error content |
 
-## Quartz Format
+## Cron Format
 
-Cron accepts exactly six fields by default: `second minute hour day month week`. Set `showYear` to use the required seventh `year` field. The V1 editor supports `*`, `?`, `/`, `-`, and `,`; day and week must contain exactly one `?`. `L`, `W`, and `#` are not supported yet.
+Default `format` is `quartz`. Quartz uses six fields: `second minute hour day month week`. Set `showYear` to require the seventh `year` field. Day and week must contain exactly one `?`.
 
-It intentionally does not infer or accept the five-field Linux cron format.
+Unix format uses five fields: `minute hour day month week`. It does not have seconds, year, or `?`. Day and week may both be specified; Croner treats that as OR.
+
+`validateCronExpression(value, { format: 'unix' })` must be used when validating Unix expressions.
+
+## Special Syntax
+
+Quartz day/week fields support Croner special syntax:
+
+| Syntax | Field | Meaning |
+| --- | --- | --- |
+| `L` | Day | Last day of the month |
+| `nW` | Day | Nearest weekday to day `n` |
+| `LW` | Day | Last weekday of the month |
+| `nL` | Week | Last weekday `n` of the month |
+| `n#N` | Week | Nth weekday `n` of the month |
+
+`L-n` is not supported. Unix format does not accept these tokens.
 
 The specified mode uses a full-width multi-select control for every field. The year field also accepts custom values through tags input, while month and weekday options display their standard names.
 
