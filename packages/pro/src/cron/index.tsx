@@ -539,7 +539,25 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       </div>
     )
   },
-  { name: 'ACron', inheritAttrs: false },
+  {
+    name: 'ACron',
+    inheritAttrs: false,
+    props: {
+      prefixCls: String,
+      rootClass: String,
+      value: String,
+      format: String,
+      showYear: { type: Boolean, default: undefined },
+      disabled: { type: Boolean, default: undefined },
+      readonly: { type: Boolean, default: undefined },
+      size: String,
+      status: String,
+      preview: { type: Boolean, default: undefined },
+      presets: Array,
+      classes: [Object, Function],
+      styles: [Object, Function],
+    },
+  },
 )
 
 ;(Cron as any).install = (app: App) => app.component(Cron.name, Cron)

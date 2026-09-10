@@ -17,13 +17,13 @@ const thirdFriday = ref('0 0 9 ? * 6#3')
   <div style="display: grid; gap: 24px;">
     <div>
       <div style="margin-bottom: 8px;">
-        Last weekday · 0 0 9 LW * ?
+        {{ 'Last weekday · 0 0 9 LW * ?' }}
       </div>
       <a-cron v-model:value="lastWeekday" preview />
     </div>
     <div>
       <div style="margin-bottom: 8px;">
-        Third Friday · 0 0 9 ? * 6#3
+        {{ 'Third Friday · 0 0 9 ? * 6#3' }}
       </div>
       <a-cron v-model:value="thirdFriday" preview />
     </div>

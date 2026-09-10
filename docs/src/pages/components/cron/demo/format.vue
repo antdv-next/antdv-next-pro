@@ -7,32 +7,45 @@ Quartz six-field, seven-field, and Unix five-field cron are independent formats.
 </docs>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
+const mode = ref<'quartz' | 'quartz-year' | 'unix'>('quartz')
 const quartz = ref('0 0 9 * * ?')
 const quartzYear = ref('0 0 9 * * ? *')
 const unix = ref('0 9 * * 1-5')
+const options = [
+  { label: 'Quartz · 6 fields', value: 'quartz' },
+  { label: 'Quartz · 7 fields', value: 'quartz-year' },
+  { label: 'Unix · 5 fields', value: 'unix' },
+]
+
+const value = computed({
+  get: () => {
+    if (mode.value === 'unix')
+      return unix.value
+    if (mode.value === 'quartz-year')
+      return quartzYear.value
+    return quartz.value
+  },
+  set: (next: string) => {
+    if (mode.value === 'unix')
+      unix.value = next
+    else if (mode.value === 'quartz-year')
+      quartzYear.value = next
+    else
+      quartz.value = next
+  },
+})
 </script>
 
 <template>
-  <div style="display: grid; gap: 24px;">
-    <div>
-      <div style="margin-bottom: 8px;">
-        Quartz · 6 fields
-      </div>
-      <a-cron v-model:value="quartz" />
-    </div>
-    <div>
-      <div style="margin-bottom: 8px;">
-        Quartz · 7 fields
-      </div>
-      <a-cron v-model:value="quartzYear" show-year />
-    </div>
-    <div>
-      <div style="margin-bottom: 8px;">
-        Unix · 5 fields
-      </div>
-      <a-cron v-model:value="unix" format="unix" />
-    </div>
+  <div>
+    <a-radio-group v-model:value="mode" option-type="button" :options="options" style="margin-bottom: 16px;" />
+    <a-cron
+      :key="mode"
+      v-model:value="value"
+      :format="mode === 'unix' ? 'unix' : 'quartz'"
+      :show-year="mode === 'quartz-year'"
+    />
   </div>
 </template>

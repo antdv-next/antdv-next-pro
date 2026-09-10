@@ -37,6 +37,10 @@ export default defineConfig({
         replacement: path.resolve(baseUrl, './packages/pro/src/scrollbar/index.tsx'),
       },
       {
+        find: /^@antdv-next\/pro\/cron$/,
+        replacement: path.resolve(baseUrl, './packages/pro/src/cron/index.tsx'),
+      },
+      {
         find: /^@antdv-next\/pro$/,
         replacement: path.resolve(baseUrl, './packages/pro/src/index.ts'),
       },
