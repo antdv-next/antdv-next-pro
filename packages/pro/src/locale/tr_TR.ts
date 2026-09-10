@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: '-e',
+  or: ' veya ',
   expression: 'Cron ifadesi',
   fieldList: 'Cron alanları',
   fieldStart: '{field} başlangıç',

@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'til',
+  or: ' eða ',
   expression: 'Cron tjáning',
   fieldList: 'Cron reitir',
   fieldStart: '{field} byrja',

@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'မှ',
+  or: ' သို့မဟုတ် ',
   expression: 'Cron စကားရပ်',
   fieldList: 'Cron အကွက်များ',
   fieldStart: '{field} စတင်သည်။',

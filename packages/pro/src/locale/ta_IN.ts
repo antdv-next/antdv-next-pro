@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'முதல்',
+  or: ' அல்லது ',
   expression: 'கிரான் வெளிப்பாடு',
   fieldList: 'கிரான் புலங்கள்',
   fieldStart: '{field} தொடக்கம்',

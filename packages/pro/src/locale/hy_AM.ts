@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'դեպի',
+  or: ' կամ ',
   expression: 'Cron արտահայտություն',
   fieldList: 'Cron դաշտեր',
   fieldStart: '{field} սկիզբ',

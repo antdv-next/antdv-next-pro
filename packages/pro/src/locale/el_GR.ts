@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'έως',
+  or: ' ή ',
   expression: 'Έκφραση Cron',
   fieldList: 'Πεδία Cron',
   fieldStart: '{field} έναρξη',

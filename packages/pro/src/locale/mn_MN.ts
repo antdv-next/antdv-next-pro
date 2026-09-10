@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'хүртэл',
+  or: ' эсвэл ',
   expression: 'Кроны илэрхийлэл',
   fieldList: 'Крон талбарууд',
   fieldStart: '{field} эхлэх',

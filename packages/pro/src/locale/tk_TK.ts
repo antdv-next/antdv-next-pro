@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: '–',
+  or: ' ýa-da ',
   expression: 'Kron aňlatmasy',
   fieldList: 'Kron meýdanlary',
   fieldStart: '{field} başlamak',

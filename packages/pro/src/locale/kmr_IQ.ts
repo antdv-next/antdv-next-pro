@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'heta',
+  or: ' an ',
   expression: 'Îfadeya Cron',
   fieldList: 'Qadên Cron',
   fieldStart: 'Destpêka {field}',

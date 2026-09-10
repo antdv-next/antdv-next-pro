@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: '–',
+  or: ' tai ',
   expression: 'Cron-lauseke',
   fieldList: 'Cron-kentät',
   fieldStart: '{field} alkaa',

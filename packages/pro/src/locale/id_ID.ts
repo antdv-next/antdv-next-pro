@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'sampai',
+  or: ' atau ',
   expression: 'Ekspresi cron',
   fieldList: 'Bidang cron',
   fieldStart: '{field} mulai',

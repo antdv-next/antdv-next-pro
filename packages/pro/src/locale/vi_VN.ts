@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'đến',
+  or: ' hoặc ',
   expression: 'Biểu thức cron',
   fieldList: 'Trường cron',
   fieldStart: '{field} bắt đầu',

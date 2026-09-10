@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'ber',
+  or: ' an ',
   expression: 'Cron îfade',
   fieldList: 'Zeviyên Cron',
   fieldStart: '{field} dest pê dike',

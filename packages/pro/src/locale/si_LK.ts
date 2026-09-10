@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'දක්වා',
+  or: ' හෝ ',
   expression: 'ක්‍රොන් ප්‍රකාශනය',
   fieldList: 'ක්‍රොන් ක්ෂේත්‍ර',
   fieldStart: '{field} ආරම්භය',

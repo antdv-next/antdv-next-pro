@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'a',
+  or: ' ou ',
   expression: 'Expresión cron',
   fieldList: 'Campos Cron',
   fieldStart: '{field} comeza',

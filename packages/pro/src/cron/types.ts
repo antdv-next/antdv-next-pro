@@ -29,6 +29,7 @@ export interface CronLocale {
   valueLabels?: Partial<Record<CronFieldName, Record<string, string>>>
   valueSeparator?: string
   to: string
+  or: string
   expression: string
   fieldList: string
   fieldStart: string

@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'tot',
+  or: ' of ',
   expression: 'Cron-expressie',
   fieldList: 'Cron-velden',
   fieldStart: '{field} begin',

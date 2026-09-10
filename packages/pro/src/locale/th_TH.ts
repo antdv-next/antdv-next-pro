@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'ถึง',
+  or: ' หรือ ',
   expression: 'การแสดงออกของครอน',
   fieldList: 'ฟิลด์ครอน',
   fieldStart: '{field} เริ่มต้น',

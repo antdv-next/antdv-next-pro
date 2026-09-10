@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'til',
+  or: ' eller ',
   expression: 'Cron-uttrykk',
   fieldList: 'Cron-felt',
   fieldStart: '{field} start',

@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: '~에게',
+  or: ' 또는 ',
   expression: '크론 표현',
   fieldList: '크론 필드',
   fieldStart: '{field} 시작',

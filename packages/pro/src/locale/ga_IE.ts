@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'chuig',
+  or: ' nó ',
   expression: 'Cron abairt',
   fieldList: 'réimsí Cron',
   fieldStart: '{field} tosú',

@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: '-მდე',
+  or: ' ან ',
   expression: 'კრონის გამომეტყველება',
   fieldList: 'კრონის ველები',
   fieldStart: '{field} დაწყება',

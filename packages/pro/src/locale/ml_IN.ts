@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'വരെ',
+  or: ' അല്ലെങ്കിൽ ',
   expression: 'ക്രോൺ എക്സ്പ്രഷൻ',
   fieldList: 'ക്രോൺ ഫീൽഡുകൾ',
   fieldStart: '{field} ആരംഭം',

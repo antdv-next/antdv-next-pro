@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'до',
+  or: ' или ',
   expression: 'Крон израз',
   fieldList: 'Cron полиња',
   fieldStart: '{field} почеток',

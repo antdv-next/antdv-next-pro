@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'do',
+  or: ' lub ',
   expression: 'Wyrażenie Cron',
   fieldList: 'Pola Cron',
   fieldStart: '{field} początek',

@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'ទៅ',
+  or: ' ឬ ',
   expression: 'កន្សោម Cron',
   fieldList: 'វាល Cron',
   fieldStart: '{field} ចាប់ផ្តើម',

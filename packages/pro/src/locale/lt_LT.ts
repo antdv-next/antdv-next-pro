@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'iki',
+  or: ' arba ',
   expression: 'Cron išraiška',
   fieldList: 'Cron laukai',
   fieldStart: '{field} pradžia',

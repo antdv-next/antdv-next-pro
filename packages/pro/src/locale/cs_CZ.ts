@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'až',
+  or: ' nebo ',
   expression: 'Cron výraz',
   fieldList: 'Cron pole',
   fieldStart: '{field}',

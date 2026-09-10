@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'līdz',
+  or: ' vai ',
   expression: 'Krona izteiksme',
   fieldList: 'Cron lauki',
   fieldStart: '{field} sākums',

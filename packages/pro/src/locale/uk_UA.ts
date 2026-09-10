@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'до',
+  or: ' або ',
   expression: 'Вираз Cron',
   fieldList: 'Поля Cron',
   fieldStart: '{field} початок',

@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'به',
+  or: ' یا ',
   expression: 'بیان کرون',
   fieldList: 'فیلدهای کرون',
   fieldStart: 'شروع {field}',

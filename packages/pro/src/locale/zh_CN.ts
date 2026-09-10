@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: '、',
   to: '至',
+  or: '或',
   expression: 'Cron 表达式',
   fieldList: 'Cron 字段',
   fieldStart: '{field}起始值',

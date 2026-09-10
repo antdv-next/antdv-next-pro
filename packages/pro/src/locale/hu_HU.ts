@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'ide',
+  or: ' vagy ',
   expression: 'Cron kifejezés',
   fieldList: 'Cron mezők',
   fieldStart: '{field} kezdete',

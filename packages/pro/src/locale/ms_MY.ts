@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'hingga',
+  or: ' atau ',
   expression: 'Ungkapan cron',
   fieldList: 'Medan Cron',
   fieldStart: '{field} mula',

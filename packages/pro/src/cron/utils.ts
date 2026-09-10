@@ -345,12 +345,22 @@ function describeCalendar(fields: CronFields, locale: CronLocale, format: CronFo
     parts.push(describeField('year', fields.year, locale, 'preview', format))
   if (getFieldMode(fields.month) !== 'every')
     parts.push(describeField('month', fields.month, locale, 'preview', format))
+
   const weekMode = getFieldMode(fields.week, 'week')
   const dayMode = getFieldMode(fields.day, 'day')
-  if (weekMode !== 'every' && weekMode !== 'unspecified')
-    parts.push(describeField('week', fields.week, locale, 'preview', format))
-  else if (dayMode !== 'every' && dayMode !== 'unspecified')
-    parts.push(describeField('day', fields.day, locale, 'preview', format))
+  const day = dayMode !== 'every' && dayMode !== 'unspecified'
+    ? describeField('day', fields.day, locale, 'preview', format)
+    : ''
+  const week = weekMode !== 'every' && weekMode !== 'unspecified'
+    ? describeField('week', fields.week, locale, 'preview', format)
+    : ''
+  if (format === 'unix' && day && week)
+    parts.push(`${day}${locale.or}${week}`)
+  else if (week)
+    parts.push(week)
+  else if (day)
+    parts.push(day)
+
   return parts.filter(Boolean).join(locale.valueSeparator ?? ', ')
 }
 

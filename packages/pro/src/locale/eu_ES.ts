@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'to',
+  or: ' edo ',
   expression: 'Cron adierazpena',
   fieldList: 'Cron eremuak',
   fieldStart: '{field} hasi',

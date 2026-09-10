@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import zhCNLocale from '../../locale/zh_CN'
 import {
   createDefaultFields,
+  describeExpression,
   formatExpression,
   getFieldMode,
   getPreview,
@@ -144,6 +145,15 @@ describe('Cron utilities', () => {
     expect(getPreview('*/5 * * * *', { format: 'unix' }).description).toBe('Start at minute 0, then execute every 5 minutes')
     expect(getPreview('0 9 * * 1-5', { format: 'unix' }).description).toBe('Execute from Mon to Fri every week at 09:00')
     expect(getPreview('30 9 1 * *', { format: 'unix' }).description).toBe('Execute on days 1 of each month at 09:30')
+  })
+
+  it('describes unix day and week together as OR', () => {
+    const options = { format: 'unix' as const }
+    const fields = parseExpression('0 9 1 * 1', options)
+    expect(fields).toMatchObject({ day: '1', week: '1' })
+    expect(describeExpression(fields!, zhCN, options)).toContain('或')
+    expect(getPreview('0 9 1 * 1', options).description).toBe('Execute on days 1 of each month or Execute every Mon at 09:00')
+    expect(getPreview('0 9 1 * 1', options, zhCN).description).toBe('每月第 1 日执行或每周一 09:00 执行')
   })
 
   it('localizes descriptions and validation errors', () => {

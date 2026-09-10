@@ -96,6 +96,7 @@ const cronLocale: CronLocale = {
   },
   valueSeparator: ', ',
   to: 'дейін',
+  or: ' немесе ',
   expression: 'Крон өрнегі',
   fieldList: 'Cron өрістері',
   fieldStart: '{field} басталуы',
