@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Không xác định',
   every: 'mỗi',
   everyField: 'Mỗi {field}',
+  valueSeparator: ', ',
   to: 'đến',
   expression: 'Biểu thức cron',
   fieldList: 'Trường cron',

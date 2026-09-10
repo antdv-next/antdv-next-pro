@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'မဖော်ပြထားပါ။',
   every: 'နေ့တိုင်း',
   everyField: '{field} တိုင်း',
+  valueSeparator: ', ',
   to: 'မှ',
   expression: 'Cron စကားရပ်',
   fieldList: 'Cron အကွက်များ',

@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'مشخص نشده است',
   every: 'هر',
   everyField: 'هر {field}',
+  valueSeparator: ', ',
   to: 'به',
   expression: 'بیان کرون',
   fieldList: 'فیلدهای کرون',

@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Nincs megadva',
   every: 'minden',
   everyField: 'Minden {field}.',
+  valueSeparator: ', ',
   to: 'ide',
   expression: 'Cron kifejezés',
   fieldList: 'Cron mezők',

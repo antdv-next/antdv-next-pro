@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: '지정되지 않음',
   every: '마다',
   everyField: '매 {field}',
+  valueSeparator: ', ',
   to: '~에게',
   expression: '크론 표현',
   fieldList: '크론 필드',

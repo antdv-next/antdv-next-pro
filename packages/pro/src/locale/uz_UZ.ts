@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Belgilanmagan',
   every: 'har',
   everyField: 'Har {field}',
+  valueSeparator: ', ',
   to: 'gacha',
   expression: 'Cron ifodasi',
   fieldList: 'Cron maydonlari',

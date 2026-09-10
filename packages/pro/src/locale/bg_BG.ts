@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Не е посочено',
   every: 'всеки',
   everyField: 'На всеки {field}',
+  valueSeparator: ', ',
   to: 'до',
   expression: 'Cron израз',
   fieldList: 'Cron полета',

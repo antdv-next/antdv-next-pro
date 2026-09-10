@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'görkezilmedi',
   every: 'hersi',
   everyField: 'Her {field}',
+  valueSeparator: ', ',
   to: '–',
   expression: 'Kron aňlatmasy',
   fieldList: 'Kron meýdanlary',

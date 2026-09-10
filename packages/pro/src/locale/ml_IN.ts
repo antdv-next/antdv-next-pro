@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'വ്യക്തമാക്കിയിട്ടില്ല',
   every: 'ഓരോന്നും',
   everyField: 'ഓരോ {field}',
+  valueSeparator: ', ',
   to: 'വരെ',
   expression: 'ക്രോൺ എക്സ്പ്രഷൻ',
   fieldList: 'ക്രോൺ ഫീൽഡുകൾ',

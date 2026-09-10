@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'ไม่ได้ระบุ',
   every: 'ทุก',
   everyField: 'ทุก {field}',
+  valueSeparator: ', ',
   to: 'ถึง',
   expression: 'การแสดงออกของครอน',
   fieldList: 'ฟิลด์ครอน',

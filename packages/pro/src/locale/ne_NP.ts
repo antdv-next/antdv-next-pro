@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'निर्दिष्ट गरिएको छैन',
   every: 'हरेक',
   everyField: 'हरेक {field}',
+  valueSeparator: ', ',
   to: 'देखि',
   expression: 'क्रोन अभिव्यक्ति',
   fieldList: 'क्रोन क्षेत्रहरू',

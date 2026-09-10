@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Non précisé',
   every: 'tous les',
   everyField: 'Tous les {field}',
+  valueSeparator: ', ',
   to: 'à',
   expression: 'Expression Cron',
   fieldList: 'Champs Cron',

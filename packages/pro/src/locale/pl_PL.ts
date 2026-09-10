@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Nie określono',
   every: 'co',
   everyField: 'Co {field}',
+  valueSeparator: ', ',
   to: 'do',
   expression: 'Wyrażenie Cron',
   fieldList: 'Pola Cron',

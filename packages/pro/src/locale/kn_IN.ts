@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'ನಿರ್ದಿಷ್ಟಪಡಿಸಲಾಗಿಲ್ಲ',
   every: 'ಪ್ರತಿ',
   everyField: 'ಪ್ರತಿ {field}',
+  valueSeparator: ', ',
   to: 'ಗೆ',
   expression: 'ಕ್ರಾನ್ ಅಭಿವ್ಯಕ್ತಿ',
   fieldList: 'ಕ್ರಾನ್ ಕ್ಷೇತ್ರಗಳು',

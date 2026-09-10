@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Tidak dinyatakan',
   every: 'setiap',
   everyField: 'Setiap {field}',
+  valueSeparator: ', ',
   to: 'hingga',
   expression: 'Ungkapan cron',
   fieldList: 'Medan Cron',

@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Nenurodyta',
   every: 'kas',
   everyField: 'Kas {field}',
+  valueSeparator: ', ',
   to: 'iki',
   expression: 'Cron išraiška',
   fieldList: 'Cron laukai',

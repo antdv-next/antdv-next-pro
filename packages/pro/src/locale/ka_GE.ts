@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'არ არის მითითებული',
   every: 'ყოველი',
   everyField: 'ყოველ {field}',
+  valueSeparator: ', ',
   to: '-მდე',
   expression: 'კრონის გამომეტყველება',
   fieldList: 'კრონის ველები',

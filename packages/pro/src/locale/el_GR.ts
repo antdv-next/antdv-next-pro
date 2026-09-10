@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Δεν διευκρινίζεται',
   every: 'κάθε',
   everyField: 'Κάθε {field}',
+  valueSeparator: ', ',
   to: 'έως',
   expression: 'Έκφραση Cron',
   fieldList: 'Πεδία Cron',

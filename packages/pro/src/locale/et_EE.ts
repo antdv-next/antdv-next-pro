@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Pole täpsustatud',
   every: 'iga',
   everyField: 'Iga {field}',
+  valueSeparator: ', ',
   to: 'kuni',
   expression: 'Cron avaldis',
   fieldList: 'Cron väljad',

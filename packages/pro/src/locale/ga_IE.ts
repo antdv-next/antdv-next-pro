@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Gan sonrú',
   every: 'gach',
   everyField: 'Gach {field}',
+  valueSeparator: ', ',
   to: 'chuig',
   expression: 'Cron abairt',
   fieldList: 'réimsí Cron',

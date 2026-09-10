@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Nav norādīts',
   every: 'katru',
   everyField: 'Ik pēc {field}',
+  valueSeparator: ', ',
   to: 'līdz',
   expression: 'Krona izteiksme',
   fieldList: 'Cron lauki',

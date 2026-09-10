@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Көрсетілмеген',
   every: 'сайын',
   everyField: '{field} сайын',
+  valueSeparator: ', ',
   to: 'дейін',
   expression: 'Крон өрнегі',
   fieldList: 'Cron өрістері',

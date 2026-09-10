@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Ei määritelty',
   every: 'joka',
   everyField: 'Joka {field}',
+  valueSeparator: ', ',
   to: '–',
   expression: 'Cron-lauseke',
   fieldList: 'Cron-kentät',

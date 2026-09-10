@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Neuvedeno',
   every: 'každý',
   everyField: 'Každých {field}',
+  valueSeparator: ', ',
   to: 'až',
   expression: 'Cron výraz',
   fieldList: 'Cron pole',

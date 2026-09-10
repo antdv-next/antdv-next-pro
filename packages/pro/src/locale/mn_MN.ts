@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Тодорхойлоогүй',
   every: 'бүр',
   everyField: '{field} бүр',
+  valueSeparator: ', ',
   to: 'хүртэл',
   expression: 'Кроны илэрхийлэл',
   fieldList: 'Крон талбарууд',

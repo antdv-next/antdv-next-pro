@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Ekki tilgreint',
   every: 'á hverjum',
   everyField: 'Á {field} fresti',
+  valueSeparator: ', ',
   to: 'til',
   expression: 'Cron tjáning',
   fieldList: 'Cron reitir',

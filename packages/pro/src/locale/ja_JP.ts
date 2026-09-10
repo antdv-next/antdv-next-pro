@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: '指定されていません',
   every: 'ごと',
   everyField: '{field}ごと',
+  valueSeparator: '、',
   to: 'まで',
   expression: 'Cron 式',
   fieldList: 'Cron フィールド',

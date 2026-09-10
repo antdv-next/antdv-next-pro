@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Belirtilmedi',
   every: 'her',
   everyField: 'Her {field}',
+  valueSeparator: ', ',
   to: '-e',
   expression: 'Cron ifadesi',
   fieldList: 'Cron alanları',

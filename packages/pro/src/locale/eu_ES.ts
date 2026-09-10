@@ -23,6 +23,7 @@ const cronLocale: CronLocale = {
   notSpecified: 'Ez da zehaztu',
   every: 'bakoitzean',
   everyField: '{field} behin',
+  valueSeparator: ', ',
   to: 'to',
   expression: 'Cron adierazpena',
   fieldList: 'Cron eremuak',
