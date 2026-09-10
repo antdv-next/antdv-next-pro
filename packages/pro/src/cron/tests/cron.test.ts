@@ -277,7 +277,7 @@ describe('Cron', () => {
   })
 
   it('applies the Cron size to the root layout', () => {
-    for (const size of ['small', 'middle', 'large'] as const) {
+    for (const size of ['small', 'medium', 'large'] as const) {
       const wrapper = mount(Cron, { props: { size } })
       const cron = wrapper.find('.ant-cron')
       expect(cron.attributes('data-size')).toBe(size)

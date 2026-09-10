@@ -33,7 +33,7 @@ group:
 | showYear | 使用七字段 Quartz 格式 | `boolean` | `false` | ✓ |
 | disabled | 禁用全部交互 | `boolean` | `false` | ✓ |
 | readonly | 可选择和复制表达式，但不能编辑 | `boolean` | `false` | ✓ |
-| size | 组件尺寸 | `'small' \| 'middle' \| 'large'` | `'middle'` | ✓ |
+| size | 组件尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
 | status | 手动设置校验状态，默认跟随 Form.Item | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - |
 | preview | 展示说明和本地时区的未来执行时间 | `boolean` | `false` | ✓ |
 | presets | 常用表达式快捷项 | `CronPreset[]` | `[]` | ✓ |
@@ -53,7 +53,7 @@ group:
 
 `v-model:value` 始终与输入框中显示的内容保持一致，因此 Form.Item 的 validator 可以获取临时非法值。Cron 负责 Quartz 语法反馈；`required` 和业务规则仍由 Form.Item 管理：
 
-直接输入会保留用户正在编辑的原文，校验和字段解析使用规范化后的表达式。`size` 与 Antdv Next 一致，取 `'small' | 'middle' | 'large'`，默认 `'middle'`。
+直接输入会保留用户正在编辑的原文，校验和字段解析使用规范化后的表达式。`size` 与 Antdv Next 一致，取 `'small' | 'medium' | 'large'`，默认 `'medium'`。
 
 ```vue
 <script setup lang="ts">

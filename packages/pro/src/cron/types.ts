@@ -5,7 +5,7 @@ export const CRON_FIELD_NAMES = ['second', 'minute', 'hour', 'day', 'month', 'we
 
 export type CronFieldName = (typeof CRON_FIELD_NAMES)[number]
 export type CronFieldMode = 'every' | 'interval' | 'specified' | 'range' | 'unspecified'
-export type CronSize = 'small' | 'middle' | 'large'
+export type CronSize = 'small' | 'medium' | 'large'
 export type CronStatus = '' | 'error' | 'success' | 'validating' | 'warning'
 export type CronValidateStatus = 'valid' | 'invalid' | 'empty'
 
