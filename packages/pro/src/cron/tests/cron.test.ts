@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { ConfigProvider, Form, FormItem, Select } from 'antdv-next'
+import { ConfigProvider, Form, FormItem, InputNumber, RadioGroup, Select } from 'antdv-next'
 import enUS from 'antdv-next/locale/en_US'
 import frFR from 'antdv-next/locale/fr_FR'
 import zhCN from 'antdv-next/locale/zh_CN'
@@ -478,10 +478,22 @@ describe('Cron', () => {
     expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('special')
     expect(wrapper.find('.ant-cron-special').exists()).toBe(true)
 
+    wrapper.getComponent(RadioGroup).vm.$emit('update:value', 'lastWeekday')
+    await nextTick()
+    expect(wrapper.find('input').element.value).toBe('0 0 9 LW * ?')
+    expect(wrapper.emitted('update:value')?.slice(-1)).toEqual([['0 0 9 LW * ?']])
+
     const weekWrapper = mount(Cron, { props: { value: '0 0 9 ? * 6#3' } })
     await weekWrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
     expect(weekWrapper.find('.ant-cron-field').attributes('data-mode')).toBe('special')
     expect(weekWrapper.find('.ant-cron-special').exists()).toBe(true)
     expect(weekWrapper.find('.ant-cron-field-control-summary').text()).toContain('3rd')
+
+    weekWrapper.getComponent(Select).vm.$emit('update:value', 'MON')
+    await nextTick()
+    weekWrapper.getComponent(InputNumber).vm.$emit('update:value', 2)
+    await nextTick()
+    expect(weekWrapper.find('input').element.value).toBe('0 0 9 ? * 2#2')
+    expect(weekWrapper.emitted('update:value')?.slice(-1)).toEqual([['0 0 9 ? * 2#2']])
   })
 })
