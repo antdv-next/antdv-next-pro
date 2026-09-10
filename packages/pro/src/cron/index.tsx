@@ -24,7 +24,7 @@ import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
 import { useFormItemInputContext, useFormItemInputContextProvider } from 'antdv-next/dist/form/context'
 import { useLocaleContext } from 'antdv-next/locale/index'
 import dayjs from 'dayjs'
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, nextTick, ref, watch } from 'vue'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
 import enUSLocale from '../locale/en_US'
@@ -138,6 +138,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     const draftExpression = ref(props.value ?? '')
     const fields = ref<CronFields>(createDefaultFields(cronOptions.value))
     const activeField = ref<CronFieldName>('minute')
+    const fieldTabRefs: Partial<Record<CronFieldName, HTMLElement>> = {}
     const validation = ref<CronValidateResult>({ status: draftExpression.value ? 'invalid' : 'empty' })
     const mergedStatus = computed(() => validation.value.status === 'invalid'
       ? 'error'
@@ -264,13 +265,38 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       applyFieldValue(activeField.value, values[mode])
     }
 
+    function setActiveField(field: CronFieldName) {
+      activeField.value = field
+      nextTick(() => {
+        fieldTabRefs[field]?.focus()
+      })
+    }
+
     function handleFieldTabKeydown(field: CronFieldName, event: KeyboardEvent) {
-      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
+      if (mergedDisabled.value)
         return
+
+      const tabFields = displayedFields.value
+      const index = tabFields.indexOf(field)
+      if (index < 0)
+        return
+
+      let nextIndex = -1
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown')
+        nextIndex = (index + 1) % tabFields.length
+      else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp')
+        nextIndex = (index - 1 + tabFields.length) % tabFields.length
+      else if (event.key === 'Home')
+        nextIndex = 0
+      else if (event.key === 'End')
+        nextIndex = tabFields.length - 1
+      else
+        return
+
       event.preventDefault()
-      const index = displayedFields.value.indexOf(field)
-      const offset = event.key === 'ArrowRight' ? 1 : -1
-      activeField.value = displayedFields.value[(index + offset + displayedFields.value.length) % displayedFields.value.length]!
+      const nextField = tabFields[nextIndex]
+      if (nextField)
+        setActiveField(nextField)
     }
 
     function getFieldDescriptionTemplate(field: CronFieldName, mode: CronFieldMode, type: 'editor' | 'preview') {
@@ -491,6 +517,12 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
                 <span
                   key={field}
                   id={tabId}
+                  ref={(el) => {
+                    if (el)
+                      fieldTabRefs[field] = el as HTMLElement
+                    else
+                      delete fieldTabRefs[field]
+                  }}
                   role="tab"
                   class={clsx(`${prefixCls.value}-field-tab`, `${prefixCls.value}-field-tab-label`, { [`${prefixCls.value}-field-tab-active`]: active })}
                   data-field={field}
@@ -500,7 +532,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
                   tabindex={mergedDisabled.value || !active ? -1 : 0}
                   onClick={() => {
                     if (!mergedDisabled.value)
-                      activeField.value = field
+                      setActiveField(field)
                   }}
                   onKeydown={(event: KeyboardEvent) => handleFieldTabKeydown(field, event)}
                 >

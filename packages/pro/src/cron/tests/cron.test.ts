@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { ConfigProvider, Form, FormItem } from 'antdv-next'
+import { ConfigProvider, Form, FormItem, Select } from 'antdv-next'
 import enUS from 'antdv-next/locale/en_US'
 import frFR from 'antdv-next/locale/fr_FR'
 import zhCN from 'antdv-next/locale/zh_CN'
@@ -319,7 +319,7 @@ describe('Cron', () => {
   })
 
   it('renders an accessible field tab interface', async () => {
-    const wrapper = mount(Cron)
+    const wrapper = mount(Cron, { attachTo: document.body })
     const tabs = wrapper.findAll('[role="tab"]')
     const panel = wrapper.find('[role="tabpanel"]')
 
@@ -329,8 +329,43 @@ describe('Cron', () => {
     expect(tabs[1]!.attributes('aria-controls')).toBe(panel.attributes('id'))
     expect(panel.attributes('aria-labelledby')).toBe(tabs[1]!.attributes('id'))
 
+    tabs[1]!.element.focus()
     await tabs[1]!.trigger('keydown', { key: 'ArrowRight' })
+    await nextTick()
     expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('hour')
+    expect(tabs[1]!.attributes('tabindex')).toBe('-1')
+    expect(tabs[2]!.attributes('tabindex')).toBe('0')
+    expect(document.activeElement).toBe(tabs[2]!.element)
+
+    await tabs[2]!.trigger('keydown', { key: 'ArrowDown' })
+    await nextTick()
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('day')
+    expect(document.activeElement).toBe(tabs[3]!.element)
+
+    await tabs[3]!.trigger('keydown', { key: 'ArrowUp' })
+    await nextTick()
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('hour')
+    expect(document.activeElement).toBe(tabs[2]!.element)
+
+    await tabs[2]!.trigger('keydown', { key: 'Home' })
+    await nextTick()
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('second')
+    expect(tabs[0]!.attributes('tabindex')).toBe('0')
+    expect(document.activeElement).toBe(tabs[0]!.element)
+
+    await tabs[0]!.trigger('keydown', { key: 'End' })
+    await nextTick()
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('week')
+    expect(tabs[5]!.attributes('tabindex')).toBe('0')
+    expect(document.activeElement).toBe(tabs[5]!.element)
+
+    wrapper.unmount()
+  })
+
+  it('ignores field tab keyboard navigation when disabled', async () => {
+    const wrapper = mount(Cron, { props: { disabled: true } })
+    await wrapper.findAll('[role="tab"]')[1]!.trigger('keydown', { key: 'ArrowRight' })
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('minute')
   })
 
   it('renders clear inline mode summaries without legacy description blocks', async () => {
@@ -415,6 +450,26 @@ describe('Cron', () => {
 
     expect(wrapper.findAll('[role="tab"]')).toHaveLength(5)
     expect(wrapper.find('[data-field="year"]').exists()).toBe(false)
+  })
+
+  it('keeps unix weekday 7 until the specified editor canonicalizes it to SUN', async () => {
+    const wrapper = mount(Cron, {
+      props: {
+        format: 'unix',
+        value: '0 9 * * 7',
+      },
+    })
+
+    expect(wrapper.find('input').element.value).toBe('0 9 * * 7')
+    await wrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('input').element.value).toBe('0 9 * * 7')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('specified')
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toContain('Sun')
+
+    wrapper.getComponent(Select).vm.$emit('update:value', ['SUN'])
+    await nextTick()
+    expect(wrapper.find('input').element.value).toBe('0 9 * * SUN')
+    expect(wrapper.emitted('update:value')?.slice(-1)).toEqual([['0 9 * * SUN']])
   })
 
   it('edits quartz special day and week syntax', async () => {

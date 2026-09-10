@@ -93,7 +93,7 @@ const rules = [
 
 Default `format` is `quartz`. Quartz uses six fields: `second minute hour day month week`. Set `showYear` to require the seventh `year` field. Day and week must contain exactly one `?`.
 
-Unix format uses five fields: `minute hour day month week`. It does not have seconds, year, or `?`. Day and week may both be specified; Croner treats that as OR.
+Unix format uses five fields: `minute hour day month week`. It does not have seconds, year, or `?`. Day and week may both be specified; Croner treats that as OR. Unix Sunday can be written as `0`, `7`, or `SUN`. Direct input keeps the original token; editing the specified weekday in the visual editor canonicalizes it to `SUN`.
 
 `validateCronExpression(value, { format: 'unix' })` must be used when validating Unix expressions.
 
