@@ -45,7 +45,6 @@ import {
   formatExpression,
   getFieldMode,
   getPreview,
-  mergeCronLocale,
   parseExpression,
   updateField,
   validateExpression,
@@ -127,7 +126,10 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     const mergedPreview = computed(() => props.preview ?? proConfig.value.preview ?? false)
     const mergedPresets = computed(() => props.presets ?? proConfig.value.presets ?? [])
     const localeCode = computed(() => localeContext.locale.value?.locale ?? 'en')
-    const locale = computed<CronLocale>(() => mergeCronLocale((localeContext.locale.value as ProLocale | undefined)?.Cron ?? enUS))
+    const locale = computed<CronLocale>(() => ({
+      ...enUS,
+      ...((localeContext.locale.value as ProLocale | undefined)?.Cron ?? {}),
+    }))
     const dateTimeFormat = computed(() => {
       const pickerLocale = localeContext.locale.value?.DatePicker?.lang
       return pickerLocale?.fieldDateTimeFormat ?? 'YYYY-MM-DD HH:mm:ss'
@@ -168,7 +170,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     })
     const modeOptions = computed(() => {
       const toOption = (value: CronFieldMode) => ({
-        label: value === 'unspecified' ? locale.value.notSpecified : (locale.value.modes[value as CronEditorMode] ?? locale.value.modes.special ?? value),
+        label: value === 'unspecified' ? locale.value.notSpecified : value === 'special' ? locale.value.modes.special : locale.value.modes[value as CronEditorMode],
         value,
       })
       if (activeField.value === 'day' || activeField.value === 'week') {
@@ -346,7 +348,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
               options={[
                 { label: locale.value.specialLastDay, value: 'last' },
                 { label: locale.value.specialLastWeekday, value: 'lastWeekday' },
-                { label: formatCronMessage(locale.value.specialNearestWeekday ?? '', { day: current.type === 'nearestWeekday' ? current.day : 15 }), value: 'nearestWeekday' },
+                { label: formatCronMessage(locale.value.specialNearestWeekday, { day: current.type === 'nearestWeekday' ? current.day : 15 }), value: 'nearestWeekday' },
               ]}
               onUpdate:value={(nextValue) => {
                 const type = String(nextValue)
@@ -399,8 +401,8 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
             value={current.type === 'lastDayOfWeek' ? 'last' : 'nth'}
             disabled={!editable.value}
             options={[
-              { label: locale.value.specialLast ?? 'Last', value: 'last' },
-              { label: locale.value.specialNth ?? 'Nth', value: 'nth' },
+              { label: locale.value.specialLast, value: 'last' },
+              { label: locale.value.specialNth, value: 'nth' },
             ]}
             onUpdate:value={(nextValue) => {
               if (String(nextValue) === 'last')

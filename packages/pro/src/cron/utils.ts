@@ -49,33 +49,6 @@ export function formatCronMessage(template: string, values: Record<string, numbe
   return template.replace(/\{(\w+)\}/g, (_, key: string) => String(values[key] ?? `{${key}}`))
 }
 
-export function mergeCronLocale(locale: CronLocale = enUS): CronLocale {
-  return {
-    ...enUS,
-    ...locale,
-    modes: {
-      ...enUS.modes,
-      ...locale.modes,
-    },
-    fieldDescriptions: {
-      ...enUS.fieldDescriptions,
-      ...locale.fieldDescriptions,
-    },
-    valueLabels: {
-      month: { ...enUS.valueLabels?.month, ...locale.valueLabels?.month },
-      week: { ...enUS.valueLabels?.week, ...locale.valueLabels?.week },
-    },
-    nthLabels: {
-      ...enUS.nthLabels,
-      ...locale.nthLabels,
-    },
-    validation: {
-      ...enUS.validation,
-      ...locale.validation,
-    },
-  }
-}
-
 function validateSegment(segment: string, definition: FieldDefinition, locale: CronLocale): string | undefined {
   const [base, step] = segment.split('/')
   if (!base || (step !== undefined && segment.split('/').length !== 2))
@@ -107,7 +80,7 @@ function validateField(value: string, name: CronFieldName, format: CronFormat, l
 
   if (normalized === '?') {
     if (format === 'unix')
-      return locale.validation.unixQuestionMark ?? locale.validation.unsupportedCharacter
+      return locale.validation.unixQuestionMark
     return name === 'day' || name === 'week' ? undefined : locale.validation.questionMarkField
   }
   if (normalized.includes('?'))
@@ -116,7 +89,7 @@ function validateField(value: string, name: CronFieldName, format: CronFormat, l
   if (format === 'quartz' && isSpecialField(name) && parseSpecial(normalized, name))
     return undefined
   if (looksLikeSpecial(normalized))
-    return locale.validation.unsupportedSpecial ?? locale.validation.unsupportedCharacter
+    return locale.validation.unsupportedSpecial
 
   if (format === 'unix' ? /[^\dA-Z*,/\-]/.test(normalized) : /[^\dA-Z*?,/\-]/.test(normalized))
     return locale.validation.unsupportedCharacter
@@ -150,7 +123,7 @@ function toCronerPattern(expression: string, format: CronFormat) {
 }
 
 function createCron(expression: string, options: CronOptions = {}) {
-  const { format } = resolveCronOptions(options)
+  const { format, showYear } = resolveCronOptions(options)
   return new Cron(toCronerPattern(expression, format), {
     paused: true,
     mode: format === 'unix' ? '5-part' : showYear ? '7-part' : '6-part',
@@ -177,7 +150,6 @@ export function parseExpression(expression: string, options: CronOptions = {}, l
 
 export function validateExpression(expression: string, options: CronOptions = {}, locale: CronLocale = enUS): CronValidateResult {
   const { format } = resolveCronOptions(options)
-  const merged = mergeCronLocale(locale)
   const normalized = expression.trim().replace(/\s+/g, ' ').toUpperCase()
   if (!normalized)
     return { status: 'empty' }
@@ -186,8 +158,8 @@ export function validateExpression(expression: string, options: CronOptions = {}
   const expectedLength = getFieldNames(options).length
   if (parts.length !== expectedLength) {
     const message = format === 'unix'
-      ? (merged.validation.expectedUnixFields ?? formatCronMessage(merged.validation.expectedFields, { count: expectedLength }))
-      : formatCronMessage(merged.validation.expectedFields, { count: expectedLength })
+      ? locale.validation.expectedUnixFields
+      : formatCronMessage(locale.validation.expectedFields, { count: expectedLength })
     return {
       status: 'invalid',
       errors: [{ message }],
@@ -197,7 +169,7 @@ export function validateExpression(expression: string, options: CronOptions = {}
   const names = getFieldNames(options)
   const errors: CronError[] = parts.flatMap((value, index) => {
     const field = names[index]
-    const message = field ? validateField(value, field, format, merged) : undefined
+    const message = field ? validateField(value, field, format, locale) : undefined
     return message && field ? [{ field, message }] : []
   })
 
@@ -206,7 +178,7 @@ export function validateExpression(expression: string, options: CronOptions = {}
     const week = parts[5]!
     if ((day === '?') === (week === '?')) {
       errors.push({
-        message: merged.validation.dayWeekQuestionMark,
+        message: locale.validation.dayWeekQuestionMark,
       })
     }
   }
@@ -220,7 +192,7 @@ export function validateExpression(expression: string, options: CronOptions = {}
   catch {
     return {
       status: 'invalid',
-      errors: [{ message: merged.validation.invalidExpression }],
+      errors: [{ message: locale.validation.invalidExpression }],
     }
   }
 
@@ -321,18 +293,18 @@ function describeSpecial(field: 'day' | 'week', value: string, locale: CronLocal
   if (!special)
     return ''
   const weekLabel = (week: number) => formatFieldToken('week', String(week), locale, 'quartz')
-  const nthLabel = (nth: number) => locale.nthLabels?.[String(nth)] ?? String(nth)
+  const nthLabel = (nth: number) => locale.nthLabels[String(nth)] ?? String(nth)
   switch (special.type) {
     case 'last':
-      return locale.specialLastDay ?? ''
+      return locale.specialLastDay
     case 'lastWeekday':
-      return locale.specialLastWeekday ?? ''
+      return locale.specialLastWeekday
     case 'nearestWeekday':
-      return formatCronMessage(locale.specialNearestWeekday ?? '', { day: special.day })
+      return formatCronMessage(locale.specialNearestWeekday, { day: special.day })
     case 'lastDayOfWeek':
-      return formatCronMessage(locale.specialLastDayOfWeek ?? '', { week: weekLabel(special.week) })
+      return formatCronMessage(locale.specialLastDayOfWeek, { week: weekLabel(special.week) })
     case 'nthDayOfWeek':
-      return formatCronMessage(locale.specialNthDayOfWeek ?? '', {
+      return formatCronMessage(locale.specialNthDayOfWeek, {
         week: weekLabel(special.week),
         nth: nthLabel(special.nth),
       })
@@ -426,24 +398,23 @@ function joinSchedule(calendar: string, time: string) {
 }
 
 export function describeExpression(fields: CronFields, locale: CronLocale = enUS, options: CronOptions = {}): string {
-  const merged = mergeCronLocale(locale)
   const format = resolveCronOptions(options).format
   const clock = getClock(fields)
-  const calendar = describeCalendar(fields, merged, format)
+  const calendar = describeCalendar(fields, locale, format)
   if (clock) {
     if (calendar)
       return insertTime(calendar, clock)
-    return formatCronMessage(merged.everyDayAt, { value: clock })
+    return formatCronMessage(locale.everyDayAt, { value: clock })
   }
 
-  const time = describeTime(fields, merged, format)
+  const time = describeTime(fields, locale, format)
   if (time && calendar && !isEveryDay(fields))
     return joinSchedule(calendar, time)
   if (time)
     return time
   if (calendar)
     return calendar
-  return merged.customSchedule
+  return locale.customSchedule
 }
 
 export function getPreview(expression: string, options: CronOptions = {}, locale: CronLocale = enUS): CronPreviewResult {

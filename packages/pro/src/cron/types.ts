@@ -20,7 +20,7 @@ export type CronFieldDescriptions = Partial<Record<CronFieldName, Partial<Record
 
 export interface CronLocale {
   fields: Record<CronFieldName, string>
-  modes: Record<CronEditorMode, string> & { special?: string }
+  modes: Record<CronEditorMode, string> & { special: string }
   any: string
   notSpecified: string
   every: string
@@ -43,14 +43,14 @@ export interface CronLocale {
   everyMinutes: string
   everyDayAt: string
   customSchedule: string
-  specialLastDay?: string
-  specialLastWeekday?: string
-  specialNearestWeekday?: string
-  specialLastDayOfWeek?: string
-  specialNthDayOfWeek?: string
-  specialLast?: string
-  specialNth?: string
-  nthLabels?: Record<string, string>
+  specialLastDay: string
+  specialLastWeekday: string
+  specialNearestWeekday: string
+  specialLastDayOfWeek: string
+  specialNthDayOfWeek: string
+  specialLast: string
+  specialNth: string
+  nthLabels: Record<string, string>
   validation: {
     invalidStep: string
     stepOutOfRange: string
@@ -62,10 +62,10 @@ export interface CronLocale {
     questionMarkAlone: string
     unsupportedCharacter: string
     expectedFields: string
-    expectedUnixFields?: string
+    expectedUnixFields: string
     dayWeekQuestionMark: string
-    unixQuestionMark?: string
-    unsupportedSpecial?: string
+    unixQuestionMark: string
+    unsupportedSpecial: string
     invalidExpression: string
   }
 }
