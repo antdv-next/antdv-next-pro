@@ -14,11 +14,6 @@ exports[`cron demo > renders basic correctly 1`] = `
     value="0 0 9 * * ?"
   />
   <div
-    class="ant-cron-description"
-  >
-    Every day at 09:00
-  </div>
-  <div
     class="ant-cron-fields"
   >
     <div
@@ -113,88 +108,88 @@ exports[`cron demo > renders basic correctly 1`] = `
           Minute
         </div>
         <div
-          aria-label="segmented control"
-          aria-orientation="horizontal"
-          class="ant-segmented css-var-root css-var-root"
-          role="radiogroup"
-          size="medium"
-          tabindex="0"
+          class="ant-cron-field-modes"
         >
           <div
-            class="ant-segmented-group"
+            aria-label="segmented control"
+            aria-orientation="horizontal"
+            class="ant-segmented css-var-root css-var-root"
+            role="radiogroup"
+            size="medium"
+            tabindex="0"
           >
-            <!---->
-            <label
-              class="ant-segmented-item"
+            <div
+              class="ant-segmented-group"
             >
-              <input
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Every"
+              <!---->
+              <label
+                class="ant-segmented-item"
               >
-                Every
-              </div>
-            </label>
-            <label
-              class="ant-segmented-item"
-            >
-              <input
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Interval"
+                <input
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Every"
+                >
+                  Every
+                </div>
+              </label>
+              <label
+                class="ant-segmented-item"
               >
-                Interval
-              </div>
-            </label>
-            <label
-              class="ant-segmented-item ant-segmented-item-selected"
-            >
-              <input
-                checked=""
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Specified"
+                <input
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Interval"
+                >
+                  Interval
+                </div>
+              </label>
+              <label
+                class="ant-segmented-item ant-segmented-item-selected"
               >
-                Specified
-              </div>
-            </label>
-            <label
-              class="ant-segmented-item"
-            >
-              <input
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Range"
+                <input
+                  checked=""
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Specified"
+                >
+                  Specified
+                </div>
+              </label>
+              <label
+                class="ant-segmented-item"
               >
-                Range
-              </div>
-            </label>
+                <input
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Range"
+                >
+                  Range
+                </div>
+              </label>
+            </div>
           </div>
-        </div>
-        <div
-          class="ant-cron-field-mode-description"
-        >
-          Specified: Minute values
         </div>
         <div
           class="ant-cron-controls"
         >
+          Execute at these minutes:
           <!---->
           <div
             aria-label="Minute values"
@@ -298,6 +293,11 @@ exports[`cron demo > renders basic correctly 1`] = `
           </div>
           <!---->
         </div>
+        <div
+          class="ant-cron-field-control-summary"
+        >
+          Execute at minutes 0 of every hour
+        </div>
       </div>
     </div>
   </div>
@@ -320,11 +320,6 @@ exports[`cron demo > renders presets correctly 1`] = `
     type="text"
     value="0 */5 * * * ?"
   />
-  <div
-    class="ant-cron-description"
-  >
-    Every 5 minutes
-  </div>
   <div
     class="ant-cron-fields"
   >
@@ -410,7 +405,7 @@ exports[`cron demo > renders presets correctly 1`] = `
         data-disabled="false"
         data-field="minute"
         data-invalid="false"
-        data-mode="interval"
+        data-mode="every"
         id="cron-2-panel-minute"
         role="tabpanel"
       >
@@ -420,131 +415,120 @@ exports[`cron demo > renders presets correctly 1`] = `
           Minute
         </div>
         <div
-          aria-label="segmented control"
-          aria-orientation="horizontal"
-          class="ant-segmented css-var-root css-var-root"
-          role="radiogroup"
-          size="medium"
-          tabindex="0"
+          class="ant-cron-field-modes"
         >
           <div
-            class="ant-segmented-group"
+            aria-label="segmented control"
+            aria-orientation="horizontal"
+            class="ant-segmented css-var-root css-var-root"
+            role="radiogroup"
+            size="medium"
+            tabindex="0"
           >
-            <!---->
-            <label
-              class="ant-segmented-item"
+            <div
+              class="ant-segmented-group"
             >
-              <input
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Every"
+              <!---->
+              <label
+                class="ant-segmented-item ant-segmented-item-selected"
               >
-                Every
-              </div>
-            </label>
-            <label
-              class="ant-segmented-item ant-segmented-item-selected"
-            >
-              <input
-                checked=""
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Interval"
+                <input
+                  checked=""
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Every"
+                >
+                  Every
+                </div>
+              </label>
+              <label
+                class="ant-segmented-item"
               >
-                Interval
-              </div>
-            </label>
-            <label
-              class="ant-segmented-item"
-            >
-              <input
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Specified"
+                <input
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Interval"
+                >
+                  Interval
+                </div>
+              </label>
+              <label
+                class="ant-segmented-item"
               >
-                Specified
-              </div>
-            </label>
-            <label
-              class="ant-segmented-item"
-            >
-              <input
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Range"
+                <input
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Specified"
+                >
+                  Specified
+                </div>
+              </label>
+              <label
+                class="ant-segmented-item"
               >
-                Range
-              </div>
-            </label>
+                <input
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Range"
+                >
+                  Range
+                </div>
+              </label>
+            </div>
           </div>
-        </div>
-        <div
-          class="ant-cron-field-mode-description"
-        >
-          Interval: Every Minute
         </div>
         <div
           class="ant-cron-controls"
         >
-          <div
-            class="ant-input-number ant-input-number-mode-input css-var-root ant-input-number-css-var ant-input-number-outlined ant-input-number-without-controls"
-          >
-            <!---->
-            <!---->
-            <input
-              aria-label="Minute start"
-              aria-valuemax="59"
-              aria-valuemin="0"
-              aria-valuenow="5"
-              autocomplete="off"
-              class="ant-input-number-input"
-              role="spinbutton"
-              step="1"
-              value="5"
-            />
-            <!---->
-            <!---->
-            <!---->
-          </div>
           <span>
-            every
+            Execute every 
           </span>
-          <div
-            class="ant-input-number ant-input-number-mode-input css-var-root ant-input-number-css-var ant-input-number-outlined ant-input-number-without-controls ant-input-number-out-of-range"
-          >
-            <!---->
-            <!---->
-            <input
-              aria-label="Minute interval"
-              aria-valuemax="60"
-              aria-valuemin="1"
-              aria-valuenow="0"
-              autocomplete="off"
-              class="ant-input-number-input"
-              role="spinbutton"
-              step="1"
-              value="0"
-            />
-            <!---->
-            <!---->
-            <!---->
-          </div>
+          <span>
+            <div
+              class="ant-input-number ant-input-number-mode-input css-var-root ant-input-number-css-var ant-input-number-outlined ant-input-number-without-controls"
+            >
+              <!---->
+              <!---->
+              <input
+                aria-label="Minute interval"
+                aria-valuemax="60"
+                aria-valuemin="1"
+                aria-valuenow="5"
+                autocomplete="off"
+                class="ant-input-number-input"
+                role="spinbutton"
+                step="1"
+                value="5"
+              />
+              <!---->
+              <!---->
+              <!---->
+            </div>
+          </span>
+          <span>
+             minutes
+          </span>
+        </div>
+        <div
+          class="ant-cron-field-control-summary"
+        >
+          Execute every 5 minutes
         </div>
       </div>
     </div>
@@ -660,11 +644,6 @@ exports[`cron demo > renders semantic correctly 1`] = `
     value="0 0 18 ? * MON,FRI"
   />
   <div
-    class="ant-cron-description"
-  >
-    Custom schedule
-  </div>
-  <div
     class="ant-cron-fields"
     style="max-width: 680px;"
   >
@@ -760,88 +739,88 @@ exports[`cron demo > renders semantic correctly 1`] = `
           Minute
         </div>
         <div
-          aria-label="segmented control"
-          aria-orientation="horizontal"
-          class="ant-segmented css-var-root css-var-root"
-          role="radiogroup"
-          size="medium"
-          tabindex="0"
+          class="ant-cron-field-modes"
         >
           <div
-            class="ant-segmented-group"
+            aria-label="segmented control"
+            aria-orientation="horizontal"
+            class="ant-segmented css-var-root css-var-root"
+            role="radiogroup"
+            size="medium"
+            tabindex="0"
           >
-            <!---->
-            <label
-              class="ant-segmented-item"
+            <div
+              class="ant-segmented-group"
             >
-              <input
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Every"
+              <!---->
+              <label
+                class="ant-segmented-item"
               >
-                Every
-              </div>
-            </label>
-            <label
-              class="ant-segmented-item"
-            >
-              <input
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Interval"
+                <input
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Every"
+                >
+                  Every
+                </div>
+              </label>
+              <label
+                class="ant-segmented-item"
               >
-                Interval
-              </div>
-            </label>
-            <label
-              class="ant-segmented-item ant-segmented-item-selected"
-            >
-              <input
-                checked=""
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Specified"
+                <input
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Interval"
+                >
+                  Interval
+                </div>
+              </label>
+              <label
+                class="ant-segmented-item ant-segmented-item-selected"
               >
-                Specified
-              </div>
-            </label>
-            <label
-              class="ant-segmented-item"
-            >
-              <input
-                class="ant-segmented-item-input"
-                name="v-0"
-                type="radio"
-              />
-              <div
-                class="ant-segmented-item-label"
-                title="Range"
+                <input
+                  checked=""
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Specified"
+                >
+                  Specified
+                </div>
+              </label>
+              <label
+                class="ant-segmented-item"
               >
-                Range
-              </div>
-            </label>
+                <input
+                  class="ant-segmented-item-input"
+                  name="v-0"
+                  type="radio"
+                />
+                <div
+                  class="ant-segmented-item-label"
+                  title="Range"
+                >
+                  Range
+                </div>
+              </label>
+            </div>
           </div>
-        </div>
-        <div
-          class="ant-cron-field-mode-description"
-        >
-          Specified: Minute values
         </div>
         <div
           class="ant-cron-controls"
         >
+          Execute at these minutes:
           <!---->
           <div
             aria-label="Minute values"
@@ -944,6 +923,11 @@ exports[`cron demo > renders semantic correctly 1`] = `
             <!---->
           </div>
           <!---->
+        </div>
+        <div
+          class="ant-cron-field-control-summary"
+        >
+          Execute at minutes 0 of every hour
         </div>
       </div>
     </div>

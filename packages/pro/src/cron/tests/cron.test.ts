@@ -346,9 +346,32 @@ describe('Cron', () => {
     expect(wrapper.find('.ant-cron-field-mode-description').exists()).toBe(false)
 
     wrapper = mountCron('0 10,20,30 9 * * ?')
-    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('在第 10、20、30 分钟执行')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每小时的第 10、20、30 分钟执行')
 
     wrapper = mountCron('0 10-30 9 * * ?')
-    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('第 10～30 分钟内每分钟执行')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每小时第 10～30 分钟执行')
+  })
+
+  it('keeps day and week every-mode mutually exclusive', async () => {
+    const mountCron = (value: string) => mount(ConfigProvider, {
+      props: { locale: proZhCN },
+      slots: { default: () => h(Cron, { value }) },
+    })
+
+    let wrapper = mountCron('0 0 9 * * ?')
+    await wrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('unspecified')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('不指定星期，按日期执行')
+    await wrapper.find('[data-field="day"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('every')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每天执行一次')
+
+    wrapper = mountCron('0 0 9 ? * *')
+    await wrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('every')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每天执行一次')
+    await wrapper.find('[data-field="day"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('unspecified')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('不指定日期，按星期执行')
   })
 })

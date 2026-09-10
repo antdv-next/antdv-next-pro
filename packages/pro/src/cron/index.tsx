@@ -123,7 +123,6 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       const pickerLocale = localeContext.locale.value?.DatePicker?.lang
       return pickerLocale?.fieldDateTimeFormat ?? 'YYYY-MM-DD HH:mm:ss'
     })
-    const modeOptions = computed(() => MODE_VALUES.filter(value => value !== 'list').map(value => ({ label: locale.value.modes[value], value })))
     const editable = computed(() => !mergedDisabled.value && !mergedReadonly.value)
     const draftExpression = ref(props.value ?? '')
     const fields = ref<CronFields>(createDefaultFields(mergedShowYear.value))
@@ -155,9 +154,19 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
     const activeValue = computed(() => fields.value[activeField.value] ?? '')
     const activeMode = computed<CronFieldMode>(() => {
       const mode = getFieldMode(activeValue.value)
-      if (mode === 'interval' && activeValue.value.startsWith('*/'))
+      if (mode === 'interval' && activeValue.value.startsWith('*/') && activeField.value !== 'day' && activeField.value !== 'week')
         return 'every'
       return mode === 'list' ? 'specified' : mode
+    })
+    const modeOptions = computed(() => {
+      const namedModes = MODE_VALUES.filter((value): value is Exclude<CronFieldMode, 'list' | 'unspecified'> => value !== 'list' && value !== 'unspecified')
+      const toOption = (value: Exclude<CronFieldMode, 'list'>) => ({
+        label: value === 'unspecified' ? locale.value.notSpecified : locale.value.modes[value],
+        value,
+      })
+      if (activeField.value === 'day' || activeField.value === 'week')
+        return [toOption('every'), toOption('unspecified'), ...namedModes.filter(value => value !== 'every').map(toOption)]
+      return namedModes.map(toOption)
     })
     useFormItemInputContextProvider(computed(() => ({
       ...formItemInputContext.value,
@@ -229,7 +238,8 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       const current = activeValue.value
       const fallback = current === '?' ? '*' : current
       const values: Record<CronFieldMode, string> = {
-        every: activeField.value === 'day' || activeField.value === 'week' ? (current === '?' ? '?' : '*') : '*',
+        every: '*',
+        unspecified: '?',
         interval: `${fallback === '*' ? min : getNumericParts(fallback, min)[0]}/${Math.min(5, max - min + 1)}`,
         specified: String(min),
         range: `${min}-${Math.min(min + 1, max)}`,
@@ -313,15 +323,9 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       const numberProps = { min, max, size: mergedSize.value, disabled: !editable.value, controls: false }
       const resolvedMode = mode === 'list' ? 'specified' : mode
       const editorTemplate = getFieldDescriptionTemplate(field, resolvedMode, 'editor')
+      if (mode === 'unspecified' || (mode === 'every' && (field === 'day' || field === 'week')))
+        return formatCronMessage(editorTemplate, getFieldDescriptionValues(field, value))
       if (mode === 'every') {
-        if (field === 'day' || field === 'week') {
-          return (
-            <>
-              {formatCronMessage(editorTemplate, getFieldDescriptionValues(field, value))}
-              <Segmented options={[{ label: locale.value.any, value: '*' }, { label: locale.value.notSpecified, value: '?' }]} value={value} disabled={!editable.value} onUpdate:value={nextValue => applyFieldValue(field, String(nextValue))} />
-            </>
-          )
-        }
         const interval = value.startsWith('*/') ? Number(value.slice(2)) : 1
         return renderEditorTemplate(editorTemplate, {
           step: <InputNumber {...numberProps} min={1} max={max - min + 1} value={Number.isFinite(interval) && interval > 0 ? interval : 1} aria-label={formatCronMessage(locale.value.fieldInterval, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, Number(nextValue ?? 1) === 1 ? '*' : `*/${nextValue ?? 1}`)} />,
@@ -395,7 +399,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
               {slots.field?.({ field: activeField.value, value: activeValue.value, disabled: mergedDisabled.value, readonly: mergedReadonly.value }) ?? (
                 <>
                   <div class={`${prefixCls.value}-field-title`}>{locale.value.fields[activeField.value]}</div>
-                  <Segmented options={modeOptions.value} value={activeMode.value} size={mergedSize.value} disabled={!editable.value} onUpdate:value={nextValue => setFieldMode(nextValue as CronFieldMode)} />
+                  <div class={`${prefixCls.value}-field-modes`}><Segmented options={modeOptions.value} value={activeMode.value} size={mergedSize.value} disabled={!editable.value} onUpdate:value={nextValue => setFieldMode(nextValue as CronFieldMode)} /></div>
                   <div class={`${prefixCls.value}-controls`}>{renderFieldControls()}</div>
                   <div class={`${prefixCls.value}-field-control-summary`}>{getModeDescription(activeMode.value)}</div>
                 </>

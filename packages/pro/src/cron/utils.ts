@@ -218,7 +218,9 @@ export function getFieldMode(value: string): CronFieldMode {
     return 'range'
   if (value.includes('/'))
     return 'interval'
-  if (value === '*' || value === '?')
+  if (value === '?')
+    return 'unspecified'
+  if (value === '*')
     return 'every'
   return 'specified'
 }

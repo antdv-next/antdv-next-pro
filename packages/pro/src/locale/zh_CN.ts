@@ -44,6 +44,7 @@ const cronLocale: CronLocale = {
     },
     day: {
       every: { editor: '每天执行', preview: '每天执行一次' },
+      unspecified: { editor: '不指定日期', preview: '不指定日期，按星期执行' },
       interval: { editor: '从每月第 {start} 日开始，每 {step} 天执行', preview: '每月从第 {start} 日起，每隔 {step} 天执行' },
       specified: { editor: '在每月以下日期执行：', preview: '每月第 {values} 日执行' },
       range: { editor: '每月第 {start}～{end} 日执行', preview: '每月第 {start}～{end} 日执行' },
@@ -56,6 +57,7 @@ const cronLocale: CronLocale = {
     },
     week: {
       every: { editor: '每天执行', preview: '每天执行一次' },
+      unspecified: { editor: '不指定星期', preview: '不指定星期，按日期执行' },
       interval: { editor: '从 {start} 开始，每隔 {step} 天执行', preview: '每周从 {start} 起，每隔 {step} 天执行' },
       specified: { editor: '在以下星期执行：', preview: '每{values}执行' },
       range: { editor: '每周{start}至{end}执行', preview: '每{start}至{end}执行' },

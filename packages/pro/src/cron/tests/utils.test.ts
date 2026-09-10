@@ -3,6 +3,7 @@ import zhCNLocale from '../../locale/zh_CN'
 import {
   createDefaultFields,
   formatExpression,
+  getFieldMode,
   getPreview,
   parseExpression,
   updateField,
@@ -61,6 +62,8 @@ describe('Cron utilities', () => {
 
     expect(day.week).toBe('*')
     expect(week.day).toBe('?')
+    expect(getFieldMode('?')).toBe('unspecified')
+    expect(getFieldMode('*')).toBe('every')
   })
 
   it('uses Croner to calculate a next execution time', () => {

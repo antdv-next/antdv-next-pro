@@ -60,12 +60,21 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
 
     '&-field': {
       display: 'grid',
+      alignContent: 'start',
       gap: token.marginXS,
       padding: token.fieldPanelPadding,
       background: token.fieldBg,
       borderRadius: token.borderRadiusSM,
       boxSizing: 'border-box',
       height: '100%',
+    },
+
+    '&-field-modes': {
+      justifySelf: 'start',
+      alignSelf: 'start',
+      width: 'max-content',
+      maxWidth: '100%',
+      minHeight: token.controlHeight,
     },
 
     '&-field-tabs': {
@@ -186,6 +195,10 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
       padding: token.paddingXS,
     },
 
+    [`&-small ${token.componentCls}-field-modes`]: {
+      minHeight: token.controlHeightSM,
+    },
+
     [`&-large ${token.componentCls}-field-tab`]: {
       minHeight: token.controlHeightLG,
       paddingInline: token.padding,
@@ -195,6 +208,10 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
     [`&-large ${token.componentCls}-field`]: {
       gap: token.marginSM,
       padding: token.padding,
+    },
+
+    [`&-large ${token.componentCls}-field-modes`]: {
+      minHeight: token.controlHeightLG,
     },
 
     '&-error': {

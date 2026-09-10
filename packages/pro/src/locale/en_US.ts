@@ -44,6 +44,7 @@ const cronLocale: CronLocale = {
     },
     day: {
       every: { editor: 'Execute every day', preview: 'Execute every day' },
+      unspecified: { editor: 'Do not specify a date', preview: 'Day not specified; follow the week field' },
       interval: { editor: 'Start on day {start} of each month, then execute every {step} days', preview: 'Each month, execute from day {start} every {step} days' },
       specified: { editor: 'Execute on these days of each month:', preview: 'Execute on days {values} of each month' },
       range: { editor: 'Execute from day {start} to day {end} of each month', preview: 'Execute from day {start} to day {end} of each month' },
@@ -56,6 +57,7 @@ const cronLocale: CronLocale = {
     },
     week: {
       every: { editor: 'Execute every day', preview: 'Execute every day' },
+      unspecified: { editor: 'Do not specify a weekday', preview: 'Week not specified; follow the day field' },
       interval: { editor: 'Start on {start}, then execute every {step} days', preview: 'Every week, execute from {start} every {step} days' },
       specified: { editor: 'Execute on these weekdays:', preview: 'Execute every {values}' },
       range: { editor: 'Execute from {start} to {end} every week', preview: 'Execute from {start} to {end} every week' },
