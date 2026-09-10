@@ -107,7 +107,7 @@ const cronLocale: CronLocale = {
   noFutureRun: '无后续执行时间',
   everySeconds: '每 {value} 秒',
   everyMinutes: '每 {value} 分钟',
-  everyDayAt: '每天 {value}',
+  everyDayAt: '每天 {value} 执行',
   customSchedule: '自定义计划',
   validation: {
     invalidStep: '步长表达式无效',

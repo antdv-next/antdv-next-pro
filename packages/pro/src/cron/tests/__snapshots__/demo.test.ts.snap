@@ -610,7 +610,7 @@ exports[`cron demo > renders presets correctly 1`] = `
     class="ant-cron-preview"
   >
     <span>
-      Every 5 minutes
+      Start at minute 0, then execute every 5 minutes
     </span>
     <ul
       class="ant-cron-preview-list"
@@ -937,7 +937,7 @@ exports[`cron demo > renders semantic correctly 1`] = `
     class="ant-cron-preview cron-demo-preview"
   >
     <span>
-      Custom schedule
+      Execute every Mon, Fri at 18:00
     </span>
     <ul
       class="ant-cron-preview-list"

@@ -225,17 +225,187 @@ export function getFieldMode(value: string): CronFieldMode {
   return 'specified'
 }
 
+function mergeCronLocale(locale: CronLocale): CronLocale {
+  return {
+    ...enUS,
+    ...locale,
+    fieldDescriptions: {
+      ...enUS.fieldDescriptions,
+      ...locale.fieldDescriptions,
+    },
+    valueLabels: {
+      month: { ...enUS.valueLabels?.month, ...locale.valueLabels?.month },
+      week: { ...enUS.valueLabels?.week, ...locale.valueLabels?.week },
+    },
+  }
+}
+
+function isNumericField(value: string) {
+  return /^\d+$/.test(value)
+}
+
+function isZeroField(value: string) {
+  return value === '0' || value === '00'
+}
+
+function isEveryOrZero(value: string) {
+  return value === '*' || isZeroField(value)
+}
+
+function isEveryDay(fields: CronFields) {
+  return (fields.day === '*' && fields.week === '?') || (fields.day === '?' && fields.week === '*')
+}
+
+function formatFieldToken(field: CronFieldName, token: string, locale: CronLocale) {
+  const normalized = token.trim().toUpperCase()
+  const aliases = field === 'month' ? MONTHS : field === 'week' ? WEEKS : undefined
+  if (aliases) {
+    const numeric = aliases[normalized] ?? (Number.isInteger(Number(normalized)) ? Number(normalized) : undefined)
+    const name = numeric !== undefined ? Object.keys(aliases)[numeric - 1] : undefined
+    if (name)
+      return locale.valueLabels?.[field]?.[name] ?? name
+  }
+  return normalized
+}
+
+function getDescriptionValues(field: CronFieldName, value: string, locale: CronLocale) {
+  const definition = FIELD_DEFINITIONS[field]
+  const separator = locale.valueSeparator ?? ', '
+  const mode = getFieldMode(value)
+  if (mode === 'interval') {
+    const [base, step] = value.split('/')
+    const startToken = !base || base === '*' ? String(definition.min) : base.split('-')[0]!
+    return {
+      start: formatFieldToken(field, startToken, locale),
+      end: formatFieldToken(field, String(definition.max), locale),
+      step: step && Number(step) > 0 ? step : '1',
+      values: formatFieldToken(field, startToken, locale),
+    }
+  }
+  if (mode === 'range') {
+    const [start, end] = value.split('-')
+    return {
+      start: formatFieldToken(field, start ?? String(definition.min), locale),
+      end: formatFieldToken(field, end ?? String(definition.max), locale),
+      step: '1',
+      values: [start, end].filter(Boolean).map(item => formatFieldToken(field, item!, locale)).join(separator),
+    }
+  }
+  const selected = value.split(',').filter(Boolean).map(item => formatFieldToken(field, item, locale)).join(separator)
+  return {
+    start: formatFieldToken(field, String(definition.min), locale),
+    end: formatFieldToken(field, String(definition.max), locale),
+    step: '1',
+    values: selected || formatFieldToken(field, String(definition.min), locale),
+  }
+}
+
+function getFieldTemplate(field: CronFieldName, mode: CronFieldMode, type: 'editor' | 'preview', locale: CronLocale) {
+  return locale.fieldDescriptions?.[field]?.[mode]?.[type]
+    ?? enUS.fieldDescriptions?.[field]?.[mode]?.[type]
+    ?? ''
+}
+
+function describeField(field: CronFieldName, value: string, locale: CronLocale, type: 'editor' | 'preview' = 'preview') {
+  const mode = getFieldMode(value)
+  const template = getFieldTemplate(field, mode, type, locale)
+  return template ? formatCronMessage(template, getDescriptionValues(field, value, locale)) : ''
+}
+
+function getClock(fields: CronFields) {
+  if (!isNumericField(fields.hour) || !isNumericField(fields.minute) || !isNumericField(fields.second))
+    return undefined
+  const time = `${fields.hour.padStart(2, '0')}:${fields.minute.padStart(2, '0')}`
+  return fields.second === '0' ? time : `${time}:${fields.second.padStart(2, '0')}`
+}
+
+function getDominantIntervalField(fields: CronFields): CronFieldName | undefined {
+  const secondMode = getFieldMode(fields.second)
+  const minuteMode = getFieldMode(fields.minute)
+  const hourMode = getFieldMode(fields.hour)
+  if (secondMode === 'interval' && (fields.minute === '*' || isZeroField(fields.minute)) && fields.hour === '*')
+    return 'second'
+  if (minuteMode === 'interval' && isEveryOrZero(fields.second) && fields.hour === '*')
+    return 'minute'
+  if (hourMode === 'interval' && isEveryOrZero(fields.second) && isEveryOrZero(fields.minute))
+    return 'hour'
+}
+
+function describeCalendar(fields: CronFields, locale: CronLocale) {
+  const parts: string[] = []
+  if (fields.year && getFieldMode(fields.year) !== 'every')
+    parts.push(describeField('year', fields.year, locale))
+  if (getFieldMode(fields.month) !== 'every')
+    parts.push(describeField('month', fields.month, locale))
+  const weekMode = getFieldMode(fields.week)
+  const dayMode = getFieldMode(fields.day)
+  if (weekMode !== 'every' && weekMode !== 'unspecified')
+    parts.push(describeField('week', fields.week, locale))
+  else if (dayMode !== 'every' && dayMode !== 'unspecified')
+    parts.push(describeField('day', fields.day, locale))
+  return parts.filter(Boolean).join(locale.valueSeparator ?? ', ')
+}
+
+function describeTime(fields: CronFields, locale: CronLocale) {
+  const intervalField = getDominantIntervalField(fields)
+  if (intervalField)
+    return describeField(intervalField, fields[intervalField]!, locale, 'editor')
+
+  const parts: string[] = []
+  const hourMode = getFieldMode(fields.hour)
+  const minuteMode = getFieldMode(fields.minute)
+  const secondMode = getFieldMode(fields.second)
+  if (hourMode !== 'every')
+    parts.push(describeField('hour', fields.hour, locale))
+  if (minuteMode !== 'every' && !(isZeroField(fields.minute) && hourMode !== 'every'))
+    parts.push(describeField('minute', fields.minute, locale))
+  if (secondMode !== 'every' && !(isZeroField(fields.second) && (minuteMode !== 'every' || hourMode !== 'every')))
+    parts.push(describeField('second', fields.second, locale))
+  return parts.filter(Boolean).join(locale.valueSeparator ?? ', ')
+}
+
+function insertTime(description: string, time: string) {
+  const executeTokens = ['执行', '執行', '実行', '실행', 'ausführen']
+  for (const token of executeTokens) {
+    if (description.endsWith(token))
+      return `${description.slice(0, -token.length).trimEnd()} ${time} ${token}`
+  }
+  if (/^(Execute|Exécuter|Esegui|Executar|Ejecutar|Uitvoeren)\b/i.test(description))
+    return `${description} at ${time}`
+  return `${description} ${time}`
+}
+
+function joinSchedule(calendar: string, time: string) {
+  if (!calendar)
+    return time
+  if (!time)
+    return calendar
+  const executeTokens = ['执行', '執行', '実行', '실행', 'ausführen']
+  for (const token of executeTokens) {
+    if (calendar.endsWith(token))
+      return `${calendar.slice(0, -token.length).trimEnd()}，${time}`
+  }
+  return `${calendar} ${time}`
+}
+
 export function describeExpression(fields: CronFields, locale: CronLocale = enUS): string {
-  if (fields.minute.startsWith('*/') && fields.second === '0') {
-    return formatCronMessage(locale.everyMinutes, { value: fields.minute.slice(2) })
+  const merged = mergeCronLocale(locale)
+  const clock = getClock(fields)
+  const calendar = describeCalendar(fields, merged)
+  if (clock) {
+    if (calendar)
+      return insertTime(calendar, clock)
+    return formatCronMessage(merged.everyDayAt, { value: clock })
   }
-  if (fields.second.startsWith('*/')) {
-    return formatCronMessage(locale.everySeconds, { value: fields.second.slice(2) })
-  }
-  if (/^\d+$/.test(fields.hour) && /^\d+$/.test(fields.minute) && fields.day === '*' && fields.week === '?') {
-    return formatCronMessage(locale.everyDayAt, { value: `${fields.hour.padStart(2, '0')}:${fields.minute.padStart(2, '0')}` })
-  }
-  return locale.customSchedule
+
+  const time = describeTime(fields, merged)
+  if (time && calendar && !isEveryDay(fields))
+    return joinSchedule(calendar, time)
+  if (time)
+    return time
+  if (calendar)
+    return calendar
+  return merged.customSchedule
 }
 
 export function getPreview(expression: string, showYear = false, locale: CronLocale = enUS): CronPreviewResult {

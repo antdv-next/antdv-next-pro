@@ -129,7 +129,7 @@ describe('Cron', () => {
 
     expect(wrapper.find('.ant-cron').classes()).toContain('from-provider')
     expect(wrapper.find('.custom-preview').attributes('style')).toContain('padding: 4px')
-    expect(wrapper.find('.custom-preview').text()).toContain('Every 5 minutes')
+    expect(wrapper.find('.custom-preview').text()).toContain('Start at minute 0, then execute every 5 minutes')
   })
 
   it('uses the Antdv ConfigProvider locale and DatePicker date-time format', () => {
@@ -153,7 +153,7 @@ describe('Cron', () => {
     })
 
     expect(wrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
-    expect(wrapper.find('.ant-cron-preview').text()).toContain('Every 5 minutes')
+    expect(wrapper.find('.ant-cron-preview').text()).toContain('Start at minute 0, then execute every 5 minutes')
     expect(wrapper.find('.ant-cron-preview').text()).toMatch(/Next run: \d{4}年\d{2}月\d{2}日/)
   })
 
@@ -185,7 +185,7 @@ describe('Cron', () => {
     })
 
     expect(wrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Seconde')
-    expect(wrapper.find('.ant-cron-preview').text()).toContain('Toutes les 5 minutes')
+    expect(wrapper.find('.ant-cron-preview').text()).toContain('Commencer à minute 0, puis exécuter toutes les 5 minutes')
   })
 
   it('follows dynamic and nested Antdv locales with an English fallback', async () => {
