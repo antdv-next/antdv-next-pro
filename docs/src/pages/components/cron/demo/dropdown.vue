@@ -44,7 +44,7 @@ function cancel() {
     :options="options"
     :not-found-content="null"
     :popup-match-select-width="false"
-    popup-class="cron-dropdown-popup"
+    :classes="{ popup: { root: 'cron-dropdown-popup' } }"
     style="width: 100%; max-width: 360px;"
     @open-change="onOpenChange"
   >
