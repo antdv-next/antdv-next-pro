@@ -344,11 +344,11 @@ exports[`cron demo > renders form correctly 1`] = `
               data-format="quartz"
               data-readonly="false"
               data-size="medium"
-              id="quartz"
             >
               <input
                 aria-label="Cron expression"
                 class="ant-input ant-input-outlined css-var-root ant-input-css-var"
+                id="quartz"
                 type="text"
                 value="0 0 9 * * ?"
               />
@@ -702,11 +702,11 @@ exports[`cron demo > renders form correctly 1`] = `
               data-format="unix"
               data-readonly="false"
               data-size="medium"
-              id="unix"
             >
               <input
                 aria-label="Cron expression"
                 class="ant-input ant-input-outlined css-var-root ant-input-css-var"
+                id="unix"
                 type="text"
                 value="0 9 * * 1-5"
               />
