@@ -20,6 +20,7 @@ group:
 <demo-group>
   <demo src="./demo/basic.vue">基础用法</demo>
   <demo src="./demo/format.vue">Cron 格式</demo>
+  <demo src="./demo/dropdown.vue">下拉模式</demo>
   <demo src="./demo/form.vue">表单校验</demo>
   <demo src="./demo/presets.vue">Preset 和预览</demo>
   <demo src="./demo/semantic.vue">语义化样式</demo>

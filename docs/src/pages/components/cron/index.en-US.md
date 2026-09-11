@@ -19,6 +19,7 @@ group:
 <demo-group>
   <demo src="./demo/basic.vue">Basic</demo>
   <demo src="./demo/format.vue">Cron format</demo>
+  <demo src="./demo/dropdown.vue">Dropdown</demo>
   <demo src="./demo/form.vue">Form</demo>
   <demo src="./demo/presets.vue">Presets and preview</demo>
   <demo src="./demo/semantic.vue">Semantic styling</demo>
