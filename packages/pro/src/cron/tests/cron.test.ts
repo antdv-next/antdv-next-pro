@@ -99,6 +99,22 @@ describe('Cron', () => {
     expect(wrapper.emitted('change')).toEqual([['0 0 9 * * ?']])
   })
 
+  it('keeps the expression input readonly while the editor stays editable', async () => {
+    const wrapper = mount(Cron, {
+      props: {
+        value: '0 0 9 * * ?',
+        presets: [{ label: 'Hourly', value: '0 0 * * * ?' }],
+      },
+    })
+
+    expect(wrapper.find('input').attributes('readonly')).toBeDefined()
+
+    const preset = wrapper.findAll('button').find(button => button.text() === 'Hourly')
+    await preset?.trigger('click')
+    expect(wrapper.find('input').element.value).toBe('0 0 * * * ?')
+    expect(wrapper.emitted('update:value')).toEqual([['0 0 * * * ?']])
+  })
+
   it('supports readonly without disabling expression selection', async () => {
     const wrapper = mount(Cron, {
       props: {
@@ -394,6 +410,33 @@ describe('Cron', () => {
     await wrapper.setProps({ value: '0 0 9 ? JAN,MAR MON' })
     expect(wrapper.find('.ant-cron-field[data-field="month"]').attributes('data-mode')).toBe('specified')
     expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['Jan', 'Mar'])
+  })
+
+  it('sorts specified tags by numeric value instead of selection order', async () => {
+    const wrapper = mount(Cron, { props: { value: '0 30,5,10 9 * * ?' } })
+    await wrapper.find('[data-field="minute"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['05', '10', '30'])
+
+    wrapper.getComponent(Select).vm.$emit('update:value', ['30', '5', '20'])
+    await nextTick()
+    expect(wrapper.find('input').element.value).toBe('0 5,20,30 9 * * ?')
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['05', '20', '30'])
+
+    const monthWrapper = mount(Cron, { props: { value: '0 0 9 ? OCT,JAN,MAR *' } })
+    await monthWrapper.find('[data-field="month"].ant-cron-field-tab-label').trigger('click')
+    expect(monthWrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['Jan', 'Mar', 'Oct'])
+
+    monthWrapper.getComponent(Select).vm.$emit('update:value', ['MAR', 'OCT', 'JAN'])
+    await nextTick()
+    expect(monthWrapper.find('input').element.value).toBe('0 0 9 ? JAN,MAR,OCT *')
+    expect(monthWrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['Jan', 'Mar', 'Oct'])
+  })
+
+  it('shows all specified tags without collapsing', async () => {
+    const wrapper = mount(Cron, { props: { value: '0 5,10,20,30,45 9 * * ?' } })
+    await wrapper.find('[data-field="minute"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['05', '10', '20', '30', '45'])
+    expect(wrapper.find('.ant-select-selection-overflow-item-rest').exists()).toBe(false)
   })
 
   it('uses full-width Select controls for every specified field', async () => {

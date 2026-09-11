@@ -10,6 +10,7 @@ Quartz six-field, seven-field, and Unix five-field cron are independent formats.
 import { computed, ref } from 'vue'
 
 const mode = ref<'quartz' | 'quartz-year' | 'unix'>('quartz')
+const size = ref<'small' | 'medium' | 'large'>('medium')
 const quartz = ref('0 0 9 * * ?')
 const quartzYear = ref('0 0 9 * * ? *')
 const unix = ref('0 9 * * 1-5')
@@ -17,6 +18,11 @@ const options = [
   { label: 'Quartz · 6 fields', value: 'quartz' },
   { label: 'Quartz · 7 fields', value: 'quartz-year' },
   { label: 'Unix · 5 fields', value: 'unix' },
+]
+const sizes = [
+  { label: 'Small', value: 'small' },
+  { label: 'Medium', value: 'medium' },
+  { label: 'Large', value: 'large' },
 ]
 
 const value = computed({
@@ -40,12 +46,16 @@ const value = computed({
 
 <template>
   <div>
-    <a-radio-group v-model:value="mode" option-type="button" :options="options" style="margin-bottom: 16px;" />
+    <a-flex vertical gap="middle" style="margin-bottom: 16px;">
+      <a-radio-group v-model:value="mode" option-type="button" :options="options" />
+      <a-radio-group v-model:value="size" option-type="button" :options="sizes" />
+    </a-flex>
     <a-cron
       :key="mode"
       v-model:value="value"
       :format="mode === 'unix' ? 'unix' : 'quartz'"
       :show-year="mode === 'quartz-year'"
+      :size="size"
     />
   </div>
 </template>

@@ -84,10 +84,28 @@ function getNumericParts(value: string, fallback: number, names?: readonly strin
   }).filter(Number.isFinite).concat(fallback)
 }
 
+function getSpecifiedSortValue(value: string, names?: readonly string[], format: CronFormat = 'quartz', field?: CronFieldName): number {
+  const normalized = value.trim().toUpperCase()
+  if (field === 'week') {
+    const aliases = getWeekAliases(format)
+    if (normalized in aliases)
+      return aliases[normalized]!
+  }
+  const aliasIndex = names ? (names as readonly string[]).indexOf(normalized as never) : -1
+  if (aliasIndex >= 0)
+    return aliasIndex + 1
+  const numeric = Number(normalized)
+  return Number.isFinite(numeric) ? numeric : Number.POSITIVE_INFINITY
+}
+
+function sortSpecifiedValues(values: string[], names?: readonly string[], format: CronFormat = 'quartz', field?: CronFieldName): string[] {
+  return [...values].sort((a, b) => getSpecifiedSortValue(a, names, format, field) - getSpecifiedSortValue(b, names, format, field))
+}
+
 function getSelectedValues(value: string, names?: readonly string[], format: CronFormat = 'quartz', field?: CronFieldName): string[] {
   if (!value || value === '*' || value === '?')
     return []
-  return value.split(',').flatMap(item => item.split('/')[0]!.split('-')).map((item) => {
+  return sortSpecifiedValues(value.split(',').flatMap(item => item.split('/')[0]!.split('-')).map((item) => {
     const normalized = item.trim().toUpperCase()
     if (names?.includes(normalized as never))
       return normalized
@@ -97,7 +115,7 @@ function getSelectedValues(value: string, names?: readonly string[], format: Cro
     if (Number.isInteger(numeric))
       return names?.[numeric - 1] ?? normalized
     return normalized
-  }).filter(Boolean)
+  }).filter(Boolean), names, format, field)
 }
 
 function formatNamedValue(field: CronFieldName, value: string, locale?: CronLocale, format: CronFormat = 'quartz') {
@@ -355,12 +373,11 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
           size={mergedSize.value}
           disabled={!editable.value}
           showSearch
-          maxTagCount={3}
           tokenSeparators={field === 'year' ? [','] : undefined}
           class={`${prefixCls.value}-specific-select`}
           placeholder={formatCronMessage(locale.value.fieldValues, { field: locale.value.fields[field] })}
           aria-label={formatCronMessage(locale.value.fieldValues, { field: locale.value.fields[field] })}
-          onUpdate:value={nextValue => applyFieldValue(field, Array.isArray(nextValue) ? nextValue.map(item => String(item)).join(',') : String(nextValue ?? ''))}
+          onUpdate:value={nextValue => applyFieldValue(field, Array.isArray(nextValue) ? sortSpecifiedValues(nextValue.map(item => String(item)), names, mergedFormat.value, field).join(',') : String(nextValue ?? ''))}
         />
       )
     }
@@ -517,7 +534,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       const { rootAttrs, controlAttrs } = splitRootAndControlAttrs(attrs as Record<string, any>)
       return (
         <div class={rootClassName.value} style={rootStyle.value} data-size={mergedSize.value} data-format={mergedFormat.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-readonly={mergedReadonly.value ? 'true' : 'false'} data-status={mergedStatus.value || undefined} aria-readonly={mergedReadonly.value || undefined} {...rootAttrs}>
-          <Input value={draftExpression.value} size={mergedSize.value} readonly={mergedReadonly.value} disabled={mergedDisabled.value} class={mergedClassNames.value.input} style={mergedStyles.value.input} aria-label={locale.value.expression} {...controlAttrs} onUpdate:value={handleExpressionInput} />
+          <Input value={draftExpression.value} size={mergedSize.value} readonly disabled={mergedDisabled.value} class={mergedClassNames.value.input} style={mergedStyles.value.input} aria-label={locale.value.expression} {...controlAttrs} onUpdate:value={handleExpressionInput} />
           <div class={clsx(`${prefixCls.value}-fields`, mergedClassNames.value.fields)} style={mergedStyles.value.fields}>
             <div class={clsx(`${prefixCls.value}-field-tabs`, mergedClassNames.value.navigation)} style={mergedStyles.value.navigation} role="tablist" aria-orientation="vertical" aria-label={locale.value.fieldList}>
               {displayedFields.value.map((field) => {
@@ -570,10 +587,20 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
             <div class={clsx(`${prefixCls.value}-preview`, mergedClassNames.value.preview)} style={mergedStyles.value.preview}>
               {slots.preview?.(preview.value) ?? (
                 <>
-                  <span>{preview.value.description}</span>
+                  {preview.value.description
+                    ? <div class={`${prefixCls.value}-preview-description`}>{preview.value.description}</div>
+                    : null}
                   {preview.value.nextRuns?.length
-                    ? <ul class={`${prefixCls.value}-preview-list`}>{preview.value.nextRuns.map(run => <li key={run.getTime()}>{formatCronMessage(locale.value.nextRun, { value: dayjs(run).locale(localeCode.value).format(dateTimeFormat.value) })}</li>)}</ul>
-                    : <span>{locale.value.noFutureRun}</span>}
+                    ? (
+                        <div class={`${prefixCls.value}-preview-runs`}>
+                          {preview.value.nextRuns.map(run => (
+                            <div key={run.getTime()} class={`${prefixCls.value}-preview-run`}>
+                              {formatCronMessage(locale.value.nextRun, { value: dayjs(run).locale(localeCode.value).format(dateTimeFormat.value) })}
+                            </div>
+                          ))}
+                        </div>
+                      )
+                    : <div class={`${prefixCls.value}-preview-empty`}>{locale.value.noFutureRun}</div>}
                 </>
               )}
             </div>

@@ -100,10 +100,15 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
       color: token.colorTextSecondary,
       cursor: 'pointer',
       borderRadius: token.borderRadiusSM,
+      transition: `color ${token.motionDurationMid}, background-color ${token.motionDurationMid}`,
 
-      '&:hover': {
-        color: token.colorPrimary,
-        background: token.colorFillSecondary,
+      [`&:not(${token.componentCls}-field-tab-active):hover`]: {
+        color: token.colorText,
+        background: token.colorBgTextHover,
+      },
+
+      [`&:not(${token.componentCls}-field-tab-active):active`]: {
+        background: token.controlItemBgActive,
       },
 
       '&:focus-visible': {
@@ -124,9 +129,8 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
     },
 
     '&-field-tab-active': {
-      background: token.fieldActiveBg,
       color: token.colorPrimary,
-      borderInlineStart: `${token.lineWidthBold}px ${token.lineType} ${token.colorPrimary}`,
+      background: token.fieldActiveBg,
     },
 
     '&-field-control-summary': {
@@ -166,18 +170,46 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
 
     '&-preview': {
       display: 'grid',
-      gap: token.marginXXS,
+      gap: token.marginXS,
       padding: token.paddingSM,
-      color: token.colorTextSecondary,
       background: token.previewBg,
       borderRadius: token.borderRadiusSM,
     },
 
-    '&-preview-list': {
+    '&-preview-description': {
+      color: token.colorText,
+      fontSize: token.fontSize,
+      lineHeight: token.lineHeight,
+    },
+
+    '&-preview-runs': {
       display: 'grid',
       gap: token.marginXXS,
-      margin: 0,
-      paddingInlineStart: token.padding,
+    },
+
+    '&-preview-run': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: token.marginXS,
+      minWidth: 0,
+      color: token.colorTextSecondary,
+      fontSize: token.fontSizeSM,
+      lineHeight: token.lineHeight,
+
+      '&::before': {
+        content: '""',
+        width: 6,
+        height: 6,
+        borderRadius: '50%',
+        background: token.colorPrimary,
+        flex: 'none',
+      },
+    },
+
+    '&-preview-empty': {
+      color: token.colorTextTertiary,
+      fontSize: token.fontSizeSM,
+      lineHeight: token.lineHeight,
     },
 
     '&-specific-select': {
@@ -210,6 +242,15 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
       minHeight: token.controlHeightSM,
     },
 
+    [`&-small ${token.componentCls}-preview`]: {
+      padding: token.paddingXS,
+      gap: token.marginXXS,
+    },
+
+    [`&-small ${token.componentCls}-preview-description`]: {
+      fontSize: token.fontSizeSM,
+    },
+
     [`&-large ${token.componentCls}-field-tab`]: {
       minHeight: token.controlHeightLG,
       paddingInline: token.padding,
@@ -223,6 +264,10 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
 
     [`&-large ${token.componentCls}-field-modes`]: {
       minHeight: token.controlHeightLG,
+    },
+
+    [`&-large ${token.componentCls}-preview`]: {
+      padding: token.padding,
     },
 
     '&-error': {
@@ -242,6 +287,23 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
         gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
       },
 
+    },
+  },
+
+  [`html.dark ${token.componentCls}, [data-theme="dark"] ${token.componentCls}`]: {
+    [`${token.componentCls}-field-tab:not(${token.componentCls}-field-tab-active)`]: {
+      '&:hover': {
+        color: token.colorTextLightSolid,
+        background: 'transparent',
+      },
+      '&:active': {
+        background: 'transparent',
+      },
+    },
+
+    [`${token.componentCls}-field-tab-active`]: {
+      color: token.colorTextLightSolid,
+      background: token.colorPrimary,
     },
   },
 })

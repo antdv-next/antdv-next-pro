@@ -17,28 +17,47 @@ interface TokenMetaItem {
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(scriptDir, '../../../..')
 const packageRoot = path.resolve(repoRoot, 'packages/pro')
-const sourcePath = path.resolve(packageRoot, 'src/scrollbar/style/token.ts')
 const globalTokenSourceDir = path.resolve(
   packageRoot,
   'node_modules/antdv-next/dist/theme/interface',
 )
 const outputPath = path.resolve(repoRoot, 'docs/src/assets/token-meta.json')
 
-const globalTokenNames = [
-  'colorFillTertiary',
-  'colorTextTertiary',
-  'colorTextSecondary',
-  'colorText',
-  'borderRadiusSM',
-  'paddingXXS',
-  'motionDurationMid',
-  'motionEaseOutCirc',
-]
+const componentGlobalTokens: Record<string, string[]> = {
+  Cron: [
+    'colorBgContainer',
+    'colorBorderSecondary',
+    'padding',
+    'controlItemBgActive',
+    'colorFillTertiary',
+    'colorError',
+    'marginXS',
+    'controlHeight',
+    'paddingSM',
+    'motionDurationMid',
+  ],
+  Scrollbar: [
+    'colorFillTertiary',
+    'colorTextTertiary',
+    'colorTextSecondary',
+    'colorText',
+    'borderRadiusSM',
+    'paddingXXS',
+    'motionDurationMid',
+    'motionEaseOutCirc',
+  ],
+}
+
+const globalTokenNames = [...new Set(Object.values(componentGlobalTokens).flat())]
 
 function getTagText(member: ts.Node, tagName: string) {
   return (ts.getJSDocTags(member).find(tag => tag.tagName.text === tagName)?.comment || '')
     .toString()
     .trim()
+}
+
+function toComponentName(dirName: string) {
+  return dirName.charAt(0).toUpperCase() + dirName.slice(1)
 }
 
 async function getGlobalTokenMeta() {
@@ -87,36 +106,48 @@ async function getGlobalTokenMeta() {
   )
 }
 
+async function collectComponentTokens() {
+  const files = await glob('src/*/style/token.ts', { cwd: packageRoot, absolute: true })
+  const components: Record<string, TokenMetaItem[]> = {}
+
+  for (const file of files.sort()) {
+    const source = await fs.readFile(file, 'utf8')
+    const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true)
+    const component = sourceFile.statements.find(
+      statement => ts.isInterfaceDeclaration(statement) && statement.name.text === 'ComponentToken',
+    )
+
+    if (!component || !ts.isInterfaceDeclaration(component))
+      throw new Error(`ComponentToken interface not found in ${file}`)
+
+    const dirName = path.basename(path.resolve(path.dirname(file), '..'))
+    const name = toComponentName(dirName)
+    components[name] = component.members
+      .filter(ts.isPropertySignature)
+      .map((member) => {
+        const token = member.name.getText(sourceFile)
+        return {
+          source: name,
+          token,
+          type: member.type?.getText(sourceFile) || 'any',
+          desc: getTagText(member, 'desc'),
+          descEn: getTagText(member, 'descEN'),
+        }
+      })
+  }
+
+  return components
+}
+
 async function main() {
-  const source = await fs.readFile(sourcePath, 'utf8')
-  const sourceFile = ts.createSourceFile(sourcePath, source, ts.ScriptTarget.Latest, true)
-  const component = sourceFile.statements.find(
-    statement => ts.isInterfaceDeclaration(statement) && statement.name.text === 'ComponentToken',
-  )
-
-  if (!component || !ts.isInterfaceDeclaration(component))
-    throw new Error(`ComponentToken interface not found in ${sourcePath}`)
-
-  const tokens: TokenMetaItem[] = component.members
-    .filter(ts.isPropertySignature)
-    .map((member) => {
-      const token = member.name.getText(sourceFile)
-      return {
-        source: 'Scrollbar',
-        token,
-        type: member.type?.getText(sourceFile) || 'any',
-        desc: getTagText(member, 'desc'),
-        descEn: getTagText(member, 'descEN'),
-      }
-    })
-
-  const global = await getGlobalTokenMeta()
+  const [global, components] = await Promise.all([
+    getGlobalTokenMeta(),
+    collectComponentTokens(),
+  ])
 
   const output = {
     global,
-    components: {
-      Scrollbar: tokens,
-    },
+    components,
   }
 
   await fs.writeFile(outputPath, `${JSON.stringify(output, null, 2)}\n`, 'utf8')

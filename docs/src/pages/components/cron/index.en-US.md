@@ -9,23 +9,22 @@ group:
   order: 1
 ---
 
-## When To Use
+## When To Use {#when-to-use}
 
 - Configure a recurring task, report, synchronization, or notification.
 - Let users edit a Quartz or Unix cron expression without memorizing its syntax.
 
-## Examples
+## Examples {#examples}
 
 <demo-group>
   <demo src="./demo/basic.vue">Basic</demo>
   <demo src="./demo/format.vue">Cron format</demo>
-  <demo src="./demo/special.vue">Special syntax</demo>
   <demo src="./demo/form.vue">Form</demo>
   <demo src="./demo/presets.vue">Presets and preview</demo>
   <demo src="./demo/semantic.vue">Semantic styling</demo>
 </demo-group>
 
-## API
+## API {#api}
 
 ### Properties
 
@@ -64,9 +63,7 @@ group:
 
 ### Form.Item
 
-`v-model:value` always matches the content displayed in the input, so a Form.Item validator receives temporary invalid values. Cron provides Quartz syntax feedback, while Form.Item remains responsible for `required` and business rules:
-
-Direct input keeps the text entered by the user, while validation and field parsing use its canonical form. `size` matches Antdv Next and accepts `'small' | 'medium' | 'large'`, defaulting to `'medium'`.
+`v-model:value` matches the input text, so Form.Item can validate the value being edited. Use `validateCronExpression` for format checks; keep `required` on Form.Item. Pass `{ format: 'unix' }` when validating Unix expressions.
 
 ```vue
 <script setup lang="ts">
@@ -123,31 +120,12 @@ Quartz day/week fields support Croner special syntax:
 
 The specified mode uses a full-width multi-select control for every field. The year field also accepts custom values through tags input, while month and weekday options display their standard names.
 
-## Internationalization
-
-Like DatePicker, Cron reads the locale from `ConfigProvider`; it does not need a separate locale prop. All 72 locales shipped by Antdv Next have matching Pro locale wrappers with Cron messages. Use a Pro locale wrapper to configure Antdv Next and Cron together, and import the matching dayjs locale in the application:
-
-```vue
-<script setup lang="ts">
-import enUS from '@antdv-next/pro/locale/en_US'
-import 'dayjs/locale/en'
-</script>
-
-<template>
-  <ap-config-provider :locale="enUS">
-    <a-cron v-model:value="value" preview />
-  </ap-config-provider>
-</template>
-```
-
-Valid expressions show a human-readable description below the input. With `preview`, the panel shows the next three execution times by default. The preview uses an instance-level dayjs locale and reuses `locale.DatePicker.lang.fieldDateTimeFormat`; the component never changes global `dayjs.locale()`. A plain Antdv Next locale without `Cron` messages falls back to English for the Cron interface.
-
-## Semantic DOM
+## Semantic DOM {#semantic-dom}
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-## Design Tokens
+## Design Tokens {#design-tokens}
 
-Customize Cron with `theme.components.Cron`.
+Customize Cron styles through `theme.components.Cron`:
 
 <ComponentTokenTable component="Cron" />

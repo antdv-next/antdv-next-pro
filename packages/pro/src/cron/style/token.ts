@@ -62,7 +62,7 @@ export function prepareComponentToken(token: any): ComponentToken {
     containerBorderColor: token.colorBorderSecondary,
     panelPadding: token.padding,
     fieldBg: token.colorBgContainer,
-    fieldActiveBg: token.colorPrimaryBg,
+    fieldActiveBg: token.controlItemBgActive,
     previewBg: token.colorFillTertiary,
     errorColor: token.colorError,
     fieldGap: token.marginXS,

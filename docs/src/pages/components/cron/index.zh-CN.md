@@ -10,23 +10,22 @@ group:
   order: 1
 ---
 
-## 何时使用
+## 何时使用 {#when-to-use}
 
 - 配置定时任务、报表、数据同步或消息推送。
 - 希望用户以可视化方式编辑 Quartz 或 Unix 表达式，而不必记住完整语法。
 
-## 代码演示
+## 代码演示 {#examples}
 
 <demo-group>
   <demo src="./demo/basic.vue">基础用法</demo>
   <demo src="./demo/format.vue">Cron 格式</demo>
-  <demo src="./demo/special.vue">特殊语法</demo>
   <demo src="./demo/form.vue">表单校验</demo>
   <demo src="./demo/presets.vue">Preset 和预览</demo>
   <demo src="./demo/semantic.vue">语义化样式</demo>
 </demo-group>
 
-## API
+## API {#api}
 
 ### 属性
 
@@ -65,9 +64,7 @@ group:
 
 ### Form.Item
 
-`v-model:value` 始终与输入框中显示的内容保持一致，因此 Form.Item 的 validator 可以获取临时非法值。Cron 负责 Quartz 语法反馈；`required` 和业务规则仍由 Form.Item 管理：
-
-直接输入会保留用户正在编辑的原文，校验和字段解析使用规范化后的表达式。`size` 与 Antdv Next 一致，取 `'small' | 'medium' | 'large'`，默认 `'medium'`。
+`v-model:value` 与输入框内容一致，Form.Item 可以校验正在编辑的值。格式用 `validateCronExpression` 检查，必填仍由 Form.Item 负责。校验 Unix 表达式时传入 `{ format: 'unix' }`。
 
 ```vue
 <script setup lang="ts">
@@ -91,6 +88,15 @@ const rules = [
 </template>
 ```
 
+### 插槽
+
+| 插槽 | 说明 |
+| --- | --- |
+| field | 替换当前字段编辑器 |
+| presets | 替换预设区域 |
+| preview | 替换预览区域 |
+| error | 替换校验错误内容 |
+
 ## Cron 格式
 
 默认 `format` 为 `quartz`。Quartz 使用六个字段：`second minute hour day month week`。开启 `showYear` 后必须提供第七个 `year` 字段。日和周必须恰好一个为 `?`。
@@ -113,31 +119,12 @@ Quartz 的日/周字段支持 Croner 已实现的特殊语法：
 
 不支持 `L-n`。Unix 格式不接受这些标记。
 
-## 国际化
-
-Cron 与 DatePicker 一样读取 `ConfigProvider` 的 locale，无需单独设置语言属性。Antdv Next 提供的 72 个语言入口均有对应的 Pro locale 包装器并包含 Cron 文案。使用 Pro locale 包装器可同时配置 Antdv Next 与 Cron；dayjs 的语言包仍需由应用显式引入：
-
-```vue
-<script setup lang="ts">
-import zhCN from '@antdv-next/pro/locale/zh_CN'
-import 'dayjs/locale/zh-cn'
-</script>
-
-<template>
-  <ap-config-provider :locale="zhCN">
-    <a-cron v-model:value="value" preview />
-  </ap-config-provider>
-</template>
-```
-
-表达式有效时，输入框下方会显示人类可读描述。开启 `preview` 后，面板底部默认展示未来 3 次执行时间。预览时间使用 dayjs 实例级 locale，并复用 `locale.DatePicker.lang.fieldDateTimeFormat`；组件不会修改全局 `dayjs.locale()`。若直接传入不含 `Cron` 文案的 Antdv Next 原始语言包，Cron 界面会回退为英文。
-
-## 语义化 DOM
+## 语义化 DOM {#semantic-dom}
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-## 主题 Token
+## 主题 Token {#design-tokens}
 
-通过 `theme.components.Cron` 定制组件 Token：
+Cron 支持通过 `theme.components.Cron` 自定义组件样式 Token：
 
 <ComponentTokenTable component="Cron" />

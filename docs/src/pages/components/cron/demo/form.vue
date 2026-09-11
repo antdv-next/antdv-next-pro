@@ -1,9 +1,9 @@
 <docs lang="zh-CN">
-配合 Form.Item 做必填和格式校验。Unix 表达式必须把 `format: 'unix'` 传给 `validateCronExpression`。
+用 Form.Item 做必填和格式校验。
 </docs>
 
 <docs lang="en-US">
-Use Form.Item for required and format checks. Unix expressions must pass `{ format: 'unix' }` to `validateCronExpression`.
+Use Form.Item for required and format validation.
 </docs>
 
 <script setup lang="ts">
