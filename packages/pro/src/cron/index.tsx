@@ -55,11 +55,20 @@ let cronIdSeed = 0
 const MODE_VALUES: CronEditorMode[] = ['every', 'interval', 'specified', 'range']
 const enUS = enUSLocale.Cron!
 
-function omitClassAndStyle(attrs: Record<string, any>) {
-  const nextAttrs = { ...attrs }
-  delete nextAttrs.class
-  delete nextAttrs.style
-  return nextAttrs
+const FORM_CONTROL_ATTR_KEYS = ['id', 'onBlur', 'onFocus', 'aria-describedby', 'aria-invalid', 'aria-required'] as const
+
+function splitRootAndControlAttrs(attrs: Record<string, any>) {
+  const rootAttrs = { ...attrs }
+  delete rootAttrs.class
+  delete rootAttrs.style
+  const controlAttrs: Record<string, any> = {}
+  for (const key of FORM_CONTROL_ATTR_KEYS) {
+    if (rootAttrs[key] !== undefined) {
+      controlAttrs[key] = rootAttrs[key]
+      delete rootAttrs[key]
+    }
+  }
+  return { rootAttrs, controlAttrs }
 }
 
 function getNumericParts(value: string, fallback: number, names?: readonly string[], format: CronFormat = 'quartz', field?: CronFieldName): number[] {
@@ -504,72 +513,75 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
         activeField.value = 'minute'
     }, { immediate: true })
 
-    return () => (
-      <div class={rootClassName.value} style={rootStyle.value} data-size={mergedSize.value} data-format={mergedFormat.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-readonly={mergedReadonly.value ? 'true' : 'false'} data-status={mergedStatus.value || undefined} aria-readonly={mergedReadonly.value || undefined} {...omitClassAndStyle(attrs as Record<string, any>)}>
-        <Input value={draftExpression.value} size={mergedSize.value} readonly={mergedReadonly.value} disabled={mergedDisabled.value} class={mergedClassNames.value.input} style={mergedStyles.value.input} aria-label={locale.value.expression} onUpdate:value={handleExpressionInput} />
-        <div class={clsx(`${prefixCls.value}-fields`, mergedClassNames.value.fields)} style={mergedStyles.value.fields}>
-          <div class={clsx(`${prefixCls.value}-field-tabs`, mergedClassNames.value.navigation)} style={mergedStyles.value.navigation} role="tablist" aria-orientation="vertical" aria-label={locale.value.fieldList}>
-            {displayedFields.value.map((field) => {
-              const tabId = `${cronId}-tab-${field}`
-              const panelId = `${cronId}-panel-${field}`
-              const active = activeField.value === field
-              return (
-                <span
-                  key={field}
-                  id={tabId}
-                  ref={(el) => {
-                    if (el)
-                      fieldTabRefs[field] = el as HTMLElement
-                    else
-                      delete fieldTabRefs[field]
-                  }}
-                  role="tab"
-                  class={clsx(`${prefixCls.value}-field-tab`, `${prefixCls.value}-field-tab-label`, { [`${prefixCls.value}-field-tab-active`]: active })}
-                  data-field={field}
-                  aria-selected={active}
-                  aria-controls={panelId}
-                  aria-disabled={mergedDisabled.value || undefined}
-                  tabindex={mergedDisabled.value || !active ? -1 : 0}
-                  onClick={() => {
-                    if (!mergedDisabled.value)
-                      setActiveField(field)
-                  }}
-                  onKeydown={(event: KeyboardEvent) => handleFieldTabKeydown(field, event)}
-                >
-                  {locale.value.fields[field]}
-                </span>
-              )
-            })}
+    return () => {
+      const { rootAttrs, controlAttrs } = splitRootAndControlAttrs(attrs as Record<string, any>)
+      return (
+        <div class={rootClassName.value} style={rootStyle.value} data-size={mergedSize.value} data-format={mergedFormat.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-readonly={mergedReadonly.value ? 'true' : 'false'} data-status={mergedStatus.value || undefined} aria-readonly={mergedReadonly.value || undefined} {...rootAttrs}>
+          <Input value={draftExpression.value} size={mergedSize.value} readonly={mergedReadonly.value} disabled={mergedDisabled.value} class={mergedClassNames.value.input} style={mergedStyles.value.input} aria-label={locale.value.expression} {...controlAttrs} onUpdate:value={handleExpressionInput} />
+          <div class={clsx(`${prefixCls.value}-fields`, mergedClassNames.value.fields)} style={mergedStyles.value.fields}>
+            <div class={clsx(`${prefixCls.value}-field-tabs`, mergedClassNames.value.navigation)} style={mergedStyles.value.navigation} role="tablist" aria-orientation="vertical" aria-label={locale.value.fieldList}>
+              {displayedFields.value.map((field) => {
+                const tabId = `${cronId}-tab-${field}`
+                const panelId = `${cronId}-panel-${field}`
+                const active = activeField.value === field
+                return (
+                  <span
+                    key={field}
+                    id={tabId}
+                    ref={(el) => {
+                      if (el)
+                        fieldTabRefs[field] = el as HTMLElement
+                      else
+                        delete fieldTabRefs[field]
+                    }}
+                    role="tab"
+                    class={clsx(`${prefixCls.value}-field-tab`, `${prefixCls.value}-field-tab-label`, { [`${prefixCls.value}-field-tab-active`]: active })}
+                    data-field={field}
+                    aria-selected={active}
+                    aria-controls={panelId}
+                    aria-disabled={mergedDisabled.value || undefined}
+                    tabindex={mergedDisabled.value || !active ? -1 : 0}
+                    onClick={() => {
+                      if (!mergedDisabled.value)
+                        setActiveField(field)
+                    }}
+                    onKeydown={(event: KeyboardEvent) => handleFieldTabKeydown(field, event)}
+                  >
+                    {locale.value.fields[field]}
+                  </span>
+                )
+              })}
+            </div>
+            <div class={clsx(`${prefixCls.value}-editor`, mergedClassNames.value.editor)} style={mergedStyles.value.editor}>
+              <div id={`${cronId}-panel-${activeField.value}`} class={clsx(`${prefixCls.value}-field`, mergedClassNames.value.field)} style={mergedStyles.value.field} role="tabpanel" aria-labelledby={`${cronId}-tab-${activeField.value}`} data-field={activeField.value} data-mode={activeMode.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-invalid={validation.value.status === 'invalid' ? 'true' : 'false'}>
+                {slots.field?.({ field: activeField.value, value: activeValue.value, disabled: mergedDisabled.value, readonly: mergedReadonly.value }) ?? (
+                  <>
+                    <div class={`${prefixCls.value}-field-title`}>{locale.value.fields[activeField.value]}</div>
+                    <div class={`${prefixCls.value}-field-modes`}><Segmented options={modeOptions.value} value={activeMode.value} size={mergedSize.value} disabled={!editable.value} onUpdate:value={nextValue => setFieldMode(nextValue as CronFieldMode)} /></div>
+                    <div class={`${prefixCls.value}-controls`}>{renderFieldControls()}</div>
+                    <div class={`${prefixCls.value}-field-control-summary`}>{getModeDescription(activeMode.value)}</div>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
-          <div class={clsx(`${prefixCls.value}-editor`, mergedClassNames.value.editor)} style={mergedStyles.value.editor}>
-            <div id={`${cronId}-panel-${activeField.value}`} class={clsx(`${prefixCls.value}-field`, mergedClassNames.value.field)} style={mergedStyles.value.field} role="tabpanel" aria-labelledby={`${cronId}-tab-${activeField.value}`} data-field={activeField.value} data-mode={activeMode.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-invalid={validation.value.status === 'invalid' ? 'true' : 'false'}>
-              {slots.field?.({ field: activeField.value, value: activeValue.value, disabled: mergedDisabled.value, readonly: mergedReadonly.value }) ?? (
+          {mergedPresets.value.length > 0 && <div class={clsx(`${prefixCls.value}-presets`, mergedClassNames.value.presets)} style={mergedStyles.value.presets}>{slots.presets?.() ?? mergedPresets.value.map(preset => <Button key={preset.value} size="small" disabled={!editable.value} onClick={() => applyExpression(preset.value, 'editor')}>{preset.label}</Button>)}</div>}
+          {preview.value && (
+            <div class={clsx(`${prefixCls.value}-preview`, mergedClassNames.value.preview)} style={mergedStyles.value.preview}>
+              {slots.preview?.(preview.value) ?? (
                 <>
-                  <div class={`${prefixCls.value}-field-title`}>{locale.value.fields[activeField.value]}</div>
-                  <div class={`${prefixCls.value}-field-modes`}><Segmented options={modeOptions.value} value={activeMode.value} size={mergedSize.value} disabled={!editable.value} onUpdate:value={nextValue => setFieldMode(nextValue as CronFieldMode)} /></div>
-                  <div class={`${prefixCls.value}-controls`}>{renderFieldControls()}</div>
-                  <div class={`${prefixCls.value}-field-control-summary`}>{getModeDescription(activeMode.value)}</div>
+                  <span>{preview.value.description}</span>
+                  {preview.value.nextRuns?.length
+                    ? <ul class={`${prefixCls.value}-preview-list`}>{preview.value.nextRuns.map(run => <li key={run.getTime()}>{formatCronMessage(locale.value.nextRun, { value: dayjs(run).locale(localeCode.value).format(dateTimeFormat.value) })}</li>)}</ul>
+                    : <span>{locale.value.noFutureRun}</span>}
                 </>
               )}
             </div>
-          </div>
+          )}
+          {validation.value.status === 'invalid' && <div class={clsx(`${prefixCls.value}-error`, mergedClassNames.value.error)} style={mergedStyles.value.error} role="alert">{slots.error?.(validation.value) ?? validation.value.errors?.map(error => error.message).join('; ') ?? locale.value.validation.invalidExpression}</div>}
         </div>
-        {mergedPresets.value.length > 0 && <div class={clsx(`${prefixCls.value}-presets`, mergedClassNames.value.presets)} style={mergedStyles.value.presets}>{slots.presets?.() ?? mergedPresets.value.map(preset => <Button key={preset.value} size="small" disabled={!editable.value} onClick={() => applyExpression(preset.value, 'editor')}>{preset.label}</Button>)}</div>}
-        {preview.value && (
-          <div class={clsx(`${prefixCls.value}-preview`, mergedClassNames.value.preview)} style={mergedStyles.value.preview}>
-            {slots.preview?.(preview.value) ?? (
-              <>
-                <span>{preview.value.description}</span>
-                {preview.value.nextRuns?.length
-                  ? <ul class={`${prefixCls.value}-preview-list`}>{preview.value.nextRuns.map(run => <li key={run.getTime()}>{formatCronMessage(locale.value.nextRun, { value: dayjs(run).locale(localeCode.value).format(dateTimeFormat.value) })}</li>)}</ul>
-                  : <span>{locale.value.noFutureRun}</span>}
-              </>
-            )}
-          </div>
-        )}
-        {validation.value.status === 'invalid' && <div class={clsx(`${prefixCls.value}-error`, mergedClassNames.value.error)} style={mergedStyles.value.error} role="alert">{slots.error?.(validation.value) ?? validation.value.errors?.map(error => error.message).join('; ') ?? locale.value.validation.invalidExpression}</div>}
-      </div>
-    )
+      )
+    }
   },
   { name: 'ACron', inheritAttrs: false },
 )

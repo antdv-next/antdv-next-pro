@@ -3,7 +3,7 @@ import { ConfigProvider, Form, FormItem, InputNumber, RadioGroup, Select } from 
 import enUS from 'antdv-next/locale/en_US'
 import frFR from 'antdv-next/locale/fr_FR'
 import zhCN from 'antdv-next/locale/zh_CN'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { defineComponent, h, nextTick, reactive, ref } from 'vue'
 import { useProConfigProvider } from '../../config-provider/context'
 import proFrFR from '../../locale/fr_FR'
@@ -130,6 +130,88 @@ describe('Cron', () => {
     expect(wrapper.find('.ant-cron').classes()).toContain('from-provider')
     expect(wrapper.find('.custom-preview').attributes('style')).toContain('padding: 4px')
     expect(wrapper.find('.custom-preview').text()).toContain('Start at minute 0, then execute every 5 minutes')
+  })
+
+  it('passes class and style to the root and form control attrs to the expression input', async () => {
+    const onBlur = vi.fn()
+    const onFocus = vi.fn()
+    const wrapper = mount(Cron, {
+      attrs: {
+        id: 'cron-input',
+        class: 'custom-cron',
+        style: { marginTop: '8px' },
+        'data-testid': 'cron-root',
+        'aria-describedby': 'cron-help',
+        'aria-invalid': 'true',
+        'aria-required': 'true',
+        onBlur,
+        onFocus,
+      },
+    })
+    const root = wrapper.find('.ant-cron')
+    const input = wrapper.find('input')
+
+    expect(root.classes()).toContain('custom-cron')
+    expect(root.attributes('style')).toContain('margin-top: 8px')
+    expect(root.attributes('data-testid')).toBe('cron-root')
+    expect(root.attributes('id')).toBeUndefined()
+    expect(input.attributes('id')).toBe('cron-input')
+    expect(input.attributes('aria-describedby')).toBe('cron-help')
+    expect(input.attributes('aria-invalid')).toBe('true')
+    expect(input.attributes('aria-required')).toBe('true')
+
+    await input.trigger('focus')
+    await input.trigger('blur')
+    expect(onFocus).toHaveBeenCalledTimes(1)
+    expect(onBlur).toHaveBeenCalledTimes(1)
+  })
+
+  it('supports semantic classes and styles as functions', () => {
+    const wrapper = mount(Cron, {
+      props: {
+        value: '0 */5 * * * ?',
+        preview: true,
+        classes: ({ props }: { props: { preview?: boolean } }) => ({
+          root: props.preview ? 'preview-root' : 'plain-root',
+          preview: 'fn-preview',
+        }),
+        styles: ({ props }: { props: { preview?: boolean } }) => ({
+          preview: { padding: props.preview ? '6px' : '0px' },
+        }),
+      },
+    })
+
+    expect(wrapper.find('.ant-cron').classes()).toContain('preview-root')
+    expect(wrapper.find('.fn-preview').exists()).toBe(true)
+    expect(wrapper.find('.fn-preview').attributes('style')).toContain('padding: 6px')
+  })
+
+  it('renders field, presets, preview, and error slots', () => {
+    const valid = mount(Cron, {
+      props: {
+        value: '0 */5 * * * ?',
+        preview: true,
+        presets: [{ label: 'Daily', value: '0 0 9 * * ?' }],
+      },
+      slots: {
+        field: ({ field }: { field: string }) => h('div', { class: 'custom-field' }, field),
+        presets: () => h('div', { class: 'custom-presets' }, 'presets'),
+        preview: () => h('div', { class: 'custom-preview-slot' }, 'preview'),
+      },
+    })
+
+    expect(valid.find('.custom-field').text()).toBe('minute')
+    expect(valid.find('.custom-presets').text()).toBe('presets')
+    expect(valid.find('.custom-preview-slot').text()).toBe('preview')
+    expect(valid.find('.ant-cron-field-modes').exists()).toBe(false)
+
+    const invalid = mount(Cron, {
+      props: { value: 'invalid' },
+      slots: {
+        error: () => h('div', { class: 'custom-error' }, 'bad cron'),
+      },
+    })
+    expect(invalid.find('.custom-error').text()).toBe('bad cron')
   })
 
   it('uses the Antdv ConfigProvider locale and DatePicker date-time format', () => {
@@ -274,6 +356,24 @@ describe('Cron', () => {
     expect(cron.attributes('data-status')).toBe('warning')
     expect(cron.classes()).toContain('ant-cron-status-warning')
     expect(wrapper.find('input').attributes('disabled')).toBeDefined()
+  })
+
+  it('forwards Form.Item field id and label association to the expression input', () => {
+    const wrapper = mount(Form, {
+      props: {
+        name: 'profile',
+        model: { cron: '0 0 9 * * ?' },
+      },
+      slots: {
+        default: () => h(FormItem, { name: 'cron', label: 'Schedule' }, {
+          default: () => h(Cron, { value: '0 0 9 * * ?' }),
+        }),
+      },
+    })
+
+    expect(wrapper.find('input#profile_cron').exists()).toBe(true)
+    expect(wrapper.find('.ant-form-item-label > label').attributes('for')).toBe('profile_cron')
+    expect(wrapper.find('.ant-cron').attributes('id')).toBeUndefined()
   })
 
   it('applies the Cron size to the root layout', () => {
