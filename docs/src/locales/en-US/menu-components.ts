@@ -9,8 +9,12 @@ export default {
     // Data Entry
     dataEntry: 'Data Entry',
     cron: 'Cron Expression Editor',
+    inputTag: 'InputTag',
     // Navigation
     navigation: 'Navigation',
     scrollbar: 'Scrollbar',
+    // Data Display
+    dataDisplay: 'Data Display',
+    heatmap: 'Heatmap',
   },
 } as const

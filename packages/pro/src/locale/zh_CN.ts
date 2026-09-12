@@ -147,6 +147,17 @@ const cronLocale: CronLocale = {
 const proLocale = {
   ...locale,
   Cron: cronLocale,
+  Heatmap: {
+    label: '热力图',
+    less: '少',
+    more: '多',
+    noData: '无数据',
+    level: '等级',
+  },
+  InputTag: {
+    clear: '清空',
+    showMore: '展开全部标签',
+  },
 } satisfies ProLocale
 
 export default proLocale

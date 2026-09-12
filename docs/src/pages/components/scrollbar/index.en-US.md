@@ -22,6 +22,7 @@ group:
   <demo src="./demo/basic.vue">Basic</demo>
   <demo src="./demo/visibility.vue">Visibility modes</demo>
   <demo src="./demo/motion.vue">Visibility motion</demo>
+  <demo src="./demo/fade.vue">Vertical fade</demo>
   <demo src="./demo/sider.vue">Navigation sider</demo>
   <demo src="./demo/controller.vue">Events and scroll control</demo>
   <demo src="./demo/semantic.vue">Semantic styling</demo>
@@ -29,7 +30,7 @@ group:
 
 ## API {#api}
 
-### Properties
+### Properties {#properties}
 
 | Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
 | --- | --- | --- | --- | --- | --- |
@@ -40,6 +41,8 @@ group:
 | visibilityY | Visibility strategy for vertical scrollbar | `'auto' \| 'always' \| 'hidden'` | - | - | ✓ |
 | hideDelay | Delay in milliseconds before auto-mode overlays hide after the pointer leaves the content area | `number` | `1200` | - | ✓ |
 | motion | Track visibility motion. `fade` fades in and out; `slide` slides in from the right and out to the right. | `'fade' \| 'slide'` | `'fade'` | - | ✓ |
+| scrollFade | Edge fade direction for the scroll content. Omit it to disable the effect. | `'vertical' \| 'horizontal' \| 'both'` | - | - | ✓ |
+| scrollFadeSize | Edge fade length in pixels. | `number` | `40` | - | ✓ |
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | `ScrollbarClassNamesType` | - | - | ✓ |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function. | `ScrollbarStylesType` | - | - | ✓ |
 

@@ -55,6 +55,13 @@ describe('Pro locale', () => {
       const locale = proLocaleModules[`../${localeName}.ts`]
       expect(locale?.locale, localeName).toEqual(expect.any(String))
       expect(locale?.Cron, localeName).toBeDefined()
+      expect(locale?.Heatmap, localeName).toMatchObject({
+        label: expect.any(String),
+        less: expect.any(String),
+        more: expect.any(String),
+        noData: expect.any(String),
+        level: expect.any(String),
+      })
 
       const messages = flattenCronLocale(locale!.Cron!)
       expect(Object.keys(messages).sort(), localeName).toEqual(expectedMessageKeys)
@@ -75,6 +82,15 @@ describe('Pro locale', () => {
     expect(arEG.Cron?.fields.second).toBe('الثانية')
     expect(frFR.Cron?.fields.second).toBe('Seconde')
     expect(proLocaleModules['../ja_JP.ts']?.Cron?.nextRun).toBe('次の実行: {value}')
+  })
+
+  it('ships Heatmap and InputTag messages for representative locales', () => {
+    expect(enUS.Heatmap?.label).toBe('Heatmap')
+    expect(frFR.Heatmap?.label).toBe('Carte thermique')
+    expect(enUS.InputTag).toMatchObject({
+      clear: 'Clear',
+      showMore: 'Show all tags',
+    })
   })
 
   it('is assignable to the antdv-next Locale type', () => {

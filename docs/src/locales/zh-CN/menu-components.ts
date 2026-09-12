@@ -9,8 +9,12 @@ export default {
     // Data Entry
     dataEntry: '数据录入',
     cron: 'Cron 表达式编辑器',
+    inputTag: 'InputTag 标签输入',
     // Navigation
     navigation: '导航',
     scrollbar: 'Scrollbar 滚动条',
+    // Data Display
+    dataDisplay: '数据展示',
+    heatmap: 'Heatmap 热力图',
   },
 } as const

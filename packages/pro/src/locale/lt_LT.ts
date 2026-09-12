@@ -147,6 +147,13 @@ const cronLocale: CronLocale = {
 const proLocale = {
   ...locale,
   Cron: cronLocale,
+  Heatmap: {
+    label: 'Šilumos žemėlapis',
+    less: 'Mažiau',
+    more: 'Daugiau',
+    noData: 'Duomenų nėra',
+    level: 'Lygis',
+  },
 } satisfies ProLocale
 
 export default proLocale

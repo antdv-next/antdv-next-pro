@@ -147,6 +147,13 @@ const cronLocale: CronLocale = {
 const proLocale = {
   ...locale,
   Cron: cronLocale,
+  Heatmap: {
+    label: 'Θερμικός χάρτης',
+    less: 'Λιγότερα',
+    more: 'Περισσότερα',
+    noData: 'Δεν υπάρχουν δεδομένα',
+    level: 'Επίπεδο',
+  },
 } satisfies ProLocale
 
 export default proLocale

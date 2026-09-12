@@ -147,6 +147,13 @@ const cronLocale: CronLocale = {
 const proLocale = {
   ...locale,
   Cron: cronLocale,
+  Heatmap: {
+    label: '히트맵',
+    less: '적음',
+    more: '많음',
+    noData: '데이터 없음',
+    level: '레벨',
+  },
 } satisfies ProLocale
 
 export default proLocale

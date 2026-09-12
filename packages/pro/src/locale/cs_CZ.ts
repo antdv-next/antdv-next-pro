@@ -147,6 +147,13 @@ const cronLocale: CronLocale = {
 const proLocale = {
   ...locale,
   Cron: cronLocale,
+  Heatmap: {
+    label: 'Tepelná mapa',
+    less: 'Méně',
+    more: 'Více',
+    noData: 'Žádná data',
+    level: 'Úroveň',
+  },
 } satisfies ProLocale
 
 export default proLocale

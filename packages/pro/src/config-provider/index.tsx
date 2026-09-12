@@ -38,10 +38,13 @@ export default ProConfigProvider
 export { useProComponentConfig, useProConfig, useProConfigProvider } from './context'
 export type {
   CronConfig,
+  HeatmapConfig,
+  InputTagConfig,
   ProConfigProviderEmits,
   ProConfigProviderProps,
   ProConfigProviderSlots,
   ScrollbarConfig,
+  ScrollbarFade,
   ScrollbarMotion,
   ScrollbarVisibility,
 } from './define'

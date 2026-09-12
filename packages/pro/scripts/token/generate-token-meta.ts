@@ -46,6 +46,28 @@ const componentGlobalTokens: Record<string, string[]> = {
     'motionDurationMid',
     'motionEaseOutCirc',
   ],
+  Heatmap: [
+    'colorFillTertiary',
+    'colorFillSecondary',
+    'colorTextSecondary',
+    'colorPrimary',
+    'borderRadiusSM',
+    'fontSizeSM',
+    'fontWeightStrong',
+    'lineHeightSM',
+    'marginSM',
+    'marginXS',
+    'marginXXS',
+    'paddingXS',
+    'paddingXXS',
+    'motionDurationMid',
+  ],
+  InputTag: [
+    'marginXXS',
+    'controlHeight',
+    'colorTextTertiary',
+    'colorText',
+  ],
 }
 
 const globalTokenNames = [...new Set(Object.values(componentGlobalTokens).flat())]
@@ -57,7 +79,10 @@ function getTagText(member: ts.Node, tagName: string) {
 }
 
 function toComponentName(dirName: string) {
-  return dirName.charAt(0).toUpperCase() + dirName.slice(1)
+  return dirName
+    .split('-')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('')
 }
 
 async function getGlobalTokenMeta() {

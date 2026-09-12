@@ -147,6 +147,13 @@ const cronLocale: CronLocale = {
 const proLocale = {
   ...locale,
   Cron: cronLocale,
+  Heatmap: {
+    label: 'Топлотна мапа',
+    less: 'Мање',
+    more: 'Више',
+    noData: 'Нема података',
+    level: 'Ниво',
+  },
 } satisfies ProLocale
 
 export default proLocale

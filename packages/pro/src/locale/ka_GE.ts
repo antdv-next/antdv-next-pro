@@ -147,6 +147,13 @@ const cronLocale: CronLocale = {
 const proLocale = {
   ...locale,
   Cron: cronLocale,
+  Heatmap: {
+    label: 'სითბოს რუკა',
+    less: 'ნაკლები',
+    more: 'მეტი',
+    noData: 'მონაცემები არ არის',
+    level: 'დონე',
+  },
 } satisfies ProLocale
 
 export default proLocale

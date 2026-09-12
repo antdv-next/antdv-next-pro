@@ -3,6 +3,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { theme } from 'antdv-next'
 import { prepareComponentToken as prepareCronToken } from '../../src/cron/style/token'
+import { prepareComponentToken as prepareHeatmapToken } from '../../src/heatmap/style/token'
+import { prepareComponentToken as prepareInputTagToken } from '../../src/input-tag/style/token'
 import { prepareComponentToken as prepareScrollbarToken } from '../../src/scrollbar/style/token'
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
@@ -27,6 +29,29 @@ async function main() {
         'motionDurationMid',
       ],
       component: prepareCronToken(globalToken),
+    },
+    Heatmap: {
+      global: [
+        'colorFillTertiary',
+        'colorFillSecondary',
+        'colorTextSecondary',
+        'colorPrimary',
+        'borderRadiusSM',
+        'fontSizeSM',
+        'fontWeightStrong',
+        'lineHeightSM',
+        'marginSM',
+        'marginXS',
+        'marginXXS',
+        'paddingXS',
+        'paddingXXS',
+        'motionDurationMid',
+      ],
+      component: prepareHeatmapToken(globalToken),
+    },
+    InputTag: {
+      global: ['marginXXS', 'controlHeight', 'colorTextTertiary', 'colorText'],
+      component: prepareInputTagToken(globalToken),
     },
     Scrollbar: {
       global: [

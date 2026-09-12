@@ -147,6 +147,13 @@ const cronLocale: CronLocale = {
 const proLocale = {
   ...locale,
   Cron: cronLocale,
+  Heatmap: {
+    label: 'Bero mapa',
+    less: 'Gutxiago',
+    more: 'Gehiago',
+    noData: 'Daturik ez',
+    level: 'Maila',
+  },
 } satisfies ProLocale
 
 export default proLocale

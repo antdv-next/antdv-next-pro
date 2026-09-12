@@ -147,6 +147,13 @@ const cronLocale: CronLocale = {
 const proLocale = {
   ...locale,
   Cron: cronLocale,
+  Heatmap: {
+    label: 'Léarscáil teasa',
+    less: 'Níos lú',
+    more: 'Níos mó',
+    noData: 'Gan sonraí',
+    level: 'Leibhéal',
+  },
 } satisfies ProLocale
 
 export default proLocale

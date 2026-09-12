@@ -14,6 +14,14 @@ export const covers: Covers = {
     cover: '/component-overview/cron.svg',
     coverDark: '/component-overview/cron-dark.svg',
   },
+  Heatmap: {
+    cover: '/component-overview/heatmap.svg',
+    coverDark: '/component-overview/heatmap-dark.svg',
+  },
+  InputTag: {
+    cover: '/component-overview/input-tag.svg',
+    coverDark: '/component-overview/input-tag-dark.svg',
+  },
   Scrollbar: {
     cover: '/component-overview/scrollbar.svg',
     coverDark: '/component-overview/scrollbar-dark.svg',
