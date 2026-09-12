@@ -30,7 +30,7 @@ import zhCN from '@antdv-next/pro/locale/zh_CN'
   <ap-config-provider
     :locale="zhCN"
     direction="ltr"
-    component-size="middle"
+    component-size="medium"
   >
     <router-view />
   </ap-config-provider>
@@ -56,7 +56,7 @@ Locale wrapper 保留 `antdv-next/locale/*` 的全部配置，并补充 Pro 组�
 也可以反向嵌套，让局部 `a-config-provider` 覆盖 Antdv 配置；ProConfigProvider 提供的 Pro 上下文仍会对该子树生效：
 
 ```vue
-<ap-config-provider component-size="middle">
+<ap-config-provider component-size="medium">
   <a-config-provider direction="rtl">
     <SettingsPanel />
   </a-config-provider>
@@ -78,7 +78,7 @@ import zhCN from '@antdv-next/pro/locale/zh_CN'
   <ap-config-provider
     :locale="zhCN"
     :theme="{ token: { colorPrimary: '#1677ff' } }"
-    component-size="middle"
+    component-size="medium"
     variant="outlined"
   >
     <router-view />
@@ -118,7 +118,7 @@ import zhCN from '@antdv-next/pro/locale/zh_CN'
 | locale | 语言包。Pro locale wrapper 与 Antdv locale 对象一致 | `ProLocale` | - |
 | direction | 布局方向 | `'ltr' \| 'rtl'` | `'ltr'` |
 | theme | 主题 Token、算法和组件级配置 | `ThemeConfig` | - |
-| componentSize | 后代组件默认尺寸 | `'small' \| 'middle' \| 'large'` | `'middle'` |
+| componentSize | 后代组件默认尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` |
 | componentDisabled | 是否默认禁用后代组件 | `boolean` | `false` |
 | variant | 输入类组件的默认变体 | `'outlined' \| 'borderless' \| 'filled' \| 'underlined'` | `'outlined'` |
 | prefixCls / iconPrefixCls | CSS 和图标前缀 | `string` | `'ant'` / `'anticon'` |

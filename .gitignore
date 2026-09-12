@@ -28,6 +28,7 @@ dist-ssr
 coverage
 web-types.json
 web-tags.json
+docs/src/assets/antd.css
 docs/src/assets/token.json
 docs/src/assets/token-meta.json
 docs/public/search.cn.json

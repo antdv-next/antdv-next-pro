@@ -29,7 +29,7 @@ import enUS from '@antdv-next/pro/locale/en_US'
   <ap-config-provider
     :locale="enUS"
     direction="ltr"
-    component-size="middle"
+    component-size="medium"
   >
     <router-view />
   </ap-config-provider>
@@ -55,7 +55,7 @@ If the project already uses `a-config-provider`, nest `ap-config-provider` insid
 You can also nest them in the opposite order to override Antdv values for a local subtree. The Pro context provided by ProConfigProvider remains available there:
 
 ```vue
-<ap-config-provider component-size="middle">
+<ap-config-provider component-size="medium">
   <a-config-provider direction="rtl">
     <SettingsPanel />
   </a-config-provider>
@@ -77,7 +77,7 @@ import enUS from '@antdv-next/pro/locale/en_US'
   <ap-config-provider
     :locale="enUS"
     :theme="{ token: { colorPrimary: '#1677ff' } }"
-    component-size="middle"
+    component-size="medium"
     variant="outlined"
   >
     <router-view />
@@ -117,7 +117,7 @@ All properties are identical to the `antdv-next` `ConfigProvider`. See [Antdv Co
 | locale | Locale object. Pro locale wrappers have the same shape as Antdv locale objects | `ProLocale` | - |
 | direction | Layout direction | `'ltr' \| 'rtl'` | `'ltr'` |
 | theme | Theme tokens, algorithms, and component-level configuration | `ThemeConfig` | - |
-| componentSize | Default size for descendant components | `'small' \| 'middle' \| 'large'` | `'middle'` |
+| componentSize | Default size for descendant components | `'small' \| 'medium' \| 'large'` | `'medium'` |
 | componentDisabled | Disable descendant components by default | `boolean` | `false` |
 | variant | Default variant for input-like components | `'outlined' \| 'borderless' \| 'filled' \| 'underlined'` | `'outlined'` |
 | prefixCls / iconPrefixCls | CSS and icon prefixes | `string` | `'ant'` / `'anticon'` |

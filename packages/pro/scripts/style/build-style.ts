@@ -5,6 +5,7 @@ import { createCache, extractStyle, StyleProvider } from '@antdv-next/cssinjs'
 import * as _antd from 'antdv-next/dist/components'
 import { createSSRApp, Fragment, h } from 'vue'
 import { renderToString } from 'vue/server-renderer'
+import Cron from '../../src/cron'
 import Heatmap from '../../src/heatmap'
 import InputTag from '../../src/input-tag'
 import Scrollbar from '../../src/scrollbar'
@@ -130,6 +131,7 @@ function defaultNode() {
 
   return h(Fragment, null, [
     ...nodes,
+    h(Cron),
     h(Heatmap),
     h(Scrollbar, { visibility: 'hidden', visibilityX: 'hidden', visibilityY: 'hidden' }, { default: () => h('div') }),
     h(InputTag, { defaultValue: ['InputTag'] }),
