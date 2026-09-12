@@ -58,19 +58,20 @@ export const components: AntdvMenuItem[] = [
   { key: '/components/overview', label: '/components/overview' },
   { key: '/components/changelog', label: '/components/changelog', tag: `v${proPkg.version}` },
   {
+    key: 'data-entry',
+    label: 'data-entry',
+    type: 'group',
+    children: [
+      { key: '/components/cron', label: '/components/cron' },
+      { key: '/components/input-tag', label: '/components/input-tag' },
+    ],
+  },
+  {
     key: 'navigation',
     label: 'navigation',
     type: 'group',
     children: [
       { key: '/components/scrollbar', label: '/components/scrollbar' },
-    ],
-  },
-  {
-    key: 'data-entry',
-    label: 'data-entry',
-    type: 'group',
-    children: [
-      { key: '/components/input-tag', label: '/components/input-tag' },
     ],
   },
   {

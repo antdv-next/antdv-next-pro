@@ -36,7 +36,7 @@ import enUS from '@antdv-next/pro/locale/en_US'
 </template>
 ```
 
-Locale wrappers mirror the objects from `antdv-next/locale/*` and can be imported from `@antdv-next/pro/locale/*`. `ProConfigProvider` does not change the public behavior of the Antdv ConfigProvider.
+Locale wrappers preserve every setting from `antdv-next/locale/*` and add messages for Pro components. They can be imported from `@antdv-next/pro/locale/*`. `ProConfigProvider` does not change the public behavior of the Antdv ConfigProvider.
 
 ## Relationship With ConfigProvider {#relationship-with-configprovider}
 

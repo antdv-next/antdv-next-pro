@@ -2,9 +2,10 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { theme } from 'antdv-next'
+import { prepareComponentToken as prepareCronToken } from '../../src/cron/style/token'
 import { prepareComponentToken as prepareHeatmapToken } from '../../src/heatmap/style/token'
 import { prepareComponentToken as prepareInputTagToken } from '../../src/input-tag/style/token'
-import { prepareComponentToken } from '../../src/scrollbar/style/token'
+import { prepareComponentToken as prepareScrollbarToken } from '../../src/scrollbar/style/token'
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(scriptDir, '../../../..')
@@ -12,23 +13,22 @@ const outputPath = path.resolve(repoRoot, 'docs/src/assets/token.json')
 
 async function main() {
   const globalToken = theme.getDesignToken()
-  const scrollbarToken = prepareComponentToken(globalToken)
-  const heatmapToken = prepareHeatmapToken(globalToken)
-  const inputTagToken = prepareInputTagToken(globalToken)
 
   const output = {
-    Scrollbar: {
+    Cron: {
       global: [
+        'colorBgContainer',
+        'colorBorderSecondary',
+        'padding',
+        'controlItemBgActive',
         'colorFillTertiary',
-        'colorTextTertiary',
-        'colorTextSecondary',
-        'colorText',
-        'borderRadiusSM',
-        'paddingXXS',
+        'colorError',
+        'marginXS',
+        'controlHeight',
+        'paddingSM',
         'motionDurationMid',
-        'motionEaseOutCirc',
       ],
-      component: scrollbarToken,
+      component: prepareCronToken(globalToken),
     },
     Heatmap: {
       global: [
@@ -47,11 +47,24 @@ async function main() {
         'paddingXXS',
         'motionDurationMid',
       ],
-      component: heatmapToken,
+      component: prepareHeatmapToken(globalToken),
     },
     InputTag: {
       global: ['marginXXS', 'controlHeight', 'colorTextTertiary', 'colorText'],
-      component: inputTagToken,
+      component: prepareInputTagToken(globalToken),
+    },
+    Scrollbar: {
+      global: [
+        'colorFillTertiary',
+        'colorTextTertiary',
+        'colorTextSecondary',
+        'colorText',
+        'borderRadiusSM',
+        'paddingXXS',
+        'motionDurationMid',
+        'motionEaseOutCirc',
+      ],
+      component: prepareScrollbarToken(globalToken),
     },
   }
 

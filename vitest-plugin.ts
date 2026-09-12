@@ -37,8 +37,16 @@ export default defineConfig({
         replacement: path.resolve(baseUrl, './packages/pro/src/scrollbar/index.tsx'),
       },
       {
+        find: /^@antdv-next\/pro\/cron$/,
+        replacement: path.resolve(baseUrl, './packages/pro/src/cron/index.tsx'),
+      },
+      {
         find: /^@antdv-next\/pro\/heatmap$/,
-        replacement: path.resolve(baseUrl, './packages/pro/src/heatmap/index.ts'),
+        replacement: path.resolve(baseUrl, './packages/pro/src/heatmap/index.tsx'),
+      },
+      {
+        find: /^@antdv-next\/pro\/input-tag$/,
+        replacement: path.resolve(baseUrl, './packages/pro/src/input-tag/index.tsx'),
       },
       {
         find: /^@antdv-next\/pro$/,

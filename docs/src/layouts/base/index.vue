@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import en from '@antdv-next/pro/locale/en_US'
+import cn from '@antdv-next/pro/locale/zh_CN'
 import { ConfigProvider, theme } from 'antdv-next'
-import en from 'antdv-next/locale/en_US'
-import cn from 'antdv-next/locale/zh_CN'
 import dayjs from 'dayjs'
 import { isFunction } from 'es-toolkit'
 import { storeToRefs } from 'pinia'

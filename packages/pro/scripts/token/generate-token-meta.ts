@@ -17,42 +17,72 @@ interface TokenMetaItem {
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(scriptDir, '../../../..')
 const packageRoot = path.resolve(repoRoot, 'packages/pro')
-const sourcePaths = {
-  Heatmap: path.resolve(packageRoot, 'src/heatmap/style/token.ts'),
-  Scrollbar: path.resolve(packageRoot, 'src/scrollbar/style/token.ts'),
-  InputTag: path.resolve(packageRoot, 'src/input-tag/style/token.ts'),
-}
 const globalTokenSourceDir = path.resolve(
   packageRoot,
   'node_modules/antdv-next/dist/theme/interface',
 )
 const outputPath = path.resolve(repoRoot, 'docs/src/assets/token-meta.json')
 
-const globalTokenNames = [
-  'marginXXS',
-  'controlHeight',
-  'colorFillTertiary',
-  'colorFillSecondary',
-  'colorTextTertiary',
-  'colorTextSecondary',
-  'colorText',
-  'colorPrimary',
-  'borderRadiusSM',
-  'fontSizeSM',
-  'fontWeightStrong',
-  'lineHeightSM',
-  'marginSM',
-  'marginXS',
-  'paddingXS',
-  'paddingXXS',
-  'motionDurationMid',
-  'motionEaseOutCirc',
-]
+const componentGlobalTokens: Record<string, string[]> = {
+  Cron: [
+    'colorBgContainer',
+    'colorBorderSecondary',
+    'padding',
+    'controlItemBgActive',
+    'colorFillTertiary',
+    'colorError',
+    'marginXS',
+    'controlHeight',
+    'paddingSM',
+    'motionDurationMid',
+  ],
+  Scrollbar: [
+    'colorFillTertiary',
+    'colorTextTertiary',
+    'colorTextSecondary',
+    'colorText',
+    'borderRadiusSM',
+    'paddingXXS',
+    'motionDurationMid',
+    'motionEaseOutCirc',
+  ],
+  Heatmap: [
+    'colorFillTertiary',
+    'colorFillSecondary',
+    'colorTextSecondary',
+    'colorPrimary',
+    'borderRadiusSM',
+    'fontSizeSM',
+    'fontWeightStrong',
+    'lineHeightSM',
+    'marginSM',
+    'marginXS',
+    'marginXXS',
+    'paddingXS',
+    'paddingXXS',
+    'motionDurationMid',
+  ],
+  InputTag: [
+    'marginXXS',
+    'controlHeight',
+    'colorTextTertiary',
+    'colorText',
+  ],
+}
+
+const globalTokenNames = [...new Set(Object.values(componentGlobalTokens).flat())]
 
 function getTagText(member: ts.Node, tagName: string) {
   return (ts.getJSDocTags(member).find(tag => tag.tagName.text === tagName)?.comment || '')
     .toString()
     .trim()
+}
+
+function toComponentName(dirName: string) {
+  return dirName
+    .split('-')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('')
 }
 
 async function getGlobalTokenMeta() {
@@ -101,28 +131,44 @@ async function getGlobalTokenMeta() {
   )
 }
 
-async function main() {
-  const global = await getGlobalTokenMeta()
-
+async function collectComponentTokens() {
+  const files = await glob('src/*/style/token.ts', { cwd: packageRoot, absolute: true })
   const components: Record<string, TokenMetaItem[]> = {}
-  for (const [sourceName, sourcePath] of Object.entries(sourcePaths)) {
-    const source = await fs.readFile(sourcePath, 'utf8')
-    const sourceFile = ts.createSourceFile(sourcePath, source, ts.ScriptTarget.Latest, true)
+
+  for (const file of files.sort()) {
+    const source = await fs.readFile(file, 'utf8')
+    const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true)
     const component = sourceFile.statements.find(
       statement => ts.isInterfaceDeclaration(statement) && statement.name.text === 'ComponentToken',
     )
+
     if (!component || !ts.isInterfaceDeclaration(component))
-      throw new Error(`ComponentToken interface not found in ${sourcePath}`)
-    components[sourceName] = component.members
+      throw new Error(`ComponentToken interface not found in ${file}`)
+
+    const dirName = path.basename(path.resolve(path.dirname(file), '..'))
+    const name = toComponentName(dirName)
+    components[name] = component.members
       .filter(ts.isPropertySignature)
-      .map(member => ({
-        source: sourceName,
-        token: member.name.getText(sourceFile),
-        type: member.type?.getText(sourceFile) || 'any',
-        desc: getTagText(member, 'desc'),
-        descEn: getTagText(member, 'descEN'),
-      }))
+      .map((member) => {
+        const token = member.name.getText(sourceFile)
+        return {
+          source: name,
+          token,
+          type: member.type?.getText(sourceFile) || 'any',
+          desc: getTagText(member, 'desc'),
+          descEn: getTagText(member, 'descEN'),
+        }
+      })
   }
+
+  return components
+}
+
+async function main() {
+  const [global, components] = await Promise.all([
+    getGlobalTokenMeta(),
+    collectComponentTokens(),
+  ])
 
   const output = {
     global,

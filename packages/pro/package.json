@@ -24,6 +24,11 @@
       "import": "./dist/scrollbar/index.js",
       "default": "./dist/scrollbar/index.js"
     },
+    "./cron": {
+      "types": "./dist/cron/index.d.ts",
+      "import": "./dist/cron/index.js",
+      "default": "./dist/cron/index.js"
+    },
     "./heatmap": {
       "types": "./dist/heatmap/index.d.ts",
       "import": "./dist/heatmap/index.js",
@@ -92,7 +97,9 @@
   },
   "dependencies": {
     "@antdv-next/cssinjs": "catalog:prod",
-    "@v-c/util": "catalog:vc"
+    "@v-c/util": "catalog:vc",
+    "croner": "catalog:prod",
+    "dayjs": "catalog:prod"
   },
   "devDependencies": {
     "@mdit-vue/plugin-frontmatter": "catalog:docs",

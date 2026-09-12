@@ -453,6 +453,12 @@ importers:
       '@v-c/util':
         specifier: ^1.0.19
         version: 1.0.19(vue@3.5.39(typescript@5.9.3))
+      croner:
+        specifier: catalog:prod
+        version: 10.0.1
+      dayjs:
+        specifier: catalog:prod
+        version: 1.11.21
       vue:
         specifier: '>=3.2.0'
         version: 3.5.39(typescript@5.9.3)
@@ -3164,6 +3170,10 @@ packages:
 
   crelt@1.0.7:
     resolution: {integrity: sha512-aK6BbWfhf4U/wCcLHKPJl/xa6VkVstRaPywWtMKGwuOLc/wZTyQYuoxgvZnNsBvv7Kg3YTBQYYBCggcviQczuA==}
+
+  croner@10.0.1:
+    resolution: {integrity: sha512-ixNtAJndqh173VQ4KodSdJEI6nuioBWI0V1ITNKhZZsO0pEMoDxz539T4FTTbSZ/xIOSuDnzxLVRqBVSvPNE2g==}
+    engines: {node: '>=18.0'}
 
   cross-env@10.1.0:
     resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
@@ -8496,6 +8506,8 @@ snapshots:
       browserslist: 4.28.4
 
   crelt@1.0.7: {}
+
+  croner@10.0.1: {}
 
   cross-env@10.1.0:
     dependencies:

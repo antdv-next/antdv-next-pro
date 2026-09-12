@@ -1,0 +1,642 @@
+import { mount } from '@vue/test-utils'
+import { ConfigProvider, Form, FormItem, InputNumber, RadioGroup, Select } from 'antdv-next'
+import enUS from 'antdv-next/locale/en_US'
+import frFR from 'antdv-next/locale/fr_FR'
+import zhCN from 'antdv-next/locale/zh_CN'
+import { describe, expect, it, vi } from 'vitest'
+import { defineComponent, h, nextTick, reactive, ref } from 'vue'
+import { useProConfigProvider } from '../../config-provider/context'
+import proFrFR from '../../locale/fr_FR'
+import proZhCN from '../../locale/zh_CN'
+import Cron from '../index'
+import { validateExpression } from '../utils'
+
+describe('Cron', () => {
+  it('exports Cron and its validator from the package entry', async () => {
+    const module = await import('../../index')
+    expect(module.Cron).toBeDefined()
+    expect(module.validateCronExpression('0 0 9 * * ?').status).toBe('valid')
+  })
+
+  it('syncs valid, invalid, and empty manual expressions', async () => {
+    const wrapper = mount(Cron)
+    const input = wrapper.find('input')
+
+    await input.setValue('0 0 9 * * *')
+    expect(wrapper.emitted('input')).toEqual([['0 0 9 * * *']])
+    expect(wrapper.emitted('update:value')).toEqual([['0 0 9 * * *']])
+    expect(wrapper.emitted('change')).toBeUndefined()
+    expect(wrapper.emitted('validate')?.slice(-1)[0]?.[0]).toMatchObject({ status: 'invalid' })
+
+    await input.setValue('')
+    expect(wrapper.emitted('update:value')?.slice(-1)).toEqual([['']])
+    expect(wrapper.emitted('validate')?.slice(-1)[0]?.[0]).toMatchObject({ status: 'empty' })
+    expect(wrapper.find('[role="alert"]').exists()).toBe(false)
+
+    await input.setValue('0 0 9 * * ?')
+    expect(wrapper.emitted('update:value')?.slice(-1)).toEqual([['0 0 9 * * ?']])
+    expect(wrapper.emitted('change')?.slice(-1)).toEqual([['0 0 9 * * ?']])
+    expect(wrapper.emitted('validate')?.slice(-1)[0]?.[0]).toMatchObject({ status: 'valid' })
+  })
+
+  it('emits change only for valid state transitions', async () => {
+    const wrapper = mount(Cron)
+    const input = wrapper.find('input')
+
+    await input.setValue('0 0 9 * * ?')
+    await input.setValue('invalid')
+    await input.setValue('still invalid')
+    await input.setValue('0 0 9 * * ?')
+
+    expect(wrapper.emitted('update:value')).toEqual([
+      ['0 0 9 * * ?'],
+      ['invalid'],
+      ['still invalid'],
+      ['0 0 9 * * ?'],
+    ])
+    expect(wrapper.emitted('change')).toEqual([
+      ['0 0 9 * * ?'],
+      ['0 0 9 * * ?'],
+    ])
+  })
+
+  it('does not emit duplicate change events for the same valid expression', async () => {
+    const wrapper = mount(Cron)
+    const input = wrapper.find('input')
+
+    await input.setValue('0 0 9 * * ?')
+    await input.setValue('0 0 9 * * ?')
+
+    expect(wrapper.emitted('change')).toEqual([['0 0 9 * * ?']])
+  })
+
+  it('keeps raw direct input while validating its canonical expression', async () => {
+    const wrapper = mount(Cron)
+    const input = wrapper.find('input')
+    const rawExpression = ' 0  0  9 * * ? '
+
+    await input.setValue(rawExpression)
+
+    expect(wrapper.find('input').element.value).toBe(rawExpression)
+    expect(wrapper.emitted('update:value')).toEqual([[rawExpression]])
+    expect(wrapper.emitted('validate')?.slice(-1)[0]?.[0]).toMatchObject({
+      status: 'valid',
+      expression: '0 0 9 * * ?',
+    })
+  })
+
+  it('applies a preset through the same valid change path', async () => {
+    const wrapper = mount(Cron, {
+      props: {
+        presets: [{ label: 'Daily', value: '0 0 9 * * ?' }],
+      },
+    })
+
+    const preset = wrapper.findAll('button').find(button => button.text() === 'Daily')
+    await preset?.trigger('click')
+
+    expect(wrapper.emitted('update:value')).toEqual([['0 0 9 * * ?']])
+    expect(wrapper.emitted('change')).toEqual([['0 0 9 * * ?']])
+  })
+
+  it('keeps the expression input readonly while the editor stays editable', async () => {
+    const wrapper = mount(Cron, {
+      props: {
+        value: '0 0 9 * * ?',
+        presets: [{ label: 'Hourly', value: '0 0 * * * ?' }],
+      },
+    })
+
+    expect(wrapper.find('input').attributes('readonly')).toBeDefined()
+
+    const preset = wrapper.findAll('button').find(button => button.text() === 'Hourly')
+    await preset?.trigger('click')
+    expect(wrapper.find('input').element.value).toBe('0 0 * * * ?')
+    expect(wrapper.emitted('update:value')).toEqual([['0 0 * * * ?']])
+  })
+
+  it('supports readonly without disabling expression selection', async () => {
+    const wrapper = mount(Cron, {
+      props: {
+        value: '0 0 9 * * ?',
+        readonly: true,
+      },
+    })
+
+    const input = wrapper.find('input')
+    expect(input.attributes('readonly')).toBeDefined()
+    await input.setValue('0 0 10 * * ?')
+    expect(wrapper.emitted('update:value')).toBeUndefined()
+  })
+
+  it('merges ProConfigProvider defaults and semantic customization', () => {
+    const ConfiguredCron = defineComponent(() => {
+      useProConfigProvider(ref({
+        cron: {
+          preview: true,
+          class: 'from-provider',
+          classes: { preview: 'custom-preview' },
+          styles: { preview: { padding: '4px' } },
+        },
+      }))
+      return () => h(Cron, { value: '0 */5 * * * ?' })
+    })
+    const wrapper = mount(ConfiguredCron)
+
+    expect(wrapper.find('.ant-cron').classes()).toContain('from-provider')
+    expect(wrapper.find('.custom-preview').attributes('style')).toContain('padding: 4px')
+    expect(wrapper.find('.custom-preview').text()).toContain('Start at minute 0, then execute every 5 minutes')
+  })
+
+  it('passes class and style to the root and form control attrs to the expression input', async () => {
+    const onBlur = vi.fn()
+    const onFocus = vi.fn()
+    const wrapper = mount(Cron, {
+      attrs: {
+        id: 'cron-input',
+        class: 'custom-cron',
+        style: { marginTop: '8px' },
+        'data-testid': 'cron-root',
+        'aria-describedby': 'cron-help',
+        'aria-invalid': 'true',
+        'aria-required': 'true',
+        onBlur,
+        onFocus,
+      },
+    })
+    const root = wrapper.find('.ant-cron')
+    const input = wrapper.find('input')
+
+    expect(root.classes()).toContain('custom-cron')
+    expect(root.attributes('style')).toContain('margin-top: 8px')
+    expect(root.attributes('data-testid')).toBe('cron-root')
+    expect(root.attributes('id')).toBeUndefined()
+    expect(input.attributes('id')).toBe('cron-input')
+    expect(input.attributes('aria-describedby')).toBe('cron-help')
+    expect(input.attributes('aria-invalid')).toBe('true')
+    expect(input.attributes('aria-required')).toBe('true')
+
+    await input.trigger('focus')
+    await input.trigger('blur')
+    expect(onFocus).toHaveBeenCalledTimes(1)
+    expect(onBlur).toHaveBeenCalledTimes(1)
+  })
+
+  it('supports semantic classes and styles as functions', () => {
+    const wrapper = mount(Cron, {
+      props: {
+        value: '0 */5 * * * ?',
+        preview: true,
+        classes: ({ props }: { props: { preview?: boolean } }) => ({
+          root: props.preview ? 'preview-root' : 'plain-root',
+          preview: 'fn-preview',
+        }),
+        styles: ({ props }: { props: { preview?: boolean } }) => ({
+          preview: { padding: props.preview ? '6px' : '0px' },
+        }),
+      },
+    })
+
+    expect(wrapper.find('.ant-cron').classes()).toContain('preview-root')
+    expect(wrapper.find('.fn-preview').exists()).toBe(true)
+    expect(wrapper.find('.fn-preview').attributes('style')).toContain('padding: 6px')
+  })
+
+  it('renders field, presets, preview, and error slots', () => {
+    const valid = mount(Cron, {
+      props: {
+        value: '0 */5 * * * ?',
+        preview: true,
+        presets: [{ label: 'Daily', value: '0 0 9 * * ?' }],
+      },
+      slots: {
+        field: ({ field }: { field: string }) => h('div', { class: 'custom-field' }, field),
+        presets: () => h('div', { class: 'custom-presets' }, 'presets'),
+        preview: () => h('div', { class: 'custom-preview-slot' }, 'preview'),
+      },
+    })
+
+    expect(valid.find('.custom-field').text()).toBe('minute')
+    expect(valid.find('.custom-presets').text()).toBe('presets')
+    expect(valid.find('.custom-preview-slot').text()).toBe('preview')
+    expect(valid.find('.ant-cron-field-modes').exists()).toBe(false)
+
+    const invalid = mount(Cron, {
+      props: { value: 'invalid' },
+      slots: {
+        error: () => h('div', { class: 'custom-error' }, 'bad cron'),
+      },
+    })
+    expect(invalid.find('.custom-error').text()).toBe('bad cron')
+  })
+
+  it('uses the Antdv ConfigProvider locale and DatePicker date-time format', () => {
+    const locale = {
+      ...zhCN,
+      DatePicker: {
+        ...zhCN.DatePicker!,
+        lang: {
+          ...zhCN.DatePicker!.lang,
+          fieldDateTimeFormat: 'YYYY年MM月DD日 HH:mm:ss',
+        },
+      },
+    }
+    const wrapper = mount(ConfigProvider, {
+      props: {
+        locale,
+      },
+      slots: {
+        default: () => h(Cron, { value: '0 */5 * * * ?', preview: true }),
+      },
+    })
+
+    expect(wrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
+    expect(wrapper.find('.ant-cron-preview').text()).toContain('Start at minute 0, then execute every 5 minutes')
+    expect(wrapper.find('.ant-cron-preview').text()).toMatch(/Next run: \d{4}年\d{2}月\d{2}日/)
+  })
+
+  it('ignores the deprecated DatePicker date-time format and uses the picker default', () => {
+    const locale = {
+      ...enUS,
+      DatePicker: {
+        ...enUS.DatePicker!,
+        dateTimeFormat: '[deprecated]',
+      },
+    }
+    const wrapper = mount(ConfigProvider, {
+      props: { locale },
+      slots: {
+        default: () => h(Cron, { value: '0 */5 * * * ?', preview: true }),
+      },
+    })
+
+    expect(wrapper.find('.ant-cron-preview').text()).toMatch(/Next run: \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)
+    expect(wrapper.find('.ant-cron-preview').text()).not.toContain('deprecated')
+  })
+
+  it('renders Cron messages from a translated Pro locale wrapper', () => {
+    const wrapper = mount(ConfigProvider, {
+      props: { locale: proFrFR },
+      slots: {
+        default: () => h(Cron, { value: '0 */5 * * * ?', preview: true }),
+      },
+    })
+
+    expect(wrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Seconde')
+    expect(wrapper.find('.ant-cron-preview').text()).toContain('Commencer à minute 0, puis exécuter toutes les 5 minutes')
+  })
+
+  it('follows dynamic and nested Antdv locales with an English fallback', async () => {
+    const activeLocale = ref(enUS)
+    const DynamicLocale = defineComponent(() => () => h(ConfigProvider, { locale: activeLocale.value }, {
+      default: () => h(Cron, { value: '0 */5 * * * ?' }),
+    }))
+    const dynamicWrapper = mount(DynamicLocale)
+
+    expect(dynamicWrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
+    activeLocale.value = zhCN
+    await nextTick()
+    expect(dynamicWrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
+
+    const nestedWrapper = mount(ConfigProvider, {
+      props: { locale: zhCN },
+      slots: {
+        default: () => h(ConfigProvider, { locale: enUS }, {
+          default: () => h(Cron, { value: '0 */5 * * * ?' }),
+        }),
+      },
+    })
+    expect(nestedWrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
+
+    const fallbackWrapper = mount(ConfigProvider, {
+      props: { locale: frFR },
+      slots: { default: () => h(Cron, { value: '0 */5 * * * ?' }) },
+    })
+    expect(fallbackWrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('Second')
+  })
+
+  it('integrates draft values, validation, and reset with Form.Item', async () => {
+    const initialValue = '0 0 9 * * ?'
+    const model = reactive({ cron: initialValue })
+    const formRef = ref<any>()
+    const FormDemo = defineComponent(() => () => h(Form, { ref: formRef, model }, {
+      default: () => h(FormItem, {
+        name: 'cron',
+        rules: [
+          { required: true, message: 'Cron is required' },
+          {
+            validator: async (_rule: unknown, value: string) => {
+              if (value && validateExpression(value).status !== 'valid')
+                throw new Error('Invalid Cron expression')
+            },
+          },
+        ],
+      }, {
+        default: () => h(Cron, {
+          value: model.cron,
+          'onUpdate:value': (value: string) => (model.cron = value),
+        }),
+      }),
+    }))
+    const wrapper = mount(FormDemo)
+    const input = wrapper.find('input')
+
+    await input.setValue('invalid')
+    expect(model.cron).toBe('invalid')
+    await expect(formRef.value.validateFields()).rejects.toBeDefined()
+
+    await input.setValue('0 0 10 * * ?')
+    await expect(formRef.value.validateFields()).resolves.toMatchObject({ cron: '0 0 10 * * ?' })
+
+    await input.setValue('')
+    await expect(formRef.value.validateFields()).rejects.toBeDefined()
+    formRef.value.resetFields()
+    await nextTick()
+    expect(model.cron).toBe(initialValue)
+    expect(wrapper.find('input').element.value).toBe(initialValue)
+  })
+
+  it('inherits disabled, size, and status from Antdv Form', () => {
+    const wrapper = mount(Form, {
+      props: { disabled: true, model: { cron: '0 0 9 * * ?' }, size: 'large' },
+      slots: {
+        default: () => h(FormItem, { name: 'cron', validateStatus: 'warning' }, {
+          default: () => h(Cron, { value: '0 0 9 * * ?' }),
+        }),
+      },
+    })
+    const cron = wrapper.find('.ant-cron')
+
+    expect(cron.attributes('data-disabled')).toBe('true')
+    expect(cron.attributes('data-size')).toBe('large')
+    expect(cron.attributes('data-status')).toBe('warning')
+    expect(cron.classes()).toContain('ant-cron-status-warning')
+    expect(wrapper.find('input').attributes('disabled')).toBeDefined()
+  })
+
+  it('forwards Form.Item field id and label association to the expression input', () => {
+    const wrapper = mount(Form, {
+      props: {
+        name: 'profile',
+        model: { cron: '0 0 9 * * ?' },
+      },
+      slots: {
+        default: () => h(FormItem, { name: 'cron', label: 'Schedule' }, {
+          default: () => h(Cron, { value: '0 0 9 * * ?' }),
+        }),
+      },
+    })
+
+    expect(wrapper.find('input#profile_cron').exists()).toBe(true)
+    expect(wrapper.find('.ant-form-item-label > label').attributes('for')).toBe('profile_cron')
+    expect(wrapper.find('.ant-cron').attributes('id')).toBeUndefined()
+  })
+
+  it('applies the Cron size to the root layout', () => {
+    for (const size of ['small', 'medium', 'large'] as const) {
+      const wrapper = mount(Cron, { props: { size } })
+      const cron = wrapper.find('.ant-cron')
+      expect(cron.attributes('data-size')).toBe(size)
+      expect(cron.classes()).toContain(`ant-cron-${size}`)
+    }
+  })
+
+  it('keeps numeric and named month lists visible in the Select', async () => {
+    const wrapper = mount(Cron, { props: { value: '0 0 9 ? 1 MON' } })
+    await wrapper.find('[data-field="month"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toContain('Jan')
+
+    await wrapper.setProps({ value: '0 0 9 ? JAN,MAR MON' })
+    expect(wrapper.find('.ant-cron-field[data-field="month"]').attributes('data-mode')).toBe('specified')
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['Jan', 'Mar'])
+  })
+
+  it('sorts specified tags by numeric value instead of selection order', async () => {
+    const wrapper = mount(Cron, { props: { value: '0 30,5,10 9 * * ?' } })
+    await wrapper.find('[data-field="minute"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['05', '10', '30'])
+
+    wrapper.getComponent(Select).vm.$emit('update:value', ['30', '5', '20'])
+    await nextTick()
+    expect(wrapper.find('input').element.value).toBe('0 5,20,30 9 * * ?')
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['05', '20', '30'])
+
+    const monthWrapper = mount(Cron, { props: { value: '0 0 9 ? OCT,JAN,MAR *' } })
+    await monthWrapper.find('[data-field="month"].ant-cron-field-tab-label').trigger('click')
+    expect(monthWrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['Jan', 'Mar', 'Oct'])
+
+    monthWrapper.getComponent(Select).vm.$emit('update:value', ['MAR', 'OCT', 'JAN'])
+    await nextTick()
+    expect(monthWrapper.find('input').element.value).toBe('0 0 9 ? JAN,MAR,OCT *')
+    expect(monthWrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['Jan', 'Mar', 'Oct'])
+  })
+
+  it('shows all specified tags without collapsing', async () => {
+    const wrapper = mount(Cron, { props: { value: '0 5,10,20,30,45 9 * * ?' } })
+    await wrapper.find('[data-field="minute"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toEqual(['05', '10', '20', '30', '45'])
+    expect(wrapper.find('.ant-select-selection-overflow-item-rest').exists()).toBe(false)
+  })
+
+  it('uses full-width Select controls for every specified field', async () => {
+    const wrapper = mount(Cron, { props: { value: '0 0 9 15 1 ?' } })
+
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+
+    await wrapper.find('[data-field="second"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+
+    await wrapper.find('[data-field="hour"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+
+    await wrapper.find('[data-field="day"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+
+    await wrapper.find('[data-field="month"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+
+    const weekWrapper = mount(Cron, { props: { value: '0 0 9 ? * MON' } })
+    await weekWrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(weekWrapper.find('.ant-cron-specific-select').exists()).toBe(true)
+  })
+
+  it('renders an accessible field tab interface', async () => {
+    const wrapper = mount(Cron, { attachTo: document.body })
+    const tabs = wrapper.findAll('[role="tab"]')
+    const panel = wrapper.find('[role="tabpanel"]')
+
+    expect(tabs).toHaveLength(6)
+    expect(wrapper.find('[role="tablist"]').attributes('aria-label')).toBe('Cron fields')
+    expect(tabs[0]!.element.tagName).toBe('SPAN')
+    expect(tabs[1]!.attributes('aria-controls')).toBe(panel.attributes('id'))
+    expect(panel.attributes('aria-labelledby')).toBe(tabs[1]!.attributes('id'))
+
+    ;(tabs[1]!.element as HTMLElement).focus()
+    await tabs[1]!.trigger('keydown', { key: 'ArrowRight' })
+    await nextTick()
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('hour')
+    expect(tabs[1]!.attributes('tabindex')).toBe('-1')
+    expect(tabs[2]!.attributes('tabindex')).toBe('0')
+    expect(document.activeElement).toBe(tabs[2]!.element)
+
+    await tabs[2]!.trigger('keydown', { key: 'ArrowDown' })
+    await nextTick()
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('day')
+    expect(document.activeElement).toBe(tabs[3]!.element)
+
+    await tabs[3]!.trigger('keydown', { key: 'ArrowUp' })
+    await nextTick()
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('hour')
+    expect(document.activeElement).toBe(tabs[2]!.element)
+
+    await tabs[2]!.trigger('keydown', { key: 'Home' })
+    await nextTick()
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('second')
+    expect(tabs[0]!.attributes('tabindex')).toBe('0')
+    expect(document.activeElement).toBe(tabs[0]!.element)
+
+    await tabs[0]!.trigger('keydown', { key: 'End' })
+    await nextTick()
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('week')
+    expect(tabs[5]!.attributes('tabindex')).toBe('0')
+    expect(document.activeElement).toBe(tabs[5]!.element)
+
+    wrapper.unmount()
+  })
+
+  it('ignores field tab keyboard navigation when disabled', async () => {
+    const wrapper = mount(Cron, { props: { disabled: true } })
+    await wrapper.findAll('[role="tab"]')[1]!.trigger('keydown', { key: 'ArrowRight' })
+    expect(wrapper.find('[role="tabpanel"]').attributes('data-field')).toBe('minute')
+  })
+
+  it('renders clear inline mode summaries without legacy description blocks', async () => {
+    const mountCron = (value: string) => mount(ConfigProvider, {
+      props: { locale: proZhCN },
+      slots: { default: () => h(Cron, { value }) },
+    })
+    let wrapper = mountCron('0 */5 9 * * ?')
+
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每 5 分钟执行一次')
+    expect((wrapper.find('.ant-cron-controls input').element as HTMLInputElement).value).toBe('5')
+    expect(wrapper.find('.ant-cron-description').exists()).toBe(false)
+    expect(wrapper.find('.ant-cron-field-mode-description').exists()).toBe(false)
+
+    wrapper = mountCron('0 10,20,30 9 * * ?')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每小时的第 10、20、30 分钟执行')
+
+    wrapper = mountCron('0 10-30 9 * * ?')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每小时第 10～30 分钟执行')
+  })
+
+  it('keeps day and week every-mode mutually exclusive', async () => {
+    const mountCron = (value: string) => mount(ConfigProvider, {
+      props: { locale: proZhCN },
+      slots: { default: () => h(Cron, { value }) },
+    })
+
+    let wrapper = mountCron('0 0 9 * * ?')
+    await wrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('unspecified')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('不指定星期，按日期执行')
+    await wrapper.find('[data-field="day"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('every')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每天执行一次')
+
+    wrapper = mountCron('0 0 9 ? * *')
+    await wrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('every')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每天执行一次')
+    await wrapper.find('[data-field="day"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('unspecified')
+    expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('不指定日期，按星期执行')
+  })
+
+  it('renders unix five fields and keeps both day and week specified', async () => {
+    const wrapper = mount(Cron, {
+      props: {
+        format: 'unix',
+        value: '0 9 * * 1-5',
+      },
+    })
+
+    expect(wrapper.find('.ant-cron').attributes('data-format')).toBe('unix')
+    expect(wrapper.findAll('[role="tab"]')).toHaveLength(5)
+    expect(wrapper.find('[data-field="second"]').exists()).toBe(false)
+    expect(wrapper.find('[role="alert"]').exists()).toBe(false)
+    expect(wrapper.find('input').element.value).toBe('0 9 * * 1-5')
+
+    const both = mount(Cron, {
+      props: {
+        format: 'unix',
+        value: '0 9 1 * 1',
+      },
+    })
+    expect(both.find('[role="alert"]').exists()).toBe(false)
+    expect(both.find('input').element.value).toBe('0 9 1 * 1')
+
+    await both.find('[data-field="day"].ant-cron-field-tab-label').trigger('click')
+    expect(both.find('.ant-cron-field').attributes('data-mode')).toBe('specified')
+    await both.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(both.find('.ant-cron-field').attributes('data-mode')).toBe('specified')
+  })
+
+  it('ignores showYear when format is unix', () => {
+    const wrapper = mount(Cron, {
+      props: {
+        format: 'unix',
+        showYear: true,
+        value: '* * * * *',
+      },
+    })
+
+    expect(wrapper.findAll('[role="tab"]')).toHaveLength(5)
+    expect(wrapper.find('[data-field="year"]').exists()).toBe(false)
+  })
+
+  it('keeps unix weekday 7 until the specified editor canonicalizes it to SUN', async () => {
+    const wrapper = mount(Cron, {
+      props: {
+        format: 'unix',
+        value: '0 9 * * 7',
+      },
+    })
+
+    expect(wrapper.find('input').element.value).toBe('0 9 * * 7')
+    await wrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('input').element.value).toBe('0 9 * * 7')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('specified')
+    expect(wrapper.findAll('.ant-select-selection-item').map(item => item.text())).toContain('Sun')
+
+    wrapper.getComponent(Select).vm.$emit('update:value', ['SUN'])
+    await nextTick()
+    expect(wrapper.find('input').element.value).toBe('0 9 * * SUN')
+    expect(wrapper.emitted('update:value')?.slice(-1)).toEqual([['0 9 * * SUN']])
+  })
+
+  it('edits quartz special day and week syntax', async () => {
+    const wrapper = mount(Cron, { props: { value: '0 0 9 L * ?' } })
+    await wrapper.find('[data-field="day"].ant-cron-field-tab-label').trigger('click')
+    expect(wrapper.find('.ant-cron-field').attributes('data-mode')).toBe('special')
+    expect(wrapper.find('.ant-cron-special').exists()).toBe(true)
+
+    wrapper.getComponent(RadioGroup).vm.$emit('update:value', 'lastWeekday')
+    await nextTick()
+    expect(wrapper.find('input').element.value).toBe('0 0 9 LW * ?')
+    expect(wrapper.emitted('update:value')?.slice(-1)).toEqual([['0 0 9 LW * ?']])
+
+    const weekWrapper = mount(Cron, { props: { value: '0 0 9 ? * 6#3' } })
+    await weekWrapper.find('[data-field="week"].ant-cron-field-tab-label').trigger('click')
+    expect(weekWrapper.find('.ant-cron-field').attributes('data-mode')).toBe('special')
+    expect(weekWrapper.find('.ant-cron-special').exists()).toBe(true)
+    expect(weekWrapper.find('.ant-cron-field-control-summary').text()).toContain('3rd')
+
+    weekWrapper.getComponent(Select).vm.$emit('update:value', 'MON')
+    await nextTick()
+    weekWrapper.getComponent(InputNumber).vm.$emit('update:value', 2)
+    await nextTick()
+    expect(weekWrapper.find('input').element.value).toBe('0 0 9 ? * 2#2')
+    expect(weekWrapper.emitted('update:value')?.slice(-1)).toEqual([['0 0 9 ? * 2#2']])
+  })
+})

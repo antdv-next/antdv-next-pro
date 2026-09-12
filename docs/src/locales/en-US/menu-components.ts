@@ -6,12 +6,13 @@ export default {
     // Other
     other: 'Other',
     configProvider: 'ProConfigProvider',
+    // Data Entry
+    dataEntry: 'Data Entry',
+    cron: 'Cron Expression Editor',
+    inputTag: 'InputTag',
     // Navigation
     navigation: 'Navigation',
     scrollbar: 'Scrollbar',
-    // Data entry
-    dataEntry: 'Data Entry',
-    inputTag: 'InputTag',
     // Data Display
     dataDisplay: 'Data Display',
     heatmap: 'Heatmap',
