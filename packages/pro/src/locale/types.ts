@@ -9,13 +9,15 @@ export interface HeatmapLocale {
   level: string
 }
 
+export interface InputTagLocale {
+  /** 清空按钮的 aria-label */
+  clear: string
+  /** 折叠标签展开按钮的 aria-label */
+  showMore: string
+}
+
 export interface ProLocale extends AntLocale {
   Cron?: CronLocale
   Heatmap?: HeatmapLocale
-  InputTag?: {
-    /** 清空按钮的 aria-label */
-    clear?: string
-    /** 折叠标签展开按钮的 aria-label */
-    showMore?: string
-  }
+  InputTag?: InputTagLocale
 }

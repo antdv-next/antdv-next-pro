@@ -289,23 +289,6 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
 
     },
   },
-
-  [`html.dark ${token.componentCls}, [data-theme="dark"] ${token.componentCls}`]: {
-    [`${token.componentCls}-field-tab:not(${token.componentCls}-field-tab-active)`]: {
-      '&:hover': {
-        color: token.colorTextLightSolid,
-        background: 'transparent',
-      },
-      '&:active': {
-        background: 'transparent',
-      },
-    },
-
-    [`${token.componentCls}-field-tab-active`]: {
-      color: token.colorTextLightSolid,
-      background: token.colorPrimary,
-    },
-  },
 })
 
 export default genStyleHooks('Cron', genCronStyle, prepareComponentToken)

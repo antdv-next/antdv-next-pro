@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Sin datos',
     level: 'Nivel',
   },
+  InputTag: {
+    clear: 'Borrar',
+    showMore: 'Mostrar todas las etiquetas',
+  },
 } satisfies ProLocale
 
 export default proLocale

@@ -6,7 +6,7 @@ description: 用于编辑 Quartz / Unix Cron 表达式的面板组件。
 demo:
   cols: 1
 group:
-  title: 数据录入
+  title: Data Entry
   order: 1
 ---
 
@@ -14,6 +14,7 @@ group:
 
 - 配置定时任务、报表、数据同步或消息推送。
 - 希望用户以可视化方式编辑 Quartz 或 Unix 表达式，而不必记住完整语法。
+- 顶部表达式为只读展示，可选择和复制；请通过可视化面板或预设修改表达式。
 
 ## 代码演示 {#examples}
 
@@ -48,9 +49,8 @@ group:
 
 | 事件 | 说明 | 类型 |
 | --- | --- | --- |
-| update:value | 表达式内容变化时触发，包括临时非法值和空值 | `(value: string) => void` |
-| change | 输入有效表达式或从非法草稿恢复为有效表达式时触发；相同的有效值不会重复触发 | `(value: string) => void` |
-| input | 每次直接输入时触发，包括临时非法值 | `(value: string) => void` |
+| change | 表达式变为有效，或从非法草稿恢复为有效表达式时触发；相同的有效值不会重复触发 | `(value: string) => void` |
+| input | 表达式草稿变化时触发，包括临时非法值 | `(value: string) => void` |
 | validate | 每次执行表达式校验后触发，并同步当前校验结果 | `(result: CronValidateResult) => void` |
 
 ### CronError
@@ -102,7 +102,7 @@ const rules = [
 
 默认 `format` 为 `quartz`。Quartz 使用六个字段：`second minute hour day month week`。开启 `showYear` 后必须提供第七个 `year` 字段。日和周必须恰好一个为 `?`。
 
-Unix 格式使用五个字段：`minute hour day month week`。没有秒、年，也不支持 `?`。日和周可以同时指定，语义为 OR。Unix 星期日可用 `0`、`7` 或 `SUN`。直接输入会保留原值；在可视化编辑器中修改指定星期后，会规范化为 `SUN`。
+Unix 格式使用五个字段：`minute hour day month week`。没有秒、年，也不支持 `?`。日和周可以同时指定，语义为 OR。Unix 星期日可用 `0`、`7` 或 `SUN`。传入的表达式会保留原值；在可视化编辑器中修改指定星期后，会规范化为 `SUN`。
 
 校验 Unix 表达式时请使用 `validateCronExpression(value, { format: 'unix' })`。
 

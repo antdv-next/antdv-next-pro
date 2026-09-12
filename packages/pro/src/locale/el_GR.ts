@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Δεν υπάρχουν δεδομένα',
     level: 'Επίπεδο',
   },
+  InputTag: {
+    clear: 'Καθαρισμός',
+    showMore: 'Εμφάνιση όλων των ετικετών',
+  },
 } satisfies ProLocale
 
 export default proLocale

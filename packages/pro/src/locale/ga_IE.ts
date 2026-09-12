@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Gan sonraí',
     level: 'Leibhéal',
   },
+  InputTag: {
+    clear: 'Glan',
+    showMore: 'Taispeáin gach clib',
+  },
 } satisfies ProLocale
 
 export default proLocale

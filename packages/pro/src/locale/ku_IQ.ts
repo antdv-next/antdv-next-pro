@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'هیچ داتا نییە',
     level: 'ئاست',
   },
+  InputTag: {
+    clear: 'پاککردنەوە',
+    showMore: 'هەموو تاگەکان پیشان بدە',
+  },
 } satisfies ProLocale
 
 export default proLocale

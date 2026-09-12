@@ -62,6 +62,12 @@ describe('Pro locale', () => {
         noData: expect.any(String),
         level: expect.any(String),
       })
+      expect(locale?.InputTag, localeName).toMatchObject({
+        clear: expect.any(String),
+        showMore: expect.any(String),
+      })
+      expect(locale?.InputTag?.clear?.trim(), `${localeName}:InputTag.clear`).not.toBe('')
+      expect(locale?.InputTag?.showMore?.trim(), `${localeName}:InputTag.showMore`).not.toBe('')
 
       const messages = flattenCronLocale(locale!.Cron!)
       expect(Object.keys(messages).sort(), localeName).toEqual(expectedMessageKeys)
@@ -90,6 +96,14 @@ describe('Pro locale', () => {
     expect(enUS.InputTag).toMatchObject({
       clear: 'Clear',
       showMore: 'Show all tags',
+    })
+    expect(frFR.InputTag).toMatchObject({
+      clear: 'Effacer',
+      showMore: 'Afficher toutes les étiquettes',
+    })
+    expect(proLocaleModules['../zh_TW.ts']?.InputTag).toMatchObject({
+      clear: '清空',
+      showMore: '展開全部標籤',
     })
   })
 

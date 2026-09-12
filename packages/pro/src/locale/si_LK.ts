@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'දත්ත නැත',
     level: 'මට්ටම',
   },
+  InputTag: {
+    clear: 'හිස් කරන්න',
+    showMore: 'සියලු ටැග් පෙන්වන්න',
+  },
 } satisfies ProLocale
 
 export default proLocale

@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Maʼlumot yo‘q',
     level: 'Daraja',
   },
+  InputTag: {
+    clear: 'Tozalash',
+    showMore: 'Barcha teglarni ko‘rsatish',
+  },
 } satisfies ProLocale
 
 export default proLocale

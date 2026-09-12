@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Տվյալ չկա',
     level: 'Մակարդակ',
   },
+  InputTag: {
+    clear: 'Մաքրել',
+    showMore: 'Ցուցադրել բոլոր պիտակները',
+  },
 } satisfies ProLocale
 
 export default proLocale

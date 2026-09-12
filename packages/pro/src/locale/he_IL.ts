@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'אין נתונים',
     level: 'רמה',
   },
+  InputTag: {
+    clear: 'נקה',
+    showMore: 'הצג את כל התגיות',
+  },
 } satisfies ProLocale
 
 export default proLocale

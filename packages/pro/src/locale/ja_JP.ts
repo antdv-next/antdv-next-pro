@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'データなし',
     level: 'レベル',
   },
+  InputTag: {
+    clear: 'クリア',
+    showMore: 'すべてのタグを表示',
+  },
 } satisfies ProLocale
 
 export default proLocale

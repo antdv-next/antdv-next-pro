@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Žiadne údaje',
     level: 'Úroveň',
   },
+  InputTag: {
+    clear: 'Vymazať',
+    showMore: 'Zobraziť všetky štítky',
+  },
 } satisfies ProLocale
 
 export default proLocale

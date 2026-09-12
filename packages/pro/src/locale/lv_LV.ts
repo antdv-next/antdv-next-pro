@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Nav datu',
     level: 'Līmenis',
   },
+  InputTag: {
+    clear: 'Notīrīt',
+    showMore: 'Rādīt visus tagus',
+  },
 } satisfies ProLocale
 
 export default proLocale

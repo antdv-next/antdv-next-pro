@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Tidak ada data',
     level: 'Tingkat',
   },
+  InputTag: {
+    clear: 'Hapus',
+    showMore: 'Tampilkan semua tag',
+  },
 } satisfies ProLocale
 
 export default proLocale

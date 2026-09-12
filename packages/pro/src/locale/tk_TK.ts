@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Maglumat ýok',
     level: 'Dereje',
   },
+  InputTag: {
+    clear: 'Arassala',
+    showMore: 'Ähli tegleri görkez',
+  },
 } satisfies ProLocale
 
 export default proLocale

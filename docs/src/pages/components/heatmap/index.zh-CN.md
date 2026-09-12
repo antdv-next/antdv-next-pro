@@ -52,7 +52,7 @@ group:
 
 | 事件 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
-| cell-click | 点击或通过键盘激活有数据项的日期单元格（包括无数据项）时触发 | `(item: HeatmapDataItem, event: MouseEvent) => void` | - |
+| cell-click | 点击或通过键盘激活 data 中出现过的日期单元格时触发（包含 value 为 null 的无数据项） | `(item: HeatmapDataItem, event: MouseEvent) => void` | - |
 
 ### 插槽 {#slots}
 

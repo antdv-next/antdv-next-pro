@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Engin gögn',
     level: 'Stig',
   },
+  InputTag: {
+    clear: 'Hreinsa',
+    showMore: 'Sýna öll merki',
+  },
 } satisfies ProLocale
 
 export default proLocale

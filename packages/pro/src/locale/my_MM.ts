@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'ဒေတာမရှိ',
     level: 'အဆင့်',
   },
+  InputTag: {
+    clear: 'ရှင်းရန်',
+    showMore: 'တဂ်အားလုံးကို ပြပါ',
+  },
 } satisfies ProLocale
 
 export default proLocale

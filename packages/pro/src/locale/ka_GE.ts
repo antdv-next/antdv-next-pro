@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'მონაცემები არ არის',
     level: 'დონე',
   },
+  InputTag: {
+    clear: 'გასუფთავება',
+    showMore: 'ყველა ტეგის ჩვენება',
+  },
 } satisfies ProLocale
 
 export default proLocale

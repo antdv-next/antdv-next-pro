@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Duomenų nėra',
     level: 'Lygis',
   },
+  InputTag: {
+    clear: 'Išvalyti',
+    showMore: 'Rodyti visas žymas',
+  },
 } satisfies ProLocale
 
 export default proLocale

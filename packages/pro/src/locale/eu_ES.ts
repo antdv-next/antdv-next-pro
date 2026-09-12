@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Daturik ez',
     level: 'Maila',
   },
+  InputTag: {
+    clear: 'Garbitu',
+    showMore: 'Erakutsi etiketa denak',
+  },
 } satisfies ProLocale
 
 export default proLocale

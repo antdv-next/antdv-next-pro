@@ -154,6 +154,10 @@ const proLocale = {
     noData: '無資料',
     level: '等級',
   },
+  InputTag: {
+    clear: '清空',
+    showMore: '展開全部標籤',
+  },
 } satisfies ProLocale
 
 export default proLocale

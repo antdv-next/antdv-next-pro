@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Nu există date',
     level: 'Nivel',
   },
+  InputTag: {
+    clear: 'Golește',
+    showMore: 'Afișează toate etichetele',
+  },
 } satisfies ProLocale
 
 export default proLocale

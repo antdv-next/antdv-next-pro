@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Không có dữ liệu',
     level: 'Cấp độ',
   },
+  InputTag: {
+    clear: 'Xóa',
+    showMore: 'Hiện tất cả thẻ',
+  },
 } satisfies ProLocale
 
 export default proLocale

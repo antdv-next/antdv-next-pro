@@ -1,7 +1,10 @@
 import { mount } from '@vue/test-utils'
+import { ConfigProvider, Form, FormItem } from 'antdv-next'
 import { describe, expect, it, vi } from 'vitest'
-import { h, nextTick } from 'vue'
+import { defineComponent, h, isRef, nextTick, reactive, ref } from 'vue'
 import { InputTag, ProConfigProvider } from '../../index'
+import enUS from '../../locale/en_US'
+import frFR from '../../locale/fr_FR'
 import zhCN from '../../locale/zh_CN'
 
 function getInput(wrapper: ReturnType<typeof mount>) {
@@ -355,6 +358,49 @@ describe('InputTag', () => {
     expect(tags[1]!.classes()).not.toContain('ant-input-tag-tag-drag-after')
   })
 
+  it('mirrors drag insert position under rtl', async () => {
+    async function dragRtl(from: number, to: number, clientX: number) {
+      const wrapper = mount(ConfigProvider, {
+        props: { direction: 'rtl' },
+        slots: {
+          default: () => h(InputTag, { defaultValue: ['one', 'two', 'three'], draggable: true }),
+        },
+      })
+      const tags = wrapper.findAll('.ant-tag')
+      expect(wrapper.find('.ant-input-tag-rtl').exists()).toBe(true)
+      tags[to]!.element.getBoundingClientRect = () => ({ left: 100, width: 40, top: 0, right: 140, bottom: 20 } as DOMRect)
+      await tags[from]!.trigger('dragstart')
+      await tags[to]!.trigger('dragover', { clientX })
+      await tags[to]!.trigger('drop', { clientX })
+      return wrapper.findAll('.ant-tag').map(tag => tag.text())
+    }
+
+    // 左半区在 RTL 中是 after：one 插到 three 之后
+    expect(await dragRtl(0, 2, 105)).toEqual(['two', 'three', 'one'])
+    // 右半区在 RTL 中是 before：one 插到 three 之前
+    expect(await dragRtl(0, 2, 130)).toEqual(['two', 'one', 'three'])
+  })
+
+  it('shows the rtl drop indicator on the logical start half', async () => {
+    const wrapper = mount(ConfigProvider, {
+      props: { direction: 'rtl' },
+      slots: {
+        default: () => h(InputTag, { defaultValue: ['one', 'two', 'three'], draggable: true }),
+      },
+    })
+    const tags = wrapper.findAll('.ant-tag')
+    tags[1]!.element.getBoundingClientRect = () => ({ left: 100, width: 40, top: 0, right: 140, bottom: 20 } as DOMRect)
+    await tags[0]!.trigger('dragstart')
+
+    await tags[1]!.trigger('dragover', { clientX: 105 })
+    expect(tags[1]!.classes()).toContain('ant-input-tag-tag-drag-after')
+    expect(tags[1]!.classes()).not.toContain('ant-input-tag-tag-drag-before')
+
+    await tags[1]!.trigger('dragover', { clientX: 130 })
+    expect(tags[1]!.classes()).toContain('ant-input-tag-tag-drag-before')
+    expect(tags[1]!.classes()).not.toContain('ant-input-tag-tag-drag-after')
+  })
+
   it('collapses tags when configured', () => {
     const wrapper = mount(InputTag, {
       props: { defaultValue: ['one', 'two', 'three', 'four'], collapseTags: true, maxCollapseTags: 2 },
@@ -409,6 +455,35 @@ describe('InputTag', () => {
     })
 
     expect(wrapper.find('.ant-input-tag-clear').attributes('aria-label')).toBe('清空')
+  })
+
+  it('uses translated InputTag messages from the current locale', () => {
+    const wrapper = mount(ProConfigProvider, {
+      props: { locale: frFR },
+      slots: {
+        default: () => h(InputTag, {
+          defaultValue: ['one', 'two', 'three'],
+          allowClear: true,
+          collapseTags: true,
+          maxCollapseTags: 1,
+        }),
+      },
+    })
+
+    expect(wrapper.find('.ant-input-tag-clear').attributes('aria-label')).toBe('Effacer')
+    expect(wrapper.find('.ant-input-tag-collapse').attributes('aria-label')).toBe('Afficher toutes les étiquettes')
+  })
+
+  it('falls back to the English InputTag locale when the current locale omits it', () => {
+    const locale = { ...zhCN, InputTag: undefined }
+    const wrapper = mount(ProConfigProvider, {
+      props: { locale },
+      slots: {
+        default: () => h(InputTag, { defaultValue: ['one'], allowClear: true }),
+      },
+    })
+
+    expect(wrapper.find('.ant-input-tag-clear').attributes('aria-label')).toBe(enUS.InputTag!.clear)
   })
 
   it('makes the collapse tag keyboard accessible and shows the tooltip on focus', async () => {
@@ -561,5 +636,121 @@ describe('InputTag', () => {
     expect(wrapper.find('.ant-input-tag-clear').element.parentElement).toBe(suffix.element)
     await wrapper.find('.custom-tag').trigger('click')
     expect(wrapper.findAll('.custom-tag')).toHaveLength(0)
+  })
+
+  it('forwards Form.Item field id and label association to the native input', () => {
+    const wrapper = mount(Form, {
+      props: {
+        name: 'profile',
+        model: { tags: ['vue'] },
+      },
+      slots: {
+        default: () => h(FormItem, { name: 'tags', label: 'Tags' }, {
+          default: () => h(InputTag, { value: ['vue'] }),
+        }),
+      },
+    })
+
+    expect(wrapper.find('input#profile_tags').exists()).toBe(true)
+    expect(wrapper.find('.ant-form-item-label > label').attributes('for')).toBe('profile_tags')
+  })
+
+  it('keeps Form.Item value as committed tags instead of the input draft', async () => {
+    const initialValue = ['vue']
+    const model = reactive({ tags: [...initialValue] })
+    const formRef = ref<any>()
+    const FormDemo = defineComponent(() => () => h(Form, { ref: formRef, model }, {
+      default: () => h(FormItem, {
+        name: 'tags',
+        rules: [{ required: true, type: 'array' as const, min: 1, message: 'Tags are required' }],
+      }, {
+        default: () => h(InputTag, {
+          value: model.tags,
+          'onUpdate:value': (value: string[]) => (model.tags = value),
+        }),
+      }),
+    }))
+    const wrapper = mount(FormDemo)
+    const input = getInput(wrapper)
+
+    await input.setValue('draft')
+    expect(model.tags).toEqual(['vue'])
+    expect(input.element.value).toBe('draft')
+    expect(input.element.value).not.toBe(model.tags.join(','))
+    await expect(formRef.value.validateFields()).resolves.toMatchObject({ tags: ['vue'] })
+
+    await input.trigger('keydown', { key: 'Enter' })
+    expect(model.tags).toEqual(['vue', 'draft'])
+    expect(input.element.value).toBe('')
+    await expect(formRef.value.validateFields()).resolves.toMatchObject({ tags: ['vue', 'draft'] })
+
+    formRef.value.resetFields()
+    await nextTick()
+    expect(model.tags).toEqual(initialValue)
+    expect(wrapper.findAll('.ant-tag').map(tag => tag.text())).toEqual(initialValue)
+  })
+
+  it('does not treat the input draft as the Form.Item value when tags are empty', async () => {
+    const model = reactive({ tags: [] as string[] })
+    const formRef = ref<any>()
+    const FormDemo = defineComponent(() => () => h(Form, { ref: formRef, model }, {
+      default: () => h(FormItem, {
+        name: 'tags',
+        rules: [{ required: true, type: 'array' as const, min: 1, message: 'Tags are required' }],
+      }, {
+        default: () => h(InputTag, {
+          value: model.tags,
+          'onUpdate:value': (value: string[]) => (model.tags = value),
+        }),
+      }),
+    }))
+    const wrapper = mount(FormDemo)
+    const input = getInput(wrapper)
+
+    await input.setValue('draft')
+    expect(model.tags).toEqual([])
+    expect(input.element.value).toBe('draft')
+    await expect(formRef.value.validateFields()).rejects.toBeDefined()
+  })
+
+  it('applies Form.Item validateStatus to the Input', () => {
+    const wrapper = mount(Form, {
+      props: { model: { tags: ['vue'] } },
+      slots: {
+        default: () => h(FormItem, { name: 'tags', validateStatus: 'warning' }, {
+          default: () => h(InputTag, { value: ['vue'] }),
+        }),
+      },
+    })
+
+    expect(wrapper.find('.ant-input-status-warning').exists()).toBe(true)
+  })
+
+  it('exposes writable native input and root element refs', async () => {
+    const wrapper = mount(InputTag, {
+      props: { defaultValue: ['one'] },
+      attachTo: document.body,
+    })
+    await nextTick()
+
+    const exposed = (wrapper.vm as any).$.exposed
+    const inputEl = getInput(wrapper).element as HTMLInputElement
+
+    expect(isRef(exposed.input)).toBe(true)
+    expect(isRef(exposed.nativeElement)).toBe(true)
+    expect(exposed.input.value).toBe(inputEl)
+    expect(exposed.nativeElement.value).toBeInstanceOf(HTMLElement)
+    expect(exposed.nativeElement.value?.contains(inputEl)).toBe(true)
+    expect((wrapper.vm as any).input).toBe(inputEl)
+    expect((wrapper.vm as any).nativeElement).toBe(exposed.nativeElement.value)
+
+    const originalInput = exposed.input.value
+    exposed.input.value = originalInput
+    expect(exposed.input.value).toBe(originalInput)
+
+    ;(wrapper.vm as any).focus()
+    expect(document.activeElement).toBe(inputEl)
+
+    wrapper.unmount()
   })
 })

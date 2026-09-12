@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Nema podataka',
     level: 'Razina',
   },
+  InputTag: {
+    clear: 'Očisti',
+    showMore: 'Prikaži sve oznake',
+  },
 } satisfies ProLocale
 
 export default proLocale

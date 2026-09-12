@@ -24,7 +24,6 @@ import { HEATMAP_COLOR_THEMES, isHeatmapColorScale } from './types'
 import { createCalendar, formatGap, normalizeData, resolveRange } from './utils'
 
 const DEFAULT_ACTIVE_COLORS = HEATMAP_COLOR_THEMES.green
-const DEFAULT_MINIMUM_COLOR = '#ebedf0'
 
 function omitClassAndStyle(attrs: Record<string, any>) {
   const nextAttrs = { ...attrs }
@@ -78,8 +77,18 @@ const Heatmap = defineComponent<
       return mergedActiveColors.value
         ?? (isColorTheme(colorTheme) ? HEATMAP_COLOR_THEMES[colorTheme] : DEFAULT_ACTIVE_COLORS)
     })
-    const resolvedColors = computed(() => [mergedMinimumColor.value ?? DEFAULT_MINIMUM_COLOR, ...resolvedActiveColors.value])
-    const usesCustomColors = computed(() => Boolean(mergedActiveColors.value || mergedColorTheme.value || mergedMinimumColor.value))
+    const usesCustomActiveColors = computed(() => Boolean(mergedActiveColors.value || mergedColorTheme.value))
+    const usesCustomMinimumColor = computed(() => Boolean(mergedMinimumColor.value))
+    const resolvedColors = computed(() => [mergedMinimumColor.value, ...resolvedActiveColors.value])
+
+    function getCustomLevelStyle(level: number): CSSProperties | undefined {
+      const backgroundColor = level === 1
+        ? (usesCustomMinimumColor.value ? mergedMinimumColor.value : undefined)
+        : level > 1 && usesCustomActiveColors.value
+          ? resolvedActiveColors.value[level - 2]
+          : undefined
+      return backgroundColor ? { backgroundColor } : undefined
+    }
 
     const mergedSemanticProps = computed<HeatmapProps>(() => ({
       ...props,
@@ -216,14 +225,14 @@ const Heatmap = defineComponent<
         >
           <span>{slots['indicator-leading-text']?.() ?? localeText.value.less}</span>
           <div class={`${prefixCls.value}-indicator-colors`}>
-            {resolvedColors.value.map((color, index) => (
+            {resolvedColors.value.map((_, index) => (
               <span
                 key={index}
                 class={`${prefixCls.value}-indicator-color`}
                 data-level={index + 1}
                 role="img"
                 aria-label={`${localeText.value.level} ${index + 1}`}
-                style={usesCustomColors.value ? { backgroundColor: color } : undefined}
+                style={getCustomLevelStyle(index + 1)}
               />
             ))}
           </div>
@@ -233,9 +242,7 @@ const Heatmap = defineComponent<
     }
 
     function renderCell(cell: HeatmapCell, row: number, column: number) {
-      const cellStyle = usesCustomColors.value && cell.level > 0
-        ? { backgroundColor: resolvedColors.value[cell.level - 1] }
-        : undefined
+      const cellStyle = getCustomLevelStyle(cell.level)
       const isInteractive = Boolean(cell.item)
       const cellLabel = cell.date ? formatTooltip(cell) : undefined
       const slotProps = cell.date

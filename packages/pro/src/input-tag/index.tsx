@@ -3,16 +3,18 @@ import type { Variant } from 'antdv-next/config-provider/context'
 import type { App, ComputedRef, CSSProperties, ShallowRef, SlotsType } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semantic'
 import type { InputTagConfig } from '../config-provider'
-import type { ProLocale } from '../locale/types'
+import type { InputTagLocale, ProLocale } from '../locale/types'
 import { clsx, useMergedState } from '@v-c/util'
 import { Input as AInput, Tag as ATag, Tooltip as ATooltip } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
 import { useDisabledContext } from 'antdv-next/config-provider/DisabledContext'
 import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
 import { useLocaleContext } from 'antdv-next/locale/index'
-import { computed, defineComponent, h, nextTick, ref, shallowRef } from 'vue'
+import { computed, defineComponent, h, nextTick, ref, shallowRef, watch } from 'vue'
+import { unwrapExposedElement } from '../_util'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
+import enUSLocale from '../locale/en_US'
 import useStyle from './style'
 
 export type InputTagValue = string[]
@@ -36,7 +38,10 @@ export type InputTagInputProps = Omit<
   | 'onCompositionend'
   | 'onUpdate:value'
 >
-export type InputTagTagProps = Omit<TagProps, 'closable' | 'disabled' | 'onClose'>
+export type InputTagTagProps = Omit<TagProps, 'closable' | 'disabled' | 'onClose'> & {
+  class?: string | Record<string, any> | Array<string | Record<string, any>>
+  style?: CSSProperties | CSSProperties[] | string
+}
 
 export interface InputTagSemanticClassNames {
   root?: string
@@ -136,6 +141,10 @@ function omitClassAndStyle(attrs: Record<string, any>) {
   return nextAttrs
 }
 
+function resolveSemanticRecord<T extends object>(value: T | ((info: any) => T) | undefined) {
+  return typeof value === 'function' ? undefined : value
+}
+
 function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
@@ -157,6 +166,8 @@ function splitInput(value: string, separators: string[]) {
   }
 }
 
+const enUSInputTag = enUSLocale.InputTag!
+
 const InputTag = defineComponent<
   InputTagProps,
   InputTagEmits,
@@ -171,13 +182,31 @@ const InputTag = defineComponent<
     const rootCls = useCSSVarCls(prefixCls)
     const [hashId, cssVarCls] = useStyle(prefixCls, rootCls)
     const inputRef = shallowRef<InputRef>()
+    const nativeInputRef = shallowRef<HTMLInputElement | null>(null)
+    const nativeElementRef = shallowRef<HTMLElement | null>(null)
     const composing = ref(false)
     const draggingIndex = ref<number | null>(null)
     const dragOverIndex = ref<number | null>(null)
     const dropPosition = ref<'before' | 'after' | null>(null)
 
-    const clearLabel = computed(() => (localeContext.locale.value as ProLocale | undefined)?.InputTag?.clear ?? 'Clear')
-    const showMoreLabel = computed(() => (localeContext.locale.value as ProLocale | undefined)?.InputTag?.showMore ?? 'Show all tags')
+    watch(
+      () => ({
+        input: unwrapExposedElement<HTMLInputElement>(inputRef.value?.input),
+        nativeElement: unwrapExposedElement<HTMLElement>(inputRef.value?.nativeElement),
+      }),
+      ({ input, nativeElement }) => {
+        nativeInputRef.value = input
+        nativeElementRef.value = nativeElement
+      },
+      { immediate: true, flush: 'post' },
+    )
+
+    const localeText = computed<InputTagLocale>(() => ({
+      ...enUSInputTag,
+      ...((localeContext.locale.value as ProLocale | undefined)?.InputTag ?? {}),
+    }))
+    const clearLabel = computed(() => localeText.value.clear)
+    const showMoreLabel = computed(() => localeText.value.showMore)
 
     const mergedDisabled = computed(() => props.disabled ?? disabledContext.value ?? false)
     const mergedReadonly = computed(() => props.readonly ?? false)
@@ -346,12 +375,12 @@ const InputTag = defineComponent<
 
     function handleCompositionStart(event: CompositionEvent) {
       composing.value = true
-      emit('compositionstart' as any, event)
+      emit('compositionstart', event)
     }
 
     function handleCompositionEnd(event: CompositionEvent) {
       composing.value = false
-      emit('compositionend' as any, event)
+      emit('compositionend', event)
     }
 
     function handleKeydown(event: KeyboardEvent) {
@@ -411,9 +440,13 @@ const InputTag = defineComponent<
         event.dataTransfer.dropEffect = 'move'
       dragOverIndex.value = index
       const target = event.currentTarget as HTMLElement | null
-      dropPosition.value = target && event.clientX < target.getBoundingClientRect().left + target.getBoundingClientRect().width / 2
-        ? 'before'
-        : 'after'
+      if (!target) {
+        dropPosition.value = 'after'
+        return
+      }
+      const rect = target.getBoundingClientRect()
+      const inLeftHalf = event.clientX < rect.left + rect.width / 2
+      dropPosition.value = (direction.value === 'rtl' ? !inLeftHalf : inLeftHalf) ? 'before' : 'after'
     }
 
     function handleDrop(index: number, event: DragEvent) {
@@ -493,8 +526,8 @@ const InputTag = defineComponent<
         key: `${value}-${index}`,
         closable,
         disabled: mergedDisabled.value,
-        class: clsx((props.tagProps as any)?.class, mergedClassNames.value.tag, dragClass),
-        style: [((props.tagProps as any)?.style), mergedStyles.value.tag],
+        class: clsx(props.tagProps?.class, mergedClassNames.value.tag, dragClass),
+        style: [props.tagProps?.style, mergedStyles.value.tag],
         ...dragAttrs,
         onClose,
       } as any, { default: () => value })
@@ -509,16 +542,16 @@ const InputTag = defineComponent<
       return h(ATag, {
         ...(props.tagProps ?? {}),
         key: `${value}-${index}`,
-        class: clsx((props.tagProps as any)?.class, mergedClassNames.value.tag),
-        style: [((props.tagProps as any)?.style), mergedStyles.value.tag],
+        class: clsx(props.tagProps?.class, mergedClassNames.value.tag),
+        style: [props.tagProps?.style, mergedStyles.value.tag],
       } as any, { default: () => value })
     }
 
     const api: InputTagRef = {
       focus: options => inputRef.value?.focus?.(options),
       blur: () => inputRef.value?.blur?.(),
-      input: computed(() => inputRef.value?.input ?? null) as unknown as ShallowRef<HTMLInputElement | null>,
-      nativeElement: computed(() => inputRef.value?.nativeElement ?? null) as unknown as ShallowRef<HTMLElement | null>,
+      input: nativeInputRef,
+      nativeElement: nativeElementRef,
     }
     expose(api)
 
@@ -573,6 +606,8 @@ const InputTag = defineComponent<
         : null
       const suffixContent = slots.suffix?.()
       const suffix = clearButton || suffixContent ? [clearButton, suffixContent] : undefined
+      const inputClassNames = resolveSemanticRecord(mergedInputProps.value.classes)
+      const inputStyles = resolveSemanticRecord(mergedInputProps.value.styles)
 
       const inputAttrs = {
         ...omitClassAndStyle(attrs as Record<string, any>),
@@ -593,16 +628,16 @@ const InputTag = defineComponent<
         allowClear: false,
         'data-readonly': inputReadonly.value ? 'true' : undefined,
         classes: {
-          ...((typeof mergedInputProps.value.classes === 'object' && mergedInputProps.value.classes) || {}),
-          root: clsx((mergedInputProps.value.classes as any)?.root, mergedClassNames.value.root),
-          input: clsx((mergedInputProps.value.classes as any)?.input, mergedClassNames.value.input),
-          suffix: clsx(`${prefixCls.value}-suffix`, (mergedInputProps.value.classes as any)?.suffix, mergedClassNames.value.suffix),
+          ...inputClassNames,
+          root: clsx(inputClassNames?.root, mergedClassNames.value.root),
+          input: clsx(inputClassNames?.input, mergedClassNames.value.input),
+          suffix: clsx(`${prefixCls.value}-suffix`, inputClassNames?.suffix, mergedClassNames.value.suffix),
         },
         styles: {
-          ...((typeof mergedInputProps.value.styles === 'object' && mergedInputProps.value.styles) || {}),
-          root: { ...((mergedInputProps.value.styles as any)?.root), ...mergedStyles.value.root },
-          input: { ...((mergedInputProps.value.styles as any)?.input), ...mergedStyles.value.input },
-          suffix: { ...((mergedInputProps.value.styles as any)?.suffix), ...mergedStyles.value.suffix },
+          ...inputStyles,
+          root: { ...inputStyles?.root, ...mergedStyles.value.root },
+          input: { ...inputStyles?.input, ...mergedStyles.value.input },
+          suffix: { ...inputStyles?.suffix, ...mergedStyles.value.suffix },
         },
         'onUpdate:value': handleInputValueUpdate,
         onInput: handleInput,
