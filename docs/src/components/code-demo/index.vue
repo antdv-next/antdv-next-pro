@@ -310,7 +310,6 @@ const sandpackOptions = computed(() => ({
   autorun: false,
   activeFile: sandpackActiveFile.value,
 }))
-const active = computed(() => route.hash === `#${id.value}`)
 function handleScroll(e: Event) {
   e.preventDefault()
   e.stopPropagation()
@@ -359,9 +358,6 @@ const { copied, copy } = useClipboard({
 
 const cls = computed(() => {
   const cls: string[] = []
-  if (active.value) {
-    cls.push('border-primary')
-  }
   if (simplify) {
     cls.push('ant-doc-demo-box-simplify')
   }

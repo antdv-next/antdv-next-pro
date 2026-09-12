@@ -1,6 +1,6 @@
 import type { App, CSSProperties, ShallowRef, SlotsType } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semantic'
-import type { ScrollbarConfig, ScrollbarMotion, ScrollbarVisibility } from '../config-provider'
+import type { ScrollbarConfig, ScrollbarFade, ScrollbarMotion, ScrollbarVisibility } from '../config-provider'
 import { clsx } from '@v-c/util'
 import { getTransitionProps } from '@v-c/util/dist/utils/transition'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
@@ -49,6 +49,8 @@ export interface ScrollbarProps {
   visibilityY?: ScrollbarVisibility
   hideDelay?: number
   motion?: ScrollbarMotion
+  scrollFade?: ScrollbarFade
+  scrollFadeSize?: number
   classes?: ScrollbarClassNamesType
   styles?: ScrollbarStylesType
 }
@@ -73,12 +75,64 @@ export interface ScrollbarRef {
 const DEFAULT_VISIBILITY: ScrollbarVisibility = 'auto'
 const DEFAULT_HIDE_DELAY = 1200
 const DEFAULT_MOTION: ScrollbarMotion = 'fade'
+const DEFAULT_SCROLL_FADE_SIZE = 40
 
 function omitClassAndStyle(attrs: Record<string, any>) {
   const nextAttrs = { ...attrs }
   delete nextAttrs.class
   delete nextAttrs.style
   return nextAttrs
+}
+
+function resolveScrollFadeClassName(prefixCls: string, scrollFade: ScrollbarFade | undefined) {
+  if (!scrollFade) {
+    return undefined
+  }
+
+  return `${prefixCls}-container-fade-${scrollFade}`
+}
+
+function resolveScrollFadeStyle(
+  scrollFade: ScrollbarFade | undefined,
+  scrollFadeSize: number,
+  metrics: {
+    clientWidth: number
+    clientHeight: number
+    scrollWidth: number
+    scrollHeight: number
+    scrollLeft: number
+    scrollTop: number
+  },
+) {
+  if (!scrollFade) {
+    return undefined
+  }
+
+  const size = Math.max(scrollFadeSize, 0)
+
+  const style: CSSProperties = {
+    '--scrollbar-fade-size': `${size}px`,
+  }
+
+  if (scrollFade === 'vertical' || scrollFade === 'both') {
+    const maxScrollY = Math.max(metrics.scrollHeight - metrics.clientHeight, 0)
+
+    Object.assign(style, {
+      '--scrollbar-fade-overflow-top': `${Math.max(metrics.scrollTop, 0)}px`,
+      '--scrollbar-fade-overflow-bottom': `${Math.max(maxScrollY - metrics.scrollTop, 0)}px`,
+    })
+  }
+
+  if (scrollFade === 'horizontal' || scrollFade === 'both') {
+    const maxScrollX = Math.max(metrics.scrollWidth - metrics.clientWidth, 0)
+
+    Object.assign(style, {
+      '--scrollbar-fade-overflow-left': `${Math.max(metrics.scrollLeft, 0)}px`,
+      '--scrollbar-fade-overflow-right': `${Math.max(maxScrollX - metrics.scrollLeft, 0)}px`,
+    })
+  }
+
+  return style
 }
 
 const Scrollbar = defineComponent<
@@ -115,6 +169,14 @@ const Scrollbar = defineComponent<
       return props.motion ?? proConfig.value.motion ?? DEFAULT_MOTION
     })
 
+    const mergedScrollFade = computed<ScrollbarFade | undefined>(() => {
+      return props.scrollFade ?? proConfig.value.scrollFade
+    })
+
+    const mergedScrollFadeSize = computed(() => {
+      return props.scrollFadeSize ?? proConfig.value.scrollFadeSize ?? DEFAULT_SCROLL_FADE_SIZE
+    })
+
     const mergedConfig = computed<ScrollbarConfig>(() => {
       return {
         ...proConfig.value,
@@ -123,6 +185,8 @@ const Scrollbar = defineComponent<
         visibilityY: mergedVisibilityY.value,
         hideDelay: mergedHideDelay.value,
         motion: mergedMotion.value,
+        scrollFade: mergedScrollFade.value,
+        scrollFadeSize: mergedScrollFadeSize.value,
       }
     })
 
@@ -141,6 +205,8 @@ const Scrollbar = defineComponent<
           visibilityY: mergedVisibilityY.value,
           hideDelay: mergedHideDelay.value,
           motion: mergedMotion.value,
+          scrollFade: mergedScrollFade.value,
+          scrollFadeSize: mergedScrollFadeSize.value,
         },
       })),
     )
@@ -182,6 +248,12 @@ const Scrollbar = defineComponent<
       computed(() => mergedConfig.value.visibilityX),
       computed(() => mergedConfig.value.visibilityY),
     )
+    const scrollFadeClassName = computed(() => {
+      return resolveScrollFadeClassName(prefixCls.value, mergedScrollFade.value)
+    })
+    const scrollFadeStyle = computed(() => {
+      return resolveScrollFadeStyle(mergedScrollFade.value, mergedScrollFadeSize.value, scrollbarState.metrics.value)
+    })
     const scrollbarDrag = useScrollbarDrag(
       containerRef,
       scrollbarState.metrics,
@@ -411,8 +483,8 @@ const Scrollbar = defineComponent<
       >
         <div
           ref={containerRef}
-          class={clsx(`${prefixCls.value}-container`, mergedClassNames.value.container)}
-          style={mergedStyles.value.container}
+          class={clsx(`${prefixCls.value}-container`, scrollFadeClassName.value, mergedClassNames.value.container)}
+          style={[mergedStyles.value.container, scrollFadeStyle.value]}
           onScroll={handleScroll}
         >
           <div

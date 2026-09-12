@@ -713,6 +713,140 @@ exports[`scrollbar demo > renders controller correctly 1`] = `
 </div>
 `;
 
+exports[`scrollbar demo > renders fade correctly 1`] = `
+<div
+  style="display: flex; flex-direction: column; gap: 24px;"
+>
+  <section>
+    <h3
+      style="margin: 0px 0px 12px; font-size: 16px;"
+    >
+      Vertical
+    </h3>
+    <div
+      class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+      data-active=""
+      data-visibility="auto"
+      data-visibility-x="auto"
+      data-visibility-y="auto"
+      style="height: 180px; border: 1px solid var(--ant-color-border); border-radius: 12px;"
+    >
+      <div
+        class="ant-scrollbar-container ant-scrollbar-container-fade-vertical"
+        style="--scrollbar-fade-size: 72px; --scrollbar-fade-overflow-top: 0px; --scrollbar-fade-overflow-bottom: 0px;"
+      >
+        <div
+          class="ant-scrollbar-content"
+        >
+          <div
+            style="display: flex; flex-direction: column; gap: 16px; padding: 16px;"
+          >
+            <p
+              style="margin: 0px;"
+            >
+              Row 1
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 2
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 3
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 4
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 5
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 6
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 7
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 8
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 9
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 10
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 11
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 12
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 13
+            </p>
+            <p
+              style="margin: 0px;"
+            >
+              Row 14
+            </p>
+          </div>
+        </div>
+      </div>
+      <transition-stub
+        appear="false"
+        css="true"
+        enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+        enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+        entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+        leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+        leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+        leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+        name="ant-scrollbar-track-fade-motion"
+        persisted="false"
+      >
+        <!---->
+      </transition-stub>
+      <transition-stub
+        appear="false"
+        css="true"
+        enteractiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare "
+        enterfromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-prepare ant-scrollbar-track-fade-motion-enter-prepare ant-scrollbar-track-fade-motion-enter-start"
+        entertoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-enter ant-scrollbar-track-fade-motion-appear ant-scrollbar-track-fade-motion-appear-active ant-scrollbar-track-fade-motion-enter-active"
+        leaveactiveclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+        leavefromclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave"
+        leavetoclass="ant-scrollbar-track-fade-motion ant-scrollbar-track-fade-motion-leave ant-scrollbar-track-fade-motion-leave-active"
+        name="ant-scrollbar-track-fade-motion"
+        persisted="false"
+      >
+        <!---->
+      </transition-stub>
+    </div>
+  </section>
+</div>
+`;
+
 exports[`scrollbar demo > renders motion correctly 1`] = `
 <div
   class="ant-row css-var-root"
