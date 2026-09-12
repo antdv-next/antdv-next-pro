@@ -18,6 +18,7 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(scriptDir, '../../../..')
 const packageRoot = path.resolve(repoRoot, 'packages/pro')
 const sourcePaths = {
+  Heatmap: path.resolve(packageRoot, 'src/heatmap/style/token.ts'),
   Scrollbar: path.resolve(packageRoot, 'src/scrollbar/style/token.ts'),
   InputTag: path.resolve(packageRoot, 'src/input-tag/style/token.ts'),
 }
@@ -31,10 +32,18 @@ const globalTokenNames = [
   'marginXXS',
   'controlHeight',
   'colorFillTertiary',
+  'colorFillSecondary',
   'colorTextTertiary',
   'colorTextSecondary',
   'colorText',
+  'colorPrimary',
   'borderRadiusSM',
+  'fontSizeSM',
+  'fontWeightStrong',
+  'lineHeightSM',
+  'marginSM',
+  'marginXS',
+  'paddingXS',
   'paddingXXS',
   'motionDurationMid',
   'motionEaseOutCirc',

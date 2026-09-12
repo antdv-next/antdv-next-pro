@@ -13,7 +13,7 @@ function flattenComponentLocales(nestedLocales: { components: Record<string, str
     layoutGroup: 'layoutGroup',
     navigation: 'navigation',
     dataEntry: 'data-entry',
-    dataDisplay: 'data-display',
+    dataDisplay: 'dataDisplay',
     feedback: 'feedback',
     other: 'other',
   }
@@ -71,6 +71,14 @@ export const components: AntdvMenuItem[] = [
     type: 'group',
     children: [
       { key: '/components/input-tag', label: '/components/input-tag' },
+    ],
+  },
+  {
+    key: 'dataDisplay',
+    label: 'dataDisplay',
+    type: 'group',
+    children: [
+      { key: '/components/heatmap', label: '/components/heatmap', tag: '1.1.0' },
     ],
   },
   {

@@ -1,11 +1,19 @@
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/zh_CN'
 
-// 原地扩展：保持与 antdv-next locale 的引用一致（locale.test.ts 有引用校验）
-const proLocale = locale as ProLocale
-proLocale.InputTag = {
-  clear: '清空',
-  showMore: '展开全部标签',
-}
+const proLocale = {
+  ...locale,
+  Heatmap: {
+    label: '热力图',
+    less: '少',
+    more: '多',
+    noData: '无数据',
+    level: '等级',
+  },
+  InputTag: {
+    clear: '清空',
+    showMore: '展开全部标签',
+  },
+} satisfies ProLocale
 
 export default proLocale

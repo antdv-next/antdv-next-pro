@@ -1,0 +1,292 @@
+import { mount } from '@vue/test-utils'
+import { Tooltip } from 'antdv-next'
+import { describe, expect, it, vi } from 'vitest'
+import { h, nextTick } from 'vue'
+import { ProConfigProvider } from '../../index'
+import zhCN from '../../locale/zh_CN'
+import Heatmap from '../index'
+import { createCalendar, getColorLevel, normalizeData, resolveRange } from '../utils'
+
+const jan1 = Date.UTC(2024, 0, 1)
+const jan2 = Date.UTC(2024, 0, 2)
+const jan3 = Date.UTC(2024, 0, 3)
+
+describe('Heatmap utilities', () => {
+  it('normalizes timestamps in UTC, retains null values, and keeps the last valid item', () => {
+    const data = normalizeData([
+      { timestamp: jan1 + 12 * 60 * 60 * 1000, value: 1 },
+      { timestamp: jan1 + 18 * 60 * 60 * 1000, value: 3 },
+      { timestamp: jan2, value: null },
+      { timestamp: jan3, value: -1 },
+      { timestamp: Number.NaN, value: 5 },
+    ])
+
+    expect(data.size).toBe(2)
+    expect(data.get(jan1)?.value).toBe(3)
+    expect(data.get(jan2)?.value).toBeNull()
+  })
+
+  it('resolves recent and reverse object ranges using UTC dates', () => {
+    expect(resolveRange('recent', jan3 + 17 * 60 * 60 * 1000)).toEqual({
+      start: jan3 - 364 * 24 * 60 * 60 * 1000,
+      end: jan3,
+    })
+    expect(resolveRange({ start: jan3, end: jan1 })).toEqual({ start: jan1, end: jan3 })
+  })
+
+  it('accepts valid calendar years and warns once before falling back for invalid years', () => {
+    const now = jan3
+    const recent = { start: now - 364 * 24 * 60 * 60 * 1000, end: now }
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+
+    expect(resolveRange(1970, now)).toEqual({ start: Date.UTC(1970, 0, 1), end: Date.UTC(1970, 11, 31) })
+    expect(resolveRange(2100, now)).toEqual({ start: Date.UTC(2100, 0, 1), end: Date.UTC(2100, 11, 31) })
+    expect(resolveRange(1969, now)).toEqual(recent)
+    expect(resolveRange(1969, now)).toEqual(recent)
+    expect(resolveRange(2101, now)).toEqual(recent)
+    expect(resolveRange(2024.5, now)).toEqual(recent)
+    expect(resolveRange(Number.NaN, now)).toEqual(recent)
+    expect(warn).toHaveBeenCalledTimes(4)
+
+    warn.mockRestore()
+  })
+
+  it('keeps missing days empty and only fills calendar-leading days when enabled', () => {
+    const data = normalizeData([
+      { timestamp: jan1, value: 0 },
+      { timestamp: jan2, value: 8 },
+      { timestamp: Date.UTC(2023, 11, 31), value: 100 },
+    ])
+    const range = { start: jan1, end: jan3 }
+
+    const withoutLeading = createCalendar(range, data, 0, false)
+    const withLeading = createCalendar(range, data, 0, true)
+
+    expect(withoutLeading[0]![0]).toMatchObject({ placeholder: true, value: null })
+    expect(withoutLeading[3]![0]).toMatchObject({ placeholder: false, value: null, level: 0 })
+    expect(withLeading[0]![0]).toMatchObject({ placeholder: false, value: 100, level: 5 })
+    expect(withLeading[1]![0]).toMatchObject({ placeholder: false, value: 0, level: 1 })
+    expect(withLeading[2]![0]).toMatchObject({ placeholder: false, value: 8, level: 5 })
+  })
+
+  it('assigns equal-width color levels with a lowest valid-value range', () => {
+    expect(getColorLevel(null, 0, 100)).toBe(0)
+    expect(getColorLevel(0, 0, 100)).toBe(1)
+    expect(getColorLevel(19.99, 0, 100)).toBe(1)
+    expect(getColorLevel(20, 0, 100)).toBe(2)
+    expect(getColorLevel(40, 0, 100)).toBe(3)
+    expect(getColorLevel(60, 0, 100)).toBe(4)
+    expect(getColorLevel(80, 0, 100)).toBe(5)
+    expect(getColorLevel(100, 0, 100)).toBe(5)
+    expect(getColorLevel(8, 8, 8)).toBe(1)
+  })
+})
+
+describe('Heatmap', () => {
+  it('renders data cells, semantic styles, tooltip, and clickable data cells', async () => {
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan3 },
+        data: [
+          { timestamp: jan1, value: 0 },
+          { timestamp: jan2, value: 6 },
+        ],
+        tooltip: true,
+        classes: { root: 'heatmap-root', cell: 'heatmap-cell' },
+        styles: { root: { padding: '4px' } },
+      },
+    })
+
+    const root = wrapper.find('.ant-heatmap')
+    expect(root.classes()).toContain('heatmap-root')
+    expect(root.attributes('style')).toContain('padding: 4px')
+    expect(wrapper.findAll('.heatmap-cell')).toHaveLength(7)
+    expect(wrapper.findComponent(Tooltip).exists()).toBe(true)
+
+    const firstDataCell = wrapper.find('[data-level="1"]')
+    expect(firstDataCell.element.tagName).toBe('BUTTON')
+    expect(firstDataCell.attributes('type')).toBe('button')
+    await firstDataCell.trigger('click')
+    expect(wrapper.emitted('cell-click')?.[0]?.[0]).toMatchObject({ timestamp: jan1, value: 0 })
+    expect(wrapper.emitted('cell-click')?.[0]?.[1]).toBeInstanceOf(MouseEvent)
+  })
+
+  it('emits cell-click for explicit no-data items but not missing or placeholder cells', async () => {
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan3 },
+        data: [{ timestamp: jan2, value: null }],
+        classes: { cell: 'heatmap-cell' },
+      },
+    })
+
+    const cells = wrapper.findAll('.heatmap-cell')
+    const explicitNoDataCell = cells[2]!
+    expect(explicitNoDataCell.element.tagName).toBe('BUTTON')
+    expect(explicitNoDataCell.attributes('type')).toBe('button')
+    await explicitNoDataCell.trigger('click')
+
+    const cellClicks = wrapper.emitted('cell-click')!
+    expect(cellClicks).toHaveLength(1)
+    expect(cellClicks[0]?.[0]).toMatchObject({ timestamp: jan2, value: null })
+
+    await cells[3]!.trigger('click')
+    await cells[0]!.trigger('click')
+    expect(wrapper.emitted('cell-click')).toHaveLength(1)
+  })
+
+  it('keeps calendar-leading data interactive without affecting range color levels', async () => {
+    const leadingDay = Date.UTC(2023, 11, 31)
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan3 },
+        fillCalendarLeading: true,
+        data: [
+          { timestamp: leadingDay, value: 100 },
+          { timestamp: jan1, value: 0 },
+          { timestamp: jan2, value: 8 },
+        ],
+        classes: { cell: 'heatmap-cell' },
+      },
+    })
+
+    const cells = wrapper.findAll('.heatmap-cell')
+    expect(cells[0]!.element.tagName).toBe('BUTTON')
+    expect(cells[0]!.attributes('data-level')).toBe('5')
+    expect(cells[2]!.attributes('data-level')).toBe('5')
+
+    await cells[0]!.trigger('click')
+    expect(wrapper.emitted('cell-click')?.[0]?.[0]).toMatchObject({ timestamp: leadingDay, value: 100 })
+  })
+
+  it('labels the calendar and limits button semantics to supplied data items', () => {
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan3 },
+        data: [{ timestamp: jan1, value: 0 }],
+        classes: { cell: 'heatmap-cell' },
+      },
+    })
+
+    expect(wrapper.find('table').attributes('aria-label')).toBe('Heatmap')
+    expect(wrapper.find('th.ant-heatmap-week-label[scope="row"]').exists()).toBe(true)
+    expect(wrapper.findAll('td.ant-heatmap-week-label')).toHaveLength(4)
+    expect(wrapper.find('.ant-heatmap-indicator-color').attributes('role')).toBe('img')
+    expect(wrapper.find('.ant-heatmap-indicator-color').attributes('aria-label')).toBe('Level 1')
+
+    const cells = wrapper.findAll('.heatmap-cell')
+    expect(cells[1]!.element.tagName).toBe('BUTTON')
+    expect(cells[1]!.attributes('type')).toBe('button')
+    expect(cells[1]!.attributes('aria-label')).toContain('Level')
+
+    expect(cells[3]!.element.tagName).toBe('DIV')
+    expect(cells[3]!.attributes('aria-label')).toBeUndefined()
+    expect(cells[3]!.element.parentElement?.getAttribute('aria-label')).toContain('No data')
+  })
+
+  it('uses Heatmap locale text and DatePicker date labels from ProConfigProvider', () => {
+    const locale = {
+      ...zhCN,
+      DatePicker: {
+        ...zhCN.DatePicker!,
+        lang: {
+          ...zhCN.DatePicker!.lang,
+          shortWeekDays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+          shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        },
+      },
+      Heatmap: {
+        label: '贡献热力图',
+        less: '低',
+        more: '高',
+        noData: '暂无贡献',
+        level: '贡献等级',
+      },
+    }
+    const wrapper = mount(ProConfigProvider, {
+      props: {
+        locale,
+      },
+      slots: {
+        default: () => h(Heatmap, {
+          range: { start: jan1, end: jan3 },
+          data: [{ timestamp: jan1, value: null }],
+        }),
+      },
+    })
+
+    expect(wrapper.find('table').attributes('aria-label')).toBe('贡献热力图')
+    expect(wrapper.find('.ant-heatmap-indicator').text()).toContain('低')
+    expect(wrapper.find('.ant-heatmap-indicator').text()).toContain('高')
+    expect(wrapper.find('.ant-heatmap-indicator-color').attributes('aria-label')).toBe('贡献等级 1')
+    expect(wrapper.find('th.ant-heatmap-week-label[scope="row"]').text()).toBe('周一')
+    expect(wrapper.find('.ant-heatmap-month-label').attributes('aria-label')).toBe('一月')
+    expect(wrapper.findAll('.ant-heatmap-cell-container')[2]!.attributes('aria-label')).toContain('暂无贡献')
+  })
+
+  it('uses Heatmap defaults from ProConfigProvider and merges semantic configuration', async () => {
+    const wrapper = mount(ProConfigProvider, {
+      props: {
+        heatmap: {
+          size: 'small',
+          showColorIndicator: false,
+          classes: { root: 'provider-root' },
+        },
+      },
+      slots: {
+        default: () => h(Heatmap, {
+          range: { start: jan1, end: jan1 },
+          classes: { root: 'props-root' },
+        }),
+      },
+    })
+
+    await nextTick()
+    const root = wrapper.find('.ant-heatmap')
+    expect(root.attributes('data-size')).toBe('small')
+    expect(root.classes()).toContain('provider-root')
+    expect(root.classes()).toContain('props-root')
+    expect(wrapper.find('.ant-heatmap-indicator').exists()).toBe(false)
+  })
+
+  it('falls back to the default colors for an invalid runtime theme', () => {
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan1 },
+        colorTheme: 'invalid-theme' as any,
+      },
+    })
+
+    expect(wrapper.findAll('.ant-heatmap-indicator-color')).toHaveLength(5)
+  })
+
+  it('falls back to a fixed color scale for invalid active colors', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan1 },
+        activeColors: ['#111111', '#222222'] as any,
+      },
+    })
+
+    expect(wrapper.findAll('.ant-heatmap-indicator-color')).toHaveLength(5)
+    expect(warn).toHaveBeenCalledTimes(1)
+    warn.mockRestore()
+  })
+
+  it('renders custom footer and indicator slots', () => {
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan2 },
+        showColorIndicator: false,
+      },
+      slots: {
+        footer: () => h('span', { class: 'heatmap-footer-slot' }, 'Total: 3'),
+        indicator: () => h('span', { class: 'heatmap-indicator-slot' }, 'Custom scale'),
+      },
+    })
+
+    expect(wrapper.find('.heatmap-footer-slot').text()).toBe('Total: 3')
+    expect(wrapper.find('.heatmap-indicator-slot').text()).toBe('Custom scale')
+  })
+})

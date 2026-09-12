@@ -33,14 +33,23 @@ describe('Pro locale', () => {
     expect(proLocaleNames).toHaveLength(72)
   })
 
-  it('keeps every upstream locale object and its locale field', async () => {
+  it('keeps every upstream locale value and adds Heatmap text', async () => {
     for (const localeName of expectedLocaleNames) {
       const locale = proLocaleModules[`../${localeName}.ts`]
       expect(locale?.locale).toEqual(expect.any(String))
+      expect(locale?.Heatmap).toMatchObject({
+        label: expect.any(String),
+        less: expect.any(String),
+        more: expect.any(String),
+        noData: expect.any(String),
+        level: expect.any(String),
+      })
     }
 
     for (const [localeName, locale] of selectedLocales) {
-      expect(locale).toBe(proLocaleModules[`../${localeName}.ts`])
+      const proLocale = proLocaleModules[`../${localeName}.ts`]!
+      expect(proLocale).toMatchObject(locale)
+      expect(proLocale).not.toBe(locale)
     }
     const upstreamLocales = await Promise.all([
       import('antdv-next/locale/ar_EG'),
@@ -55,9 +64,9 @@ describe('Pro locale', () => {
   })
 
   it('is assignable to the antdv-next Locale type', () => {
-    const proLocale: ProLocale = enUS
+    const proLocale: ProLocale = proLocaleModules['../en_US.ts']!
     const antLocale: AntLocale = proLocale
 
-    expect(antLocale).toBe(enUS)
+    expect(antLocale).toMatchObject(enUS)
   })
 })

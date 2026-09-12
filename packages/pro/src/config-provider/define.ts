@@ -1,5 +1,6 @@
 import type { ConfigProviderProps } from 'antdv-next/config-provider'
 import type { CSSProperties } from 'vue'
+import type { HeatmapConfig } from '../heatmap/types'
 import type { ProLocale } from '../locale/types'
 
 export type ScrollbarVisibility = 'auto' | 'always' | 'hidden'
@@ -32,11 +33,12 @@ export interface InputTagConfig {
 }
 
 export interface ProConfigContextProps {
+  heatmap?: HeatmapConfig
   scrollbar?: ScrollbarConfig
   inputTag?: InputTagConfig
 }
 
-export const PRO_CONFIG_KEYS = ['scrollbar', 'inputTag'] as const satisfies readonly (keyof ProConfigContextProps)[]
+export const PRO_CONFIG_KEYS = ['heatmap', 'scrollbar', 'inputTag'] as const satisfies readonly (keyof ProConfigContextProps)[]
 
 export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'>, ProConfigContextProps {
   locale?: ProLocale
@@ -50,3 +52,5 @@ export interface ProConfigProviderSlots {
 }
 
 export type ProConfigProviderEmits = Record<string, any>
+
+export type { HeatmapConfig }

@@ -12,5 +12,8 @@ export default {
     // Data entry
     dataEntry: 'Data Entry',
     inputTag: 'InputTag',
+    // Data Display
+    dataDisplay: 'Data Display',
+    heatmap: 'Heatmap',
   },
 } as const

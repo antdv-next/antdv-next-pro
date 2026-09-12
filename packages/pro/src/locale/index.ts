@@ -1,1 +1,1 @@
-export type { ProLocale } from './types'
+export type { HeatmapLocale, ProLocale } from './types'
