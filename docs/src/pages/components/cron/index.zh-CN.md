@@ -48,7 +48,6 @@ group:
 
 | 事件 | 说明 | 类型 |
 | --- | --- | --- |
-| update:value | 表达式内容变化时触发，包括临时非法值和空值 | `(value: string) => void` |
 | change | 输入有效表达式或从非法草稿恢复为有效表达式时触发；相同的有效值不会重复触发 | `(value: string) => void` |
 | input | 每次直接输入时触发，包括临时非法值 | `(value: string) => void` |
 | validate | 每次执行表达式校验后触发，并同步当前校验结果 | `(result: CronValidateResult) => void` |

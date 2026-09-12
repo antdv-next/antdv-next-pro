@@ -47,7 +47,6 @@ group:
 
 | Event | Description | Type |
 | --- | --- | --- |
-| update:value | Triggered when the expression changes, including temporary invalid and empty values | `(value: string) => void` |
 | change | Triggered when a valid expression is entered or recovered after an invalid draft; repeated valid values do not trigger it | `(value: string) => void` |
 | input | Triggered for every manual input, including invalid drafts | `(value: string) => void` |
 | validate | Triggered after each expression validation and reports the current result | `(result: CronValidateResult) => void` |
