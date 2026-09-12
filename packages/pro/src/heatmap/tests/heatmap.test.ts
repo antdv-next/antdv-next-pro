@@ -249,6 +249,48 @@ describe('Heatmap', () => {
     expect(wrapper.find('.ant-heatmap-indicator').exists()).toBe(false)
   })
 
+  it('does not inline a hardcoded empty color when only active colors are customized', () => {
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan2 },
+        data: [
+          { timestamp: jan1, value: 0 },
+          { timestamp: jan2, value: 8 },
+        ],
+        activeColors: ['#111111', '#222222', '#333333', '#444444'],
+      },
+    })
+
+    const indicatorColors = wrapper.findAll('.ant-heatmap-indicator-color')
+    expect(indicatorColors).toHaveLength(5)
+    expect((indicatorColors[0]!.element as HTMLElement).style.backgroundColor).toBe('')
+    expect((indicatorColors[1]!.element as HTMLElement).style.backgroundColor).toBe('rgb(17, 17, 17)')
+    expect((indicatorColors[4]!.element as HTMLElement).style.backgroundColor).toBe('rgb(68, 68, 68)')
+
+    expect((wrapper.find('[data-level="1"]').element as HTMLElement).style.backgroundColor).toBe('')
+    expect((wrapper.find('[data-level="5"]').element as HTMLElement).style.backgroundColor).toBe('rgb(68, 68, 68)')
+  })
+
+  it('applies a custom minimum color without overriding the default active scale', () => {
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan2 },
+        data: [
+          { timestamp: jan1, value: 0 },
+          { timestamp: jan2, value: 8 },
+        ],
+        minimumColor: '#abcdef',
+      },
+    })
+
+    const indicatorColors = wrapper.findAll('.ant-heatmap-indicator-color')
+    expect((indicatorColors[0]!.element as HTMLElement).style.backgroundColor).toBe('rgb(171, 205, 239)')
+    expect((indicatorColors[1]!.element as HTMLElement).style.backgroundColor).toBe('')
+
+    expect((wrapper.find('[data-level="1"]').element as HTMLElement).style.backgroundColor).toBe('rgb(171, 205, 239)')
+    expect((wrapper.find('[data-level="5"]').element as HTMLElement).style.backgroundColor).toBe('')
+  })
+
   it('falls back to the default colors for an invalid runtime theme', () => {
     const wrapper = mount(Heatmap, {
       props: {
