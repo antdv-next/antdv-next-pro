@@ -37,6 +37,7 @@ const ProConfigProvider = defineComponent<
 export default ProConfigProvider
 export { useProComponentConfig, useProConfig, useProConfigProvider } from './context'
 export type {
+  InputTagConfig,
   ProConfigProviderEmits,
   ProConfigProviderProps,
   ProConfigProviderSlots,

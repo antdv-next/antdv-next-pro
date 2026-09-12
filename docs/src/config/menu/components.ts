@@ -66,6 +66,14 @@ export const components: AntdvMenuItem[] = [
     ],
   },
   {
+    key: 'data-entry',
+    label: 'data-entry',
+    type: 'group',
+    children: [
+      { key: '/components/input-tag', label: '/components/input-tag' },
+    ],
+  },
+  {
     key: 'other',
     label: 'other',
     type: 'group',

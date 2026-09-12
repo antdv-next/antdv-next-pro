@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { theme } from 'antdv-next'
+import { prepareComponentToken as prepareInputTagToken } from '../../src/input-tag/style/token'
 import { prepareComponentToken } from '../../src/scrollbar/style/token'
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
@@ -11,6 +12,7 @@ const outputPath = path.resolve(repoRoot, 'docs/src/assets/token.json')
 async function main() {
   const globalToken = theme.getDesignToken()
   const componentToken = prepareComponentToken(globalToken)
+  const inputTagToken = prepareInputTagToken(globalToken)
 
   const output = {
     Scrollbar: {
@@ -25,6 +27,10 @@ async function main() {
         'motionEaseOutCirc',
       ],
       component: componentToken,
+    },
+    InputTag: {
+      global: ['marginXXS', 'controlHeight', 'colorTextTertiary', 'colorText'],
+      component: inputTagToken,
     },
   }
 

@@ -24,6 +24,11 @@
       "import": "./dist/scrollbar/index.js",
       "default": "./dist/scrollbar/index.js"
     },
+    "./input-tag": {
+      "types": "./dist/input-tag/index.d.ts",
+      "import": "./dist/input-tag/index.js",
+      "default": "./dist/input-tag/index.js"
+    },
     "./locale": {
       "types": "./dist/locale/index.d.ts",
       "import": "./dist/locale/index.js",

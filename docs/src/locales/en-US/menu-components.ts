@@ -9,5 +9,8 @@ export default {
     // Navigation
     navigation: 'Navigation',
     scrollbar: 'Scrollbar',
+    // Data entry
+    dataEntry: 'Data Entry',
+    inputTag: 'InputTag',
   },
 } as const
