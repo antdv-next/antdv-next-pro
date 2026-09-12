@@ -6,6 +6,8 @@ import { tsxResolveTypes } from 'vite-plugin-tsx-resolve-types'
 export default defineConfig({
   entry: [
     'src/index.ts',
+    'src/heatmap/index.ts',
+    'src/input-tag/index.tsx',
     'src/locale/index.ts',
     'src/locale/*.ts',
   ],

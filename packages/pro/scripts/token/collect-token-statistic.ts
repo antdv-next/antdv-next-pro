@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { theme } from 'antdv-next'
 import { prepareComponentToken as prepareHeatmapToken } from '../../src/heatmap/style/token'
+import { prepareComponentToken as prepareInputTagToken } from '../../src/input-tag/style/token'
 import { prepareComponentToken } from '../../src/scrollbar/style/token'
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
@@ -13,6 +14,7 @@ async function main() {
   const globalToken = theme.getDesignToken()
   const scrollbarToken = prepareComponentToken(globalToken)
   const heatmapToken = prepareHeatmapToken(globalToken)
+  const inputTagToken = prepareInputTagToken(globalToken)
 
   const output = {
     Scrollbar: {
@@ -46,6 +48,10 @@ async function main() {
         'motionDurationMid',
       ],
       component: heatmapToken,
+    },
+    InputTag: {
+      global: ['marginXXS', 'controlHeight', 'colorTextTertiary', 'colorText'],
+      component: inputTagToken,
     },
   }
 

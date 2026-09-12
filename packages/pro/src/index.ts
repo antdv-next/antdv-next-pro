@@ -1,5 +1,6 @@
 import type { App, Plugin } from 'vue'
 import type { ComponentToken as HeatmapComponentToken } from './heatmap/style'
+import type { ComponentToken as InputTagComponentToken } from './input-tag/style'
 import type { ComponentToken as ScrollbarComponentToken } from './scrollbar/style'
 import * as components from './components'
 
@@ -7,6 +8,7 @@ declare module 'antdv-next/theme/interface/components' {
   interface ComponentTokenMap {
     Heatmap?: HeatmapComponentToken
     Scrollbar?: ScrollbarComponentToken
+    InputTag?: InputTagComponentToken
   }
 }
 
@@ -14,11 +16,26 @@ export * from './components'
 export { default as ProConfigProvider } from './config-provider'
 export type {
   HeatmapConfig,
+  InputTagConfig,
   ProConfigProviderProps,
   ScrollbarConfig,
+  ScrollbarFade,
   ScrollbarMotion,
   ScrollbarVisibility,
 } from './config-provider'
+export type {
+  InputTagClassNamesType,
+  InputTagEmits,
+  InputTagInputProps,
+  InputTagProps,
+  InputTagRef,
+  InputTagSemanticClassNames,
+  InputTagSemanticName,
+  InputTagSemanticStyles,
+  InputTagStylesType,
+  InputTagTagProps,
+  InputTagValue,
+} from './input-tag'
 
 export default {
   install(app: App) {

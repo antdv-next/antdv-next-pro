@@ -49,7 +49,7 @@ catalogs:
     vitest: ^4.1.9
     vue-tsc: ^3.3.5
   docs:
-    '@antdv-next/docs-plugins': ^0.0.2
+    '@antdv-next/docs-plugins': ^0.0.4
     '@antdv-next/unocss': ^1.1.1
     '@codesandbox/sandpack-themes': ^2.0.21
     '@mdit-vue/plugin-frontmatter': 3.0.2

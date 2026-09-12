@@ -9,6 +9,9 @@ export default {
     // Navigation
     navigation: 'Navigation',
     scrollbar: 'Scrollbar',
+    // Data entry
+    dataEntry: 'Data Entry',
+    inputTag: 'InputTag',
     // Data Display
     dataDisplay: 'Data Display',
     heatmap: 'Heatmap',

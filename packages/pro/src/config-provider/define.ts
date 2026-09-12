@@ -5,6 +5,7 @@ import type { ProLocale } from '../locale/types'
 
 export type ScrollbarVisibility = 'auto' | 'always' | 'hidden'
 export type ScrollbarMotion = 'fade' | 'slide'
+export type ScrollbarFade = 'vertical' | 'horizontal' | 'both'
 
 export interface ScrollbarConfig {
   visibility?: ScrollbarVisibility
@@ -12,18 +13,32 @@ export interface ScrollbarConfig {
   visibilityY?: ScrollbarVisibility
   hideDelay?: number
   motion?: ScrollbarMotion
+  scrollFade?: ScrollbarFade
+  scrollFadeSize?: number
   class?: string
   style?: CSSProperties
   classes?: Record<string, string>
   styles?: Record<string, CSSProperties>
 }
 
+export interface InputTagConfig {
+  maxCount?: number
+  tokenSeparators?: string[]
+  allowDuplicate?: boolean
+  allowClear?: boolean
+  class?: string
+  style?: CSSProperties
+  classes?: Record<string, string> | ((info: { props: any }) => Record<string, string>)
+  styles?: Record<string, CSSProperties> | ((info: { props: any }) => Record<string, CSSProperties>)
+}
+
 export interface ProConfigContextProps {
   heatmap?: HeatmapConfig
   scrollbar?: ScrollbarConfig
+  inputTag?: InputTagConfig
 }
 
-export const PRO_CONFIG_KEYS = ['heatmap', 'scrollbar'] as const satisfies readonly (keyof ProConfigContextProps)[]
+export const PRO_CONFIG_KEYS = ['heatmap', 'scrollbar', 'inputTag'] as const satisfies readonly (keyof ProConfigContextProps)[]
 
 export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'>, ProConfigContextProps {
   locale?: ProLocale

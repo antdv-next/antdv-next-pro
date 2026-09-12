@@ -50,7 +50,7 @@ const handleSiderChange: MenuEmits['click'] = (info) => {
 const handleHeaderChange: MenuEmits['click'] = (info) => {
   const key = info.key
   if (key === '/playground') {
-    window.open('https://pro-play.antdv-next.com', '_blank')
+    window.open('https://play.antdv-next.com/?pro=1', '_blank')
     return
   }
   if (key === '/sponsor') {
@@ -138,7 +138,7 @@ function changeDirection(value: 1 | 2) {
 
 function getHeaderMenuUrl(key: string) {
   if (key === '/playground')
-    return 'https://pro-play.antdv-next.com'
+    return 'https://play.antdv-next.com/?pro=1'
   if (key === '/sponsor')
     return sponsorUrl
   return key

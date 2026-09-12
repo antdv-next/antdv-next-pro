@@ -10,6 +10,10 @@ const proLocale = {
     noData: '无数据',
     level: '等级',
   },
+  InputTag: {
+    clear: '清空',
+    showMore: '展开全部标签',
+  },
 } satisfies ProLocale
 
 export default proLocale
