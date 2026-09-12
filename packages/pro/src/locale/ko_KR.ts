@@ -154,6 +154,10 @@ const proLocale = {
     noData: '데이터 없음',
     level: '레벨',
   },
+  InputTag: {
+    clear: '지우기',
+    showMore: '모든 태그 표시',
+  },
 } satisfies ProLocale
 
 export default proLocale

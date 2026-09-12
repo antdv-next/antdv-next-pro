@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'डाटा छैन',
     level: 'स्तर',
   },
+  InputTag: {
+    clear: 'खाली गर्नुहोस्',
+    showMore: 'सबै ट्याग देखाउनुहोस्',
+  },
 } satisfies ProLocale
 
 export default proLocale

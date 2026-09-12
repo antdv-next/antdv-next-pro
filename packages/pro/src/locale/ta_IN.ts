@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'தரவு இல்லை',
     level: 'நிலை',
   },
+  InputTag: {
+    clear: 'அழி',
+    showMore: 'அனைத்து குறிச்சொற்களையும் காட்டு',
+  },
 } satisfies ProLocale
 
 export default proLocale

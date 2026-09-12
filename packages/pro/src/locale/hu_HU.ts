@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Nincs adat',
     level: 'Szint',
   },
+  InputTag: {
+    clear: 'Törlés',
+    showMore: 'Összes címke megjelenítése',
+  },
 } satisfies ProLocale
 
 export default proLocale

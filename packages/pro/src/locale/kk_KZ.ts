@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Деректер жоқ',
     level: 'Деңгей',
   },
+  InputTag: {
+    clear: 'Тазалау',
+    showMore: 'Барлық тегтерді көрсету',
+  },
 } satisfies ProLocale
 
 export default proLocale

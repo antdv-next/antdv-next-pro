@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'কোনও ডেটা নেই',
     level: 'স্তর',
   },
+  InputTag: {
+    clear: 'মুছুন',
+    showMore: 'সব ট্যাগ দেখান',
+  },
 } satisfies ProLocale
 
 export default proLocale

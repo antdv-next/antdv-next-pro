@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Ei tietoja',
     level: 'Taso',
   },
+  InputTag: {
+    clear: 'Tyhjennä',
+    showMore: 'Näytä kaikki tunnisteet',
+  },
 } satisfies ProLocale
 
 export default proLocale

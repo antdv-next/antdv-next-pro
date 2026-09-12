@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'គ្មានទិន្នន័យ',
     level: 'កម្រិត',
   },
+  InputTag: {
+    clear: 'សម្អាត',
+    showMore: 'បង្ហាញស្លាកទាំងអស់',
+  },
 } satisfies ProLocale
 
 export default proLocale

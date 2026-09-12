@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'ഡാറ്റയില്ല',
     level: 'നില',
   },
+  InputTag: {
+    clear: 'മായ്ക്കുക',
+    showMore: 'എല്ലാ ടാഗുകളും കാണിക്കുക',
+  },
 } satisfies ProLocale
 
 export default proLocale

@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Inga data',
     level: 'Nivå',
   },
+  InputTag: {
+    clear: 'Rensa',
+    showMore: 'Visa alla taggar',
+  },
 } satisfies ProLocale
 
 export default proLocale

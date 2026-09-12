@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Daneyên tune',
     level: 'Ast',
   },
+  InputTag: {
+    clear: 'Paqij bike',
+    showMore: 'Hemû etîketan nîşan bide',
+  },
 } satisfies ProLocale
 
 export default proLocale

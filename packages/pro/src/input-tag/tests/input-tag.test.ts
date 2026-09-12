@@ -2,6 +2,8 @@ import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { h, nextTick } from 'vue'
 import { InputTag, ProConfigProvider } from '../../index'
+import enUS from '../../locale/en_US'
+import frFR from '../../locale/fr_FR'
 import zhCN from '../../locale/zh_CN'
 
 function getInput(wrapper: ReturnType<typeof mount>) {
@@ -409,6 +411,35 @@ describe('InputTag', () => {
     })
 
     expect(wrapper.find('.ant-input-tag-clear').attributes('aria-label')).toBe('清空')
+  })
+
+  it('uses translated InputTag messages from the current locale', () => {
+    const wrapper = mount(ProConfigProvider, {
+      props: { locale: frFR },
+      slots: {
+        default: () => h(InputTag, {
+          defaultValue: ['one', 'two', 'three'],
+          allowClear: true,
+          collapseTags: true,
+          maxCollapseTags: 1,
+        }),
+      },
+    })
+
+    expect(wrapper.find('.ant-input-tag-clear').attributes('aria-label')).toBe('Effacer')
+    expect(wrapper.find('.ant-input-tag-collapse').attributes('aria-label')).toBe('Afficher toutes les étiquettes')
+  })
+
+  it('falls back to the English InputTag locale when the current locale omits it', () => {
+    const locale = { ...zhCN, InputTag: undefined }
+    const wrapper = mount(ProConfigProvider, {
+      props: { locale },
+      slots: {
+        default: () => h(InputTag, { defaultValue: ['one'], allowClear: true }),
+      },
+    })
+
+    expect(wrapper.find('.ant-input-tag-clear').attributes('aria-label')).toBe(enUS.InputTag!.clear)
   })
 
   it('makes the collapse tag keyboard accessible and shows the tooltip on focus', async () => {

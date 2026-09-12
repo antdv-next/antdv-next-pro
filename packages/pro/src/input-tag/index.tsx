@@ -3,7 +3,7 @@ import type { Variant } from 'antdv-next/config-provider/context'
 import type { App, ComputedRef, CSSProperties, ShallowRef, SlotsType } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semantic'
 import type { InputTagConfig } from '../config-provider'
-import type { ProLocale } from '../locale/types'
+import type { InputTagLocale, ProLocale } from '../locale/types'
 import { clsx, useMergedState } from '@v-c/util'
 import { Input as AInput, Tag as ATag, Tooltip as ATooltip } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
@@ -13,6 +13,7 @@ import { useLocaleContext } from 'antdv-next/locale/index'
 import { computed, defineComponent, h, nextTick, ref, shallowRef } from 'vue'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
+import enUSLocale from '../locale/en_US'
 import useStyle from './style'
 
 export type InputTagValue = string[]
@@ -157,6 +158,8 @@ function splitInput(value: string, separators: string[]) {
   }
 }
 
+const enUSInputTag = enUSLocale.InputTag!
+
 const InputTag = defineComponent<
   InputTagProps,
   InputTagEmits,
@@ -176,8 +179,12 @@ const InputTag = defineComponent<
     const dragOverIndex = ref<number | null>(null)
     const dropPosition = ref<'before' | 'after' | null>(null)
 
-    const clearLabel = computed(() => (localeContext.locale.value as ProLocale | undefined)?.InputTag?.clear ?? 'Clear')
-    const showMoreLabel = computed(() => (localeContext.locale.value as ProLocale | undefined)?.InputTag?.showMore ?? 'Show all tags')
+    const localeText = computed<InputTagLocale>(() => ({
+      ...enUSInputTag,
+      ...((localeContext.locale.value as ProLocale | undefined)?.InputTag ?? {}),
+    }))
+    const clearLabel = computed(() => localeText.value.clear)
+    const showMoreLabel = computed(() => localeText.value.showMore)
 
     const mergedDisabled = computed(() => props.disabled ?? disabledContext.value ?? false)
     const mergedReadonly = computed(() => props.readonly ?? false)

@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Andmed puuduvad',
     level: 'Tase',
   },
+  InputTag: {
+    clear: 'Tühjenda',
+    showMore: 'Kuva kõik sildid',
+  },
 } satisfies ProLocale
 
 export default proLocale

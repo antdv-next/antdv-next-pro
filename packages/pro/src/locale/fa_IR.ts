@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'داده‌ای وجود ندارد',
     level: 'سطح',
   },
+  InputTag: {
+    clear: 'پاک کردن',
+    showMore: 'نمایش همه برچسب‌ها',
+  },
 } satisfies ProLocale
 
 export default proLocale

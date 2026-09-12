@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Өгөгдөл алга',
     level: 'Түвшин',
   },
+  InputTag: {
+    clear: 'Цэвэрлэх',
+    showMore: 'Бүх шошгыг харуулах',
+  },
 } satisfies ProLocale
 
 export default proLocale

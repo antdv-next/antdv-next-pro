@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'کوئی ڈیٹا نہیں',
     level: 'سطح',
   },
+  InputTag: {
+    clear: 'صاف کریں',
+    showMore: 'تمام ٹیگز دکھائیں',
+  },
 } satisfies ProLocale
 
 export default proLocale

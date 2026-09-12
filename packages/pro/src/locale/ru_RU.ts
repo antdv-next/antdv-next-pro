@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Нет данных',
     level: 'Уровень',
   },
+  InputTag: {
+    clear: 'Очистить',
+    showMore: 'Показать все теги',
+  },
 } satisfies ProLocale
 
 export default proLocale

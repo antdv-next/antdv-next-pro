@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Geen gegevens',
     level: 'Niveau',
   },
+  InputTag: {
+    clear: 'Wissen',
+    showMore: 'Alle tags weergeven',
+  },
 } satisfies ProLocale
 
 export default proLocale

@@ -154,6 +154,10 @@ const proLocale = {
     noData: 'Veri yok',
     level: 'Seviye',
   },
+  InputTag: {
+    clear: 'Temizle',
+    showMore: 'Tüm etiketleri göster',
+  },
 } satisfies ProLocale
 
 export default proLocale
