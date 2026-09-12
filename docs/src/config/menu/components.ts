@@ -62,8 +62,8 @@ export const components: AntdvMenuItem[] = [
     label: 'data-entry',
     type: 'group',
     children: [
-      { key: '/components/cron', label: '/components/cron' },
-      { key: '/components/input-tag', label: '/components/input-tag' },
+      { key: '/components/cron', label: '/components/cron', tag: '1.1.0' },
+      { key: '/components/input-tag', label: '/components/input-tag', tag: '1.1.0' },
     ],
   },
   {

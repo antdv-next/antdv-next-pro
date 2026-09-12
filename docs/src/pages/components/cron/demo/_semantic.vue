@@ -12,15 +12,15 @@ const presets = [
 ]
 
 const semantics = computed(() => [
-  { name: 'root', desc: t('root') },
-  { name: 'input', desc: t('input') },
-  { name: 'fields', desc: t('fields') },
-  { name: 'navigation', desc: t('navigation') },
-  { name: 'editor', desc: t('editor') },
-  { name: 'field', desc: t('field') },
-  { name: 'presets', desc: t('presets') },
-  { name: 'preview', desc: t('preview') },
-  { name: 'error', desc: t('error') },
+  { name: 'root', desc: t('root'), version: '1.1.0' },
+  { name: 'input', desc: t('input'), version: '1.1.0' },
+  { name: 'fields', desc: t('fields'), version: '1.1.0' },
+  { name: 'navigation', desc: t('navigation'), version: '1.1.0' },
+  { name: 'editor', desc: t('editor'), version: '1.1.0' },
+  { name: 'field', desc: t('field'), version: '1.1.0' },
+  { name: 'presets', desc: t('presets'), version: '1.1.0' },
+  { name: 'preview', desc: t('preview'), version: '1.1.0' },
+  { name: 'error', desc: t('error'), version: '1.1.0' },
 ])
 </script>
 
