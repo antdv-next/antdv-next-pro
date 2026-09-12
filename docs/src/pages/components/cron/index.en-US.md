@@ -12,7 +12,8 @@ group:
 ## When To Use {#when-to-use}
 
 - Configure a recurring task, report, synchronization, or notification.
-- Let users edit a Quartz or Unix cron expression without memorizing its syntax.
+- Let users edit a Quartz or Unix cron expression visually, without memorizing its syntax.
+- The top expression field is a read-only display. Users can select and copy it; edits go through the visual panel or presets.
 
 ## Examples {#examples}
 
@@ -47,8 +48,8 @@ group:
 
 | Event | Description | Type |
 | --- | --- | --- |
-| change | Triggered when a valid expression is entered or recovered after an invalid draft; repeated valid values do not trigger it | `(value: string) => void` |
-| input | Triggered for every manual input, including invalid drafts | `(value: string) => void` |
+| change | Triggered when the expression becomes valid, or is recovered after an invalid draft; repeated valid values do not trigger it | `(value: string) => void` |
+| input | Triggered when the expression draft changes, including invalid drafts | `(value: string) => void` |
 | validate | Triggered after each expression validation and reports the current result | `(result: CronValidateResult) => void` |
 
 ### CronError
@@ -100,7 +101,7 @@ const rules = [
 
 Default `format` is `quartz`. Quartz uses six fields: `second minute hour day month week`. Set `showYear` to require the seventh `year` field. Day and week must contain exactly one `?`.
 
-Unix format uses five fields: `minute hour day month week`. It does not have seconds, year, or `?`. Day and week may both be specified; Croner treats that as OR. Unix Sunday can be written as `0`, `7`, or `SUN`. Direct input keeps the original token; editing the specified weekday in the visual editor canonicalizes it to `SUN`.
+Unix format uses five fields: `minute hour day month week`. It does not have seconds, year, or `?`. Day and week may both be specified; Croner treats that as OR. Unix Sunday can be written as `0`, `7`, or `SUN`. Incoming values keep the original token; editing the specified weekday in the visual editor canonicalizes it to `SUN`.
 
 `validateCronExpression(value, { format: 'unix' })` must be used when validating Unix expressions.
 
