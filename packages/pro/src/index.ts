@@ -16,6 +16,7 @@ export type {
   InputTagConfig,
   ProConfigProviderProps,
   ScrollbarConfig,
+  ScrollbarFade,
   ScrollbarMotion,
   ScrollbarVisibility,
 } from './config-provider'

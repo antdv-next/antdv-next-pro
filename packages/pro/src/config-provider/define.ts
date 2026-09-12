@@ -4,6 +4,7 @@ import type { ProLocale } from '../locale/types'
 
 export type ScrollbarVisibility = 'auto' | 'always' | 'hidden'
 export type ScrollbarMotion = 'fade' | 'slide'
+export type ScrollbarFade = 'vertical' | 'horizontal' | 'both'
 
 export interface ScrollbarConfig {
   visibility?: ScrollbarVisibility
@@ -11,6 +12,8 @@ export interface ScrollbarConfig {
   visibilityY?: ScrollbarVisibility
   hideDelay?: number
   motion?: ScrollbarMotion
+  scrollFade?: ScrollbarFade
+  scrollFadeSize?: number
   class?: string
   style?: CSSProperties
   classes?: Record<string, string>
