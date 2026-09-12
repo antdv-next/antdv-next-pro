@@ -27,6 +27,52 @@ export type {
   ScrollbarVisibility,
 } from './config-provider'
 export type {
+  CronClassNamesType,
+  CronEditorMode,
+  CronEmits,
+  CronError,
+  CronErrorCode,
+  CronFieldDescriptions,
+  CronFieldMode,
+  CronFieldModeDescription,
+  CronFieldName,
+  CronFields,
+  CronFieldSlotProps,
+  CronFormat,
+  CronLocale,
+  CronOptions,
+  CronPreset,
+  CronPreviewResult,
+  CronProps,
+  CronSemanticClassNames,
+  CronSemanticName,
+  CronSemanticStyles,
+  CronSize,
+  CronSlots,
+  CronStatus,
+  CronStylesType,
+  CronValidateResult,
+  CronValidateStatus,
+} from './cron'
+export type {
+  HeatmapClassNamesType,
+  HeatmapColorScale,
+  HeatmapColorTheme,
+  HeatmapData,
+  HeatmapDataItem,
+  HeatmapEmits,
+  HeatmapFirstDayOfWeek,
+  HeatmapProps,
+  HeatmapRange,
+  HeatmapSemanticClassNames,
+  HeatmapSemanticName,
+  HeatmapSemanticStyles,
+  HeatmapSize,
+  HeatmapSlots,
+  HeatmapStylesType,
+  HeatmapTooltipSlotProps,
+} from './heatmap'
+export type {
   InputTagClassNamesType,
   InputTagEmits,
   InputTagInputProps,
@@ -39,6 +85,17 @@ export type {
   InputTagTagProps,
   InputTagValue,
 } from './input-tag'
+export type {
+  ScrollbarClassNamesType,
+  ScrollbarEmits,
+  ScrollbarProps,
+  ScrollbarRef,
+  ScrollbarSemanticClassNames,
+  ScrollbarSemanticName,
+  ScrollbarSemanticStyles,
+  ScrollbarSlots,
+  ScrollbarStylesType,
+} from './scrollbar'
 
 export default {
   install(app: App) {

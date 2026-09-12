@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { Form, FormItem } from 'antdv-next'
+import { ConfigProvider, Form, FormItem } from 'antdv-next'
 import { describe, expect, it, vi } from 'vitest'
 import { defineComponent, h, isRef, nextTick, reactive, ref } from 'vue'
 import { InputTag, ProConfigProvider } from '../../index'
@@ -355,6 +355,49 @@ describe('InputTag', () => {
 
     await tags[1]!.trigger('dragend')
     expect(tags[1]!.classes()).not.toContain('ant-input-tag-tag-drag-before')
+    expect(tags[1]!.classes()).not.toContain('ant-input-tag-tag-drag-after')
+  })
+
+  it('mirrors drag insert position under rtl', async () => {
+    async function dragRtl(from: number, to: number, clientX: number) {
+      const wrapper = mount(ConfigProvider, {
+        props: { direction: 'rtl' },
+        slots: {
+          default: () => h(InputTag, { defaultValue: ['one', 'two', 'three'], draggable: true }),
+        },
+      })
+      const tags = wrapper.findAll('.ant-tag')
+      expect(wrapper.find('.ant-input-tag-rtl').exists()).toBe(true)
+      tags[to]!.element.getBoundingClientRect = () => ({ left: 100, width: 40, top: 0, right: 140, bottom: 20 } as DOMRect)
+      await tags[from]!.trigger('dragstart')
+      await tags[to]!.trigger('dragover', { clientX })
+      await tags[to]!.trigger('drop', { clientX })
+      return wrapper.findAll('.ant-tag').map(tag => tag.text())
+    }
+
+    // 左半区在 RTL 中是 after：one 插到 three 之后
+    expect(await dragRtl(0, 2, 105)).toEqual(['two', 'three', 'one'])
+    // 右半区在 RTL 中是 before：one 插到 three 之前
+    expect(await dragRtl(0, 2, 130)).toEqual(['two', 'one', 'three'])
+  })
+
+  it('shows the rtl drop indicator on the logical start half', async () => {
+    const wrapper = mount(ConfigProvider, {
+      props: { direction: 'rtl' },
+      slots: {
+        default: () => h(InputTag, { defaultValue: ['one', 'two', 'three'], draggable: true }),
+      },
+    })
+    const tags = wrapper.findAll('.ant-tag')
+    tags[1]!.element.getBoundingClientRect = () => ({ left: 100, width: 40, top: 0, right: 140, bottom: 20 } as DOMRect)
+    await tags[0]!.trigger('dragstart')
+
+    await tags[1]!.trigger('dragover', { clientX: 105 })
+    expect(tags[1]!.classes()).toContain('ant-input-tag-tag-drag-after')
+    expect(tags[1]!.classes()).not.toContain('ant-input-tag-tag-drag-before')
+
+    await tags[1]!.trigger('dragover', { clientX: 130 })
+    expect(tags[1]!.classes()).toContain('ant-input-tag-tag-drag-before')
     expect(tags[1]!.classes()).not.toContain('ant-input-tag-tag-drag-after')
   })
 

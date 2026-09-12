@@ -40,6 +40,10 @@ const genInputTagStyle: GenerateStyle<InputTagToken, CSSObject> = (token) => {
         gap: tagGap,
       },
 
+      '&-rtl': {
+        direction: 'rtl',
+      },
+
       '&-tag': {
         marginInlineEnd: 0,
       },
@@ -48,13 +52,21 @@ const genInputTagStyle: GenerateStyle<InputTagToken, CSSObject> = (token) => {
         opacity: 0.5,
       },
 
-      // 插入位置指示：左半区 -> 目标前，右半区 -> 目标后
+      // 插入位置指示：inline-start 半区 -> 目标前，inline-end 半区 -> 目标后
       '&-tag-drag-before': {
         boxShadow: `-2px 0 0 0 ${token.colorPrimary}`,
       },
 
       '&-tag-drag-after': {
         boxShadow: `2px 0 0 0 ${token.colorPrimary}`,
+      },
+
+      [`&-rtl ${componentCls}-tag-drag-before`]: {
+        boxShadow: `2px 0 0 0 ${token.colorPrimary}`,
+      },
+
+      [`&-rtl ${componentCls}-tag-drag-after`]: {
+        boxShadow: `-2px 0 0 0 ${token.colorPrimary}`,
       },
 
       '&-collapse': {
