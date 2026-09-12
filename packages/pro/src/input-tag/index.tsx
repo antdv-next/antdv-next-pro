@@ -10,7 +10,8 @@ import { useBaseConfig } from 'antdv-next/config-provider/context'
 import { useDisabledContext } from 'antdv-next/config-provider/DisabledContext'
 import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
 import { useLocaleContext } from 'antdv-next/locale/index'
-import { computed, defineComponent, h, nextTick, ref, shallowRef } from 'vue'
+import { computed, defineComponent, h, nextTick, ref, shallowRef, watch } from 'vue'
+import { unwrapExposedElement } from '../_util'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
 import enUSLocale from '../locale/en_US'
@@ -174,10 +175,24 @@ const InputTag = defineComponent<
     const rootCls = useCSSVarCls(prefixCls)
     const [hashId, cssVarCls] = useStyle(prefixCls, rootCls)
     const inputRef = shallowRef<InputRef>()
+    const nativeInputRef = shallowRef<HTMLInputElement | null>(null)
+    const nativeElementRef = shallowRef<HTMLElement | null>(null)
     const composing = ref(false)
     const draggingIndex = ref<number | null>(null)
     const dragOverIndex = ref<number | null>(null)
     const dropPosition = ref<'before' | 'after' | null>(null)
+
+    watch(
+      () => ({
+        input: unwrapExposedElement<HTMLInputElement>(inputRef.value?.input),
+        nativeElement: unwrapExposedElement<HTMLElement>(inputRef.value?.nativeElement),
+      }),
+      ({ input, nativeElement }) => {
+        nativeInputRef.value = input
+        nativeElementRef.value = nativeElement
+      },
+      { immediate: true, flush: 'post' },
+    )
 
     const localeText = computed<InputTagLocale>(() => ({
       ...enUSInputTag,
@@ -524,8 +539,8 @@ const InputTag = defineComponent<
     const api: InputTagRef = {
       focus: options => inputRef.value?.focus?.(options),
       blur: () => inputRef.value?.blur?.(),
-      input: computed(() => inputRef.value?.input ?? null) as unknown as ShallowRef<HTMLInputElement | null>,
-      nativeElement: computed(() => inputRef.value?.nativeElement ?? null) as unknown as ShallowRef<HTMLElement | null>,
+      input: nativeInputRef,
+      nativeElement: nativeElementRef,
     }
     expose(api)
 

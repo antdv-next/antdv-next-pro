@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { Form, FormItem } from 'antdv-next'
 import { describe, expect, it, vi } from 'vitest'
-import { defineComponent, h, nextTick, reactive, ref } from 'vue'
+import { defineComponent, h, isRef, nextTick, reactive, ref } from 'vue'
 import { InputTag, ProConfigProvider } from '../../index'
 import enUS from '../../locale/en_US'
 import frFR from '../../locale/fr_FR'
@@ -681,5 +681,33 @@ describe('InputTag', () => {
     })
 
     expect(wrapper.find('.ant-input-status-warning').exists()).toBe(true)
+  })
+
+  it('exposes writable native input and root element refs', async () => {
+    const wrapper = mount(InputTag, {
+      props: { defaultValue: ['one'] },
+      attachTo: document.body,
+    })
+    await nextTick()
+
+    const exposed = (wrapper.vm as any).$.exposed
+    const inputEl = getInput(wrapper).element as HTMLInputElement
+
+    expect(isRef(exposed.input)).toBe(true)
+    expect(isRef(exposed.nativeElement)).toBe(true)
+    expect(exposed.input.value).toBe(inputEl)
+    expect(exposed.nativeElement.value).toBeInstanceOf(HTMLElement)
+    expect(exposed.nativeElement.value?.contains(inputEl)).toBe(true)
+    expect((wrapper.vm as any).input).toBe(inputEl)
+    expect((wrapper.vm as any).nativeElement).toBe(exposed.nativeElement.value)
+
+    const originalInput = exposed.input.value
+    exposed.input.value = originalInput
+    expect(exposed.input.value).toBe(originalInput)
+
+    ;(wrapper.vm as any).focus()
+    expect(document.activeElement).toBe(inputEl)
+
+    wrapper.unmount()
   })
 })
