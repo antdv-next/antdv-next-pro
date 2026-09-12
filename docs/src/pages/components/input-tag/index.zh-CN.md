@@ -24,6 +24,7 @@ group:
   <demo src="./demo/draggable.vue">拖拽排序</demo>
   <demo src="./demo/collapse.vue">标签折叠</demo>
   <demo src="./demo/controlled.vue">受控用法</demo>
+  <demo src="./demo/form.vue">表单校验</demo>
   <demo src="./demo/readonly.vue">只读与语义化</demo>
   <demo src="./demo/semantic.vue">语义化样式</demo>
 </demo-group>
@@ -45,7 +46,7 @@ group:
 | readonly | 是否只读 | `boolean` | `false` | - | × |
 | autoFocus | 是否自动聚焦输入框 | `boolean` | `false` | - | × |
 | size | 输入框尺寸 | `SizeType` | - | - | × |
-| status | 输入框状态 | `InputProps['status']` | - | - | × |
+| status | 手动设置校验状态，默认跟随 Form.Item | `InputProps['status']` | - | - | × |
 | variant | 输入框变体 | `Variant` | - | - | × |
 | maxCount | 最大标签数量 | `number` | - | - | ✓ |
 | tokenSeparators | 按触发键提交时用于拆分标签的分隔符 | `string[]` | `[]` | - | ✓ |
@@ -77,6 +78,24 @@ group:
 | blur | 输入框失去焦点时触发 | `(event: FocusEvent) => void` | - |
 
 `change` 事件的 `info.trigger` 用于标识变化来源，包括 `enter`、`space`、`blur`、`token-separator`、`drag`、`tag-remove`、`backspace` 和 `clear`。
+
+### Form.Item {#form-item}
+
+`v-model:value` 绑定的是已提交的标签列表，不是输入框草稿。Form.Item 校验标签数组；草稿仍走 `inputValue` / `v-model:input-value`，提交前不会覆盖表单值。
+
+```vue
+<script setup lang="ts">
+const rules = [
+  { required: true, type: 'array' as const, min: 1, message: '请至少添加一个标签' },
+]
+</script>
+
+<template>
+  <a-form-item name="tags" :rules="rules">
+    <a-input-tag v-model:value="form.tags" />
+  </a-form-item>
+</template>
+```
 
 ### 插槽 {#slots}
 

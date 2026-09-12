@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
+import { Form, FormItem } from 'antdv-next'
 import { describe, expect, it, vi } from 'vitest'
-import { h, nextTick } from 'vue'
+import { defineComponent, h, nextTick, reactive, ref } from 'vue'
 import { InputTag, ProConfigProvider } from '../../index'
 import enUS from '../../locale/en_US'
 import frFR from '../../locale/fr_FR'
@@ -592,5 +593,93 @@ describe('InputTag', () => {
     expect(wrapper.find('.ant-input-tag-clear').element.parentElement).toBe(suffix.element)
     await wrapper.find('.custom-tag').trigger('click')
     expect(wrapper.findAll('.custom-tag')).toHaveLength(0)
+  })
+
+  it('forwards Form.Item field id and label association to the native input', () => {
+    const wrapper = mount(Form, {
+      props: {
+        name: 'profile',
+        model: { tags: ['vue'] },
+      },
+      slots: {
+        default: () => h(FormItem, { name: 'tags', label: 'Tags' }, {
+          default: () => h(InputTag, { value: ['vue'] }),
+        }),
+      },
+    })
+
+    expect(wrapper.find('input#profile_tags').exists()).toBe(true)
+    expect(wrapper.find('.ant-form-item-label > label').attributes('for')).toBe('profile_tags')
+  })
+
+  it('keeps Form.Item value as committed tags instead of the input draft', async () => {
+    const initialValue = ['vue']
+    const model = reactive({ tags: [...initialValue] })
+    const formRef = ref<any>()
+    const FormDemo = defineComponent(() => () => h(Form, { ref: formRef, model }, {
+      default: () => h(FormItem, {
+        name: 'tags',
+        rules: [{ required: true, type: 'array' as const, min: 1, message: 'Tags are required' }],
+      }, {
+        default: () => h(InputTag, {
+          value: model.tags,
+          'onUpdate:value': (value: string[]) => (model.tags = value),
+        }),
+      }),
+    }))
+    const wrapper = mount(FormDemo)
+    const input = getInput(wrapper)
+
+    await input.setValue('draft')
+    expect(model.tags).toEqual(['vue'])
+    expect(input.element.value).toBe('draft')
+    expect(input.element.value).not.toBe(model.tags.join(','))
+    await expect(formRef.value.validateFields()).resolves.toMatchObject({ tags: ['vue'] })
+
+    await input.trigger('keydown', { key: 'Enter' })
+    expect(model.tags).toEqual(['vue', 'draft'])
+    expect(input.element.value).toBe('')
+    await expect(formRef.value.validateFields()).resolves.toMatchObject({ tags: ['vue', 'draft'] })
+
+    formRef.value.resetFields()
+    await nextTick()
+    expect(model.tags).toEqual(initialValue)
+    expect(wrapper.findAll('.ant-tag').map(tag => tag.text())).toEqual(initialValue)
+  })
+
+  it('does not treat the input draft as the Form.Item value when tags are empty', async () => {
+    const model = reactive({ tags: [] as string[] })
+    const formRef = ref<any>()
+    const FormDemo = defineComponent(() => () => h(Form, { ref: formRef, model }, {
+      default: () => h(FormItem, {
+        name: 'tags',
+        rules: [{ required: true, type: 'array' as const, min: 1, message: 'Tags are required' }],
+      }, {
+        default: () => h(InputTag, {
+          value: model.tags,
+          'onUpdate:value': (value: string[]) => (model.tags = value),
+        }),
+      }),
+    }))
+    const wrapper = mount(FormDemo)
+    const input = getInput(wrapper)
+
+    await input.setValue('draft')
+    expect(model.tags).toEqual([])
+    expect(input.element.value).toBe('draft')
+    await expect(formRef.value.validateFields()).rejects.toBeDefined()
+  })
+
+  it('applies Form.Item validateStatus to the Input', () => {
+    const wrapper = mount(Form, {
+      props: { model: { tags: ['vue'] } },
+      slots: {
+        default: () => h(FormItem, { name: 'tags', validateStatus: 'warning' }, {
+          default: () => h(InputTag, { value: ['vue'] }),
+        }),
+      },
+    })
+
+    expect(wrapper.find('.ant-input-status-warning').exists()).toBe(true)
   })
 })

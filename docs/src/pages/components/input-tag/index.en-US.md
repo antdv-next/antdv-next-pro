@@ -23,6 +23,7 @@ Use it to enter string tags such as emails, keywords, or categories.
   <demo src="./demo/draggable.vue">Draggable</demo>
   <demo src="./demo/collapse.vue">Collapse tags</demo>
   <demo src="./demo/controlled.vue">Controlled</demo>
+  <demo src="./demo/form.vue">Form validation</demo>
   <demo src="./demo/readonly.vue">Readonly and semantic</demo>
   <demo src="./demo/semantic.vue">Semantic styling</demo>
 </demo-group>
@@ -44,7 +45,7 @@ Use it to enter string tags such as emails, keywords, or categories.
 | readonly | Make the component readonly | `boolean` | `false` | - | × |
 | autoFocus | Autofocus the input | `boolean` | `false` | - | × |
 | size | Input size | `SizeType` | - | - | × |
-| status | Input status | `InputProps['status']` | - | - | × |
+| status | Manually set validation status; follows Form.Item by default | `InputProps['status']` | - | - | × |
 | variant | Input variant | `Variant` | - | - | × |
 | maxCount | Maximum number of tags | `number` | - | - | ✓ |
 | tokenSeparators | Separators used to split tags when submitting with the trigger key | `string[]` | `[]` | - | ✓ |
@@ -76,6 +77,24 @@ Use it to enter string tags such as emails, keywords, or categories.
 | blur | Triggered when the input loses focus | `(event: FocusEvent) => void` | - |
 
 The `change` event's `info.trigger` identifies the change source: `enter`, `space`, `blur`, `token-separator`, `drag`, `tag-remove`, `backspace`, or `clear`.
+
+### Form.Item {#form-item}
+
+`v-model:value` is the committed tag list, not the input draft. Form.Item validates the tag array; the draft stays on `inputValue` / `v-model:input-value` and does not overwrite the form value before commit.
+
+```vue
+<script setup lang="ts">
+const rules = [
+  { required: true, type: 'array' as const, min: 1, message: 'Enter at least one tag' },
+]
+</script>
+
+<template>
+  <a-form-item name="tags" :rules="rules">
+    <a-input-tag v-model:value="form.tags" />
+  </a-form-item>
+</template>
+```
 
 ### Slots {#slots}
 
