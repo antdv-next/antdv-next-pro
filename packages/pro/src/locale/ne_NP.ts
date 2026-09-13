@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/ne_NP'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'सेकेन्ड',
     minute: 'मिनेट',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'दायरा',
     special: 'विशेष',
   },
-  any: 'कुनै पनि',
   notSpecified: 'निर्दिष्ट गरिएको छैन',
-  every: 'हरेक',
   everyField: 'हरेक {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'हरेक {step} सेकेन्ड चलाउनुहोस्', preview: 'हरेक {step} सेकेन्ड चलाउनुहोस्' },
-      interval: { editor: 'सेकेन्ड {start} बाट सुरु गर्नुहोस्, त्यसपछि हरेक {step} सेकेन्ड चलाउनुहोस्', preview: 'हरेक मिनेट सेकेन्ड {start} बाट हरेक {step} सेकेन्ड चलाउनुहोस्' },
-      specified: { editor: 'यी सेकेन्ड मा चलाउनुहोस्:', preview: 'हरेक मिनेट सेकेन्ड {values} मा चलाउनुहोस्' },
-      range: { editor: 'सेकेन्ड {start} देखि सेकेन्ड {end} सम्म चलाउनुहोस्', preview: 'हरेक मिनेट सेकेन्ड {start} देखि सेकेन्ड {end} सम्म चलाउनुहोस्' },
-    },
-    minute: {
-      every: { editor: 'हरेक {step} मिनेट चलाउनुहोस्', preview: 'हरेक {step} मिनेट चलाउनुहोस्' },
-      interval: { editor: 'मिनेट {start} बाट सुरु गर्नुहोस्, त्यसपछि हरेक {step} मिनेट चलाउनुहोस्', preview: 'हरेक घण्टा मिनेट {start} बाट हरेक {step} मिनेट चलाउनुहोस्' },
-      specified: { editor: 'यी मिनेट मा चलाउनुहोस्:', preview: 'हरेक घण्टा मिनेट {values} मा चलाउनुहोस्' },
-      range: { editor: 'मिनेट {start} देखि मिनेट {end} सम्म चलाउनुहोस्', preview: 'हरेक घण्टा मिनेट {start} देखि मिनेट {end} सम्म चलाउनुहोस्' },
-    },
-    hour: {
-      every: { editor: 'हरेक {step} घण्टा चलाउनुहोस्', preview: 'हरेक {step} घण्टा चलाउनुहोस्' },
-      interval: { editor: '{start}:00 बाट सुरु गर्नुहोस्, त्यसपछि हरेक {step} घण्टा चलाउनुहोस्', preview: 'हरेक दिन {start}:00 बाट हरेक {step} घण्टा चलाउनुहोस्' },
-      specified: { editor: 'यी समयमा चलाउनुहोस्:', preview: 'हरेक दिन {values}:00 मा चलाउनुहोस्' },
-      range: { editor: '{start}:00 देखि {end}:00 सम्म चलाउनुहोस्', preview: 'हरेक दिन {start}:00 देखि {end}:00 सम्म चलाउनुहोस्' },
-    },
-    day: {
-      every: { editor: 'हरेक दिन चलाउनुहोस्', preview: 'हरेक दिन चलाउनुहोस्' },
-      unspecified: { editor: 'मिति तोक्नुहोस् न', preview: 'दिन तोकिएको छैन; हप्ता फिल्ड पालना गर्नुहोस्' },
-      interval: { editor: 'हरेक महिनाको दिन {start} बाट सुरु गर्नुहोस्, त्यसपछि हरेक {step} दिन चलाउनुहोस्', preview: 'हरेक महिना दिन {start} बाट हरेक {step} दिन चलाउनुहोस्' },
-      specified: { editor: 'हरेक महिनाका यी दिनमा चलाउनुहोस्:', preview: 'हरेक महिना दिन {values} मा चलाउनुहोस्' },
-      range: { editor: 'हरेक महिना दिन {start} देखि {end} सम्म चलाउनुहोस्', preview: 'हरेक महिना दिन {start} देखि {end} सम्म चलाउनुहोस्' },
-    },
-    month: {
-      every: { editor: 'हरेक महिना चलाउनुहोस्', preview: 'हरेक महिना चलाउनुहोस्' },
-      interval: { editor: '{start} बाट सुरु गर्नुहोस्, त्यसपछि हरेक {step} महिना चलाउनुहोस्', preview: 'हरेक वर्ष {start} बाट हरेक {step} महिना चलाउनुहोस्' },
-      specified: { editor: 'यी महिनामा चलाउनुहोस्:', preview: 'हरेक वर्ष {values} मा चलाउनुहोस्' },
-      range: { editor: '{start} देखि {end} सम्म चलाउनुहोस्', preview: 'हरेक वर्ष {start} देखि {end} सम्म चलाउनुहोस्' },
-    },
-    week: {
-      every: { editor: 'हरेक दिन चलाउनुहोस्', preview: 'हरेक दिन चलाउनुहोस्' },
-      unspecified: { editor: 'हप्ताको दिन तोक्नुहोस् न', preview: 'हप्ता तोकिएको छैन; दिन फिल्ड पालना गर्नुहोस्' },
-      interval: { editor: '{start} बाट सुरु गर्नुहोस्, त्यसपछि हरेक {step} दिन चलाउनुहोस्', preview: 'हरेक हप्ता {start} बाट हरेक {step} दिन चलाउनुहोस्' },
-      specified: { editor: 'हप्ताका यी दिनमा चलाउनुहोस्:', preview: 'हरेक {values} चलाउनुहोस्' },
-      range: { editor: 'हरेक हप्ता {start} देखि {end} सम्म चलाउनुहोस्', preview: 'हरेक हप्ता {start} देखि {end} सम्म चलाउनुहोस्' },
-    },
-    year: {
-      every: { editor: 'हरेक वर्ष चलाउनुहोस्', preview: 'हरेक वर्ष चलाउनुहोस्' },
-      interval: { editor: 'वर्ष {start} बाट सुरु गर्नुहोस्, त्यसपछि हरेक {step} वर्ष चलाउनुहोस्', preview: 'वर्ष {start} बाट हरेक {step} वर्ष चलाउनुहोस्' },
-      specified: { editor: 'यी वर्षमा चलाउनुहोस्:', preview: 'वर्ष {values} मा चलाउनुहोस्' },
-      range: { editor: 'वर्ष {start} देखि {end} सम्म चलाउनुहोस्', preview: 'वर्ष {start} देखि {end} सम्म चलाउनुहोस्' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'जनवरी',
-      FEB: 'फेब्रुअरी',
-      MAR: 'मार्च',
-      APR: 'अप्रिल',
-      MAY: 'मे',
-      JUN: 'जुन',
-      JUL: 'जुलाई',
-      AUG: 'अगस्ट',
-      SEP: 'सेप्टेम्बर',
-      OCT: 'अक्टोबर',
-      NOV: 'नोभेम्बर',
-      DEC: 'डिसेम्बर',
-    },
-    week: {
-      SUN: 'आइत',
-      MON: 'सोम',
-      TUE: 'मङ्गल',
-      WED: 'बुध',
-      THU: 'बिहि',
-      FRI: 'शुक्र',
-      SAT: 'शनि',
-    },
-  },
+  everyStep: 'हरेक {step} {field} चलाउनुहोस्',
+  intervalField: ' {start} बाट सुरु गर्नुहोस्, त्यसपछि हरेक {step} {field} चलाउनुहोस्',
+  specifiedField: '{values}',
+  rangeField: '{start} देखि {end}',
+  unspecifiedDay: 'दिन तोकिएको छैन; हप्ता फिल्ड पालना गर्नुहोस्',
+  unspecifiedWeek: 'हप्ता तोकिएको छैन; दिन फिल्ड पालना गर्नुहोस्',
   valueSeparator: ', ',
-  to: 'देखि',
-  or: ' वा ',
   expression: 'क्रोन अभिव्यक्ति',
   fieldList: 'क्रोन क्षेत्रहरू',
   fieldStart: '{field} सुरु',
   fieldInterval: '{field} अन्तराल',
   fieldRangeStart: '{field} दायरा सुरु',
   fieldRangeEnd: '{field} दायरा अन्त्य',
-  fieldValue: '{field} मान',
   fieldValues: '{field} मानहरू',
   nextRun: 'अर्को रन: {value}',
   noFutureRun: 'कुनै भविष्य रन छैन',
-  everySeconds: 'प्रत्येक {value} सेकेन्डमा',
-  everyMinutes: 'हरेक {value} मिनेटमा',
-  everyDayAt: 'हरेक दिन {value} बजे',
-  customSchedule: 'अनुकूलन तालिका',
   specialLastDay: 'प्रत्येक महिनाको अन्तिम दिन',
   specialLastWeekday: 'प्रत्येक महिनाको अन्तिम कार्यदिन',
   specialNearestWeekday: 'प्रत्येक महिनाको {day} गते नजिकको कार्यदिन',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'यो विशेष वाक्य संरचना समर्थित छैन',
     invalidExpression: 'अमान्य क्रोन अभिव्यक्ति',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

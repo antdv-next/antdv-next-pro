@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/mk_MK'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'Втора',
     minute: 'Минута',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Опсег',
     special: 'Специјално',
   },
-  any: 'Секое',
   notSpecified: 'Не е одредено',
-  every: 'секој',
   everyField: 'секој {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Извршувај на секои {step} секунди', preview: 'Извршувај на секои {step} секунди' },
-      interval: { editor: 'Почни од секунда {start} и извршувај на секои {step} секунди', preview: 'секоја минута извршувај од секунда {start} на секои {step} секунди' },
-      specified: { editor: 'Извршувај во овие секунди:', preview: 'Извршувај во секунди {values} секоја минута' },
-      range: { editor: 'Извршувај од секунда {start} до секунда {end}', preview: 'Извршувај од секунда {start} до секунда {end} секоја минута' },
-    },
-    minute: {
-      every: { editor: 'Извршувај на секои {step} минути', preview: 'Извршувај на секои {step} минути' },
-      interval: { editor: 'Почни од минута {start} и извршувај на секои {step} минути', preview: 'секој час извршувај од минута {start} на секои {step} минути' },
-      specified: { editor: 'Извршувај во овие минути:', preview: 'Извршувај во минути {values} секој час' },
-      range: { editor: 'Извршувај од минута {start} до минута {end}', preview: 'Извршувај од минута {start} до минута {end} секој час' },
-    },
-    hour: {
-      every: { editor: 'Извршувај на секои {step} часа', preview: 'Извршувај на секои {step} часа' },
-      interval: { editor: 'Почни во {start}:00 и извршувај на секои {step} часа', preview: 'Секој ден извршувај од {start}:00 на секои {step} часа' },
-      specified: { editor: 'Извршувај во овие времиња:', preview: 'Извршувај во {values}:00 секој ден' },
-      range: { editor: 'Извршувај од {start}:00 до {end}:00', preview: 'Извршувај од {start}:00 до {end}:00 секој ден' },
-    },
-    day: {
-      every: { editor: 'Извршувај секој ден', preview: 'Извршувај секој ден' },
-      unspecified: { editor: 'Не одредувај датум', preview: 'Денот не е одреден; следи го полето за недела' },
-      interval: { editor: 'Почни на {start}. ден од секој месец и извршувај на секои {step} дена', preview: 'Секој месец извршувај од {start}. ден на секои {step} дена' },
-      specified: { editor: 'Извршувај во овие денови од секој месец:', preview: 'Извршувај на денови {values} од секој месец' },
-      range: { editor: 'Извршувај од {start}. до {end}. ден од секој месец', preview: 'Извршувај од {start}. до {end}. ден од секој месец' },
-    },
-    month: {
-      every: { editor: 'Извршувај секој месец', preview: 'Извршувај секој месец' },
-      interval: { editor: 'Почни во {start} и извршувај на секои {step} месеци', preview: 'Секоја година извршувај од {start} на секои {step} месеци' },
-      specified: { editor: 'Извршувај во овие месеци:', preview: 'Извршувај во {values} секоја година' },
-      range: { editor: 'Извршувај од {start} до {end}', preview: 'Извршувај од {start} до {end} секоја година' },
-    },
-    week: {
-      every: { editor: 'Извршувај секој ден', preview: 'Извршувај секој ден' },
-      unspecified: { editor: 'Не одредувај ден од неделата', preview: 'Неделата не е одредена; следи го полето за ден' },
-      interval: { editor: 'Почни {start} и извршувај на секои {step} дена', preview: 'Секоја недела извршувај од {start} на секои {step} дена' },
-      specified: { editor: 'Извршувај во овие денови од неделата:', preview: 'Извршувај секој {values}' },
-      range: { editor: 'Извршувај од {start} до {end} секоја недела', preview: 'Извршувај од {start} до {end} секоја недела' },
-    },
-    year: {
-      every: { editor: 'Извршувај секоја година', preview: 'Извршувај секоја година' },
-      interval: { editor: 'Почни во {start} година и извршувај на секои {step} години', preview: 'Извршувај од {start} година на секои {step} години' },
-      specified: { editor: 'Извршувај во овие години:', preview: 'Извршувај во {values} година' },
-      range: { editor: 'Извршувај од {start} до {end} година', preview: 'Извршувај од {start} до {end} година' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'јан.',
-      FEB: 'фев.',
-      MAR: 'мар.',
-      APR: 'апр.',
-      MAY: 'мај',
-      JUN: 'јун.',
-      JUL: 'јул.',
-      AUG: 'авг.',
-      SEP: 'сеп.',
-      OCT: 'окт.',
-      NOV: 'ное.',
-      DEC: 'дек.',
-    },
-    week: {
-      SUN: 'нед.',
-      MON: 'пон.',
-      TUE: 'вто.',
-      WED: 'сре.',
-      THU: 'чет.',
-      FRI: 'пет.',
-      SAT: 'саб.',
-    },
-  },
+  everyStep: 'Извршувај на секои {step} минути {field}',
+  intervalField: 'Почни од {field} {start} и извршувај на секои {step} минути',
+  specifiedField: '{values}',
+  rangeField: '{start} до {end}',
+  unspecifiedDay: 'Денот не е одреден; следи го полето за недела',
+  unspecifiedWeek: 'Неделата не е одредена; следи го полето за ден',
   valueSeparator: ', ',
-  to: 'до',
-  or: ' или ',
   expression: 'Крон израз',
   fieldList: 'Cron полиња',
   fieldStart: '{field} почеток',
   fieldInterval: '{field} интервал',
   fieldRangeStart: 'почеток на опсегот {field}',
   fieldRangeEnd: 'крај на опсегот {field}',
-  fieldValue: '{field} вредност',
   fieldValues: '{field} вредности',
   nextRun: 'Следно возење: {value}',
   noFutureRun: 'Нема идно трчање',
-  everySeconds: 'На секои {value} секунди',
-  everyMinutes: 'На секои {value} минути',
-  everyDayAt: 'Секој ден во {value}',
-  customSchedule: 'Прилагоден распоред',
   specialLastDay: 'последниот ден од секој месец',
   specialLastWeekday: 'последниот работен ден од секој месец',
   specialNearestWeekday: 'најблискиот работен ден до {day}. ден од секој месец',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Оваа специјална синтакса не е поддржана',
     invalidExpression: 'Неважечки cron израз',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/by_BY'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'секунда',
     minute: 'хвіліна',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Дыяпазон',
     special: 'Адмысловы',
   },
-  any: 'Любы',
   notSpecified: 'Не ўказана',
-  every: 'кожны',
   everyField: 'кожны {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Выконваць кожныя {step} секунд', preview: 'Выконваць кожныя {step} секунд' },
-      interval: { editor: 'Пачаць з секунды {start} і выконваць кожныя {step} секунд', preview: 'кожную хвіліну выконваць з секунды {start} кожныя {step} секунд' },
-      specified: { editor: 'Выконваць у такія секунд:', preview: 'Выконваць у секунд {values} кожную хвіліну' },
-      range: { editor: 'Выконваць з секунды {start} да секунды {end}', preview: 'Выконваць з секунды {start} да секунды {end} кожную хвіліну' },
-    },
-    minute: {
-      every: { editor: 'Выконваць кожныя {step} хвілін', preview: 'Выконваць кожныя {step} хвілін' },
-      interval: { editor: 'Пачаць з хвіліны {start} і выконваць кожныя {step} хвілін', preview: 'кожную гадзіну выконваць з хвіліны {start} кожныя {step} хвілін' },
-      specified: { editor: 'Выконваць у такія хвілін:', preview: 'Выконваць у хвілін {values} кожную гадзіну' },
-      range: { editor: 'Выконваць з хвіліны {start} да хвіліны {end}', preview: 'Выконваць з хвіліны {start} да хвіліны {end} кожную гадзіну' },
-    },
-    hour: {
-      every: { editor: 'Выконваць кожныя {step} гадзін', preview: 'Выконваць кожныя {step} гадзін' },
-      interval: { editor: 'Пачаць а {start}:00 і выконваць кожныя {step} гадзін', preview: 'Кожны дзень выконваць з {start}:00 кожныя {step} гадзін' },
-      specified: { editor: 'Выконваць у такі час:', preview: 'Выконваць а {values}:00 кожны дзень' },
-      range: { editor: 'Выконваць з {start}:00 да {end}:00', preview: 'Выконваць з {start}:00 да {end}:00 кожны дзень' },
-    },
-    day: {
-      every: { editor: 'Выконваць кожны дзень', preview: 'Выконваць кожны дзень' },
-      unspecified: { editor: 'Не ўказваць дату', preview: 'Дзень не ўказаны; выкарыстоўваць поле тыдня' },
-      interval: { editor: 'Пачаць з {start}-га дня кожнага месяца і выконваць кожныя {step} дзён', preview: 'Кожны месяц выконваць з {start}-га дня кожныя {step} дзён' },
-      specified: { editor: 'Выконваць у такія дні месяца:', preview: 'Выконваць у дні {values} кожнага месяца' },
-      range: { editor: 'Выконваць з {start}-га да {end}-га дня кожнага месяца', preview: 'Выконваць з {start}-га да {end}-га дня кожнага месяца' },
-    },
-    month: {
-      every: { editor: 'Выконваць кожны месяц', preview: 'Выконваць кожны месяц' },
-      interval: { editor: 'Пачаць з {start} і выконваць кожныя {step} месяцаў', preview: 'Кожны год выконваць з {start} кожныя {step} месяцаў' },
-      specified: { editor: 'Выконваць у такія месяцы:', preview: 'Выконваць у {values} кожны год' },
-      range: { editor: 'Выконваць з {start} да {end}', preview: 'Выконваць з {start} да {end} кожны год' },
-    },
-    week: {
-      every: { editor: 'Выконваць кожны дзень', preview: 'Выконваць кожны дзень' },
-      unspecified: { editor: 'Не ўказваць дзень тыдня', preview: 'Тыдзень не ўказаны; выкарыстоўваць поле дня' },
-      interval: { editor: 'Пачаць з {start} і выконваць кожныя {step} дзён', preview: 'Кожны тыдзень выконваць з {start} кожныя {step} дзён' },
-      specified: { editor: 'Выконваць у такія дні тыдня:', preview: 'Выконваць кожны {values}' },
-      range: { editor: 'Выконваць з {start} да {end} кожны тыдзень', preview: 'Выконваць з {start} да {end} кожны тыдзень' },
-    },
-    year: {
-      every: { editor: 'Выконваць кожны год', preview: 'Выконваць кожны год' },
-      interval: { editor: 'Пачаць з {start} года і выконваць кожныя {step} гадоў', preview: 'Выконваць з {start} года кожныя {step} гадоў' },
-      specified: { editor: 'Выконваць у такія гады:', preview: 'Выконваць у {values} годзе' },
-      range: { editor: 'Выконваць з {start} да {end} года', preview: 'Выконваць з {start} да {end} года' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: '1月',
-      FEB: '2月',
-      MAR: '3月',
-      APR: '4月',
-      MAY: '5月',
-      JUN: '6月',
-      JUL: '7月',
-      AUG: '8月',
-      SEP: '9月',
-      OCT: '10月',
-      NOV: '11月',
-      DEC: '12月',
-    },
-    week: {
-      SUN: '周日',
-      MON: '周一',
-      TUE: '周二',
-      WED: '周三',
-      THU: '周四',
-      FRI: '周五',
-      SAT: '周六',
-    },
-  },
+  everyStep: 'Выконваць кожныя {step} хвілін {field}',
+  intervalField: 'Пачаць з хвіліны {start} і выконваць кожныя {step} хвілін {field}',
+  specifiedField: '{values}',
+  rangeField: '{start} да {end}',
+  unspecifiedDay: 'Дзень не ўказаны; выкарыстоўваць поле тыдня',
+  unspecifiedWeek: 'Тыдзень не ўказаны; выкарыстоўваць поле дня',
   valueSeparator: ', ',
-  to: 'да',
-  or: ' або ',
   expression: 'Выраз Cron',
   fieldList: 'Палі Cron',
   fieldStart: '{field} пачатак',
   fieldInterval: '{field} інтэрвал',
   fieldRangeStart: '{field} пачатак дыяпазону',
   fieldRangeEnd: '{field} канец дыяпазону',
-  fieldValue: '{field} значэнне',
   fieldValues: '{field} значэння',
   nextRun: 'Наступны запуск: {value}',
   noFutureRun: 'Няма будучыні',
-  everySeconds: 'Кожныя {value} секунд',
-  everyMinutes: 'Кожныя {value} хвілін',
-  everyDayAt: 'Кожны дзень у {value}',
-  customSchedule: 'Індывідуальны расклад',
   specialLastDay: 'апошні дзень кожнага месяца',
   specialLastWeekday: 'апошні працоўны дзень кожнага месяца',
   specialNearestWeekday: 'найбліжэйшы працоўны дзень да {day}-га дня кожнага месяца',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Гэты адмысловы сінтаксіс не падтрымліваецца',
     invalidExpression: 'Няправільны выраз cron',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

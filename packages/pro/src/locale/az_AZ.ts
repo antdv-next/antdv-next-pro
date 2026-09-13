@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/az_AZ'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'Saniyə',
     minute: 'Dəqiqə',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Aralığı',
     special: 'Xüsusi',
   },
-  any: 'İstənilən',
   notSpecified: 'Müəyyən edilməyib',
-  every: 'hər',
   everyField: 'Hər {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Hər {step} saniyə icra et', preview: 'Hər {step} saniyə icra et' },
-      interval: { editor: 'saniyə {start} dəyərindən başla, sonra hər {step} saniyə icra et', preview: 'hər dəqiqə saniyə {start} dəyərindən etibarən hər {step} saniyə icra et' },
-      specified: { editor: 'Bu saniyə icra et:', preview: 'hər dəqiqə saniyə {values} dəyərlərində icra et' },
-      range: { editor: 'saniyə {start} ilə saniyə {end} arasında icra et', preview: 'hər dəqiqə saniyə {start} ilə saniyə {end} arasında icra et' },
-    },
-    minute: {
-      every: { editor: 'Hər {step} dəqiqə icra et', preview: 'Hər {step} dəqiqə icra et' },
-      interval: { editor: 'dəqiqə {start} dəyərindən başla, sonra hər {step} dəqiqə icra et', preview: 'hər saat dəqiqə {start} dəyərindən etibarən hər {step} dəqiqə icra et' },
-      specified: { editor: 'Bu dəqiqə icra et:', preview: 'hər saat dəqiqə {values} dəyərlərində icra et' },
-      range: { editor: 'dəqiqə {start} ilə dəqiqə {end} arasında icra et', preview: 'hər saat dəqiqə {start} ilə dəqiqə {end} arasında icra et' },
-    },
-    hour: {
-      every: { editor: 'Hər {step} saat icra et', preview: 'Hər {step} saat icra et' },
-      interval: { editor: '{start}:00-dan başla, sonra hər {step} saat icra et', preview: 'Hər gün {start}:00-dan etibarən hər {step} saat icra et' },
-      specified: { editor: 'Bu saatlarda icra et:', preview: 'Hər gün {values}:00-da icra et' },
-      range: { editor: '{start}:00 ilə {end}:00 arasında icra et', preview: 'Hər gün {start}:00 ilə {end}:00 arasında icra et' },
-    },
-    day: {
-      every: { editor: 'Hər gün icra et', preview: 'Hər gün icra et' },
-      unspecified: { editor: 'Tarix təyin etmə', preview: 'Gün təyin edilməyib; həftə sahəsinə əməl et' },
-      interval: { editor: 'Hər ayın {start}-ci günündən başla, sonra hər {step} gün icra et', preview: 'Hər ay {start}-ci gündən etibarən hər {step} gün icra et' },
-      specified: { editor: 'Hər ay bu günlərdə icra et:', preview: 'Hər ay {values}-ci günlərdə icra et' },
-      range: { editor: 'Hər ay {start}-ci gündən {end}-ci günə qədər icra et', preview: 'Hər ay {start}-ci gündən {end}-ci günə qədər icra et' },
-    },
-    month: {
-      every: { editor: 'Hər ay icra et', preview: 'Hər ay icra et' },
-      interval: { editor: '{start} dəyərindən başla, sonra hər {step} ay icra et', preview: 'Hər il {start} dəyərindən etibarən hər {step} ay icra et' },
-      specified: { editor: 'Bu aylarda icra et:', preview: 'Hər il {values} icra et' },
-      range: { editor: '{start} ilə {end} arasında icra et', preview: 'Hər il {start} ilə {end} arasında icra et' },
-    },
-    week: {
-      every: { editor: 'Hər gün icra et', preview: 'Hər gün icra et' },
-      unspecified: { editor: 'Həftə gününü təyin etmə', preview: 'Həftə təyin edilməyib; gün sahəsinə əməl et' },
-      interval: { editor: '{start} günündən başla, sonra hər {step} gün icra et', preview: 'Hər həftə {start} günündən etibarən hər {step} gün icra et' },
-      specified: { editor: 'Bu həftə günlərində icra et:', preview: 'Hər {values} icra et' },
-      range: { editor: 'Hər həftə {start} ilə {end} arasında icra et', preview: 'Hər həftə {start} ilə {end} arasında icra et' },
-    },
-    year: {
-      every: { editor: 'Hər il icra et', preview: 'Hər il icra et' },
-      interval: { editor: '{start} ilindən başla, sonra hər {step} il icra et', preview: '{start} ilindən etibarən hər {step} il icra et' },
-      specified: { editor: 'Bu illərdə icra et:', preview: '{values} illərində icra et' },
-      range: { editor: '{start} ilindən {end} ilinə qədər icra et', preview: '{start} ilindən {end} ilinə qədər icra et' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'yan',
-      FEB: 'fev',
-      MAR: 'mar',
-      APR: 'apr',
-      MAY: 'may',
-      JUN: 'iyn',
-      JUL: 'iyl',
-      AUG: 'avq',
-      SEP: 'sen',
-      OCT: 'okt',
-      NOV: 'noy',
-      DEC: 'dek',
-    },
-    week: {
-      SUN: 'B.',
-      MON: 'B.E.',
-      TUE: 'Ç.A.',
-      WED: 'Ç.',
-      THU: 'C.A.',
-      FRI: 'C.',
-      SAT: 'Ş.',
-    },
-  },
+  everyStep: 'Hər {step} {field} icra et',
+  intervalField: ' {start} dəyərindən başla, sonra hər {step} {field} icra et',
+  specifiedField: '{values}',
+  rangeField: '{start} qədər {end}',
+  unspecifiedDay: 'Gün təyin edilməyib; həftə sahəsinə əməl et',
+  unspecifiedWeek: 'Həftə təyin edilməyib; gün sahəsinə əməl et',
   valueSeparator: ', ',
-  to: 'qədər',
-  or: ' və ya ',
   expression: 'Cron ifadəsi',
   fieldList: 'Cron sahələri',
   fieldStart: '{field} başlanğıc',
   fieldInterval: '{field} interval',
   fieldRangeStart: '{field} diapazon başlanğıcı',
   fieldRangeEnd: '{field} aralığın sonu',
-  fieldValue: '{field} dəyər',
   fieldValues: '{field} dəyər',
   nextRun: 'Növbəti qaçış: {value}',
   noFutureRun: 'Gələcək qaçış yoxdur',
-  everySeconds: 'Hər {value} saniyədən bir',
-  everyMinutes: 'Hər {value} dəqiqədən bir',
-  everyDayAt: 'Hər gün {value} radələrində',
-  customSchedule: 'Fərdi cədvəl',
   specialLastDay: 'hər ayın son günü',
   specialLastWeekday: 'hər ayın son iş günü',
   specialNearestWeekday: 'hər ayın {day}-cü gününə ən yaxın iş günü',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Bu xüsusi sintaksis dəstəklənmir',
     invalidExpression: 'Yanlış cron ifadəsi',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

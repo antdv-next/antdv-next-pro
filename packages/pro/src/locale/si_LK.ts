@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/si_LK'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'දෙවන',
     minute: 'මිනිත්තු',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'පරාසය',
     special: 'විශේෂ',
   },
-  any: 'ඕනෑම',
   notSpecified: 'නිශ්චිතව දක්වා නැත',
-  every: 'සෑම',
   everyField: 'සෑම {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'සෑම {step} තත්පර ක් ක්‍රියාත්මක කරන්න', preview: 'සෑම {step} තත්පර ක් ක්‍රියාත්මක කරන්න' },
-      interval: { editor: 'තත්පරය {start} සිට ආරම්භ කර, පසුව සෑම {step} තත්පර ක් ක්‍රියාත්මක කරන්න', preview: 'සෑම මිනිත්තුවකම තත්පරය {start} සිට සෑම {step} තත්පර ක් ක්‍රියාත්මක කරන්න' },
-      specified: { editor: 'මෙම තත්පර ක්‍රියාත්මක කරන්න:', preview: 'සෑම මිනිත්තුවකම තත්පර {values} හි ක්‍රියාත්මක කරන්න' },
-      range: { editor: 'තත්පරය {start} සිට තත්පරය {end} දක්වා ක්‍රියාත්මක කරන්න', preview: 'සෑම මිනිත්තුවකම තත්පරය {start} සිට තත්පරය {end} දක්වා ක්‍රියාත්මක කරන්න' },
-    },
-    minute: {
-      every: { editor: 'සෑම {step} මිනිත්තු ක් ක්‍රියාත්මක කරන්න', preview: 'සෑම {step} මිනිත්තු ක් ක්‍රියාත්මක කරන්න' },
-      interval: { editor: 'මිනිත්තුව {start} සිට ආරම්භ කර, පසුව සෑම {step} මිනිත්තු ක් ක්‍රියාත්මක කරන්න', preview: 'සෑම පැයකම මිනිත්තුව {start} සිට සෑම {step} මිනිත්තු ක් ක්‍රියාත්මක කරන්න' },
-      specified: { editor: 'මෙම මිනිත්තු ක්‍රියාත්මක කරන්න:', preview: 'සෑම පැයකම මිනිත්තු {values} හි ක්‍රියාත්මක කරන්න' },
-      range: { editor: 'මිනිත්තුව {start} සිට මිනිත්තුව {end} දක්වා ක්‍රියාත්මක කරන්න', preview: 'සෑම පැයකම මිනිත්තුව {start} සිට මිනිත්තුව {end} දක්වා ක්‍රියාත්මක කරන්න' },
-    },
-    hour: {
-      every: { editor: 'සෑම {step} පැය ක් ක්‍රියාත්මක කරන්න', preview: 'සෑම {step} පැය ක් ක්‍රියාත්මක කරන්න' },
-      interval: { editor: '{start}:00 සිට ආරම්භ කර, පසුව සෑම {step} පැයකට ක්‍රියාත්මක කරන්න', preview: 'සෑම දිනකම {start}:00 සිට සෑම {step} පැයකට ක්‍රියාත්මක කරන්න' },
-      specified: { editor: 'මෙම වේලාවන්හි ක්‍රියාත්මක කරන්න:', preview: 'සෑම දිනකම {values}:00 ට ක්‍රියාත්මක කරන්න' },
-      range: { editor: '{start}:00 සිට {end}:00 දක්වා ක්‍රියාත්මක කරන්න', preview: 'සෑම දිනකම {start}:00 සිට {end}:00 දක්වා ක්‍රියාත්මක කරන්න' },
-    },
-    day: {
-      every: { editor: 'සෑම දිනකම ක්‍රියාත්මක කරන්න', preview: 'සෑම දිනකම ක්‍රියාත්මක කරන්න' },
-      unspecified: { editor: 'දිනයක් නොදක්වන්න', preview: 'දිනය දක්වා නැත; සතිය ක්ෂේත්‍රය අනුගමනය කරන්න' },
-      interval: { editor: 'සෑම මාසයකම {start} වන දින සිට ආරම්භ කර, පසුව සෑම {step} දිනකට ක්‍රියාත්මක කරන්න', preview: 'සෑම මාසයකම {start} වන දින සිට සෑම {step} දිනකට ක්‍රියාත්මක කරන්න' },
-      specified: { editor: 'සෑම මාසයකම මෙම දිනවල ක්‍රියාත්මක කරන්න:', preview: 'සෑම මාසයකම {values} වන දින ක්‍රියාත්මක කරන්න' },
-      range: { editor: 'සෑම මාසයකම {start} සිට {end} වන දින දක්වා ක්‍රියාත්මක කරන්න', preview: 'සෑම මාසයකම {start} සිට {end} වන දින දක්වා ක්‍රියාත්මක කරන්න' },
-    },
-    month: {
-      every: { editor: 'සෑම මාසයකම ක්‍රියාත්මක කරන්න', preview: 'සෑම මාසයකම ක්‍රියාත්මක කරන්න' },
-      interval: { editor: '{start} සිට ආරම්භ කර, පසුව සෑම {step} මාසයකට ක්‍රියාත්මක කරන්න', preview: 'සෑම වසරකම {start} සිට සෑම {step} මාසයකට ක්‍රියාත්මක කරන්න' },
-      specified: { editor: 'මෙම මාසවල ක්‍රියාත්මක කරන්න:', preview: 'සෑම වසරකම {values} හි ක්‍රියාත්මක කරන්න' },
-      range: { editor: '{start} සිට {end} දක්වා ක්‍රියාත්මක කරන්න', preview: 'සෑම වසරකම {start} සිට {end} දක්වා ක්‍රියාත්මක කරන්න' },
-    },
-    week: {
-      every: { editor: 'සෑම දිනකම ක්‍රියාත්මක කරන්න', preview: 'සෑම දිනකම ක්‍රියාත්මක කරන්න' },
-      unspecified: { editor: 'සතියේ දිනය නොදක්වන්න', preview: 'සතිය දක්වා නැත; දින ක්ෂේත්‍රය අනුගමනය කරන්න' },
-      interval: { editor: '{start} සිට ආරම්භ කර, පසුව සෑම {step} දිනකට ක්‍රියාත්මක කරන්න', preview: 'සෑම සතියකම {start} සිට සෑම {step} දිනකට ක්‍රියාත්මක කරන්න' },
-      specified: { editor: 'මෙම සති දිනවල ක්‍රියාත්මක කරන්න:', preview: 'සෑම {values} ක්‍රියාත්මක කරන්න' },
-      range: { editor: 'සෑම සතියකම {start} සිට {end} දක්වා ක්‍රියාත්මක කරන්න', preview: 'සෑම සතියකම {start} සිට {end} දක්වා ක්‍රියාත්මක කරන්න' },
-    },
-    year: {
-      every: { editor: 'සෑම වසරකම ක්‍රියාත්මක කරන්න', preview: 'සෑම වසරකම ක්‍රියාත්මක කරන්න' },
-      interval: { editor: '{start} වසරේ සිට ආරම්භ කර, පසුව සෑම {step} වසරකට ක්‍රියාත්මක කරන්න', preview: '{start} වසරේ සිට සෑම {step} වසරකට ක්‍රියාත්මක කරන්න' },
-      specified: { editor: 'මෙම වසරවල ක්‍රියාත්මක කරන්න:', preview: '{values} වසරවල ක්‍රියාත්මක කරන්න' },
-      range: { editor: '{start} වසරේ සිට {end} වසර දක්වා ක්‍රියාත්මක කරන්න', preview: '{start} වසරේ සිට {end} වසර දක්වා ක්‍රියාත්මක කරන්න' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'ජනවාරි',
-      FEB: 'පෙබරවාරි',
-      MAR: 'මාර්තු',
-      APR: 'අප්‍රේල්',
-      MAY: 'මැයි',
-      JUN: 'ජූනි',
-      JUL: 'ජූලි',
-      AUG: 'අගෝස්තු',
-      SEP: 'සැප්තැම්බර්',
-      OCT: 'ඔක්තෝබර්',
-      NOV: 'නොවැම්බර්',
-      DEC: 'දෙසැම්බර්',
-    },
-    week: {
-      SUN: 'ඉරිදා',
-      MON: 'සඳුදා',
-      TUE: 'අඟහ',
-      WED: 'බදාදා',
-      THU: 'බ්‍රහස්',
-      FRI: 'සිකු',
-      SAT: 'සෙන',
-    },
-  },
+  everyStep: 'සෑම {step} {field} ක් ක්‍රියාත්මක කරන්න',
+  intervalField: 'ව {start} සිට ආරම්භ කර, පසුව සෑම {step} {field} ක් ක්‍රියාත්මක කරන්න',
+  specifiedField: '{values}',
+  rangeField: '{start} දක්වා {end}',
+  unspecifiedDay: 'දිනය දක්වා නැත; සතිය ක්ෂේත්‍රය අනුගමනය කරන්න',
+  unspecifiedWeek: 'සතිය දක්වා නැත; දින ක්ෂේත්‍රය අනුගමනය කරන්න',
   valueSeparator: ', ',
-  to: 'දක්වා',
-  or: ' හෝ ',
   expression: 'ක්‍රොන් ප්‍රකාශනය',
   fieldList: 'ක්‍රොන් ක්ෂේත්‍ර',
   fieldStart: '{field} ආරම්භය',
   fieldInterval: '{field} පරතරය',
   fieldRangeStart: '{field} පරාසය ආරම්භය',
   fieldRangeEnd: '{field} පරාසය අවසානය',
-  fieldValue: '{field} අගය',
   fieldValues: '{field} අගයන්',
   nextRun: 'මීළඟ ධාවනය: {value}',
   noFutureRun: 'අනාගත ධාවනය නැත',
-  everySeconds: 'සෑම තත්පර {value}කම',
-  everyMinutes: 'සෑම විනාඩි {value}කම',
-  everyDayAt: 'සෑම දිනකම {value} ට',
-  customSchedule: 'අභිරුචි කාලසටහන',
   specialLastDay: 'සෑම මසකම අවසාන දිනය',
   specialLastWeekday: 'සෑම මසකම අවසාන වැඩ දිනය',
   specialNearestWeekday: 'සෑම මසකම {day} වන දිනට ආසන්නතම වැඩ දිනය',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'මෙම විශේෂ වාග් රීතිය සහාය නොදක්වයි',
     invalidExpression: 'වලංගු නොවන ක්‍රෝන් ප්‍රකාශනය',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

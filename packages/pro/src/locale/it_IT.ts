@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/it_IT'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'Secondo',
     minute: 'Minuto',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Gamma',
     special: 'Speciale',
   },
-  any: 'Qualunque',
   notSpecified: 'Non specificato',
-  every: 'ogni',
   everyField: 'Ogni {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Esegui ogni {step} secondi', preview: 'Esegui ogni {step} secondi' },
-      interval: { editor: 'Inizia a secondo {start}, poi esegui ogni {step} secondi', preview: 'di ogni minuto, esegui da secondo {start} ogni {step} secondi' },
-      specified: { editor: 'Esegui in questi secondi:', preview: 'Esegui ai secondi {values} di ogni minuto' },
-      range: { editor: 'Esegui da secondo {start} a secondo {end}', preview: 'Esegui da secondo {start} a secondo {end} di ogni minuto' },
-    },
-    minute: {
-      every: { editor: 'Esegui ogni {step} minuti', preview: 'Esegui ogni {step} minuti' },
-      interval: { editor: 'Inizia a minuto {start}, poi esegui ogni {step} minuti', preview: 'di ogni ora, esegui da minuto {start} ogni {step} minuti' },
-      specified: { editor: 'Esegui in questi minuti:', preview: 'Esegui ai minuti {values} di ogni ora' },
-      range: { editor: 'Esegui da minuto {start} a minuto {end}', preview: 'Esegui da minuto {start} a minuto {end} di ogni ora' },
-    },
-    hour: {
-      every: { editor: 'Esegui ogni {step} ore', preview: 'Esegui ogni {step} ore' },
-      interval: { editor: 'Inizia alle {start}:00, poi esegui ogni {step} ore', preview: 'Ogni giorno, esegui dalle {start}:00 ogni {step} ore' },
-      specified: { editor: 'Esegui in questi orari:', preview: 'Esegui alle {values}:00 ogni giorno' },
-      range: { editor: 'Esegui dalle {start}:00 alle {end}:00', preview: 'Esegui dalle {start}:00 alle {end}:00 ogni giorno' },
-    },
-    day: {
-      every: { editor: 'Esegui ogni giorno', preview: 'Esegui ogni giorno' },
-      unspecified: { editor: 'Non specificare una data', preview: 'Giorno non specificato; seguire il campo settimana' },
-      interval: { editor: 'Inizia il giorno {start} di ogni mese, poi esegui ogni {step} giorni', preview: 'Ogni mese, esegui dal giorno {start} ogni {step} giorni' },
-      specified: { editor: 'Esegui in questi giorni di ogni mese:', preview: 'Esegui i giorni {values} di ogni mese' },
-      range: { editor: 'Esegui dal giorno {start} al giorno {end} di ogni mese', preview: 'Esegui dal giorno {start} al giorno {end} di ogni mese' },
-    },
-    month: {
-      every: { editor: 'Esegui ogni mese', preview: 'Esegui ogni mese' },
-      interval: { editor: 'Inizia a {start}, poi esegui ogni {step} mesi', preview: 'Ogni anno, esegui da {start} ogni {step} mesi' },
-      specified: { editor: 'Esegui in questi mesi:', preview: 'Esegui in {values} ogni anno' },
-      range: { editor: 'Esegui da {start} a {end}', preview: 'Esegui da {start} a {end} ogni anno' },
-    },
-    week: {
-      every: { editor: 'Esegui ogni giorno', preview: 'Esegui ogni giorno' },
-      unspecified: { editor: 'Non specificare un giorno della settimana', preview: 'Settimana non specificata; seguire il campo giorno' },
-      interval: { editor: 'Inizia {start}, poi esegui ogni {step} giorni', preview: 'Ogni settimana, esegui da {start} ogni {step} giorni' },
-      specified: { editor: 'Esegui in questi giorni della settimana:', preview: 'Esegui ogni {values}' },
-      range: { editor: 'Esegui da {start} a {end} ogni settimana', preview: 'Esegui da {start} a {end} ogni settimana' },
-    },
-    year: {
-      every: { editor: 'Esegui ogni anno', preview: 'Esegui ogni anno' },
-      interval: { editor: 'Inizia nell\'anno {start}, poi esegui ogni {step} anni', preview: 'Esegui dall\'anno {start} ogni {step} anni' },
-      specified: { editor: 'Esegui in questi anni:', preview: 'Esegui negli anni {values}' },
-      range: { editor: 'Esegui dall\'anno {start} all\'anno {end}', preview: 'Esegui dall\'anno {start} all\'anno {end}' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'gen',
-      FEB: 'feb',
-      MAR: 'mar',
-      APR: 'apr',
-      MAY: 'mag',
-      JUN: 'giu',
-      JUL: 'lug',
-      AUG: 'ago',
-      SEP: 'set',
-      OCT: 'ott',
-      NOV: 'nov',
-      DEC: 'dic',
-    },
-    week: {
-      SUN: 'dom',
-      MON: 'lun',
-      TUE: 'mar',
-      WED: 'mer',
-      THU: 'gio',
-      FRI: 'ven',
-      SAT: 'sab',
-    },
-  },
+  everyStep: 'Esegui ogni {step} minuti {field}',
+  intervalField: 'Inizia a {field} {start}, poi esegui ogni {step} minuti',
+  specifiedField: '{values}',
+  rangeField: '{start} a {end}',
+  unspecifiedDay: 'Giorno non specificato; seguire il campo settimana',
+  unspecifiedWeek: 'Settimana non specificata; seguire il campo giorno',
   valueSeparator: ', ',
-  to: 'a',
-  or: ' o ',
   expression: 'Espressione cron',
   fieldList: 'Campi cron',
   fieldStart: '{field} inizio',
   fieldInterval: 'Intervallo {field}',
   fieldRangeStart: 'Inizio gamma {field}',
   fieldRangeEnd: '{field}',
-  fieldValue: 'valore {field}',
   fieldValues: '{field} valori',
   nextRun: 'Prossima esecuzione: {value}',
   noFutureRun: 'Nessuna corsa futura',
-  everySeconds: 'Ogni {value} secondi',
-  everyMinutes: 'Ogni {value} minuti',
-  everyDayAt: 'Tutti i giorni alle {value}',
-  customSchedule: 'Programmazione personalizzata',
   specialLastDay: 'l\'ultimo giorno di ogni mese',
   specialLastWeekday: 'l\'ultimo giorno feriale di ogni mese',
   specialNearestWeekday: 'il giorno feriale più vicino al giorno {day} di ogni mese',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Questa sintassi speciale non è supportata',
     invalidExpression: 'Espressione cron non valida',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

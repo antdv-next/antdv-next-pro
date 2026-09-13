@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/ku_IQ'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'Duyem',
     minute: 'Deqe',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Rêze',
     special: 'تایبەت',
   },
-  any: 'Her kes',
   notSpecified: 'Ne diyar e',
-  every: 'her',
   everyField: 'Her {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'هەر {step} چرکە جێبەجێ بکە', preview: 'هەر {step} چرکە جێبەجێ بکە' },
-      interval: { editor: 'لە چرکە {start} دەست پێبکە، پاشان هەر {step} چرکە جێبەجێ بکە', preview: 'هەر خولەکێک لە چرکە {start} هەر {step} چرکە جێبەجێ بکە' },
-      specified: { editor: 'لەم چرکە جێبەجێ بکە:', preview: 'هەر خولەکێک لە چرکە {values} جێبەجێ بکە' },
-      range: { editor: 'لە چرکە {start} تا چرکە {end} جێبەجێ بکە', preview: 'هەر خولەکێک لە چرکە {start} تا چرکە {end} جێبەجێ بکە' },
-    },
-    minute: {
-      every: { editor: 'هەر {step} خولەک جێبەجێ بکە', preview: 'هەر {step} خولەک جێبەجێ بکە' },
-      interval: { editor: 'لە خولەک {start} دەست پێبکە، پاشان هەر {step} خولەک جێبەجێ بکە', preview: 'هەر کاتژمێرێک لە خولەک {start} هەر {step} خولەک جێبەجێ بکە' },
-      specified: { editor: 'لەم خولەک جێبەجێ بکە:', preview: 'هەر کاتژمێرێک لە خولەک {values} جێبەجێ بکە' },
-      range: { editor: 'لە خولەک {start} تا خولەک {end} جێبەجێ بکە', preview: 'هەر کاتژمێرێک لە خولەک {start} تا خولەک {end} جێبەجێ بکە' },
-    },
-    hour: {
-      every: { editor: 'هەر {step} کاتژمێر جێبەجێ بکە', preview: 'هەر {step} کاتژمێر جێبەجێ بکە' },
-      interval: { editor: 'لە {start}:00 دەست پێبکە، پاشان هەر {step} کاتژمێر جێبەجێ بکە', preview: 'هەر ڕۆژێک لە {start}:00 هەر {step} کاتژمێر جێبەجێ بکە' },
-      specified: { editor: 'لەم کاتانە جێبەجێ بکە:', preview: 'هەر ڕۆژێک لە {values}:00 جێبەجێ بکە' },
-      range: { editor: 'لە {start}:00 تا {end}:00 جێبەجێ بکە', preview: 'هەر ڕۆژێک لە {start}:00 تا {end}:00 جێبەجێ بکە' },
-    },
-    day: {
-      every: { editor: 'هەر ڕۆژێک جێبەجێ بکە', preview: 'هەر ڕۆژێک جێبەجێ بکە' },
-      unspecified: { editor: 'بەروار دیاری مەکە', preview: 'ڕۆژ دیاری نەکراوە؛ خانەی هەفتە بەکاربهێنە' },
-      interval: { editor: 'لە ڕۆژی {start}ی هەر مانگێک دەست پێبکە، پاشان هەر {step} ڕۆژ جێبەجێ بکە', preview: 'هەر مانگێک لە ڕۆژی {start} هەر {step} ڕۆژ جێبەجێ بکە' },
-      specified: { editor: 'لەم ڕۆژانەی هەر مانگێک جێبەجێ بکە:', preview: 'لە ڕۆژانی {values}ی هەر مانگێک جێبەجێ بکە' },
-      range: { editor: 'لە ڕۆژی {start} تا {end}ی هەر مانگێک جێبەجێ بکە', preview: 'لە ڕۆژی {start} تا {end}ی هەر مانگێک جێبەجێ بکە' },
-    },
-    month: {
-      every: { editor: 'هەر مانگێک جێبەجێ بکە', preview: 'هەر مانگێک جێبەجێ بکە' },
-      interval: { editor: 'لە {start} دەست پێبکە، پاشان هەر {step} مانگ جێبەجێ بکە', preview: 'هەر ساڵێک لە {start} هەر {step} مانگ جێبەجێ بکە' },
-      specified: { editor: 'لەم مانگانە جێبەجێ بکە:', preview: 'هەر ساڵێک لە {values} جێبەجێ بکە' },
-      range: { editor: 'لە {start} تا {end} جێبەجێ بکە', preview: 'هەر ساڵێک لە {start} تا {end} جێبەجێ بکە' },
-    },
-    week: {
-      every: { editor: 'هەر ڕۆژێک جێبەجێ بکە', preview: 'هەر ڕۆژێک جێبەجێ بکە' },
-      unspecified: { editor: 'ڕۆژی هەفتە دیاری مەکە', preview: 'هەفتە دیاری نەکراوە؛ خانەی ڕۆژ بەکاربهێنە' },
-      interval: { editor: 'لە {start} دەست پێبکە، پاشان هەر {step} ڕۆژ جێبەجێ بکە', preview: 'هەر هەفتەیەک لە {start} هەر {step} ڕۆژ جێبەجێ بکە' },
-      specified: { editor: 'لەم ڕۆژانەی هەفتە جێبەجێ بکە:', preview: 'هەر {values} جێبەجێ بکە' },
-      range: { editor: 'هەر هەفتەیەک لە {start} تا {end} جێبەجێ بکە', preview: 'هەر هەفتەیەک لە {start} تا {end} جێبەجێ بکە' },
-    },
-    year: {
-      every: { editor: 'هەر ساڵێک جێبەجێ بکە', preview: 'هەر ساڵێک جێبەجێ بکە' },
-      interval: { editor: 'لە ساڵی {start} دەست پێبکە، پاشان هەر {step} ساڵ جێبەجێ بکە', preview: 'لە ساڵی {start} هەر {step} ساڵ جێبەجێ بکە' },
-      specified: { editor: 'لەم ساڵانە جێبەجێ بکە:', preview: 'لە ساڵانی {values} جێبەجێ بکە' },
-      range: { editor: 'لە ساڵی {start} تا ساڵی {end} جێبەجێ بکە', preview: 'لە ساڵی {start} تا ساڵی {end} جێبەجێ بکە' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'کانونی دووەم',
-      FEB: 'شوبات',
-      MAR: 'ئازار',
-      APR: 'نیسان',
-      MAY: 'ئایار',
-      JUN: 'حوزەیران',
-      JUL: 'تەممووز',
-      AUG: 'ئاب',
-      SEP: 'ئەیلوول',
-      OCT: 'تشرینی یەکەم',
-      NOV: 'تشرینی دووەم',
-      DEC: 'کانونی یەکەم',
-    },
-    week: {
-      SUN: 'یەکشەممە',
-      MON: 'دووشەممە',
-      TUE: 'سێشەممە',
-      WED: 'چوارشەممە',
-      THU: 'پێنجشەممە',
-      FRI: 'هەینی',
-      SAT: 'شەممە',
-    },
-  },
+  everyStep: 'هەر {step} خولەک جێبەجێ بکە {field}',
+  intervalField: 'لە خولەک {start} دەست پێبکە، پاشان هەر {step} خولەک جێبەجێ بکە {field}',
+  specifiedField: '{values}',
+  rangeField: '{start} ber {end}',
+  unspecifiedDay: 'ڕۆژ دیاری نەکراوە؛ خانەی هەفتە بەکاربهێنە',
+  unspecifiedWeek: 'هەفتە دیاری نەکراوە؛ خانەی ڕۆژ بەکاربهێنە',
   valueSeparator: ', ',
-  to: 'ber',
-  or: ' an ',
   expression: 'Cron îfade',
   fieldList: 'Zeviyên Cron',
   fieldStart: '{field} dest pê dike',
   fieldInterval: '{field} navber',
   fieldRangeStart: 'Rêjeya {field} dest pê dike',
   fieldRangeEnd: '{field} dawiya rêzê',
-  fieldValue: '{field} nirx',
   fieldValues: '{field} nirx',
   nextRun: 'Rêvekirina Paşê: {value}',
   noFutureRun: 'Pêşeroj tune',
-  everySeconds: 'Her {value} saniye',
-  everyMinutes: 'Her {value} deqîqe',
-  everyDayAt: 'Her roj li {value}',
-  customSchedule: 'Bernameya xwerû',
   specialLastDay: 'کۆتا ڕۆژی هەر مانگێک',
   specialLastWeekday: 'کۆتا ڕۆژی کارکردنی هەر مانگێک',
   specialNearestWeekday: 'نزیكترین ڕۆژی کارکردن بۆ ڕۆژی {day}ی هەر مانگێک',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'ئەم ڕستەسازییە تایبەتە پشتگیری ناکرێت',
     invalidExpression: 'Ravekirina kron nederbasdar',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

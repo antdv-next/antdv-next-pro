@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/ta_IN'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'இரண்டாவது',
     minute: 'நிமிடம்',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'வரம்பு',
     special: 'சிறப்பு',
   },
-  any: 'ஏதேனும்',
   notSpecified: 'குறிப்பிடப்படவில்லை',
-  every: 'ஒவ்வொரு',
   everyField: 'ஒவ்வொரு {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'ஒவ்வொரு {step} வினாடி இயக்கவும்', preview: 'ஒவ்வொரு {step} வினாடி இயக்கவும்' },
-      interval: { editor: 'வினாடி {start} இல் தொடங்கி, பிறகு ஒவ்வொரு {step} வினாடி இயக்கவும்', preview: 'ஒவ்வொரு நிமிடமும் வினாடி {start} முதல் ஒவ்வொரு {step} வினாடி இயக்கவும்' },
-      specified: { editor: 'இந்த வினாடி இயக்கவும்:', preview: 'ஒவ்வொரு நிமிடமும் வினாடி {values} இல் இயக்கவும்' },
-      range: { editor: 'வினாடி {start} முதல் வினாடி {end} வரை இயக்கவும்', preview: 'ஒவ்வொரு நிமிடமும் வினாடி {start} முதல் வினாடி {end} வரை இயக்கவும்' },
-    },
-    minute: {
-      every: { editor: 'ஒவ்வொரு {step} நிமிடம் இயக்கவும்', preview: 'ஒவ்வொரு {step} நிமிடம் இயக்கவும்' },
-      interval: { editor: 'நிமிடம் {start} இல் தொடங்கி, பிறகு ஒவ்வொரு {step} நிமிடம் இயக்கவும்', preview: 'ஒவ்வொரு மணியும் நிமிடம் {start} முதல் ஒவ்வொரு {step} நிமிடம் இயக்கவும்' },
-      specified: { editor: 'இந்த நிமிடம் இயக்கவும்:', preview: 'ஒவ்வொரு மணியும் நிமிடம் {values} இல் இயக்கவும்' },
-      range: { editor: 'நிமிடம் {start} முதல் நிமிடம் {end} வரை இயக்கவும்', preview: 'ஒவ்வொரு மணியும் நிமிடம் {start} முதல் நிமிடம் {end} வரை இயக்கவும்' },
-    },
-    hour: {
-      every: { editor: 'ஒவ்வொரு {step} மணி இயக்கவும்', preview: 'ஒவ்வொரு {step} மணி இயக்கவும்' },
-      interval: { editor: '{start}:00 இல் தொடங்கி, பிறகு ஒவ்வொரு {step} மணி இயக்கவும்', preview: 'ஒவ்வொரு நாளும் {start}:00 முதல் ஒவ்வொரு {step} மணி இயக்கவும்' },
-      specified: { editor: 'இந்த நேரங்களில் இயக்கவும்:', preview: 'ஒவ்வொரு நாளும் {values}:00 இல் இயக்கவும்' },
-      range: { editor: '{start}:00 முதல் {end}:00 வரை இயக்கவும்', preview: 'ஒவ்வொரு நாளும் {start}:00 முதல் {end}:00 வரை இயக்கவும்' },
-    },
-    day: {
-      every: { editor: 'ஒவ்வொரு நாளும் இயக்கவும்', preview: 'ஒவ்வொரு நாளும் இயக்கவும்' },
-      unspecified: { editor: 'தேதியைக் குறிப்பிட வேண்டாம்', preview: 'நாள் குறிப்பிடப்படவில்லை; வாரம் புலத்தைப் பின்பற்றவும்' },
-      interval: { editor: 'ஒவ்வொரு மாதமும் {start} ஆம் நாளில் தொடங்கி, பிறகு ஒவ்வொரு {step} நாள் இயக்கவும்', preview: 'ஒவ்வொரு மாதமும் {start} ஆம் நாள் முதல் ஒவ்வொரு {step} நாள் இயக்கவும்' },
-      specified: { editor: 'ஒவ்வொரு மாதமும் இந்த நாட்களில் இயக்கவும்:', preview: 'ஒவ்வொரு மாதமும் {values} ஆம் நாளில் இயக்கவும்' },
-      range: { editor: 'ஒவ்வொரு மாதமும் {start} முதல் {end} ஆம் நாள் வரை இயக்கவும்', preview: 'ஒவ்வொரு மாதமும் {start} முதல் {end} ஆம் நாள் வரை இயக்கவும்' },
-    },
-    month: {
-      every: { editor: 'ஒவ்வொரு மாதமும் இயக்கவும்', preview: 'ஒவ்வொரு மாதமும் இயக்கவும்' },
-      interval: { editor: '{start} இல் தொடங்கி, பிறகு ஒவ்வொரு {step} மாதம் இயக்கவும்', preview: 'ஒவ்வொரு ஆண்டும் {start} முதல் ஒவ்வொரு {step} மாதம் இயக்கவும்' },
-      specified: { editor: 'இந்த மாதங்களில் இயக்கவும்:', preview: 'ஒவ்வொரு ஆண்டும் {values} இல் இயக்கவும்' },
-      range: { editor: '{start} முதல் {end} வரை இயக்கவும்', preview: 'ஒவ்வொரு ஆண்டும் {start} முதல் {end} வரை இயக்கவும்' },
-    },
-    week: {
-      every: { editor: 'ஒவ்வொரு நாளும் இயக்கவும்', preview: 'ஒவ்வொரு நாளும் இயக்கவும்' },
-      unspecified: { editor: 'வார நாளைக் குறிப்பிட வேண்டாம்', preview: 'வாரம் குறிப்பிடப்படவில்லை; நாள் புலத்தைப் பின்பற்றவும்' },
-      interval: { editor: '{start} இல் தொடங்கி, பிறகு ஒவ்வொரு {step} நாள் இயக்கவும்', preview: 'ஒவ்வொரு வாரமும் {start} முதல் ஒவ்வொரு {step} நாள் இயக்கவும்' },
-      specified: { editor: 'இந்த வார நாட்களில் இயக்கவும்:', preview: 'ஒவ்வொரு {values} இயக்கவும்' },
-      range: { editor: 'ஒவ்வொரு வாரமும் {start} முதல் {end} வரை இயக்கவும்', preview: 'ஒவ்வொரு வாரமும் {start} முதல் {end} வரை இயக்கவும்' },
-    },
-    year: {
-      every: { editor: 'ஒவ்வொரு ஆண்டும் இயக்கவும்', preview: 'ஒவ்வொரு ஆண்டும் இயக்கவும்' },
-      interval: { editor: '{start} ஆம் ஆண்டில் தொடங்கி, பிறகு ஒவ்வொரு {step} ஆண்டு இயக்கவும்', preview: '{start} ஆம் ஆண்டு முதல் ஒவ்வொரு {step} ஆண்டு இயக்கவும்' },
-      specified: { editor: 'இந்த ஆண்டுகளில் இயக்கவும்:', preview: '{values} ஆண்டுகளில் இயக்கவும்' },
-      range: { editor: '{start} ஆம் ஆண்டு முதல் {end} ஆம் ஆண்டு வரை இயக்கவும்', preview: '{start} ஆம் ஆண்டு முதல் {end} ஆம் ஆண்டு வரை இயக்கவும்' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'ஜன.',
-      FEB: 'பிப்.',
-      MAR: 'மார்.',
-      APR: 'ஏப்.',
-      MAY: 'மே',
-      JUN: 'ஜூன்',
-      JUL: 'ஜூலை',
-      AUG: 'ஆக.',
-      SEP: 'செப்.',
-      OCT: 'அக்.',
-      NOV: 'நவ.',
-      DEC: 'டிச.',
-    },
-    week: {
-      SUN: 'ஞாயி.',
-      MON: 'திங்.',
-      TUE: 'செவ்.',
-      WED: 'புத.',
-      THU: 'வியா.',
-      FRI: 'வெள்.',
-      SAT: 'சனி',
-    },
-  },
+  everyStep: 'ஒவ்வொரு {step} {field} இயக்கவும்',
+  intervalField: ' {start} இல் தொடங்கி, பிறகு ஒவ்வொரு {step} {field} இயக்கவும்',
+  specifiedField: '{values}',
+  rangeField: '{start} முதல் {end}',
+  unspecifiedDay: 'நாள் குறிப்பிடப்படவில்லை; வாரம் புலத்தைப் பின்பற்றவும்',
+  unspecifiedWeek: 'வாரம் குறிப்பிடப்படவில்லை; நாள் புலத்தைப் பின்பற்றவும்',
   valueSeparator: ', ',
-  to: 'முதல்',
-  or: ' அல்லது ',
   expression: 'கிரான் வெளிப்பாடு',
   fieldList: 'கிரான் புலங்கள்',
   fieldStart: '{field} தொடக்கம்',
   fieldInterval: '{field} இடைவெளி',
   fieldRangeStart: '{field} வரம்பு தொடக்கம்',
   fieldRangeEnd: '{field} வரம்பு முடிவு',
-  fieldValue: '{field} மதிப்பு',
   fieldValues: '{field} மதிப்புகள்',
   nextRun: 'அடுத்த ஓட்டம்: {value}',
   noFutureRun: 'எதிர்கால ஓட்டம் இல்லை',
-  everySeconds: 'ஒவ்வொரு {value} வினாடிகளுக்கும்',
-  everyMinutes: 'ஒவ்வொரு {value} நிமிடங்களுக்கும்',
-  everyDayAt: 'ஒவ்வொரு நாளும் {value} மணிக்கு',
-  customSchedule: 'தனிப்பயன் அட்டவணை',
   specialLastDay: 'ஒவ்வொரு மாதத்தின் கடைசி நாள்',
   specialLastWeekday: 'ஒவ்வொரு மாதத்தின் கடைசி வேலை நாள்',
   specialNearestWeekday: 'ஒவ்வொரு மாதமும் {day} ஆம் நாளுக்கு அருகிலுள்ள வேலை நாள்',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'இந்த சிறப்பு தொடரியல் ஆதரிக்கப்படாது',
     invalidExpression: 'தவறான கிரான் வெளிப்பாடு',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

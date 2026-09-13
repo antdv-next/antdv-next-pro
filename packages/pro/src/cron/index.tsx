@@ -354,6 +354,29 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       })
     }
 
+    function renderNumberSelect(field: CronFieldName, value: number, min: number, max: number, ariaLabel: string, onUpdate: (value: number) => void, formatOption?: (value: number) => string) {
+      return (
+        <Select
+          value={String(value)}
+          options={Array.from({ length: max - min + 1 }, (_, index) => {
+            const optionValue = index + min
+            const label = formatOption?.(optionValue) ?? formatFieldValue(field, String(optionValue), locale.value, mergedFormat.value)
+            return { value: String(optionValue), label }
+          })}
+          size={mergedSize.value}
+          disabled={!editable.value}
+          aria-label={ariaLabel}
+          onUpdate:value={nextValue => onUpdate(Number(nextValue ?? min))}
+        />
+      )
+    }
+
+    function renderNumberControl(field: CronFieldName, value: number, min: number, max: number, ariaLabel: string, onUpdate: (value: number) => void) {
+      if (field !== 'year')
+        return renderNumberSelect(field, value, min, max, ariaLabel, onUpdate)
+      return <InputNumber min={min} max={max} value={value} size={mergedSize.value} disabled={!editable.value} controls={false} aria-label={ariaLabel} onUpdate:value={nextValue => onUpdate(Number(nextValue ?? min))} />
+    }
+
     function renderSpecifiedSelect(field: CronFieldName, value: string, names?: readonly string[]) {
       const [min, max] = fieldLimits.value[field]
       const optionValues = names ?? (field === 'year' ? [] : Array.from({ length: max - min + 1 }, (_, index) => String(index + min)))
@@ -406,18 +429,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
                   applySpecial({ type: 'nearestWeekday', day: current.type === 'nearestWeekday' ? current.day : 15 })
               }}
             />
-            {current.type === 'nearestWeekday' && (
-              <InputNumber
-                min={1}
-                max={31}
-                value={current.day}
-                size={mergedSize.value}
-                disabled={!editable.value}
-                controls={false}
-                aria-label={locale.value.specialNearestWeekday}
-                onUpdate:value={nextValue => applySpecial({ type: 'nearestWeekday', day: Number(nextValue ?? 15) })}
-              />
-            )}
+            {current.type === 'nearestWeekday' && renderNumberSelect('day', current.day, 1, 31, locale.value.specialNearestWeekday, day => applySpecial({ type: 'nearestWeekday', day }))}
           </div>
         )
       }
@@ -457,18 +469,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
                 applySpecial({ type: 'nthDayOfWeek', week: current.week, nth: current.type === 'nthDayOfWeek' ? current.nth : 1 })
             }}
           />
-          {current.type === 'nthDayOfWeek' && (
-            <InputNumber
-              min={1}
-              max={5}
-              value={current.nth}
-              size={mergedSize.value}
-              disabled={!editable.value}
-              controls={false}
-              aria-label={locale.value.specialNth}
-              onUpdate:value={nextValue => applySpecial({ type: 'nthDayOfWeek', week: current.week, nth: Number(nextValue ?? 1) })}
-            />
-          )}
+          {current.type === 'nthDayOfWeek' && renderNumberSelect('week', current.nth, 1, 5, locale.value.specialNth, nth => applySpecial({ type: 'nthDayOfWeek', week: current.week, nth }), nth => String(nth))}
         </div>
       )
     }
@@ -484,7 +485,6 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       const mode = activeMode.value
       const names = field === 'month' ? MONTH_VALUES : field === 'week' ? WEEK_VALUES : undefined
       const values = getNumericParts(value, min, names, mergedFormat.value, field)
-      const numberProps = { min, max, size: mergedSize.value, disabled: !editable.value, controls: false }
       const editorTemplate = formatCronMessage(getFieldTemplate(field, mode, locale.value), { field: locale.value.fields[field] })
       if (mode === 'special' && (field === 'day' || field === 'week'))
         return wrapControls(renderSpecialControls(field))
@@ -493,19 +493,19 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       if (mode === 'every') {
         const interval = value.startsWith('*/') ? Number(value.slice(2)) : 1
         return wrapControls(renderEditorTemplate(editorTemplate, {
-          step: <InputNumber {...numberProps} min={1} max={max - min + 1} value={Number.isFinite(interval) && interval > 0 ? interval : 1} aria-label={formatCronMessage(locale.value.fieldInterval, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, Number(nextValue ?? 1) === 1 ? '*' : `*/${nextValue ?? 1}`)} />,
+          step: renderNumberControl(field, Number.isFinite(interval) && interval > 0 ? interval : 1, 1, max - min + 1, formatCronMessage(locale.value.fieldInterval, { field: locale.value.fields[field] }), nextValue => applyFieldValue(field, nextValue === 1 ? '*' : `*/${nextValue}`)),
         }))
       }
       if (mode === 'interval') {
         return wrapControls(renderEditorTemplate(editorTemplate, {
-          start: <InputNumber {...numberProps} value={values[0]} aria-label={formatCronMessage(locale.value.fieldStart, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${nextValue ?? min}/${values[1] ?? 1}`)} />,
-          step: <InputNumber {...numberProps} min={1} max={max - min + 1} value={values[1] ?? 1} aria-label={formatCronMessage(locale.value.fieldInterval, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${values[0] ?? min}/${nextValue ?? 1}`)} />,
+          start: renderNumberControl(field, values[0] ?? min, min, max, formatCronMessage(locale.value.fieldStart, { field: locale.value.fields[field] }), nextValue => applyFieldValue(field, `${nextValue}/${values[1] ?? 1}`)),
+          step: renderNumberControl(field, values[1] ?? 1, 1, max - min + 1, formatCronMessage(locale.value.fieldInterval, { field: locale.value.fields[field] }), nextValue => applyFieldValue(field, `${values[0] ?? min}/${nextValue}`)),
         }))
       }
       if (mode === 'range') {
         return wrapControls(renderEditorTemplate(editorTemplate, {
-          start: <InputNumber {...numberProps} value={values[0]} aria-label={formatCronMessage(locale.value.fieldRangeStart, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${nextValue ?? min}-${values[1] ?? max}`)} />,
-          end: <InputNumber {...numberProps} value={values[1] ?? max} aria-label={formatCronMessage(locale.value.fieldRangeEnd, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, `${values[0] ?? min}-${nextValue ?? max}`)} />,
+          start: renderNumberControl(field, values[0] ?? min, min, max, formatCronMessage(locale.value.fieldRangeStart, { field: locale.value.fields[field] }), nextValue => applyFieldValue(field, `${nextValue}-${values[1] ?? max}`)),
+          end: renderNumberControl(field, values[1] ?? max, min, max, formatCronMessage(locale.value.fieldRangeEnd, { field: locale.value.fields[field] }), nextValue => applyFieldValue(field, `${values[0] ?? min}-${nextValue}`)),
         }))
       }
       if (mode === 'specified') {

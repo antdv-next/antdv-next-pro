@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/mr_IN'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'सेकंद',
     minute: 'मिनिट',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'श्रेणी',
     special: 'विशेष',
   },
-  any: 'कोणतीही',
   notSpecified: 'निर्दिष्ट नाही',
-  every: 'प्रत्येक',
   everyField: 'प्रत्येक {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'दर {step} सेकंद चालवा', preview: 'दर {step} सेकंद चालवा' },
-      interval: { editor: 'सेकंद {start} पासून सुरू करा, नंतर दर {step} सेकंद चालवा', preview: 'दर मिनिट सेकंद {start} पासून दर {step} सेकंद चालवा' },
-      specified: { editor: 'या सेकंद चालवा:', preview: 'दर मिनिट सेकंद {values} वर चालवा' },
-      range: { editor: 'सेकंद {start} ते सेकंद {end} चालवा', preview: 'दर मिनिट सेकंद {start} ते सेकंद {end} चालवा' },
-    },
-    minute: {
-      every: { editor: 'दर {step} मिनिटे चालवा', preview: 'दर {step} मिनिटे चालवा' },
-      interval: { editor: 'मिनिट {start} पासून सुरू करा, नंतर दर {step} मिनिटे चालवा', preview: 'दर तास मिनिट {start} पासून दर {step} मिनिटे चालवा' },
-      specified: { editor: 'या मिनिटे चालवा:', preview: 'दर तास मिनिटे {values} वर चालवा' },
-      range: { editor: 'मिनिट {start} ते मिनिट {end} चालवा', preview: 'दर तास मिनिट {start} ते मिनिट {end} चालवा' },
-    },
-    hour: {
-      every: { editor: 'दर {step} तास चालवा', preview: 'दर {step} तास चालवा' },
-      interval: { editor: '{start}:00 पासून सुरू करा, नंतर दर {step} तास चालवा', preview: 'दररोज {start}:00 पासून दर {step} तास चालवा' },
-      specified: { editor: 'या वेळी चालवा:', preview: 'दररोज {values}:00 वाजता चालवा' },
-      range: { editor: '{start}:00 ते {end}:00 चालवा', preview: 'दररोज {start}:00 ते {end}:00 चालवा' },
-    },
-    day: {
-      every: { editor: 'दररोज चालवा', preview: 'दररोज चालवा' },
-      unspecified: { editor: 'तारीख निर्दिष्ट करू नका', preview: 'दिवस निर्दिष्ट नाही; आठवडा फील्ड अनुसरा' },
-      interval: { editor: 'दर महिन्याच्या {start} दिवसापासून सुरू करा, नंतर दर {step} दिवस चालवा', preview: 'दर महिना दिवस {start} पासून दर {step} दिवस चालवा' },
-      specified: { editor: 'दर महिन्याच्या या दिवशी चालवा:', preview: 'दर महिना दिवस {values} चालवा' },
-      range: { editor: 'दर महिना दिवस {start} ते {end} चालवा', preview: 'दर महिना दिवस {start} ते {end} चालवा' },
-    },
-    month: {
-      every: { editor: 'दर महिना चालवा', preview: 'दर महिना चालवा' },
-      interval: { editor: '{start} पासून सुरू करा, नंतर दर {step} महिने चालवा', preview: 'दरवर्षी {start} पासून दर {step} महिने चालवा' },
-      specified: { editor: 'या महिन्यांत चालवा:', preview: 'दरवर्षी {values} चालवा' },
-      range: { editor: '{start} ते {end} चालवा', preview: 'दरवर्षी {start} ते {end} चालवा' },
-    },
-    week: {
-      every: { editor: 'दररोज चालवा', preview: 'दररोज चालवा' },
-      unspecified: { editor: 'आठवड्याचा दिवस निर्दिष्ट करू नका', preview: 'आठवडा निर्दिष्ट नाही; दिवस फील्ड अनुसरा' },
-      interval: { editor: '{start} पासून सुरू करा, नंतर दर {step} दिवस चालवा', preview: 'दर आठवडा {start} पासून दर {step} दिवस चालवा' },
-      specified: { editor: 'आठवड्याच्या या दिवशी चालवा:', preview: 'दर {values} चालवा' },
-      range: { editor: 'दर आठवडा {start} ते {end} चालवा', preview: 'दर आठवडा {start} ते {end} चालवा' },
-    },
-    year: {
-      every: { editor: 'दरवर्षी चालवा', preview: 'दरवर्षी चालवा' },
-      interval: { editor: 'वर्ष {start} पासून सुरू करा, नंतर दर {step} वर्षे चालवा', preview: 'वर्ष {start} पासून दर {step} वर्षे चालवा' },
-      specified: { editor: 'या वर्षांत चालवा:', preview: 'वर्ष {values} चालवा' },
-      range: { editor: 'वर्ष {start} ते {end} चालवा', preview: 'वर्ष {start} ते {end} चालवा' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'जाने',
-      FEB: 'फेब्रु',
-      MAR: 'मार्च',
-      APR: 'एप्रि',
-      MAY: 'मे',
-      JUN: 'जून',
-      JUL: 'जुलै',
-      AUG: 'ऑग',
-      SEP: 'सप्टें',
-      OCT: 'ऑक्टो',
-      NOV: 'नोव्हें',
-      DEC: 'डिसें',
-    },
-    week: {
-      SUN: 'रवि',
-      MON: 'सोम',
-      TUE: 'मंगळ',
-      WED: 'बुध',
-      THU: 'गुरु',
-      FRI: 'शुक्र',
-      SAT: 'शनि',
-    },
-  },
+  everyStep: 'दर {step} {field}े चालवा',
+  intervalField: ' {start} पासून सुरू करा, नंतर दर {step} {field}े चालवा',
+  specifiedField: '{values}',
+  rangeField: '{start} ते {end}',
+  unspecifiedDay: 'दिवस निर्दिष्ट नाही; आठवडा फील्ड अनुसरा',
+  unspecifiedWeek: 'आठवडा निर्दिष्ट नाही; दिवस फील्ड अनुसरा',
   valueSeparator: ', ',
-  to: 'ते',
-  or: ' किंवा ',
   expression: 'क्रॉन अभिव्यक्ती',
   fieldList: 'क्रॉन फील्ड',
   fieldStart: '{field} प्रारंभ',
   fieldInterval: '{field} मध्यांतर',
   fieldRangeStart: '{field} श्रेणी प्रारंभ',
   fieldRangeEnd: '{field} श्रेणी समाप्त',
-  fieldValue: '{field} मूल्य',
   fieldValues: '{field} मूल्ये',
   nextRun: 'पुढील रन: {value}',
   noFutureRun: 'भविष्यात कोणतीही धाव नाही',
-  everySeconds: 'प्रत्येक {value} सेकंदांनी',
-  everyMinutes: 'प्रत्येक {value} मिनिटांनी',
-  everyDayAt: 'दररोज {value} वाजता',
-  customSchedule: 'सानुकूल शेड्यूल',
   specialLastDay: 'प्रत्येक महिन्याचा शेवटचा दिवस',
   specialLastWeekday: 'प्रत्येक महिन्याचा शेवटचा कार्यदिवस',
   specialNearestWeekday: 'प्रत्येक महिन्याच्या {day} तारखेच्या जवळचा कार्यदिवस',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'ही विशेष वाक्यरचना समर्थित नाही',
     invalidExpression: 'अवैध क्रॉन अभिव्यक्ती',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

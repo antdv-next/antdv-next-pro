@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/bn_BD'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'সেকেন্ড',
     minute: 'মিনিট',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'পরিসর',
     special: 'বিশেষ',
   },
-  any: 'যেকোনো',
   notSpecified: 'নির্দিষ্ট করা নেই',
-  every: 'প্রতি',
   everyField: 'প্রতি {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'প্রতি {step} সেকেন্ড চালান', preview: 'প্রতি {step} সেকেন্ড চালান' },
-      interval: { editor: 'সেকেন্ড {start} থেকে শুরু করুন, তারপর প্রতি {step} সেকেন্ড চালান', preview: 'প্রতি মিনিট সেকেন্ড {start} থেকে প্রতি {step} সেকেন্ড চালান' },
-      specified: { editor: 'এই সেকেন্ড চালান:', preview: 'প্রতি মিনিট সেকেন্ড {values} এ চালান' },
-      range: { editor: 'সেকেন্ড {start} থেকে সেকেন্ড {end} পর্যন্ত চালান', preview: 'প্রতি মিনিট সেকেন্ড {start} থেকে সেকেন্ড {end} পর্যন্ত চালান' },
-    },
-    minute: {
-      every: { editor: 'প্রতি {step} মিনিট চালান', preview: 'প্রতি {step} মিনিট চালান' },
-      interval: { editor: 'মিনিট {start} থেকে শুরু করুন, তারপর প্রতি {step} মিনিট চালান', preview: 'প্রতি ঘণ্টা মিনিট {start} থেকে প্রতি {step} মিনিট চালান' },
-      specified: { editor: 'এই মিনিট চালান:', preview: 'প্রতি ঘণ্টা মিনিট {values} এ চালান' },
-      range: { editor: 'মিনিট {start} থেকে মিনিট {end} পর্যন্ত চালান', preview: 'প্রতি ঘণ্টা মিনিট {start} থেকে মিনিট {end} পর্যন্ত চালান' },
-    },
-    hour: {
-      every: { editor: 'প্রতি {step} ঘণ্টা চালান', preview: 'প্রতি {step} ঘণ্টা চালান' },
-      interval: { editor: '{start}:00 থেকে শুরু করুন, তারপর প্রতি {step} ঘণ্টা চালান', preview: 'প্রতিদিন {start}:00 থেকে প্রতি {step} ঘণ্টা চালান' },
-      specified: { editor: 'এই সময়ে চালান:', preview: 'প্রতিদিন {values}:00 এ চালান' },
-      range: { editor: '{start}:00 থেকে {end}:00 পর্যন্ত চালান', preview: 'প্রতিদিন {start}:00 থেকে {end}:00 পর্যন্ত চালান' },
-    },
-    day: {
-      every: { editor: 'প্রতিদিন চালান', preview: 'প্রতিদিন চালান' },
-      unspecified: { editor: 'তারিখ নির্দিষ্ট করবেন না', preview: 'দিন নির্দিষ্ট নয়; সপ্তাহ ক্ষেত্র অনুসরণ করুন' },
-      interval: { editor: 'প্রতি মাসের {start} তারিখ থেকে শুরু করুন, তারপর প্রতি {step} দিন চালান', preview: 'প্রতি মাস {start} তারিখ থেকে প্রতি {step} দিন চালান' },
-      specified: { editor: 'প্রতি মাসের এই তারিখগুলোতে চালান:', preview: 'প্রতি মাসের {values} তারিখে চালান' },
-      range: { editor: 'প্রতি মাসের {start} থেকে {end} তারিখ পর্যন্ত চালান', preview: 'প্রতি মাসের {start} থেকে {end} তারিখ পর্যন্ত চালান' },
-    },
-    month: {
-      every: { editor: 'প্রতি মাস চালান', preview: 'প্রতি মাস চালান' },
-      interval: { editor: '{start} থেকে শুরু করুন, তারপর প্রতি {step} মাস চালান', preview: 'প্রতি বছর {start} থেকে প্রতি {step} মাস চালান' },
-      specified: { editor: 'এই মাসগুলোতে চালান:', preview: 'প্রতি বছর {values} এ চালান' },
-      range: { editor: '{start} থেকে {end} পর্যন্ত চালান', preview: 'প্রতি বছর {start} থেকে {end} পর্যন্ত চালান' },
-    },
-    week: {
-      every: { editor: 'প্রতিদিন চালান', preview: 'প্রতিদিন চালান' },
-      unspecified: { editor: 'সপ্তাহের দিন নির্দিষ্ট করবেন না', preview: 'সপ্তাহ নির্দিষ্ট নয়; দিন ক্ষেত্র অনুসরণ করুন' },
-      interval: { editor: '{start} থেকে শুরু করুন, তারপর প্রতি {step} দিন চালান', preview: 'প্রতি সপ্তাহ {start} থেকে প্রতি {step} দিন চালান' },
-      specified: { editor: 'সপ্তাহের এই দিনগুলোতে চালান:', preview: 'প্রতি {values} চালান' },
-      range: { editor: 'প্রতি সপ্তাহ {start} থেকে {end} পর্যন্ত চালান', preview: 'প্রতি সপ্তাহ {start} থেকে {end} পর্যন্ত চালান' },
-    },
-    year: {
-      every: { editor: 'প্রতি বছর চালান', preview: 'প্রতি বছর চালান' },
-      interval: { editor: '{start} সাল থেকে শুরু করুন, তারপর প্রতি {step} বছর চালান', preview: '{start} সাল থেকে প্রতি {step} বছর চালান' },
-      specified: { editor: 'এই সালগুলোতে চালান:', preview: '{values} সালে চালান' },
-      range: { editor: '{start} সাল থেকে {end} সাল পর্যন্ত চালান', preview: '{start} সাল থেকে {end} সাল পর্যন্ত চালান' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'জানু',
-      FEB: 'ফেব',
-      MAR: 'মার্চ',
-      APR: 'এপ্রিল',
-      MAY: 'মে',
-      JUN: 'জুন',
-      JUL: 'জুলাই',
-      AUG: 'আগস্ট',
-      SEP: 'সেপ্ট',
-      OCT: 'অক্টো',
-      NOV: 'নভেম্বর',
-      DEC: 'ডিসে',
-    },
-    week: {
-      SUN: 'রবি',
-      MON: 'সোম',
-      TUE: 'মঙ্গল',
-      WED: 'বুধ',
-      THU: 'বৃহস্পতি',
-      FRI: 'শুক্র',
-      SAT: 'শনি',
-    },
-  },
+  everyStep: 'প্রতি {step} {field} চালান',
+  intervalField: ' {start} থেকে শুরু করুন, তারপর প্রতি {step} {field} চালান',
+  specifiedField: '{values}',
+  rangeField: '{start} থেকে {end}',
+  unspecifiedDay: 'দিন নির্দিষ্ট নয়; সপ্তাহ ক্ষেত্র অনুসরণ করুন',
+  unspecifiedWeek: 'সপ্তাহ নির্দিষ্ট নয়; দিন ক্ষেত্র অনুসরণ করুন',
   valueSeparator: ', ',
-  to: 'থেকে',
-  or: ' অথবা ',
   expression: 'ক্রোন এক্সপ্রেশন',
   fieldList: 'ক্রোন ক্ষেত্র',
   fieldStart: '{field} শুরু',
   fieldInterval: '{field} ব্যবধান',
   fieldRangeStart: '{field} পরিসর শুরু',
   fieldRangeEnd: '{field} পরিসর শেষ',
-  fieldValue: '{field} মান',
   fieldValues: '{field}টি মান',
   nextRun: 'পরবর্তী রান: {value}',
   noFutureRun: 'কোন ভবিষ্যৎ রান',
-  everySeconds: 'প্রতি {value} সেকেন্ডে',
-  everyMinutes: 'প্রতি {value} মিনিটে',
-  everyDayAt: 'প্রতিদিন {value} এ',
-  customSchedule: 'কাস্টম সময়সূচী',
   specialLastDay: 'প্রতি মাসের শেষ দিন',
   specialLastWeekday: 'প্রতি মাসের শেষ কর্মদিবস',
   specialNearestWeekday: 'প্রতি মাসের {day} তারিখের নিকটতম কর্মদিবস',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'এই বিশেষ সিনট্যাক্স সমর্থিত নয়',
     invalidExpression: 'অবৈধ ক্রোন এক্সপ্রেশন',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { ConfigProvider, Form, FormItem, InputNumber, RadioGroup, Segmented, Select, Tooltip } from 'antdv-next'
+import { ConfigProvider, Form, FormItem, RadioGroup, Segmented, Select, Tooltip } from 'antdv-next'
 import enUS from 'antdv-next/locale/en_US'
 import frFR from 'antdv-next/locale/fr_FR'
 import zhCN from 'antdv-next/locale/zh_CN'
@@ -494,7 +494,7 @@ describe('Cron', () => {
     let wrapper = mountCron('0 */5 9 * * ?')
 
     expect(wrapper.find('.ant-cron-field-control-summary').text()).toBe('每 5 分钟执行')
-    expect((wrapper.find('.ant-cron-controls input').element as HTMLInputElement).value).toBe('5')
+    expect(wrapper.getComponent(Select).props('value')).toBe('5')
     expect(wrapper.find('.ant-cron-description').exists()).toBe(false)
     expect(wrapper.find('.ant-cron-field-mode-description').exists()).toBe(false)
 
@@ -591,6 +591,28 @@ describe('Cron', () => {
     expect(wrapper.find('.ant-cron-field-control-summary').text()).toContain(`${currentYear}`)
   })
 
+  it('uses selects for bounded numeric interval and range values', async () => {
+    const wrapper = mount(Cron, { props: { value: '0 10/5 * * * ?' } })
+    let selects = wrapper.findAllComponents(Select)
+    expect(selects).toHaveLength(2)
+
+    selects[0]!.vm.$emit('update:value', '20')
+    await nextTick()
+    expect(wrapper.find('input').element.value).toBe('0 20/5 * * * ?')
+
+    selects[1]!.vm.$emit('update:value', '10')
+    await nextTick()
+    expect(wrapper.find('input').element.value).toBe('0 20/10 * * * ?')
+
+    wrapper.getComponent(Segmented).vm.$emit('update:value', 'range')
+    await nextTick()
+    selects = wrapper.findAllComponents(Select)
+    expect(selects).toHaveLength(2)
+    selects[1]!.vm.$emit('update:value', '30')
+    await nextTick()
+    expect(wrapper.find('input').element.value).toBe('0 0-30 * * * ?')
+  })
+
   it('keeps unix weekday 7 until the specified editor canonicalizes it to SUN', async () => {
     const wrapper = mount(Cron, {
       props: {
@@ -630,7 +652,7 @@ describe('Cron', () => {
 
     weekWrapper.getComponent(Select).vm.$emit('update:value', 'MON')
     await nextTick()
-    weekWrapper.getComponent(InputNumber).vm.$emit('update:value', 2)
+    weekWrapper.findAllComponents(Select)[1]!.vm.$emit('update:value', '2')
     await nextTick()
     expect(weekWrapper.find('input').element.value).toBe('0 0 9 ? * 2#2')
     expect(weekWrapper.emitted('update:value')?.slice(-1)).toEqual([['0 0 9 ? * 2#2']])

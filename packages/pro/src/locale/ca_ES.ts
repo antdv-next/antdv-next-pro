@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/ca_ES'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'Segon',
     minute: 'Minut',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Interval',
     special: 'Especial',
   },
-  any: 'Qualsevol',
   notSpecified: 'No especificat',
-  every: 'cada',
   everyField: 'Cada {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Executa cada {step} segons', preview: 'Executa cada {step} segons' },
-      interval: { editor: 'Comença a segon {start} i executa cada {step} segons', preview: 'de cada minut, executa des de segon {start} cada {step} segons' },
-      specified: { editor: 'Executa en aquests segons:', preview: 'Executa als segons {values} de cada minut' },
-      range: { editor: 'Executa des de segon {start} fins a segon {end}', preview: 'Executa des de segon {start} fins a segon {end} de cada minut' },
-    },
-    minute: {
-      every: { editor: 'Executa cada {step} minuts', preview: 'Executa cada {step} minuts' },
-      interval: { editor: 'Comença a minut {start} i executa cada {step} minuts', preview: 'de cada hora, executa des de minut {start} cada {step} minuts' },
-      specified: { editor: 'Executa en aquests minuts:', preview: 'Executa als minuts {values} de cada hora' },
-      range: { editor: 'Executa des de minut {start} fins a minut {end}', preview: 'Executa des de minut {start} fins a minut {end} de cada hora' },
-    },
-    hour: {
-      every: { editor: 'Executa cada {step} hores', preview: 'Executa cada {step} hores' },
-      interval: { editor: 'Comença a les {start}:00 i executa cada {step} hores', preview: 'Cada dia, executa des de les {start}:00 cada {step} hores' },
-      specified: { editor: 'Executa a aquestes hores:', preview: 'Executa a les {values}:00 cada dia' },
-      range: { editor: 'Executa de {start}:00 a {end}:00', preview: 'Executa de {start}:00 a {end}:00 cada dia' },
-    },
-    day: {
-      every: { editor: 'Executa cada dia', preview: 'Executa cada dia' },
-      unspecified: { editor: 'No especifiquis una data', preview: 'El dia no està especificat; segueix el camp de la setmana' },
-      interval: { editor: 'Comença el dia {start} de cada mes i executa cada {step} dies', preview: 'Cada mes, executa des del dia {start} cada {step} dies' },
-      specified: { editor: 'Executa aquests dies de cada mes:', preview: 'Executa els dies {values} de cada mes' },
-      range: { editor: 'Executa del dia {start} al dia {end} de cada mes', preview: 'Executa del dia {start} al dia {end} de cada mes' },
-    },
-    month: {
-      every: { editor: 'Executa cada mes', preview: 'Executa cada mes' },
-      interval: { editor: 'Comença a {start} i executa cada {step} mesos', preview: 'Cada any, executa des de {start} cada {step} mesos' },
-      specified: { editor: 'Executa aquests mesos:', preview: 'Executa en {values} cada any' },
-      range: { editor: 'Executa de {start} a {end}', preview: 'Executa de {start} a {end} cada any' },
-    },
-    week: {
-      every: { editor: 'Executa cada dia', preview: 'Executa cada dia' },
-      unspecified: { editor: 'No especifiquis un dia de la setmana', preview: 'La setmana no està especificada; segueix el camp del dia' },
-      interval: { editor: 'Comença el {start} i executa cada {step} dies', preview: 'Cada setmana, executa des de {start} cada {step} dies' },
-      specified: { editor: 'Executa aquests dies de la setmana:', preview: 'Executa cada {values}' },
-      range: { editor: 'Executa de {start} a {end} cada setmana', preview: 'Executa de {start} a {end} cada setmana' },
-    },
-    year: {
-      every: { editor: 'Executa cada any', preview: 'Executa cada any' },
-      interval: { editor: 'Comença l\'any {start} i executa cada {step} anys', preview: 'Executa des de l\'any {start} cada {step} anys' },
-      specified: { editor: 'Executa aquests anys:', preview: 'Executa els anys {values}' },
-      range: { editor: 'Executa de l\'any {start} a l\'any {end}', preview: 'Executa de l\'any {start} a l\'any {end}' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'gen.',
-      FEB: 'febr.',
-      MAR: 'març',
-      APR: 'abr.',
-      MAY: 'maig',
-      JUN: 'juny',
-      JUL: 'jul.',
-      AUG: 'ag.',
-      SEP: 'set.',
-      OCT: 'oct.',
-      NOV: 'nov.',
-      DEC: 'des.',
-    },
-    week: {
-      SUN: 'dg.',
-      MON: 'dl.',
-      TUE: 'dt.',
-      WED: 'dc.',
-      THU: 'dj.',
-      FRI: 'dv.',
-      SAT: 'ds.',
-    },
-  },
+  everyStep: 'Executa cada {step} {field}',
+  intervalField: 'Comença a  {start} i executa cada {step} {field}',
+  specifiedField: '{values}',
+  rangeField: '{start} a {end}',
+  unspecifiedDay: 'El dia no està especificat; segueix el camp de la setmana',
+  unspecifiedWeek: 'La setmana no està especificada; segueix el camp del dia',
   valueSeparator: ', ',
-  to: 'a',
-  or: ' o ',
   expression: 'Expressió Cron',
   fieldList: 'Camps Cron',
   fieldStart: '{field} comença',
   fieldInterval: '{field} interval',
   fieldRangeStart: '{field} inici d\'interval',
   fieldRangeEnd: '{field} final d\'interval',
-  fieldValue: '{field} valor',
   fieldValues: '{field} valors',
   nextRun: 'Proper execució: {value}',
   noFutureRun: 'No hi ha cap execució futura',
-  everySeconds: 'Cada {value} segons',
-  everyMinutes: 'Cada {value} minuts',
-  everyDayAt: 'Cada dia a les {value}',
-  customSchedule: 'Horari personalitzat',
   specialLastDay: 'l\'últim dia de cada mes',
   specialLastWeekday: 'l\'últim dia laborable de cada mes',
   specialNearestWeekday: 'el dia laborable més proper al dia {day} de cada mes',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Aquesta sintaxi especial no és compatible',
     invalidExpression: 'Expressió cron no vàlida',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

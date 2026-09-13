@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/ko_KR'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: '초',
     minute: '분',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: '범위',
     special: '특수',
   },
-  any: '모두',
   notSpecified: '지정되지 않음',
-  every: '마다',
   everyField: '매 {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: '{step} 초마다 실행', preview: '{step} 초마다 실행' },
-      interval: { editor: '{start} 초부터 {step} 초마다 실행', preview: '매분 {start} 초부터 {step} 초마다 실행' },
-      specified: { editor: '다음 초에 실행:', preview: '매분 {values} 초에 실행' },
-      range: { editor: '{start} 초부터 {end} 초까지 실행', preview: '매분 {start}~{end} 초에 실행' },
-    },
-    minute: {
-      every: { editor: '{step} 분마다 실행', preview: '{step} 분마다 실행' },
-      interval: { editor: '{start} 분부터 {step} 분마다 실행', preview: '매시간 {start} 분부터 {step} 분마다 실행' },
-      specified: { editor: '다음 분에 실행:', preview: '매시간 {values} 분에 실행' },
-      range: { editor: '{start} 분부터 {end} 분까지 실행', preview: '매시간 {start}~{end} 분에 실행' },
-    },
-    hour: {
-      every: { editor: '{step} 시간마다 실행', preview: '{step} 시간마다 실행' },
-      interval: { editor: '{start}시부터 {step}시간마다 실행', preview: '매일 {start}시부터 {step}시간마다 실행' },
-      specified: { editor: '다음 시각에 실행:', preview: '매일 {values}시에 실행' },
-      range: { editor: '{start}시부터 {end}시까지 실행', preview: '매일 {start}~{end}시에 실행' },
-    },
-    day: {
-      every: { editor: '매일 실행', preview: '매일 실행' },
-      unspecified: { editor: '날짜를 지정하지 않음', preview: '날짜를 지정하지 않고 요일을 따름' },
-      interval: { editor: '매월 {start}일부터 {step}일마다 실행', preview: '매월 {start}일부터 {step}일마다 실행' },
-      specified: { editor: '매월 다음 날짜에 실행:', preview: '매월 {values}일에 실행' },
-      range: { editor: '매월 {start}~{end}일에 실행', preview: '매월 {start}~{end}일에 실행' },
-    },
-    month: {
-      every: { editor: '매월 실행', preview: '매월 실행' },
-      interval: { editor: '{start}부터 {step}개월마다 실행', preview: '매년 {start}부터 {step}개월마다 실행' },
-      specified: { editor: '다음 월에 실행:', preview: '매년 {values}에 실행' },
-      range: { editor: '{start}부터 {end}까지 실행', preview: '매년 {start}~{end}에 실행' },
-    },
-    week: {
-      every: { editor: '매일 실행', preview: '매일 실행' },
-      unspecified: { editor: '요일을 지정하지 않음', preview: '요일을 지정하지 않고 날짜를 따름' },
-      interval: { editor: '{start}부터 {step}일마다 실행', preview: '매주 {start}부터 {step}일마다 실행' },
-      specified: { editor: '다음 요일에 실행:', preview: '매주 {values}에 실행' },
-      range: { editor: '매주 {start}부터 {end}까지 실행', preview: '매주 {start}부터 {end}까지 실행' },
-    },
-    year: {
-      every: { editor: '매년 실행', preview: '매년 실행' },
-      interval: { editor: '{start}년부터 {step}년마다 실행', preview: '{start}년부터 {step}년마다 실행' },
-      specified: { editor: '다음 연도에 실행:', preview: '{values}년에 실행' },
-      range: { editor: '{start}년부터 {end}년까지 실행', preview: '{start}년부터 {end}년까지 실행' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: '1월',
-      FEB: '2월',
-      MAR: '3월',
-      APR: '4월',
-      MAY: '5월',
-      JUN: '6월',
-      JUL: '7월',
-      AUG: '8월',
-      SEP: '9월',
-      OCT: '10월',
-      NOV: '11월',
-      DEC: '12월',
-    },
-    week: {
-      SUN: '일요일',
-      MON: '월요일',
-      TUE: '화요일',
-      WED: '수요일',
-      THU: '목요일',
-      FRI: '금요일',
-      SAT: '토요일',
-    },
-  },
+  everyStep: '{step} {field}마다 실행',
+  intervalField: '{start} 부터 {step} {field}마다 실행',
+  specifiedField: '{values}',
+  rangeField: '{start} ~에게 {end}',
+  unspecifiedDay: '날짜를 지정하지 않고 요일을 따름',
+  unspecifiedWeek: '요일을 지정하지 않고 날짜를 따름',
   valueSeparator: ', ',
-  to: '~에게',
-  or: ' 또는 ',
   expression: '크론 표현',
   fieldList: '크론 필드',
   fieldStart: '{field} 시작',
   fieldInterval: '{field} 간격',
   fieldRangeStart: '{field} 범위 시작',
   fieldRangeEnd: '{field} 범위 끝',
-  fieldValue: '{field} 값',
   fieldValues: '{field} 값',
   nextRun: '다음 실행: {value}',
   noFutureRun: '향후 실행 없음',
-  everySeconds: '매 {value}초마다',
-  everyMinutes: '매 {value}분마다',
-  everyDayAt: '매일 {value}에',
-  customSchedule: '맞춤 일정',
   specialLastDay: '매월 마지막 날',
   specialLastWeekday: '매월 마지막 평일',
   specialNearestWeekday: '매월 {day}일에 가장 가까운 평일',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: '이 특수 구문은 지원되지 않습니다',
     invalidExpression: '잘못된 크론 표현',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

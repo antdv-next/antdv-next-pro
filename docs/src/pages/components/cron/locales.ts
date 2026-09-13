@@ -7,7 +7,7 @@ export const locales = {
     editor: '当前字段的编辑面板容器。',
     field: '当前字段的具体编辑内容。',
     presets: '常用表达式快捷按钮区域。',
-    preview: '表达式说明和未来执行时间预览。',
+    preview: '下次执行时间和 Cron 自然语言说明预览。',
     error: '校验失败时的错误提示。',
   },
   en: {
@@ -18,7 +18,7 @@ export const locales = {
     editor: 'Container of the active field editor panel.',
     field: 'Active field editor content.',
     presets: 'Shortcut buttons for common expressions.',
-    preview: 'Human-readable description and upcoming run times.',
+    preview: 'Next local run times followed by a natural-language Cron description.',
     error: 'Validation error message shown when the expression is invalid.',
   },
 }

@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/bg_BG'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'Секунда',
     minute: 'минута',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Обхват',
     special: 'Специален',
   },
-  any: 'Всякакви',
   notSpecified: 'Не е посочено',
-  every: 'всеки',
   everyField: 'На всеки {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Изпълнявай на всеки {step} секунди', preview: 'Изпълнявай на всеки {step} секунди' },
-      interval: { editor: 'Започни от секунда {start} и изпълнявай на всеки {step} секунди', preview: 'всяка минута изпълнявай от секунда {start} на всеки {step} секунди' },
-      specified: { editor: 'Изпълнявай в тези секунди:', preview: 'Изпълнявай в секунди {values} всяка минута' },
-      range: { editor: 'Изпълнявай от секунда {start} до секунда {end}', preview: 'Изпълнявай от секунда {start} до секунда {end} всяка минута' },
-    },
-    minute: {
-      every: { editor: 'Изпълнявай на всеки {step} минути', preview: 'Изпълнявай на всеки {step} минути' },
-      interval: { editor: 'Започни от минута {start} и изпълнявай на всеки {step} минути', preview: 'всеки час изпълнявай от минута {start} на всеки {step} минути' },
-      specified: { editor: 'Изпълнявай в тези минути:', preview: 'Изпълнявай в минути {values} всеки час' },
-      range: { editor: 'Изпълнявай от минута {start} до минута {end}', preview: 'Изпълнявай от минута {start} до минута {end} всеки час' },
-    },
-    hour: {
-      every: { editor: 'Изпълнявай на всеки {step} часа', preview: 'Изпълнявай на всеки {step} часа' },
-      interval: { editor: 'Започни в {start}:00 и изпълнявай на всеки {step} часа', preview: 'Всеки ден изпълнявай от {start}:00 на всеки {step} часа' },
-      specified: { editor: 'Изпълнявай в тези часове:', preview: 'Изпълнявай в {values}:00 всеки ден' },
-      range: { editor: 'Изпълнявай от {start}:00 до {end}:00', preview: 'Изпълнявай от {start}:00 до {end}:00 всеки ден' },
-    },
-    day: {
-      every: { editor: 'Изпълнявай всеки ден', preview: 'Изпълнявай всеки ден' },
-      unspecified: { editor: 'Не задавай дата', preview: 'Денят не е зададен; следвай полето за седмица' },
-      interval: { editor: 'Започни на {start}-ия ден от всеки месец и изпълнявай на всеки {step} дни', preview: 'Всеки месец изпълнявай от {start}-ия ден на всеки {step} дни' },
-      specified: { editor: 'Изпълнявай в тези дни от всеки месец:', preview: 'Изпълнявай на дни {values} от всеки месец' },
-      range: { editor: 'Изпълнявай от {start}-ия до {end}-ия ден на всеки месец', preview: 'Изпълнявай от {start}-ия до {end}-ия ден на всеки месец' },
-    },
-    month: {
-      every: { editor: 'Изпълнявай всеки месец', preview: 'Изпълнявай всеки месец' },
-      interval: { editor: 'Започни от {start} и изпълнявай на всеки {step} месеца', preview: 'Всяка година изпълнявай от {start} на всеки {step} месеца' },
-      specified: { editor: 'Изпълнявай в тези месеци:', preview: 'Изпълнявай в {values} всяка година' },
-      range: { editor: 'Изпълнявай от {start} до {end}', preview: 'Изпълнявай от {start} до {end} всяка година' },
-    },
-    week: {
-      every: { editor: 'Изпълнявай всеки ден', preview: 'Изпълнявай всеки ден' },
-      unspecified: { editor: 'Не задавай ден от седмицата', preview: 'Седмицата не е зададена; следвай полето за ден' },
-      interval: { editor: 'Започни от {start} и изпълнявай на всеки {step} дни', preview: 'Всяка седмица изпълнявай от {start} на всеки {step} дни' },
-      specified: { editor: 'Изпълнявай в тези дни от седмицата:', preview: 'Изпълнявай всеки {values}' },
-      range: { editor: 'Изпълнявай от {start} до {end} всяка седмица', preview: 'Изпълнявай от {start} до {end} всяка седмица' },
-    },
-    year: {
-      every: { editor: 'Изпълнявай всяка година', preview: 'Изпълнявай всяка година' },
-      interval: { editor: 'Започни от година {start} и изпълнявай на всеки {step} години', preview: 'Изпълнявай от година {start} на всеки {step} години' },
-      specified: { editor: 'Изпълнявай в тези години:', preview: 'Изпълнявай през {values} година' },
-      range: { editor: 'Изпълнявай от година {start} до година {end}', preview: 'Изпълнявай от година {start} до година {end}' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: '01',
-      FEB: '02',
-      MAR: '03',
-      APR: '04',
-      MAY: '05',
-      JUN: '06',
-      JUL: '07',
-      AUG: '08',
-      SEP: '09',
-      OCT: '10',
-      NOV: '11',
-      DEC: '12',
-    },
-    week: {
-      SUN: 'нд',
-      MON: 'пн',
-      TUE: 'вт',
-      WED: 'ср',
-      THU: 'чт',
-      FRI: 'пт',
-      SAT: 'сб',
-    },
-  },
+  everyStep: 'Изпълнявай на всеки {step} минути {field}',
+  intervalField: 'Започни от {field} {start} и изпълнявай на всеки {step} минути',
+  specifiedField: '{values}',
+  rangeField: '{start} до {end}',
+  unspecifiedDay: 'Денят не е зададен; следвай полето за седмица',
+  unspecifiedWeek: 'Седмицата не е зададена; следвай полето за ден',
   valueSeparator: ', ',
-  to: 'до',
-  or: ' или ',
   expression: 'Cron израз',
   fieldList: 'Cron полета',
   fieldStart: '{field} начало',
   fieldInterval: '{field} интервал',
   fieldRangeStart: '{field} начало на диапазона',
   fieldRangeEnd: '{field} край на диапазона',
-  fieldValue: '{field} стойност',
   fieldValues: '{field} стойности',
   nextRun: 'Следващо изпълнение: {value}',
   noFutureRun: 'Няма бъдещо изпълнение',
-  everySeconds: 'На всеки {value} секунди',
-  everyMinutes: 'На всеки {value} минути',
-  everyDayAt: 'Всеки ден в {value}',
-  customSchedule: 'Персонализиран график',
   specialLastDay: 'последният ден на всеки месец',
   specialLastWeekday: 'последният работен ден на всеки месец',
   specialNearestWeekday: 'най-близкият работен ден до {day}-ия ден на всеки месец',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Този специален синтаксис не се поддържа',
     invalidExpression: 'Невалиден cron израз',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

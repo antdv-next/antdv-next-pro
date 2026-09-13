@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/my_MM'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'ဒုတိယ',
     minute: 'မိနစ်',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'အပိုင်းအခြား',
     special: 'အထူး',
   },
-  any: 'တစ်ခုခု',
   notSpecified: 'မဖော်ပြထားပါ။',
-  every: 'နေ့တိုင်း',
   everyField: '{field} တိုင်း',
-  fieldDescriptions: {
-    second: {
-      every: { editor: '{step} စက္ကန့် တိုင်း လုပ်ဆောင်ပါ', preview: '{step} စက္ကန့် တိုင်း လုပ်ဆောင်ပါ' },
-      interval: { editor: 'စက္ကန့် {start} မှ စတင်ပြီး {step} စက္ကန့် တိုင်း လုပ်ဆောင်ပါ', preview: 'မိနစ်တိုင်း စက္ကန့် {start} မှ {step} စက္ကန့် တိုင်း လုပ်ဆောင်ပါ' },
-      specified: { editor: 'ဤ စက္ကန့် တွင် လုပ်ဆောင်ပါ:', preview: 'မိနစ်တိုင်း စက္ကန့် {values} တွင် လုပ်ဆောင်ပါ' },
-      range: { editor: 'စက္ကန့် {start} မှ စက္ကန့် {end} အထိ လုပ်ဆောင်ပါ', preview: 'မိနစ်တိုင်း စက္ကန့် {start} မှ စက္ကန့် {end} အထိ လုပ်ဆောင်ပါ' },
-    },
-    minute: {
-      every: { editor: '{step} မိနစ် တိုင်း လုပ်ဆောင်ပါ', preview: '{step} မိနစ် တိုင်း လုပ်ဆောင်ပါ' },
-      interval: { editor: 'မိနစ် {start} မှ စတင်ပြီး {step} မိနစ် တိုင်း လုပ်ဆောင်ပါ', preview: 'နာရီတိုင်း မိနစ် {start} မှ {step} မိနစ် တိုင်း လုပ်ဆောင်ပါ' },
-      specified: { editor: 'ဤ မိနစ် တွင် လုပ်ဆောင်ပါ:', preview: 'နာရီတိုင်း မိနစ် {values} တွင် လုပ်ဆောင်ပါ' },
-      range: { editor: 'မိနစ် {start} မှ မိနစ် {end} အထိ လုပ်ဆောင်ပါ', preview: 'နာရီတိုင်း မိနစ် {start} မှ မိနစ် {end} အထိ လုပ်ဆောင်ပါ' },
-    },
-    hour: {
-      every: { editor: '{step} နာရီ တိုင်း လုပ်ဆောင်ပါ', preview: '{step} နာရီ တိုင်း လုပ်ဆောင်ပါ' },
-      interval: { editor: '{start}:00 မှ စတင်ပြီး {step} နာရီတိုင်း လုပ်ဆောင်ပါ', preview: 'နေ့တိုင်း {start}:00 မှ {step} နာရီတိုင်း လုပ်ဆောင်ပါ' },
-      specified: { editor: 'ဤအချိန်များတွင် လုပ်ဆောင်ပါ:', preview: 'နေ့တိုင်း {values}:00 တွင် လုပ်ဆောင်ပါ' },
-      range: { editor: '{start}:00 မှ {end}:00 အထိ လုပ်ဆောင်ပါ', preview: 'နေ့တိုင်း {start}:00 မှ {end}:00 အထိ လုပ်ဆောင်ပါ' },
-    },
-    day: {
-      every: { editor: 'နေ့တိုင်း လုပ်ဆောင်ပါ', preview: 'နေ့တိုင်း လုပ်ဆောင်ပါ' },
-      unspecified: { editor: 'ရက်စွဲ မသတ်မှတ်ပါနှင့်', preview: 'ရက် မသတ်မှတ်ထားပါ; ရက်သတ္တပတ် အကွက်ကို လိုက်နာပါ' },
-      interval: { editor: 'လတိုင်း ရက် {start} မှ စတင်ပြီး {step} ရက်တိုင်း လုပ်ဆောင်ပါ', preview: 'လတိုင်း ရက် {start} မှ {step} ရက်တိုင်း လုပ်ဆောင်ပါ' },
-      specified: { editor: 'လတိုင်း ဤရက်များတွင် လုပ်ဆောင်ပါ:', preview: 'လတိုင်း ရက် {values} တွင် လုပ်ဆောင်ပါ' },
-      range: { editor: 'လတိုင်း ရက် {start} မှ {end} အထိ လုပ်ဆောင်ပါ', preview: 'လတိုင်း ရက် {start} မှ {end} အထိ လုပ်ဆောင်ပါ' },
-    },
-    month: {
-      every: { editor: 'လတိုင်း လုပ်ဆောင်ပါ', preview: 'လတိုင်း လုပ်ဆောင်ပါ' },
-      interval: { editor: '{start} မှ စတင်ပြီး {step} လတိုင်း လုပ်ဆောင်ပါ', preview: 'နှစ်တိုင်း {start} မှ {step} လတိုင်း လုပ်ဆောင်ပါ' },
-      specified: { editor: 'ဤလများတွင် လုပ်ဆောင်ပါ:', preview: 'နှစ်တိုင်း {values} တွင် လုပ်ဆောင်ပါ' },
-      range: { editor: '{start} မှ {end} အထိ လုပ်ဆောင်ပါ', preview: 'နှစ်တိုင်း {start} မှ {end} အထိ လုပ်ဆောင်ပါ' },
-    },
-    week: {
-      every: { editor: 'နေ့တိုင်း လုပ်ဆောင်ပါ', preview: 'နေ့တိုင်း လုပ်ဆောင်ပါ' },
-      unspecified: { editor: 'ရက်သတ္တပတ်နေ့ မသတ်မှတ်ပါနှင့်', preview: 'ရက်သတ္တပတ် မသတ်မှတ်ထားပါ; ရက် အကွက်ကို လိုက်နာပါ' },
-      interval: { editor: '{start} မှ စတင်ပြီး {step} ရက်တိုင်း လုပ်ဆောင်ပါ', preview: 'အပတ်တိုင်း {start} မှ {step} ရက်တိုင်း လုပ်ဆောင်ပါ' },
-      specified: { editor: 'ဤရက်သတ္တပတ်နေ့များတွင် လုပ်ဆောင်ပါ:', preview: 'တိုင်း {values} လုပ်ဆောင်ပါ' },
-      range: { editor: 'အပတ်တိုင်း {start} မှ {end} အထိ လုပ်ဆောင်ပါ', preview: 'အပတ်တိုင်း {start} မှ {end} အထိ လုပ်ဆောင်ပါ' },
-    },
-    year: {
-      every: { editor: 'နှစ်တိုင်း လုပ်ဆောင်ပါ', preview: 'နှစ်တိုင်း လုပ်ဆောင်ပါ' },
-      interval: { editor: 'နှစ် {start} မှ စတင်ပြီး {step} နှစ်တိုင်း လုပ်ဆောင်ပါ', preview: 'နှစ် {start} မှ {step} နှစ်တိုင်း လုပ်ဆောင်ပါ' },
-      specified: { editor: 'ဤနှစ်များတွင် လုပ်ဆောင်ပါ:', preview: 'နှစ် {values} တွင် လုပ်ဆောင်ပါ' },
-      range: { editor: 'နှစ် {start} မှ {end} အထိ လုပ်ဆောင်ပါ', preview: 'နှစ် {start} မှ {end} အထိ လုပ်ဆောင်ပါ' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'ဇန်',
-      FEB: 'ဖေ',
-      MAR: 'မတ်',
-      APR: 'ဧ',
-      MAY: 'မေ',
-      JUN: 'ဇွန်',
-      JUL: 'ဇူ',
-      AUG: 'ဩ',
-      SEP: 'စက်',
-      OCT: 'အောက်',
-      NOV: 'နို',
-      DEC: 'ဒီ',
-    },
-    week: {
-      SUN: 'တနင်္ဂနွေ',
-      MON: 'တနင်္လာ',
-      TUE: 'အင်္ဂါ',
-      WED: 'ဗုဒ္ဓဟူး',
-      THU: 'ကြာသပတေး',
-      FRI: 'သောကြာ',
-      SAT: 'စနေ',
-    },
-  },
+  everyStep: '{step} {field} တိုင်း လုပ်ဆောင်ပါ',
+  intervalField: ' {start} မှ စတင်ပြီး {step} {field} တိုင်း လုပ်ဆောင်ပါ',
+  specifiedField: '{values}',
+  rangeField: '{start} မှ {end}',
+  unspecifiedDay: 'ရက် မသတ်မှတ်ထားပါ; ရက်သတ္တပတ် အကွက်ကို လိုက်နာပါ',
+  unspecifiedWeek: 'ရက်သတ္တပတ် မသတ်မှတ်ထားပါ; ရက် အကွက်ကို လိုက်နာပါ',
   valueSeparator: ', ',
-  to: 'မှ',
-  or: ' သို့မဟုတ် ',
   expression: 'Cron စကားရပ်',
   fieldList: 'Cron အကွက်များ',
   fieldStart: '{field} စတင်သည်။',
   fieldInterval: '{field} ကြားကာလ',
   fieldRangeStart: '{field} အပိုင်းအခြား စတင်သည်။',
   fieldRangeEnd: '{field} အပိုင်းအခြား အဆုံး',
-  fieldValue: '{field} တန်ဖိုး',
   fieldValues: '{field} တန်ဖိုးများ',
   nextRun: 'နောက်တစ်ခုပြေးခြင်း- {value}',
   noFutureRun: 'အနာဂတ် ပြေးခြင်း မရှိပါ။',
-  everySeconds: '{value} စက္ကန့်တိုင်း',
-  everyMinutes: '{value} မိနစ်တိုင်း',
-  everyDayAt: 'နေ့တိုင်း {value} တွင်',
-  customSchedule: 'စိတ်ကြိုက်အချိန်ဇယား',
   specialLastDay: 'လတိုင်း၏ နောက်ဆုံးနေ့',
   specialLastWeekday: 'လတိုင်း၏ နောက်ဆုံး အလုပ်ချိန်နေ့',
   specialNearestWeekday: 'လတိုင်း {day} ရက်နှင့် အနီးဆုံး အလုပ်ချိန်နေ့',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'ဤအထူး syntax ကို မပံ့ပိုးပါ',
     invalidExpression: 'မမှန်သော cron စကားရပ်',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/kk_KZ'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'секунд',
     minute: 'Минут',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Ауқым',
     special: 'Арнайы',
   },
-  any: 'Кез келген',
   notSpecified: 'Көрсетілмеген',
-  every: 'сайын',
   everyField: '{field} сайын',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Әр {step} секунд орында', preview: 'Әр {step} секунд орында' },
-      interval: { editor: 'секунд {start} мәнінен бастап, әр {step} секунд орында', preview: 'әр минут секунд {start} мәнінен бастап әр {step} секунд орында' },
-      specified: { editor: 'Мына секунд орында:', preview: 'әр минут секунд {values} мәндерінде орында' },
-      range: { editor: 'секунд {start} пен секунд {end} аралығында орында', preview: 'әр минут секунд {start} пен секунд {end} аралығында орында' },
-    },
-    minute: {
-      every: { editor: 'Әр {step} минут орында', preview: 'Әр {step} минут орында' },
-      interval: { editor: 'минут {start} мәнінен бастап, әр {step} минут орында', preview: 'әр сағат минут {start} мәнінен бастап әр {step} минут орында' },
-      specified: { editor: 'Мына минут орында:', preview: 'әр сағат минут {values} мәндерінде орында' },
-      range: { editor: 'минут {start} пен минут {end} аралығында орында', preview: 'әр сағат минут {start} пен минут {end} аралығында орында' },
-    },
-    hour: {
-      every: { editor: 'Әр {step} сағат орында', preview: 'Әр {step} сағат орында' },
-      interval: { editor: '{start}:00-ден бастап, әр {step} сағат орында', preview: 'Күн сайын {start}:00-ден бастап әр {step} сағат орында' },
-      specified: { editor: 'Мына уақыттарда орында:', preview: 'Күн сайын {values}:00-де орында' },
-      range: { editor: '{start}:00 пен {end}:00 аралығында орында', preview: 'Күн сайын {start}:00 пен {end}:00 аралығында орында' },
-    },
-    day: {
-      every: { editor: 'Күн сайын орында', preview: 'Күн сайын орында' },
-      unspecified: { editor: 'Күнді көрсетпе', preview: 'Күн көрсетілмеген; апта өрісін пайдалан' },
-      interval: { editor: 'Әр айдың {start}-ші күнінен бастап, әр {step} күн орында', preview: 'Әр ай {start}-ші күннен бастап әр {step} күн орында' },
-      specified: { editor: 'Әр айдың мына күндерінде орында:', preview: 'Әр айдың {values}-ші күндерінде орында' },
-      range: { editor: 'Әр айдың {start}-ші күнінен {end}-ші күніне дейін орында', preview: 'Әр айдың {start}-ші күнінен {end}-ші күніне дейін орында' },
-    },
-    month: {
-      every: { editor: 'Ай сайын орында', preview: 'Ай сайын орында' },
-      interval: { editor: '{start} мәнінен бастап, әр {step} ай орында', preview: 'Жыл сайын {start} мәнінен бастап әр {step} ай орында' },
-      specified: { editor: 'Мына айларда орында:', preview: 'Жыл сайын {values} орында' },
-      range: { editor: '{start} пен {end} аралығында орында', preview: 'Жыл сайын {start} пен {end} аралығында орында' },
-    },
-    week: {
-      every: { editor: 'Күн сайын орында', preview: 'Күн сайын орында' },
-      unspecified: { editor: 'Апта күнін көрсетпе', preview: 'Апта көрсетілмеген; күн өрісін пайдалан' },
-      interval: { editor: '{start} күнінен бастап, әр {step} күн орында', preview: 'Әр апта {start} күнінен бастап әр {step} күн орында' },
-      specified: { editor: 'Мына апта күндерінде орында:', preview: 'Әр {values} орында' },
-      range: { editor: 'Әр апта {start} пен {end} аралығында орында', preview: 'Әр апта {start} пен {end} аралығында орында' },
-    },
-    year: {
-      every: { editor: 'Жыл сайын орында', preview: 'Жыл сайын орында' },
-      interval: { editor: '{start} жылынан бастап, әр {step} жыл орында', preview: '{start} жылынан бастап әр {step} жыл орында' },
-      specified: { editor: 'Мына жылдары орында:', preview: '{values} жылдары орында' },
-      range: { editor: '{start} жылынан {end} жылына дейін орында', preview: '{start} жылынан {end} жылына дейін орында' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'қаң.',
-      FEB: 'ақп.',
-      MAR: 'нау.',
-      APR: 'сәу.',
-      MAY: 'мам.',
-      JUN: 'мау.',
-      JUL: 'шіл.',
-      AUG: 'там.',
-      SEP: 'қыр.',
-      OCT: 'қаз.',
-      NOV: 'қар.',
-      DEC: 'жел.',
-    },
-    week: {
-      SUN: 'жс',
-      MON: 'дс',
-      TUE: 'сс',
-      WED: 'ср',
-      THU: 'бс',
-      FRI: 'жм',
-      SAT: 'сб',
-    },
-  },
+  everyStep: 'Әр {step} {field} орында',
+  intervalField: ' {start} мәнінен бастап, әр {step} {field} орында',
+  specifiedField: '{values}',
+  rangeField: '{start} дейін {end}',
+  unspecifiedDay: 'Күн көрсетілмеген; апта өрісін пайдалан',
+  unspecifiedWeek: 'Апта көрсетілмеген; күн өрісін пайдалан',
   valueSeparator: ', ',
-  to: 'дейін',
-  or: ' немесе ',
   expression: 'Крон өрнегі',
   fieldList: 'Cron өрістері',
   fieldStart: '{field} басталуы',
   fieldInterval: '{field} интервал',
   fieldRangeStart: '{field} диапазонның басталуы',
   fieldRangeEnd: '{field} ауқым соңы',
-  fieldValue: '{field} мәні',
   fieldValues: '{field} мән',
   nextRun: 'Келесі жүгіріс: {value}',
   noFutureRun: 'Болашақта жүгіру жоқ',
-  everySeconds: '{value} секунд сайын',
-  everyMinutes: '{value} минут сайын',
-  everyDayAt: 'Күн сайын сағат {value}',
-  customSchedule: 'Арнайы кесте',
   specialLastDay: 'әр айдың соңғы күні',
   specialLastWeekday: 'әр айдың соңғы жұмыс күні',
   specialNearestWeekday: 'әр айдың {day}-ші күніне ең жақын жұмыс күні',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Бұл арнайы синтаксис қолданылмайды',
     invalidExpression: 'Cron өрнегі жарамсыз',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

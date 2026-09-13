@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/zh_CN'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: '秒',
     minute: '分钟',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: '范围',
     special: '特殊',
   },
-  any: '任意',
   notSpecified: '不指定',
-  every: '每',
-  everyField: '每{field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: '每 {step} 秒执行', preview: '每 {step} 秒执行一次' },
-      interval: { editor: '从 {start} 秒开始，每 {step} 秒执行', preview: '每分钟从第 {start} 秒起，每隔 {step} 秒执行' },
-      specified: { editor: '在以下秒数执行：', preview: '每分钟的第 {values} 秒执行' },
-      range: { editor: '从第 {start} 秒到第 {end} 秒执行', preview: '每分钟第 {start}～{end} 秒执行' },
-    },
-    minute: {
-      every: { editor: '每 {step} 分钟执行', preview: '每 {step} 分钟执行一次' },
-      interval: { editor: '从 {start} 分钟开始，每 {step} 分钟执行', preview: '每小时从第 {start} 分钟起，每隔 {step} 分钟执行' },
-      specified: { editor: '在以下分钟执行：', preview: '每小时的第 {values} 分钟执行' },
-      range: { editor: '从第 {start} 分钟到第 {end} 分钟执行', preview: '每小时第 {start}～{end} 分钟执行' },
-    },
-    hour: {
-      every: { editor: '每 {step} 小时执行', preview: '每 {step} 小时执行一次' },
-      interval: { editor: '从 {start} 点开始，每 {step} 小时执行', preview: '每天从 {start} 点起，每隔 {step} 小时执行' },
-      specified: { editor: '在以下时间执行：', preview: '每天 {values} 点执行' },
-      range: { editor: '从 {start} 点到 {end} 点执行', preview: '每天 {start}～{end} 点执行' },
-    },
-    day: {
-      every: { editor: '每天执行', preview: '每天执行一次' },
-      unspecified: { editor: '不指定日期', preview: '不指定日期，按星期执行' },
-      interval: { editor: '从每月第 {start} 日开始，每 {step} 天执行', preview: '每月从第 {start} 日起，每隔 {step} 天执行' },
-      specified: { editor: '在每月以下日期执行：', preview: '每月第 {values} 日执行' },
-      range: { editor: '每月第 {start}～{end} 日执行', preview: '每月第 {start}～{end} 日执行' },
-    },
-    month: {
-      every: { editor: '每月执行', preview: '每月执行一次' },
-      interval: { editor: '从 {start} 开始，每 {step} 个月执行', preview: '每年从 {start} 起，每隔 {step} 个月执行' },
-      specified: { editor: '在以下月份执行：', preview: '每年{values}执行' },
-      range: { editor: '从 {start} 到 {end} 执行', preview: '每年 {start}～{end} 执行' },
-    },
-    week: {
-      every: { editor: '每天执行', preview: '每天执行一次' },
-      unspecified: { editor: '不指定星期', preview: '不指定星期，按日期执行' },
-      interval: { editor: '从 {start} 开始，每隔 {step} 天执行', preview: '每周从 {start} 起，每隔 {step} 天执行' },
-      specified: { editor: '在以下星期执行：', preview: '每{values}执行' },
-      range: { editor: '每周{start}至{end}执行', preview: '每{start}至{end}执行' },
-    },
-    year: {
-      every: { editor: '每年执行', preview: '每年执行一次' },
-      interval: { editor: '从 {start} 年开始，每 {step} 年执行', preview: '从 {start} 年起，每隔 {step} 年执行' },
-      specified: { editor: '在以下年份执行：', preview: '在{values}年执行' },
-      range: { editor: '从 {start} 年到 {end} 年执行', preview: '从 {start} 年到 {end} 年执行' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: '1月',
-      FEB: '2月',
-      MAR: '3月',
-      APR: '4月',
-      MAY: '5月',
-      JUN: '6月',
-      JUL: '7月',
-      AUG: '8月',
-      SEP: '9月',
-      OCT: '10月',
-      NOV: '11月',
-      DEC: '12月',
-    },
-    week: {
-      SUN: '周日',
-      MON: '周一',
-      TUE: '周二',
-      WED: '周三',
-      THU: '周四',
-      FRI: '周五',
-      SAT: '周六',
-    },
-  },
+  everyField: '每{field}执行',
+  everyStep: '每 {step} {field}执行',
+  intervalField: '从 {start} 开始，每 {step} {field}执行',
+  specifiedField: '{values}',
+  rangeField: '从 {start} 到 {end}',
+  unspecifiedDay: '不指定日期，按星期执行',
+  unspecifiedWeek: '不指定星期，按日期执行',
   valueSeparator: '、',
-  to: '至',
-  or: '或',
   expression: 'Cron 表达式',
   fieldList: 'Cron 字段',
   fieldStart: '{field}起始值',
   fieldInterval: '{field}间隔',
   fieldRangeStart: '{field}范围起始值',
   fieldRangeEnd: '{field}范围结束值',
-  fieldValue: '{field}值',
   fieldValues: '{field}值',
   nextRun: '下次执行：{value}',
   noFutureRun: '无后续执行时间',
-  everySeconds: '每 {value} 秒',
-  everyMinutes: '每 {value} 分钟',
-  everyDayAt: '每天 {value} 执行',
-  customSchedule: '自定义计划',
   specialLastDay: '每月最后一天',
   specialLastWeekday: '每月最后一个工作日',
   specialNearestWeekday: '每月最接近 {day} 日的工作日',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: '不支持该特殊语法',
     invalidExpression: 'Cron 表达式无效',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

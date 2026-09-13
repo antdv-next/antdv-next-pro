@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/lt_LT'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'sekundė',
     minute: 'Minutė',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Diapazonas',
     special: 'Specialus',
   },
-  any: 'Bet koks',
   notSpecified: 'Nenurodyta',
-  every: 'kas',
   everyField: 'Kas {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Vykdyti kas {step} sekundžių', preview: 'Vykdyti kas {step} sekundžių' },
-      interval: { editor: 'Pradėti nuo sekundės {start} ir vykdyti kas {step} sekundžių', preview: 'kiekvieną minutę vykdyti nuo sekundės {start} kas {step} sekundžių' },
-      specified: { editor: 'Vykdyti šiais sekundžių:', preview: 'Vykdyti sekundžių {values} kiekvieną minutę' },
-      range: { editor: 'Vykdyti nuo sekundės {start} iki sekundės {end}', preview: 'Vykdyti nuo sekundės {start} iki sekundės {end} kiekvieną minutę' },
-    },
-    minute: {
-      every: { editor: 'Vykdyti kas {step} minučių', preview: 'Vykdyti kas {step} minučių' },
-      interval: { editor: 'Pradėti nuo minutės {start} ir vykdyti kas {step} minučių', preview: 'kiekvieną valandą vykdyti nuo minutės {start} kas {step} minučių' },
-      specified: { editor: 'Vykdyti šiais minučių:', preview: 'Vykdyti minučių {values} kiekvieną valandą' },
-      range: { editor: 'Vykdyti nuo minutės {start} iki minutės {end}', preview: 'Vykdyti nuo minutės {start} iki minutės {end} kiekvieną valandą' },
-    },
-    hour: {
-      every: { editor: 'Vykdyti kas {step} valandų', preview: 'Vykdyti kas {step} valandų' },
-      interval: { editor: 'Pradėti {start}:00 ir vykdyti kas {step} valandas', preview: 'Kiekvieną dieną vykdyti nuo {start}:00 kas {step} valandas' },
-      specified: { editor: 'Vykdyti šiuo laiku:', preview: 'Vykdyti {values}:00 kiekvieną dieną' },
-      range: { editor: 'Vykdyti nuo {start}:00 iki {end}:00', preview: 'Vykdyti nuo {start}:00 iki {end}:00 kiekvieną dieną' },
-    },
-    day: {
-      every: { editor: 'Vykdyti kiekvieną dieną', preview: 'Vykdyti kiekvieną dieną' },
-      unspecified: { editor: 'Nenurodyti datos', preview: 'Diena nenurodyta; naudoti savaitės lauką' },
-      interval: { editor: 'Pradėti kiekvieno mėnesio {start} dieną ir vykdyti kas {step} dienas', preview: 'Kiekvieną mėnesį vykdyti nuo {start} dienos kas {step} dienas' },
-      specified: { editor: 'Vykdyti šiomis kiekvieno mėnesio dienomis:', preview: 'Vykdyti {values} dienomis kiekvieną mėnesį' },
-      range: { editor: 'Vykdyti nuo {start} iki {end} dienos kiekvieną mėnesį', preview: 'Vykdyti nuo {start} iki {end} dienos kiekvieną mėnesį' },
-    },
-    month: {
-      every: { editor: 'Vykdyti kiekvieną mėnesį', preview: 'Vykdyti kiekvieną mėnesį' },
-      interval: { editor: 'Pradėti {start} ir vykdyti kas {step} mėnesius', preview: 'Kiekvienais metais vykdyti nuo {start} kas {step} mėnesius' },
-      specified: { editor: 'Vykdyti šiais mėnesiais:', preview: 'Vykdyti {values} kiekvienais metais' },
-      range: { editor: 'Vykdyti nuo {start} iki {end}', preview: 'Vykdyti nuo {start} iki {end} kiekvienais metais' },
-    },
-    week: {
-      every: { editor: 'Vykdyti kiekvieną dieną', preview: 'Vykdyti kiekvieną dieną' },
-      unspecified: { editor: 'Nenurodyti savaitės dienos', preview: 'Savaitė nenurodyta; naudoti dienos lauką' },
-      interval: { editor: 'Pradėti {start} ir vykdyti kas {step} dienas', preview: 'Kiekvieną savaitę vykdyti nuo {start} kas {step} dienas' },
-      specified: { editor: 'Vykdyti šiomis savaitės dienomis:', preview: 'Vykdyti kiekvieną {values}' },
-      range: { editor: 'Vykdyti nuo {start} iki {end} kiekvieną savaitę', preview: 'Vykdyti nuo {start} iki {end} kiekvieną savaitę' },
-    },
-    year: {
-      every: { editor: 'Vykdyti kiekvienais metais', preview: 'Vykdyti kiekvienais metais' },
-      interval: { editor: 'Pradėti {start} metais ir vykdyti kas {step} metus', preview: 'Vykdyti nuo {start} metų kas {step} metus' },
-      specified: { editor: 'Vykdyti šiais metais:', preview: 'Vykdyti {values} metais' },
-      range: { editor: 'Vykdyti nuo {start} iki {end} metų', preview: 'Vykdyti nuo {start} iki {end} metų' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: '01',
-      FEB: '02',
-      MAR: '03',
-      APR: '04',
-      MAY: '05',
-      JUN: '06',
-      JUL: '07',
-      AUG: '08',
-      SEP: '09',
-      OCT: '10',
-      NOV: '11',
-      DEC: '12',
-    },
-    week: {
-      SUN: 'sk',
-      MON: 'pr',
-      TUE: 'an',
-      WED: 'tr',
-      THU: 'kt',
-      FRI: 'pn',
-      SAT: 'št',
-    },
-  },
+  everyStep: 'Vykdyti kas {step} minučių {field}',
+  intervalField: 'Pradėti nuo {field} {start} ir vykdyti kas {step} minučių',
+  specifiedField: '{values}',
+  rangeField: '{start} iki {end}',
+  unspecifiedDay: 'Diena nenurodyta; naudoti savaitės lauką',
+  unspecifiedWeek: 'Savaitė nenurodyta; naudoti dienos lauką',
   valueSeparator: ', ',
-  to: 'iki',
-  or: ' arba ',
   expression: 'Cron išraiška',
   fieldList: 'Cron laukai',
   fieldStart: '{field} pradžia',
   fieldInterval: '{field} intervalas',
   fieldRangeStart: '{field} diapazono pradžia',
   fieldRangeEnd: '{field} diapazono pabaiga',
-  fieldValue: '{field} vertė',
   fieldValues: '{field} vertės',
   nextRun: 'Kitas paleidimas: {value}',
   noFutureRun: 'Jokio paleidimo ateityje',
-  everySeconds: 'Kas {value} sek',
-  everyMinutes: 'Kas {value} min',
-  everyDayAt: 'Kiekvieną dieną {value}',
-  customSchedule: 'Pasirinktinis tvarkaraštis',
   specialLastDay: 'paskutinė kiekvieno mėnesio diena',
   specialLastWeekday: 'paskutinė kiekvieno mėnesio darbo diena',
   specialNearestWeekday: 'artimiausia darbo diena {day}-ai kiekvieno mėnesio dienai',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Ši speciali sintaksė nepalaikoma',
     invalidExpression: 'Neteisinga cron išraiška',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

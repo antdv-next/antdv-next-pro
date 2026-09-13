@@ -99,6 +99,7 @@
     "@antdv-next/cssinjs": "catalog:prod",
     "@v-c/util": "catalog:vc",
     "croner": "catalog:prod",
+    "cronstrue": "catalog:prod",
     "dayjs": "catalog:prod"
   },
   "devDependencies": {

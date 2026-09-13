@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/km_KH'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'ទីពីរ',
     minute: 'នាទី',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'ជួរ',
     special: 'ពិសេស',
   },
-  any: 'ណាមួយ។',
   notSpecified: 'មិនបានបញ្ជាក់',
-  every: 'រៀងរាល់',
   everyField: 'រៀងរាល់ {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'ដំណើរការរៀងរាល់ {step} វិនាទី', preview: 'ដំណើរការរៀងរាល់ {step} វិនាទី' },
-      interval: { editor: 'ចាប់ផ្តើមនៅ វិនាទី {start} បន្ទាប់មកដំណើរការរៀងរាល់ {step} វិនាទី', preview: 'រៀងរាល់នាទី ដំណើរការពី វិនាទី {start} រៀងរាល់ {step} វិនាទី' },
-      specified: { editor: 'ដំណើរការនៅ វិនាទី ទាំងនេះ:', preview: 'ដំណើរការនៅ វិនាទី {values} រៀងរាល់នាទី' },
-      range: { editor: 'ដំណើរការពី វិនាទី {start} ដល់ វិនាទី {end}', preview: 'ដំណើរការពី វិនាទី {start} ដល់ វិនាទី {end} រៀងរាល់នាទី' },
-    },
-    minute: {
-      every: { editor: 'ដំណើរការរៀងរាល់ {step} នាទី', preview: 'ដំណើរការរៀងរាល់ {step} នាទី' },
-      interval: { editor: 'ចាប់ផ្តើមនៅ នាទី {start} បន្ទាប់មកដំណើរការរៀងរាល់ {step} នាទី', preview: 'រៀងរាល់ម៉ោង ដំណើរការពី នាទី {start} រៀងរាល់ {step} នាទី' },
-      specified: { editor: 'ដំណើរការនៅ នាទី ទាំងនេះ:', preview: 'ដំណើរការនៅ នាទី {values} រៀងរាល់ម៉ោង' },
-      range: { editor: 'ដំណើរការពី នាទី {start} ដល់ នាទី {end}', preview: 'ដំណើរការពី នាទី {start} ដល់ នាទី {end} រៀងរាល់ម៉ោង' },
-    },
-    hour: {
-      every: { editor: 'ដំណើរការរៀងរាល់ {step} ម៉ោង', preview: 'ដំណើរការរៀងរាល់ {step} ម៉ោង' },
-      interval: { editor: 'ចាប់ផ្តើមនៅ {start}:00 បន្ទាប់មកដំណើរការរៀងរាល់ {step} ម៉ោង', preview: 'រៀងរាល់ថ្ងៃ ដំណើរការពី {start}:00 រៀងរាល់ {step} ម៉ោង' },
-      specified: { editor: 'ដំណើរការនៅពេលទាំងនេះ:', preview: 'ដំណើរការនៅ {values}:00 រៀងរាល់ថ្ងៃ' },
-      range: { editor: 'ដំណើរការពី {start}:00 ដល់ {end}:00', preview: 'ដំណើរការពី {start}:00 ដល់ {end}:00 រៀងរាល់ថ្ងៃ' },
-    },
-    day: {
-      every: { editor: 'ដំណើរការរៀងរាល់ថ្ងៃ', preview: 'ដំណើរការរៀងរាល់ថ្ងៃ' },
-      unspecified: { editor: 'កុំបញ្ជាក់កាលបរិច្ឆេទ', preview: 'ថ្ងៃមិនត្រូវបានបញ្ជាក់; ប្រើវាលសប្តាហ៍' },
-      interval: { editor: 'ចាប់ផ្តើមនៅថ្ងៃទី {start} នៃរៀងរាល់ខែ បន្ទាប់មកដំណើរការរៀងរាល់ {step} ថ្ងៃ', preview: 'រៀងរាល់ខែ ដំណើរការពីថ្ងៃទី {start} រៀងរាល់ {step} ថ្ងៃ' },
-      specified: { editor: 'ដំណើរការនៅថ្ងៃទាំងនេះនៃរៀងរាល់ខែ:', preview: 'ដំណើរការនៅថ្ងៃទី {values} នៃរៀងរាល់ខែ' },
-      range: { editor: 'ដំណើរការពីថ្ងៃទី {start} ដល់ថ្ងៃទី {end} នៃរៀងរាល់ខែ', preview: 'ដំណើរការពីថ្ងៃទី {start} ដល់ថ្ងៃទី {end} នៃរៀងរាល់ខែ' },
-    },
-    month: {
-      every: { editor: 'ដំណើរការរៀងរាល់ខែ', preview: 'ដំណើរការរៀងរាល់ខែ' },
-      interval: { editor: 'ចាប់ផ្តើមនៅ {start} បន្ទាប់មកដំណើរការរៀងរាល់ {step} ខែ', preview: 'រៀងរាល់ឆ្នាំ ដំណើរការពី {start} រៀងរាល់ {step} ខែ' },
-      specified: { editor: 'ដំណើរការនៅខែទាំងនេះ:', preview: 'ដំណើរការនៅ {values} រៀងរាល់ឆ្នាំ' },
-      range: { editor: 'ដំណើរការពី {start} ដល់ {end}', preview: 'ដំណើរការពី {start} ដល់ {end} រៀងរាល់ឆ្នាំ' },
-    },
-    week: {
-      every: { editor: 'ដំណើរការរៀងរាល់ថ្ងៃ', preview: 'ដំណើរការរៀងរាល់ថ្ងៃ' },
-      unspecified: { editor: 'កុំបញ្ជាក់ថ្ងៃក្នុងសប្តាហ៍', preview: 'សប្តាហ៍មិនត្រូវបានបញ្ជាក់; ប្រើវាលថ្ងៃ' },
-      interval: { editor: 'ចាប់ផ្តើមនៅ {start} បន្ទាប់មកដំណើរការរៀងរាល់ {step} ថ្ងៃ', preview: 'រៀងរាល់សប្តាហ៍ ដំណើរការពី {start} រៀងរាល់ {step} ថ្ងៃ' },
-      specified: { editor: 'ដំណើរការនៅថ្ងៃទាំងនេះនៃសប្តាហ៍:', preview: 'ដំណើរការរៀងរាល់ {values}' },
-      range: { editor: 'ដំណើរការពី {start} ដល់ {end} រៀងរាល់សប្តាហ៍', preview: 'ដំណើរការពី {start} ដល់ {end} រៀងរាល់សប្តាហ៍' },
-    },
-    year: {
-      every: { editor: 'ដំណើរការរៀងរាល់ឆ្នាំ', preview: 'ដំណើរការរៀងរាល់ឆ្នាំ' },
-      interval: { editor: 'ចាប់ផ្តើមនៅឆ្នាំ {start} បន្ទាប់មកដំណើរការរៀងរាល់ {step} ឆ្នាំ', preview: 'ដំណើរការពីឆ្នាំ {start} រៀងរាល់ {step} ឆ្នាំ' },
-      specified: { editor: 'ដំណើរការនៅឆ្នាំទាំងនេះ:', preview: 'ដំណើរការនៅឆ្នាំ {values}' },
-      range: { editor: 'ដំណើរការពីឆ្នាំ {start} ដល់ឆ្នាំ {end}', preview: 'ដំណើរការពីឆ្នាំ {start} ដល់ឆ្នាំ {end}' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'មករា',
-      FEB: 'កុម្ភៈ',
-      MAR: 'មីនា',
-      APR: 'មេសា',
-      MAY: 'ឧសភា',
-      JUN: 'មិថុនា',
-      JUL: 'កក្កដា',
-      AUG: 'សីហា',
-      SEP: 'កញ្ញា',
-      OCT: 'តុលា',
-      NOV: 'វិច្ឆិកា',
-      DEC: 'ធ្នូ',
-    },
-    week: {
-      SUN: 'អាទិត្យ',
-      MON: 'ចន្ទ',
-      TUE: 'អង្គារ',
-      WED: 'ពុធ',
-      THU: 'ព្រហ',
-      FRI: 'សុក្រ',
-      SAT: 'សៅរ៍',
-    },
-  },
+  everyStep: 'ដំណើរការរៀងរាល់ {step} {field}',
+  intervalField: 'ចាប់ផ្តើមនៅ  {start} បន្ទាប់មកដំណើរការរៀងរាល់ {step} {field}',
+  specifiedField: '{values}',
+  rangeField: '{start} ទៅ {end}',
+  unspecifiedDay: 'ថ្ងៃមិនត្រូវបានបញ្ជាក់; ប្រើវាលសប្តាហ៍',
+  unspecifiedWeek: 'សប្តាហ៍មិនត្រូវបានបញ្ជាក់; ប្រើវាលថ្ងៃ',
   valueSeparator: ', ',
-  to: 'ទៅ',
-  or: ' ឬ ',
   expression: 'កន្សោម Cron',
   fieldList: 'វាល Cron',
   fieldStart: '{field} ចាប់ផ្តើម',
   fieldInterval: '{field} ចន្លោះពេល',
   fieldRangeStart: '{field} ជួរចាប់ផ្តើម',
   fieldRangeEnd: '{field} ជួរបញ្ចប់',
-  fieldValue: 'តម្លៃ {field}',
   fieldValues: 'តម្លៃ {field}',
   nextRun: 'ការរត់បន្ទាប់៖ {value}',
   noFutureRun: 'គ្មានការរត់នាពេលអនាគតទេ។',
-  everySeconds: 'រៀងរាល់ {value} វិនាទី',
-  everyMinutes: 'រៀងរាល់ {value} នាទី',
-  everyDayAt: 'រៀងរាល់ថ្ងៃនៅម៉ោង {value}',
-  customSchedule: 'កាលវិភាគផ្ទាល់ខ្លួន',
   specialLastDay: 'ថ្ងៃចុងក្រោយនៃគ្រប់ខែ',
   specialLastWeekday: 'ថ្ងៃធ្វើការចុងក្រោយនៃគ្រប់ខែ',
   specialNearestWeekday: 'ថ្ងៃធ្វើការដែលនៅជិតថ្ងៃទី {day} នៃគ្រប់ខែ',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'វាក្យសម្ពន្ធពិសេសនេះមិនត្រូវបានគាំទ្រទេ',
     invalidExpression: 'កន្សោម cron មិនត្រឹមត្រូវ',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

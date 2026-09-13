@@ -124,35 +124,28 @@ describe('Cron utilities', () => {
   it('uses Croner to calculate a next execution time', () => {
     const preview = getPreview('0 */5 * * * ?')
 
-    expect(preview.description).toBe('Start at minute 0, then execute every 5 minutes')
+    expect(preview.description).toBe('Every 5 minutes')
     expect(preview.nextRunAt).toBeInstanceOf(Date)
     expect(preview.nextRuns).toHaveLength(3)
     expect(preview.nextRuns?.every(value => value instanceof Date)).toBe(true)
   })
 
-  it('describes common schedules in human language', () => {
-    expect(getPreview('0 0 9 * * ?').description).toBe('Every day at 09:00')
-    expect(getPreview('0 30 9 ? * MON-FRI').description).toBe('Execute from Mon to Fri every week at 09:30')
-    expect(getPreview('0 0 9 1 * ?').description).toBe('Execute on days 1 of each month at 09:00')
-    expect(getPreview('*/5 * * * * ?').description).toBe('Start at second 0, then execute every 5 seconds')
-
-    expect(getPreview('0 0 9 * * ?', {}, zhCN).description).toBe('每天 09:00 执行')
-    expect(getPreview('0 30 9 ? * MON-FRI', {}, zhCN).description).toBe('每周一至周五 09:30 执行')
-    expect(getPreview('0 0 9 1 * ?', {}, zhCN).description).toBe('每月第 1 日 09:00 执行')
-    expect(getPreview('0 */5 * * * ?', {}, zhCN).description).toBe('从 0 分钟开始，每 5 分钟执行')
-    expect(getPreview('*/5 * * * * ?', {}, zhCN).description).toBe('从 0 秒开始，每 5 秒执行')
-    expect(getPreview('0 0 */2 * * ?', {}, zhCN).description).toBe('从 0 点开始，每 2 小时执行')
-    expect(getPreview('0 0 9,18 * * ?', {}, zhCN).description).toBe('每天 9、18 点执行')
-    expect(getPreview('0 0 9 ? * MON', {}, zhCN).description).toBe('每周一 09:00 执行')
-    expect(getPreview('0 1/5 * * * ?', {}, zhCN).description).toBe('从 1 分钟开始，每 5 分钟执行')
+  it('describes expressions with cronstrue', () => {
+    expect(getPreview('0 0 9 * * ?').description).toBe('At 09:00')
+    expect(getPreview('0 0,1,2,4 9 * * ?', {}, zhCN, 'zh-cn').description).toBe('在09:00、09:01、09:02和09:04')
+    expect(getPreview('0 30 9 ? * MON-FRI').description).toBe('At 09:30, Monday through Friday')
+    expect(getPreview('0 0 9 1 * ?').description).toBe('At 09:00, on day 1 of the month')
+    expect(getPreview('*/5 * * * * ?').description).toBe('Every 5 seconds')
+    expect(getPreview('0 */5 * * * ?', {}, zhCN, 'zh-cn').description).toBe('每隔 5 分钟')
+    expect(getPreview('0 0 9 ? * MON,FRI').description).toBe('At 09:00, only on Monday and Friday')
   })
 
   it('describes quartz special syntax', () => {
-    expect(getPreview('0 0 9 L * ?').description).toBe('the last day of each month at 09:00')
-    expect(getPreview('0 0 9 LW * ?').description).toBe('the last weekday of each month at 09:00')
-    expect(getPreview('0 0 9 15W * ?').description).toBe('the nearest weekday to day 15 of each month at 09:00')
-    expect(getPreview('0 0 9 ? * 6L').description).toBe('the last Fri of each month at 09:00')
-    expect(getPreview('0 0 9 ? * 6#3').description).toBe('the 3rd Fri of each month at 09:00')
+    expect(getPreview('0 0 9 L * ?').description).toBe('At 09:00, on the last day of the month')
+    expect(getPreview('0 0 9 LW * ?').description).toBe('At 09:00, on the last weekday of the month')
+    expect(getPreview('0 0 9 15W * ?').description).toBe('At 09:00, on the weekday nearest day 15 of the month')
+    expect(getPreview('0 0 9 ? * 6L').description).toBe('At 09:00, on the last Friday of the month')
+    expect(getPreview('0 0 9 ? * 6#3').description).toBe('At 09:00, on the third Friday of the month')
   })
 
   it('uses Croner last-day semantics after replacing quartz ?', () => {
@@ -164,22 +157,22 @@ describe('Cron utilities', () => {
   })
 
   it('describes unix five-field expressions', () => {
-    expect(getPreview('*/5 * * * *', { format: 'unix' }).description).toBe('Start at minute 0, then execute every 5 minutes')
-    expect(getPreview('0 9 * * 1-5', { format: 'unix' }).description).toBe('Execute from Mon to Fri every week at 09:00')
-    expect(getPreview('30 9 1 * *', { format: 'unix' }).description).toBe('Execute on days 1 of each month at 09:30')
+    expect(getPreview('*/5 * * * *', { format: 'unix' }).description).toBe('Every 5 minutes')
+    expect(getPreview('0 9 * * 1-5', { format: 'unix' }).description).toBe('At 09:00, Monday through Friday')
+    expect(getPreview('30 9 1 * *', { format: 'unix' }).description).toBe('At 09:30, on day 1 of the month')
   })
 
   it('describes unix day and week together as OR', () => {
     const options = { format: 'unix' as const }
     const fields = parseExpression('0 9 1 * 1', options)
     expect(fields).toMatchObject({ day: '1', week: '1' })
-    expect(describeExpression(fields!, zhCN, options)).toContain('或')
-    expect(getPreview('0 9 1 * 1', options).description).toBe('Execute on days 1 of each month or Execute every Mon at 09:00')
-    expect(getPreview('0 9 1 * 1', options, zhCN).description).toBe('每月第 1 日执行或每周一 09:00 执行')
+    expect(describeExpression('0 9 1 * 1', 'zh-cn', options)).toBe('在09:00, 限每月 1 号, 或者为星期一')
+    expect(getPreview('0 9 1 * 1', options).description).toBe('At 09:00, on day 1 of the month, and on Monday')
+    expect(getPreview('0 9 1 * 1', options, zhCN, 'zh-cn').description).toBe('在09:00, 限每月 1 号, 或者为星期一')
   })
 
   it('localizes descriptions and validation errors', () => {
-    expect(getPreview('0 */5 * * * ?', {}, zhCN).description).toBe('从 0 分钟开始，每 5 分钟执行')
+    expect(getPreview('0 */5 * * * ?', {}, zhCN, 'zh-cn').description).toBe('每隔 5 分钟')
     expect(validateExpression('* * * * *', {}, zhCN).errors?.[0]).toMatchObject({
       code: 'EXPECTED_FIELDS',
       message: '当前 Quartz 格式需要 6 个字段',

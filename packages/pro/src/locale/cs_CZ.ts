@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/cs_CZ'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'sekunda',
     minute: 'minuta',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Rozsah',
     special: 'Speciální',
   },
-  any: 'Jakýkoli',
   notSpecified: 'Neuvedeno',
-  every: 'každý',
   everyField: 'Každých {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Spouštět každých {step} sekund', preview: 'Spouštět každých {step} sekund' },
-      interval: { editor: 'Začít v sekundy {start} a spouštět každých {step} sekund', preview: 'každé minuty spouštět od sekundy {start} každých {step} sekund' },
-      specified: { editor: 'Spouštět v těchto sekund:', preview: 'Spouštět v sekund {values} každé minuty' },
-      range: { editor: 'Spouštět od sekundy {start} do sekundy {end}', preview: 'Spouštět od sekundy {start} do sekundy {end} každé minuty' },
-    },
-    minute: {
-      every: { editor: 'Spouštět každých {step} minut', preview: 'Spouštět každých {step} minut' },
-      interval: { editor: 'Začít v minuty {start} a spouštět každých {step} minut', preview: 'každé hodiny spouštět od minuty {start} každých {step} minut' },
-      specified: { editor: 'Spouštět v těchto minut:', preview: 'Spouštět v minut {values} každé hodiny' },
-      range: { editor: 'Spouštět od minuty {start} do minuty {end}', preview: 'Spouštět od minuty {start} do minuty {end} každé hodiny' },
-    },
-    hour: {
-      every: { editor: 'Spouštět každých {step} hodin', preview: 'Spouštět každých {step} hodin' },
-      interval: { editor: 'Začít v {start}:00 a spouštět každých {step} hodin', preview: 'Každý den spouštět od {start}:00 každých {step} hodin' },
-      specified: { editor: 'Spouštět v těchto časech:', preview: 'Spouštět v {values}:00 každý den' },
-      range: { editor: 'Spouštět od {start}:00 do {end}:00', preview: 'Spouštět od {start}:00 do {end}:00 každý den' },
-    },
-    day: {
-      every: { editor: 'Spouštět každý den', preview: 'Spouštět každý den' },
-      unspecified: { editor: 'Neurčovat datum', preview: 'Den není určen; použít pole týdne' },
-      interval: { editor: 'Začít {start}. den každého měsíce a spouštět každých {step} dní', preview: 'Každý měsíc spouštět od {start}. dne každých {step} dní' },
-      specified: { editor: 'Spouštět v tyto dny každého měsíce:', preview: 'Spouštět {values}. den každého měsíce' },
-      range: { editor: 'Spouštět od {start}. do {end}. dne každého měsíce', preview: 'Spouštět od {start}. do {end}. dne každého měsíce' },
-    },
-    month: {
-      every: { editor: 'Spouštět každý měsíc', preview: 'Spouštět každý měsíc' },
-      interval: { editor: 'Začít v {start} a spouštět každých {step} měsíců', preview: 'Každý rok spouštět od {start} každých {step} měsíců' },
-      specified: { editor: 'Spouštět v těchto měsících:', preview: 'Spouštět v {values} každý rok' },
-      range: { editor: 'Spouštět od {start} do {end}', preview: 'Spouštět od {start} do {end} každý rok' },
-    },
-    week: {
-      every: { editor: 'Spouštět každý den', preview: 'Spouštět každý den' },
-      unspecified: { editor: 'Neurčovat den v týdnu', preview: 'Týden není určen; použít pole dne' },
-      interval: { editor: 'Začít v {start} a spouštět každých {step} dní', preview: 'Každý týden spouštět od {start} každých {step} dní' },
-      specified: { editor: 'Spouštět v tyto dny týdne:', preview: 'Spouštět každý {values}' },
-      range: { editor: 'Spouštět od {start} do {end} každý týden', preview: 'Spouštět od {start} do {end} každý týden' },
-    },
-    year: {
-      every: { editor: 'Spouštět každý rok', preview: 'Spouštět každý rok' },
-      interval: { editor: 'Začít v roce {start} a spouštět každých {step} let', preview: 'Spouštět od roku {start} každých {step} let' },
-      specified: { editor: 'Spouštět v těchto letech:', preview: 'Spouštět v letech {values}' },
-      range: { editor: 'Spouštět od roku {start} do roku {end}', preview: 'Spouštět od roku {start} do roku {end}' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'led',
-      FEB: 'úno',
-      MAR: 'bře',
-      APR: 'dub',
-      MAY: 'kvě',
-      JUN: 'čvn',
-      JUL: 'čvc',
-      AUG: 'srp',
-      SEP: 'zář',
-      OCT: 'říj',
-      NOV: 'lis',
-      DEC: 'pro',
-    },
-    week: {
-      SUN: 'ne',
-      MON: 'po',
-      TUE: 'út',
-      WED: 'st',
-      THU: 'čt',
-      FRI: 'pá',
-      SAT: 'so',
-    },
-  },
+  everyStep: 'Spouštět každých {step} minut {field}',
+  intervalField: 'Začít v minuty {start} a spouštět každých {step} minut {field}',
+  specifiedField: '{values}',
+  rangeField: '{start} až {end}',
+  unspecifiedDay: 'Den není určen; použít pole týdne',
+  unspecifiedWeek: 'Týden není určen; použít pole dne',
   valueSeparator: ', ',
-  to: 'až',
-  or: ' nebo ',
   expression: 'Cron výraz',
   fieldList: 'Cron pole',
   fieldStart: '{field}',
   fieldInterval: '{field} interval',
   fieldRangeStart: '{field} začátek rozsahu',
   fieldRangeEnd: '{field} konec rozsahu',
-  fieldValue: '{field}',
   fieldValues: '{field} hodnot',
   nextRun: 'Další spuštění: {value}',
   noFutureRun: 'Žádný budoucí běh',
-  everySeconds: 'Každých {value} sekund',
-  everyMinutes: 'Každých {value} minut',
-  everyDayAt: 'Každý den v {value}',
-  customSchedule: 'Vlastní rozvrh',
   specialLastDay: 'poslední den každého měsíce',
   specialLastWeekday: 'poslední pracovní den každého měsíce',
   specialNearestWeekday: 'nejbližší pracovní den k {day}. dni každého měsíce',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Tato speciální syntaxe není podporována',
     invalidExpression: 'Neplatný cron výraz',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

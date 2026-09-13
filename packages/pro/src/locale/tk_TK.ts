@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/tk_TK'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'Ikinji',
     minute: 'minut',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'aralygy',
     special: 'Yörite',
   },
-  any: 'Islendik',
   notSpecified: 'görkezilmedi',
-  every: 'hersi',
   everyField: 'Her {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Her {step} sekunt ýerine ýetir', preview: 'Her {step} sekunt ýerine ýetir' },
-      interval: { editor: 'sekunt {start} bahasyndan başla, soň her {step} sekunt ýerine ýetir', preview: 'her minut sekunt {start} bahasyndan başlap her {step} sekunt ýerine ýetir' },
-      specified: { editor: 'Şu sekunt ýerine ýetir:', preview: 'her minut sekunt {values} bahalarynda ýerine ýetir' },
-      range: { editor: 'sekunt {start} bilen sekunt {end} aralygynda ýerine ýetir', preview: 'her minut sekunt {start} bilen sekunt {end} aralygynda ýerine ýetir' },
-    },
-    minute: {
-      every: { editor: 'Her {step} minut ýerine ýetir', preview: 'Her {step} minut ýerine ýetir' },
-      interval: { editor: 'minut {start} bahasyndan başla, soň her {step} minut ýerine ýetir', preview: 'her sagat minut {start} bahasyndan başlap her {step} minut ýerine ýetir' },
-      specified: { editor: 'Şu minut ýerine ýetir:', preview: 'her sagat minut {values} bahalarynda ýerine ýetir' },
-      range: { editor: 'minut {start} bilen minut {end} aralygynda ýerine ýetir', preview: 'her sagat minut {start} bilen minut {end} aralygynda ýerine ýetir' },
-    },
-    hour: {
-      every: { editor: 'Her {step} sagat ýerine ýetir', preview: 'Her {step} sagat ýerine ýetir' },
-      interval: { editor: '{start}:00-dan başla, soň her {step} sagat ýerine ýetir', preview: 'Her gün {start}:00-dan başlap her {step} sagat ýerine ýetir' },
-      specified: { editor: 'Şu sagatlarda ýerine ýetir:', preview: 'Her gün {values}:00-da ýerine ýetir' },
-      range: { editor: '{start}:00 bilen {end}:00 aralygynda ýerine ýetir', preview: 'Her gün {start}:00 bilen {end}:00 aralygynda ýerine ýetir' },
-    },
-    day: {
-      every: { editor: 'Her gün ýerine ýetir', preview: 'Her gün ýerine ýetir' },
-      unspecified: { editor: 'Sene görkezme', preview: 'Gün görkezilmedi; hepde meýdanyna eýer' },
-      interval: { editor: 'Her aýyň {start}-nji gününden başla, soň her {step} gün ýerine ýetir', preview: 'Her aý {start}-nji günden başlap her {step} gün ýerine ýetir' },
-      specified: { editor: 'Her aý şu günlerde ýerine ýetir:', preview: 'Her aý {values}-nji günlerde ýerine ýetir' },
-      range: { editor: 'Her aý {start}-nji günden {end}-nji güne çenli ýerine ýetir', preview: 'Her aý {start}-nji günden {end}-nji güne çenli ýerine ýetir' },
-    },
-    month: {
-      every: { editor: 'Her aý ýerine ýetir', preview: 'Her aý ýerine ýetir' },
-      interval: { editor: '{start} bahasyndan başla, soň her {step} aý ýerine ýetir', preview: 'Her ýyl {start} bahasyndan başlap her {step} aý ýerine ýetir' },
-      specified: { editor: 'Şu aýlarda ýerine ýetir:', preview: 'Her ýyl {values} ýerine ýetir' },
-      range: { editor: '{start} bilen {end} aralygynda ýerine ýetir', preview: 'Her ýyl {start} bilen {end} aralygynda ýerine ýetir' },
-    },
-    week: {
-      every: { editor: 'Her gün ýerine ýetir', preview: 'Her gün ýerine ýetir' },
-      unspecified: { editor: 'Hepde gününi görkezme', preview: 'Hepde görkezilmedi; gün meýdanyna eýer' },
-      interval: { editor: '{start} gününden başla, soň her {step} gün ýerine ýetir', preview: 'Her hepde {start} gününden başlap her {step} gün ýerine ýetir' },
-      specified: { editor: 'Şu hepde günlerinde ýerine ýetir:', preview: 'Her {values} ýerine ýetir' },
-      range: { editor: 'Her hepde {start} bilen {end} aralygynda ýerine ýetir', preview: 'Her hepde {start} bilen {end} aralygynda ýerine ýetir' },
-    },
-    year: {
-      every: { editor: 'Her ýyl ýerine ýetir', preview: 'Her ýyl ýerine ýetir' },
-      interval: { editor: '{start} ýylyndan başla, soň her {step} ýyl ýerine ýetir', preview: '{start} ýylyndan başlap her {step} ýyl ýerine ýetir' },
-      specified: { editor: 'Şu ýyllarda ýerine ýetir:', preview: '{values} ýyllarynda ýerine ýetir' },
-      range: { editor: '{start} ýylyndan {end} ýylyna çenli ýerine ýetir', preview: '{start} ýylyndan {end} ýylyna çenli ýerine ýetir' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'Ýan',
-      FEB: 'Few',
-      MAR: 'Mar',
-      APR: 'Apr',
-      MAY: 'Maý',
-      JUN: 'Iýun',
-      JUL: 'Iýul',
-      AUG: 'Awg',
-      SEP: 'Sen',
-      OCT: 'Okt',
-      NOV: 'Noý',
-      DEC: 'Dek',
-    },
-    week: {
-      SUN: 'Ýek',
-      MON: 'Duş',
-      TUE: 'Siş',
-      WED: 'Çar',
-      THU: 'Pen',
-      FRI: 'Ann',
-      SAT: 'Şen',
-    },
-  },
+  everyStep: 'Her {step} {field} ýerine ýetir',
+  intervalField: ' {start} bahasyndan başla, soň her {step} {field} ýerine ýetir',
+  specifiedField: '{values}',
+  rangeField: '{start} – {end}',
+  unspecifiedDay: 'Gün görkezilmedi; hepde meýdanyna eýer',
+  unspecifiedWeek: 'Hepde görkezilmedi; gün meýdanyna eýer',
   valueSeparator: ', ',
-  to: '–',
-  or: ' ýa-da ',
   expression: 'Kron aňlatmasy',
   fieldList: 'Kron meýdanlary',
   fieldStart: '{field} başlamak',
   fieldInterval: '{field} aralyk',
   fieldRangeStart: '{field} aralyk başlangyjy',
   fieldRangeEnd: '{field} diapazonyň soňy',
-  fieldValue: '{field} bahasy',
   fieldValues: '{field} bahalar',
   nextRun: 'Indiki ylgaw: {value}',
   noFutureRun: 'Geljekde iş bolmaz',
-  everySeconds: 'Her {value} sekuntda',
-  everyMinutes: 'Her {value} minutda',
-  everyDayAt: 'Her gün {value}-de',
-  customSchedule: 'omörite tertip',
   specialLastDay: 'her aýyň soňky güni',
   specialLastWeekday: 'her aýyň soňky iş güni',
   specialNearestWeekday: 'her aýyň {day}-nji gününe iň ýakyn iş güni',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Bu yörite sintaksis goldanylmaýar',
     invalidExpression: 'Nädogry kron aňlatmasy',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

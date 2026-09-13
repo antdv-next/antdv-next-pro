@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/fr_CA'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'Seconde',
     minute: 'Minute',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Portée',
     special: 'Spécial',
   },
-  any: 'N\'importe lequel',
   notSpecified: 'Non spécifié',
-  every: 'tous les',
   everyField: 'Tous les {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Exécuter toutes les {step} secondes', preview: 'Exécuter toutes les {step} secondes' },
-      interval: { editor: 'Commencer à seconde {start}, puis exécuter toutes les {step} secondes', preview: 'chaque minute, exécuter à partir de seconde {start} toutes les {step} secondes' },
-      specified: { editor: 'Exécuter à ces secondes :', preview: 'Exécuter aux secondes {values} chaque minute' },
-      range: { editor: 'Exécuter de seconde {start} à seconde {end}', preview: 'Exécuter de seconde {start} à seconde {end} chaque minute' },
-    },
-    minute: {
-      every: { editor: 'Exécuter toutes les {step} minutes', preview: 'Exécuter toutes les {step} minutes' },
-      interval: { editor: 'Commencer à minute {start}, puis exécuter toutes les {step} minutes', preview: 'chaque heure, exécuter à partir de minute {start} toutes les {step} minutes' },
-      specified: { editor: 'Exécuter à ces minutes :', preview: 'Exécuter aux minutes {values} chaque heure' },
-      range: { editor: 'Exécuter de minute {start} à minute {end}', preview: 'Exécuter de minute {start} à minute {end} chaque heure' },
-    },
-    hour: {
-      every: { editor: 'Exécuter toutes les {step} heures', preview: 'Exécuter toutes les {step} heures' },
-      interval: { editor: 'Commencer à {start}:00, puis exécuter toutes les {step} heures', preview: 'Chaque jour, exécuter à partir de {start}:00 toutes les {step} heures' },
-      specified: { editor: 'Exécuter à ces heures :', preview: 'Exécuter à {values}:00 chaque jour' },
-      range: { editor: 'Exécuter de {start}:00 à {end}:00', preview: 'Exécuter de {start}:00 à {end}:00 chaque jour' },
-    },
-    day: {
-      every: { editor: 'Exécuter tous les jours', preview: 'Exécuter tous les jours' },
-      unspecified: { editor: 'Ne pas spécifier de date', preview: 'Date non spécifiée ; suivre le champ semaine' },
-      interval: { editor: 'Commencer le jour {start} de chaque mois, puis exécuter tous les {step} jours', preview: 'Chaque mois, exécuter à partir du jour {start} tous les {step} jours' },
-      specified: { editor: 'Exécuter ces jours de chaque mois :', preview: 'Exécuter les jours {values} de chaque mois' },
-      range: { editor: 'Exécuter du jour {start} au jour {end} de chaque mois', preview: 'Exécuter du jour {start} au jour {end} de chaque mois' },
-    },
-    month: {
-      every: { editor: 'Exécuter tous les mois', preview: 'Exécuter tous les mois' },
-      interval: { editor: 'Commencer en {start}, puis exécuter tous les {step} mois', preview: 'Chaque année, exécuter à partir de {start} tous les {step} mois' },
-      specified: { editor: 'Exécuter ces mois-ci :', preview: 'Exécuter en {values} chaque année' },
-      range: { editor: 'Exécuter de {start} à {end}', preview: 'Exécuter de {start} à {end} chaque année' },
-    },
-    week: {
-      every: { editor: 'Exécuter tous les jours', preview: 'Exécuter tous les jours' },
-      unspecified: { editor: 'Ne pas spécifier de jour de la semaine', preview: 'Semaine non spécifiée ; suivre le champ jour' },
-      interval: { editor: 'Commencer le {start}, puis exécuter tous les {step} jours', preview: 'Chaque semaine, exécuter à partir de {start} tous les {step} jours' },
-      specified: { editor: 'Exécuter ces jours de la semaine :', preview: 'Exécuter chaque {values}' },
-      range: { editor: 'Exécuter de {start} à {end} chaque semaine', preview: 'Exécuter de {start} à {end} chaque semaine' },
-    },
-    year: {
-      every: { editor: 'Exécuter tous les ans', preview: 'Exécuter tous les ans' },
-      interval: { editor: 'Commencer en {start}, puis exécuter tous les {step} ans', preview: 'Exécuter à partir de {start} tous les {step} ans' },
-      specified: { editor: 'Exécuter ces années-ci :', preview: 'Exécuter en {values}' },
-      range: { editor: 'Exécuter de {start} à {end}', preview: 'Exécuter de {start} à {end}' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'janv.',
-      FEB: 'févr.',
-      MAR: 'mars',
-      APR: 'avr.',
-      MAY: 'mai',
-      JUN: 'juin',
-      JUL: 'juil.',
-      AUG: 'août',
-      SEP: 'sept.',
-      OCT: 'oct.',
-      NOV: 'nov.',
-      DEC: 'déc.',
-    },
-    week: {
-      SUN: 'dim.',
-      MON: 'lun.',
-      TUE: 'mar.',
-      WED: 'mer.',
-      THU: 'jeu.',
-      FRI: 'ven.',
-      SAT: 'sam.',
-    },
-  },
+  everyStep: 'Exécuter toutes les {step} {field}',
+  intervalField: 'Commencer à  {start}, puis exécuter toutes les {step} {field}',
+  specifiedField: '{values}',
+  rangeField: '{start} à {end}',
+  unspecifiedDay: 'Date non spécifiée ; suivre le champ semaine',
+  unspecifiedWeek: 'Semaine non spécifiée ; suivre le champ jour',
   valueSeparator: ', ',
-  to: 'à',
-  or: ' ou ',
   expression: 'Expression Cron',
   fieldList: 'Champs Cron',
   fieldStart: '{field} début',
   fieldInterval: '{field} intervalle',
   fieldRangeStart: '{field} début de plage',
   fieldRangeEnd: '{field} fin de plage',
-  fieldValue: '{field} valeur',
   fieldValues: '{field} valeurs',
   nextRun: 'Prochaine exécution : {value}',
   noFutureRun: 'Aucune exécution future',
-  everySeconds: 'Toutes les {value} secondes',
-  everyMinutes: 'Toutes les {value} minutes',
-  everyDayAt: 'Tous les jours à {value}',
-  customSchedule: 'Calendrier personnalisé',
   specialLastDay: 'le dernier jour de chaque mois',
   specialLastWeekday: 'le dernier jour ouvrable de chaque mois',
   specialNearestWeekday: 'le jour ouvrable le plus proche du jour {day} de chaque mois',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Cette syntaxe spéciale n\'est pas prise en charge',
     invalidExpression: 'Expression cron invalide',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

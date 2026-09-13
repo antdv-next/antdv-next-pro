@@ -177,8 +177,8 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
     },
 
     '&-preview-description': {
-      color: token.colorText,
-      fontSize: token.fontSize,
+      color: token.colorTextSecondary,
+      fontSize: token.fontSizeSM,
       lineHeight: token.lineHeight,
     },
 
@@ -192,8 +192,8 @@ const genCronStyle: GenerateStyle<CronToken, CSSObject> = token => ({
       alignItems: 'center',
       gap: token.marginXS,
       minWidth: 0,
-      color: token.colorTextSecondary,
-      fontSize: token.fontSizeSM,
+      color: token.colorText,
+      fontSize: token.fontSize,
       lineHeight: token.lineHeight,
 
       '&::before': {

@@ -1,12 +1,15 @@
 import type { CronError, CronErrorCode, CronFieldMode, CronFieldName, CronFields, CronFormat, CronLocale, CronOptions, CronPreviewResult, CronValidateResult } from '../types'
 import { Cron } from 'croner'
+import cronstrue from 'cronstrue/i18n'
 import enUSLocale from '../../locale/en_US'
 import {
   getFieldLimits,
   getFieldNames,
   getWeekAliases,
   MONTH_ALIASES,
+  MONTH_VALUES,
   resolveCronOptions,
+  WEEK_VALUES,
   weekNumberToName,
 } from './format'
 import { isSpecialField, looksLikeSpecial, parseSpecial } from './special'
@@ -47,6 +50,29 @@ function parseNumber(value: string, definition: FieldDefinition): number | undef
 
 export function formatCronMessage(template: string, values: Record<string, number | string> = {}) {
   return template.replace(/\{(\w+)\}/g, (_, key: string) => String(values[key] ?? `{${key}}`))
+}
+
+function isCompleteLabels(labels: unknown, count: number): labels is string[] {
+  return Array.isArray(labels) && labels.length === count && labels.every(label => typeof label === 'string' && label.trim())
+}
+
+export function resolveValueLabels(localeCode = 'en', pickerLocale?: { shortMonths?: string[], shortWeekDays?: string[] }, overrides?: CronLocale['valueLabels']) {
+  const language = localeCode.replace('_', '-').toLowerCase()
+  const formatter = new Intl.DateTimeFormat(language, { month: 'short', timeZone: 'UTC' })
+  const weekdayFormatter = new Intl.DateTimeFormat(language, { weekday: 'short', timeZone: 'UTC' })
+  const overrideMonths = overrides?.month
+  const overrideWeeks = overrides?.week
+  const months = isCompleteLabels(overrideMonths && MONTH_VALUES.map(value => overrideMonths[value]), 12)
+    ? overrideMonths
+    : isCompleteLabels(pickerLocale?.shortMonths, 12)
+      ? Object.fromEntries(MONTH_VALUES.map((value, index) => [value, pickerLocale.shortMonths![index]!]))
+      : Object.fromEntries(MONTH_VALUES.map((value, index) => [value, formatter.format(new Date(Date.UTC(2020, index, 1)))]))
+  const weeks = isCompleteLabels(overrideWeeks && WEEK_VALUES.map(value => overrideWeeks[value]), 7)
+    ? overrideWeeks
+    : isCompleteLabels(pickerLocale?.shortWeekDays, 7)
+      ? Object.fromEntries(WEEK_VALUES.map((value, index) => [value, pickerLocale.shortWeekDays![index]!]))
+      : Object.fromEntries(WEEK_VALUES.map((value, index) => [value, weekdayFormatter.format(new Date(Date.UTC(2020, 5, 7 + index)))]))
+  return { ...overrides, month: months, week: weeks }
 }
 
 function fieldIssue(code: CronErrorCode, message: string): Pick<CronError, 'code' | 'message'> {
@@ -225,23 +251,6 @@ export function getFieldMode(value: string, field?: CronFieldName): CronFieldMod
   return 'specified'
 }
 
-function isNumericField(value: string | undefined) {
-  return Boolean(value && /^\d+$/.test(value))
-}
-
-function isZeroField(value: string | undefined) {
-  return value === '0' || value === '00' || value === undefined
-}
-
-function isEveryOrZero(value: string | undefined) {
-  return value === '*' || isZeroField(value)
-}
-
-function isEveryDay(fields: CronFields) {
-  return (fields.day === '*' && (fields.week === '?' || fields.week === '*'))
-    || (fields.day === '?' && fields.week === '*')
-}
-
 function formatFieldToken(field: CronFieldName, token: string, locale: CronLocale, format: CronFormat) {
   const normalized = token.trim().toUpperCase()
   if (field === 'month' || field === 'week') {
@@ -290,10 +299,22 @@ function getDescriptionValues(field: CronFieldName, value: string, locale: CronL
   }
 }
 
-function getFieldTemplate(field: CronFieldName, mode: CronFieldMode, type: 'editor' | 'preview', locale: CronLocale) {
-  return locale.fieldDescriptions?.[field]?.[mode]?.[type]
-    ?? enUS.fieldDescriptions?.[field]?.[mode]?.[type]
-    ?? ''
+export function isStepEveryField(field: CronFieldName) {
+  return field === 'second' || field === 'minute' || field === 'hour'
+}
+
+export function getFieldTemplate(field: CronFieldName, mode: CronFieldMode, locale: CronLocale) {
+  if (mode === 'unspecified')
+    return field === 'day' ? locale.unspecifiedDay : locale.unspecifiedWeek
+  if (mode === 'every')
+    return isStepEveryField(field) ? locale.everyStep : locale.everyField
+  if (mode === 'interval')
+    return locale.intervalField
+  if (mode === 'specified')
+    return locale.specifiedField
+  if (mode === 'range')
+    return locale.rangeField
+  return ''
 }
 
 function describeSpecial(field: 'day' | 'week', value: string, locale: CronLocale) {
@@ -319,132 +340,113 @@ function describeSpecial(field: 'day' | 'week', value: string, locale: CronLocal
   }
 }
 
-export function describeField(field: CronFieldName, value: string, locale: CronLocale, type: 'editor' | 'preview' = 'preview', format: CronFormat = 'quartz') {
+export function describeField(field: CronFieldName, value: string, locale: CronLocale, format: CronFormat = 'quartz') {
   if (isSpecialField(field) && parseSpecial(value, field))
     return describeSpecial(field, value, locale)
   const mode = getFieldMode(value, field)
-  const template = getFieldTemplate(field, mode, type, locale)
-  return template ? formatCronMessage(template, getDescriptionValues(field, value, locale, format)) : ''
+  const normalizedMode = mode === 'interval' && isStepEveryField(field) && value.startsWith('*/') ? 'every' : mode
+  const template = getFieldTemplate(field, normalizedMode, locale)
+  return template ? formatCronMessage(template, { field: locale.fields[field], ...getDescriptionValues(field, value, locale, format) }) : ''
 }
 
-function getClock(fields: CronFields) {
-  const second = fields.second ?? '0'
-  if (!isNumericField(fields.hour) || !isNumericField(fields.minute) || !isNumericField(second))
+interface CronstrueApi {
+  toString: (expression: string, options?: Record<string, unknown>) => string
+  locales?: Record<string, unknown>
+}
+
+type IntlListFormatConstructor = new (locales?: string | string[], options?: { type?: 'conjunction' | 'disjunction' }) => {
+  format: (values: string[]) => string
+}
+
+function getCronstrueApi() {
+  const imported = cronstrue as unknown as CronstrueApi & { default?: CronstrueApi }
+  return imported.locales ? imported : imported.default!
+}
+
+function resolveCronstrueLocale(localeCode = 'en') {
+  const normalized = localeCode.replace('-', '_').toLowerCase()
+  const direct: Record<string, string> = {
+    zh_cn: 'zh_CN',
+    zh_tw: 'zh_TW',
+    zh_hk: 'zh_TW',
+    pt_br: 'pt_BR',
+    pt_pt: 'pt_PT',
+    en_gb: 'en',
+    en_us: 'en',
+  }
+  const [language, region] = normalized.split('_')
+  const candidates = [direct[normalized], region ? `${language}_${region.toUpperCase()}` : undefined, language, 'en'].filter(Boolean) as string[]
+  const api = getCronstrueApi()
+  return candidates.find(candidate => api.locales && candidate in api.locales) ?? 'en'
+}
+
+function describeWithCronstrue(expression: string, localeCode: string, options: CronOptions) {
+  const { format } = resolveCronOptions(options)
+  return getCronstrueApi().toString(expression, {
+    locale: resolveCronstrueLocale(localeCode),
+    use24HourTimeFormat: true,
+    dayOfWeekStartIndexZero: format === 'unix',
+    throwExceptionOnParseError: true,
+  })
+}
+
+function describeSpecifiedMinutes(expression: string, localeCode: string, options: CronOptions) {
+  const { format } = resolveCronOptions(options)
+  const parts = expression.trim().split(/\s+/)
+  const minuteIndex = format === 'unix' ? 0 : 1
+  const hourIndex = format === 'unix' ? 1 : 2
+  const secondsIndex = format === 'unix' ? -1 : 0
+  const minuteExpression = parts[minuteIndex]
+  const hourExpression = parts[hourIndex]
+
+  if (!minuteExpression?.includes(',') || !hourExpression || !/^\d+$/.test(hourExpression) || (secondsIndex >= 0 && !/^0+$/.test(parts[secondsIndex] ?? '')))
     return undefined
-  const time = `${fields.hour.padStart(2, '0')}:${fields.minute.padStart(2, '0')}`
-  return second === '0' ? time : `${time}:${second.padStart(2, '0')}`
-}
 
-function getDominantIntervalField(fields: CronFields): CronFieldName | undefined {
-  const secondMode = getFieldMode(fields.second ?? '0')
-  const minuteMode = getFieldMode(fields.minute)
-  const hourMode = getFieldMode(fields.hour)
-  if (fields.second !== undefined && secondMode === 'interval' && (fields.minute === '*' || isZeroField(fields.minute)) && fields.hour === '*')
-    return 'second'
-  if (minuteMode === 'interval' && isEveryOrZero(fields.second) && fields.hour === '*')
-    return 'minute'
-  if (hourMode === 'interval' && isEveryOrZero(fields.second) && isEveryOrZero(fields.minute))
-    return 'hour'
-}
+  const minutes = minuteExpression.split(',')
+  if (minutes.length < 2 || minutes.some(value => !/^\d+$/.test(value) || Number(value) < 0 || Number(value) > 59))
+    return undefined
 
-function describeCalendar(fields: CronFields, locale: CronLocale, format: CronFormat) {
-  const parts: string[] = []
-  if (fields.year && getFieldMode(fields.year) !== 'every')
-    parts.push(describeField('year', fields.year, locale, 'preview', format))
-  if (getFieldMode(fields.month) !== 'every')
-    parts.push(describeField('month', fields.month, locale, 'preview', format))
+  const descriptions = minutes.map((minute) => {
+    const singleParts = [...parts]
+    singleParts[minuteIndex] = minute
+    return describeWithCronstrue(singleParts.join(' '), localeCode, options)
+  })
+  const timePattern = /\d{1,2}:\d{2}(?::\d{2})?/
+  const times = descriptions.map(description => description.match(timePattern)?.[0])
+  if (times.some(time => !time))
+    return undefined
 
-  const weekMode = getFieldMode(fields.week, 'week')
-  const dayMode = getFieldMode(fields.day, 'day')
-  const day = dayMode !== 'every' && dayMode !== 'unspecified'
-    ? describeField('day', fields.day, locale, 'preview', format)
-    : ''
-  const week = weekMode !== 'every' && weekMode !== 'unspecified'
-    ? describeField('week', fields.week, locale, 'preview', format)
-    : ''
-  if (format === 'unix' && day && week)
-    parts.push(`${day}${locale.or}${week}`)
-  else if (week)
-    parts.push(week)
-  else if (day)
-    parts.push(day)
-
-  return parts.filter(Boolean).join(locale.valueSeparator ?? ', ')
-}
-
-function describeTime(fields: CronFields, locale: CronLocale, format: CronFormat) {
-  const intervalField = getDominantIntervalField(fields)
-  if (intervalField)
-    return describeField(intervalField, fields[intervalField]!, locale, 'editor', format)
-
-  const parts: string[] = []
-  const hourMode = getFieldMode(fields.hour)
-  const minuteMode = getFieldMode(fields.minute)
-  const second = fields.second ?? '0'
-  const secondMode = getFieldMode(second)
-  if (hourMode !== 'every')
-    parts.push(describeField('hour', fields.hour, locale, 'preview', format))
-  if (minuteMode !== 'every' && !(isZeroField(fields.minute) && hourMode !== 'every'))
-    parts.push(describeField('minute', fields.minute, locale, 'preview', format))
-  if (fields.second !== undefined && secondMode !== 'every' && !(isZeroField(second) && (minuteMode !== 'every' || hourMode !== 'every')))
-    parts.push(describeField('second', second, locale, 'preview', format))
-  return parts.filter(Boolean).join(locale.valueSeparator ?? ', ')
-}
-
-function insertTime(description: string, time: string) {
-  const executeTokens = ['执行', '執行', '実行', '실행', 'ausführen']
-  for (const token of executeTokens) {
-    if (description.endsWith(token))
-      return `${description.slice(0, -token.length).trimEnd()} ${time} ${token}`
+  let timeList: string
+  try {
+    const ListFormat = (Intl as typeof Intl & { ListFormat?: IntlListFormatConstructor }).ListFormat
+    timeList = ListFormat
+      ? new ListFormat(localeCode.replace('_', '-'), { type: 'conjunction' }).format(times as string[])
+      : times.join(', ')
   }
-  if (/^(Execute|Exécuter|Esegui|Executar|Ejecutar|Uitvoeren|the)\b/i.test(description))
-    return `${description} at ${time}`
-  return `${description} ${time}`
-}
-
-function joinSchedule(calendar: string, time: string) {
-  if (!calendar)
-    return time
-  if (!time)
-    return calendar
-  const executeTokens = ['执行', '執行', '実行', '실행', 'ausführen']
-  for (const token of executeTokens) {
-    if (calendar.endsWith(token))
-      return `${calendar.slice(0, -token.length).trimEnd()}，${time}`
+  catch {
+    timeList = times.join(', ')
   }
-  return `${calendar} ${time}`
+  return descriptions[0]!.replace(timePattern, timeList)
 }
 
-export function describeExpression(fields: CronFields, locale: CronLocale = enUS, options: CronOptions = {}): string {
-  const format = resolveCronOptions(options).format
-  const clock = getClock(fields)
-  const calendar = describeCalendar(fields, locale, format)
-  if (clock) {
-    if (calendar)
-      return insertTime(calendar, clock)
-    return formatCronMessage(locale.everyDayAt, { value: clock })
-  }
-
-  const time = describeTime(fields, locale, format)
-  if (time && calendar && !isEveryDay(fields))
-    return joinSchedule(calendar, time)
-  if (time)
-    return time
-  if (calendar)
-    return calendar
-  return locale.customSchedule
+export function describeExpression(expression: string, localeCode = 'en', options: CronOptions = {}): string {
+  const description = describeWithCronstrue(expression, localeCode, options)
+  return describeSpecifiedMinutes(expression, localeCode, options) ?? description
 }
 
-export function getPreview(expression: string, options: CronOptions = {}, locale: CronLocale = enUS): CronPreviewResult {
+export function getPreview(expression: string, options: CronOptions = {}, locale: CronLocale = enUS, localeCode = 'en'): CronPreviewResult {
   const validation = validateExpression(expression, options, locale)
   if (validation.status !== 'valid' || !validation.expression)
     return { expression }
-  const format = resolveCronOptions(options).format
-  const fields = toFields(validation.expression.split(' '), format)
   const cron = createCron(validation.expression, options)
+  let description: string | undefined
+  try {
+    description = describeExpression(validation.expression, localeCode, options)
+  }
+  catch {}
   return {
     expression: validation.expression,
-    description: describeExpression(fields, locale, options),
+    description,
     nextRunAt: cron.nextRun() ?? undefined,
     nextRuns: cron.nextRuns(3),
   }

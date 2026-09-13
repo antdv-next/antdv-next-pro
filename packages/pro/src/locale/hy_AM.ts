@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/hy_AM'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'Երկրորդ',
     minute: 'րոպե',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Շրջանակ',
     special: 'Հատուկ',
   },
-  any: 'Ցանկացած',
   notSpecified: 'Չի նշվում',
-  every: 'ամեն',
   everyField: 'Ամեն {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Կատարել յուրաքանչյուր {step} վայրկյան', preview: 'Կատարել յուրաքանչյուր {step} վայրկյան' },
-      interval: { editor: 'Սկսել վայրկյան {start}-ից, ապա կատարել յուրաքանչյուր {step} վայրկյան', preview: 'յուրաքանչյուր րոպե կատարել վայրկյան {start}-ից յուրաքանչյուր {step} վայրկյան' },
-      specified: { editor: 'Կատարել այս վայրկյան:', preview: 'Կատարել վայրկյան {values} յուրաքանչյուր րոպե' },
-      range: { editor: 'Կատարել վայրկյան {start}-ից մինչև վայրկյան {end}', preview: 'Կատարել վայրկյան {start}-ից մինչև վայրկյան {end} յուրաքանչյուր րոպե' },
-    },
-    minute: {
-      every: { editor: 'Կատարել յուրաքանչյուր {step} րոպե', preview: 'Կատարել յուրաքանչյուր {step} րոպե' },
-      interval: { editor: 'Սկսել րոպե {start}-ից, ապա կատարել յուրաքանչյուր {step} րոպե', preview: 'յուրաքանչյուր ժամ կատարել րոպե {start}-ից յուրաքանչյուր {step} րոպե' },
-      specified: { editor: 'Կատարել այս րոպե:', preview: 'Կատարել րոպե {values} յուրաքանչյուր ժամ' },
-      range: { editor: 'Կատարել րոպե {start}-ից մինչև րոպե {end}', preview: 'Կատարել րոպե {start}-ից մինչև րոպե {end} յուրաքանչյուր ժամ' },
-    },
-    hour: {
-      every: { editor: 'Կատարել յուրաքանչյուր {step} ժամ', preview: 'Կատարել յուրաքանչյուր {step} ժամ' },
-      interval: { editor: 'Սկսել {start}:00-ին, ապա կատարել յուրաքանչյուր {step} ժամը', preview: 'Յուրաքանչյուր օր կատարել {start}:00-ից յուրաքանչյուր {step} ժամը' },
-      specified: { editor: 'Կատարել այս ժամերին:', preview: 'Կատարել {values}:00-ին յուրաքանչյուր օր' },
-      range: { editor: 'Կատարել {start}:00-ից մինչև {end}:00', preview: 'Կատարել {start}:00-ից մինչև {end}:00 յուրաքանչյուր օր' },
-    },
-    day: {
-      every: { editor: 'Կատարել ամեն օր', preview: 'Կատարել ամեն օր' },
-      unspecified: { editor: 'Ամսաթիվ չնշել', preview: 'Օրը նշված չէ; հետևել շաբաթվա դաշտին' },
-      interval: { editor: 'Սկսել յուրաքանչյուր ամսվա {start}-րդ օրվանից, ապա կատարել յուրաքանչյուր {step} օրը', preview: 'Յուրաքանչյուր ամիս կատարել {start}-րդ օրվանից յուրաքանչյուր {step} օրը' },
-      specified: { editor: 'Կատարել յուրաքանչյուր ամսվա այս օրերին:', preview: 'Կատարել յուրաքանչյուր ամսվա {values}-րդ օրերին' },
-      range: { editor: 'Կատարել յուրաքանչյուր ամսվա {start}-րդից {end}-րդ օրերը', preview: 'Կատարել յուրաքանչյուր ամսվա {start}-րդից {end}-րդ օրերը' },
-    },
-    month: {
-      every: { editor: 'Կատարել ամեն ամիս', preview: 'Կատարել ամեն ամիս' },
-      interval: { editor: 'Սկսել {start}-ից, ապա կատարել յուրաքանչյուր {step} ամիսը', preview: 'Յուրաքանչյուր տարի կատարել {start}-ից յուրաքանչյուր {step} ամիսը' },
-      specified: { editor: 'Կատարել այս ամիսներին:', preview: 'Կատարել {values} յուրաքանչյուր տարի' },
-      range: { editor: 'Կատարել {start}-ից մինչև {end}', preview: 'Կատարել {start}-ից մինչև {end} յուրաքանչյուր տարի' },
-    },
-    week: {
-      every: { editor: 'Կատարել ամեն օր', preview: 'Կատարել ամեն օր' },
-      unspecified: { editor: 'Շաբաթվա օր չնշել', preview: 'Շաբաթը նշված չէ; հետևել օրվա դաշտին' },
-      interval: { editor: 'Սկսել {start}-ից, ապա կատարել յուրաքանչյուր {step} օրը', preview: 'Յուրաքանչյուր շաբաթ կատարել {start}-ից յուրաքանչյուր {step} օրը' },
-      specified: { editor: 'Կատարել շաբաթվա այս օրերին:', preview: 'Կատարել յուրաքանչյուր {values}' },
-      range: { editor: 'Կատարել {start}-ից մինչև {end} յուրաքանչյուր շաբաթ', preview: 'Կատարել {start}-ից մինչև {end} յուրաքանչյուր շաբաթ' },
-    },
-    year: {
-      every: { editor: 'Կատարել ամեն տարի', preview: 'Կատարել ամեն տարի' },
-      interval: { editor: 'Սկսել {start} թվականից, ապա կատարել յուրաքանչյուր {step} տարին', preview: 'Կատարել {start} թվականից յուրաքանչյուր {step} տարին' },
-      specified: { editor: 'Կատարել այս տարիներին:', preview: 'Կատարել {values} թվականներին' },
-      range: { editor: 'Կատարել {start} թվականից մինչև {end}', preview: 'Կատարել {start} թվականից մինչև {end}' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'հնվ',
-      FEB: 'փտվ',
-      MAR: 'մրտ',
-      APR: 'ապր',
-      MAY: 'մյս',
-      JUN: 'հնս',
-      JUL: 'հլս',
-      AUG: 'օգս',
-      SEP: 'սեպ',
-      OCT: 'հոկ',
-      NOV: 'նոյ',
-      DEC: 'դեկ',
-    },
-    week: {
-      SUN: 'կիր',
-      MON: 'երկ',
-      TUE: 'երք',
-      WED: 'չրք',
-      THU: 'հնգ',
-      FRI: 'ուր',
-      SAT: 'շբթ',
-    },
-  },
+  everyStep: 'Կատարել յուրաքանչյուր {step} {field}',
+  intervalField: 'Սկսել  {start}-ից, ապա կատարել յուրաքանչյուր {step} {field}',
+  specifiedField: '{values}',
+  rangeField: '{start} դեպի {end}',
+  unspecifiedDay: 'Օրը նշված չէ; հետևել շաբաթվա դաշտին',
+  unspecifiedWeek: 'Շաբաթը նշված չէ; հետևել օրվա դաշտին',
   valueSeparator: ', ',
-  to: 'դեպի',
-  or: ' կամ ',
   expression: 'Cron արտահայտություն',
   fieldList: 'Cron դաշտեր',
   fieldStart: '{field} սկիզբ',
   fieldInterval: '{field} ընդմիջում',
   fieldRangeStart: '{field} միջակայքի սկիզբ',
   fieldRangeEnd: '{field} ընդգրկույթի վերջ',
-  fieldValue: '{field} արժեք',
   fieldValues: '{field} արժեքներ',
   nextRun: 'Հաջորդ վազքը՝ {value}',
   noFutureRun: 'Ոչ մի ապագա վազք',
-  everySeconds: 'Յուրաքանչյուր {value} վայրկյանը մեկ',
-  everyMinutes: 'Յուրաքանչյուր {value} րոպեն մեկ',
-  everyDayAt: 'Ամեն օր ժամը {value}',
-  customSchedule: 'Պատվերով ժամանակացույց',
   specialLastDay: 'յուրաքանչյուր ամսվա վերջին օրը',
   specialLastWeekday: 'յուրաքանչյուր ամսվա վերջին աշխատանքային օրը',
   specialNearestWeekday: 'յուրաքանչյուր ամսվա {day}-րդ օրին ամենամոտ աշխատանքային օրը',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Այս հատուկ շարահյուսությունը չի աջակցվում',
     invalidExpression: 'Անվավեր cron արտահայտություն',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

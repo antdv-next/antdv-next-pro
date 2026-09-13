@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/he_IL'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'שניה',
     minute: 'דקה',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'טווח',
     special: 'מיוחד',
   },
-  any: 'כל',
   notSpecified: 'לא צוין',
-  every: 'כל',
   everyField: 'כל {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'הפעלה כל {step} שניות', preview: 'הפעלה כל {step} שניות' },
-      interval: { editor: 'התחלה בשנייה {start} ואז הפעלה כל {step} שניות', preview: 'כל דקה הפעלה משנייה {start} כל {step} שניות' },
-      specified: { editor: 'הפעלה בשניות הבאים:', preview: 'הפעלה בשניות {values} כל דקה' },
-      range: { editor: 'הפעלה משנייה {start} עד שנייה {end}', preview: 'הפעלה משנייה {start} עד שנייה {end} כל דקה' },
-    },
-    minute: {
-      every: { editor: 'הפעלה כל {step} דקות', preview: 'הפעלה כל {step} דקות' },
-      interval: { editor: 'התחלה בדקה {start} ואז הפעלה כל {step} דקות', preview: 'כל שעה הפעלה מדקה {start} כל {step} דקות' },
-      specified: { editor: 'הפעלה בדקות הבאים:', preview: 'הפעלה בדקות {values} כל שעה' },
-      range: { editor: 'הפעלה מדקה {start} עד דקה {end}', preview: 'הפעלה מדקה {start} עד דקה {end} כל שעה' },
-    },
-    hour: {
-      every: { editor: 'הפעלה כל {step} שעות', preview: 'הפעלה כל {step} שעות' },
-      interval: { editor: 'התחלה ב-{start}:00 ואז הפעלה כל {step} שעות', preview: 'כל יום, הפעלה מ-{start}:00 כל {step} שעות' },
-      specified: { editor: 'הפעלה בשעות הבאות:', preview: 'הפעלה ב-{values}:00 כל יום' },
-      range: { editor: 'הפעלה מ-{start}:00 עד {end}:00', preview: 'הפעלה מ-{start}:00 עד {end}:00 כל יום' },
-    },
-    day: {
-      every: { editor: 'הפעלה כל יום', preview: 'הפעלה כל יום' },
-      unspecified: { editor: 'לא לציין תאריך', preview: 'היום לא צוין; יש לעקוב אחר שדה השבוע' },
-      interval: { editor: 'התחלה ביום {start} בכל חודש ואז הפעלה כל {step} ימים', preview: 'כל חודש, הפעלה מיום {start} כל {step} ימים' },
-      specified: { editor: 'הפעלה בימים הבאים בכל חודש:', preview: 'הפעלה בימים {values} בכל חודש' },
-      range: { editor: 'הפעלה מיום {start} עד יום {end} בכל חודש', preview: 'הפעלה מיום {start} עד יום {end} בכל חודש' },
-    },
-    month: {
-      every: { editor: 'הפעלה כל חודש', preview: 'הפעלה כל חודש' },
-      interval: { editor: 'התחלה ב-{start} ואז הפעלה כל {step} חודשים', preview: 'כל שנה, הפעלה מ-{start} כל {step} חודשים' },
-      specified: { editor: 'הפעלה בחודשים הבאים:', preview: 'הפעלה ב-{values} כל שנה' },
-      range: { editor: 'הפעלה מ-{start} עד {end}', preview: 'הפעלה מ-{start} עד {end} כל שנה' },
-    },
-    week: {
-      every: { editor: 'הפעלה כל יום', preview: 'הפעלה כל יום' },
-      unspecified: { editor: 'לא לציין יום בשבוע', preview: 'השבוע לא צוין; יש לעקוב אחר שדה היום' },
-      interval: { editor: 'התחלה ב-{start} ואז הפעלה כל {step} ימים', preview: 'כל שבוע, הפעלה מ-{start} כל {step} ימים' },
-      specified: { editor: 'הפעלה בימים הבאים בשבוע:', preview: 'הפעלה כל {values}' },
-      range: { editor: 'הפעלה מ-{start} עד {end} כל שבוע', preview: 'הפעלה מ-{start} עד {end} כל שבוע' },
-    },
-    year: {
-      every: { editor: 'הפעלה כל שנה', preview: 'הפעלה כל שנה' },
-      interval: { editor: 'התחלה בשנת {start} ואז הפעלה כל {step} שנים', preview: 'הפעלה משנת {start} כל {step} שנים' },
-      specified: { editor: 'הפעלה בשנים הבאות:', preview: 'הפעלה בשנים {values}' },
-      range: { editor: 'הפעלה משנת {start} עד שנת {end}', preview: 'הפעלה משנת {start} עד שנת {end}' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'ינו׳',
-      FEB: 'פבר׳',
-      MAR: 'מרץ',
-      APR: 'אפר׳',
-      MAY: 'מאי',
-      JUN: 'יוני',
-      JUL: 'יולי',
-      AUG: 'אוג׳',
-      SEP: 'ספט׳',
-      OCT: 'אוק׳',
-      NOV: 'נוב׳',
-      DEC: 'דצמ׳',
-    },
-    week: {
-      SUN: 'יום א׳',
-      MON: 'יום ב׳',
-      TUE: 'יום ג׳',
-      WED: 'יום ד׳',
-      THU: 'יום ה׳',
-      FRI: 'יום ו׳',
-      SAT: 'שבת',
-    },
-  },
+  everyStep: 'הפעלה כל {step} דקות {field}',
+  intervalField: 'התחלה ב{field} {start} ואז הפעלה כל {step} דקות',
+  specifiedField: '{values}',
+  rangeField: '{start} ל {end}',
+  unspecifiedDay: 'היום לא צוין; יש לעקוב אחר שדה השבוע',
+  unspecifiedWeek: 'השבוע לא צוין; יש לעקוב אחר שדה היום',
   valueSeparator: ', ',
-  to: 'ל',
-  or: ' או ',
   expression: 'הבעת קרון',
   fieldList: 'שדות קרון',
   fieldStart: '{field} התחל',
   fieldInterval: 'מרווח {field}',
   fieldRangeStart: '{field}',
   fieldRangeEnd: 'סוף טווח {field}',
-  fieldValue: '{field}',
   fieldValues: '{field} ערכים',
   nextRun: 'ההרצה הבאה: {value}',
   noFutureRun: 'אין ריצה עתידית',
-  everySeconds: 'כל {value} שניות',
-  everyMinutes: 'כל {value} דקות',
-  everyDayAt: 'כל יום בשעה {value}',
-  customSchedule: 'לוח זמנים מותאם אישית',
   specialLastDay: 'היום האחרון בכל חודש',
   specialLastWeekday: 'יום העבודה האחרון בכל חודש',
   specialNearestWeekday: 'יום העבודה הקרוב ביותר ליום {day} בכל חודש',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'תחביר מיוחד זה אינו נתמך',
     invalidExpression: 'ביטוי cron לא חוקי',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,

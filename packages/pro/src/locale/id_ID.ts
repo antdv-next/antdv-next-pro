@@ -2,7 +2,7 @@ import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/id_ID'
 
-const cronLocale: CronLocale = {
+const cronLocale = {
   fields: {
     second: 'Detik',
     minute: 'Menit',
@@ -19,98 +19,24 @@ const cronLocale: CronLocale = {
     range: 'Rentang',
     special: 'Khusus',
   },
-  any: 'Apa saja',
   notSpecified: 'Tidak ditentukan',
-  every: 'setiap',
   everyField: 'Setiap {field}',
-  fieldDescriptions: {
-    second: {
-      every: { editor: 'Jalankan setiap {step} detik', preview: 'Jalankan setiap {step} detik' },
-      interval: { editor: 'Mulai pada detik {start}, lalu jalankan setiap {step} detik', preview: 'setiap menit, jalankan dari detik {start} setiap {step} detik' },
-      specified: { editor: 'Jalankan pada detik berikut:', preview: 'Jalankan pada detik {values} setiap menit' },
-      range: { editor: 'Jalankan dari detik {start} sampai detik {end}', preview: 'Jalankan dari detik {start} sampai detik {end} setiap menit' },
-    },
-    minute: {
-      every: { editor: 'Jalankan setiap {step} menit', preview: 'Jalankan setiap {step} menit' },
-      interval: { editor: 'Mulai pada menit {start}, lalu jalankan setiap {step} menit', preview: 'setiap jam, jalankan dari menit {start} setiap {step} menit' },
-      specified: { editor: 'Jalankan pada menit berikut:', preview: 'Jalankan pada menit {values} setiap jam' },
-      range: { editor: 'Jalankan dari menit {start} sampai menit {end}', preview: 'Jalankan dari menit {start} sampai menit {end} setiap jam' },
-    },
-    hour: {
-      every: { editor: 'Jalankan setiap {step} jam', preview: 'Jalankan setiap {step} jam' },
-      interval: { editor: 'Mulai pada {start}:00, lalu jalankan setiap {step} jam', preview: 'Setiap hari, jalankan dari {start}:00 setiap {step} jam' },
-      specified: { editor: 'Jalankan pada waktu berikut:', preview: 'Jalankan pada {values}:00 setiap hari' },
-      range: { editor: 'Jalankan dari {start}:00 sampai {end}:00', preview: 'Jalankan dari {start}:00 sampai {end}:00 setiap hari' },
-    },
-    day: {
-      every: { editor: 'Jalankan setiap hari', preview: 'Jalankan setiap hari' },
-      unspecified: { editor: 'Jangan tentukan tanggal', preview: 'Tanggal tidak ditentukan; ikuti kolom minggu' },
-      interval: { editor: 'Mulai pada hari ke-{start} setiap bulan, lalu jalankan setiap {step} hari', preview: 'Setiap bulan, jalankan dari hari ke-{start} setiap {step} hari' },
-      specified: { editor: 'Jalankan pada tanggal berikut setiap bulan:', preview: 'Jalankan pada hari ke-{values} setiap bulan' },
-      range: { editor: 'Jalankan dari hari ke-{start} sampai ke-{end} setiap bulan', preview: 'Jalankan dari hari ke-{start} sampai ke-{end} setiap bulan' },
-    },
-    month: {
-      every: { editor: 'Jalankan setiap bulan', preview: 'Jalankan setiap bulan' },
-      interval: { editor: 'Mulai pada {start}, lalu jalankan setiap {step} bulan', preview: 'Setiap tahun, jalankan dari {start} setiap {step} bulan' },
-      specified: { editor: 'Jalankan pada bulan berikut:', preview: 'Jalankan pada {values} setiap tahun' },
-      range: { editor: 'Jalankan dari {start} sampai {end}', preview: 'Jalankan dari {start} sampai {end} setiap tahun' },
-    },
-    week: {
-      every: { editor: 'Jalankan setiap hari', preview: 'Jalankan setiap hari' },
-      unspecified: { editor: 'Jangan tentukan hari dalam minggu', preview: 'Minggu tidak ditentukan; ikuti kolom hari' },
-      interval: { editor: 'Mulai pada {start}, lalu jalankan setiap {step} hari', preview: 'Setiap minggu, jalankan dari {start} setiap {step} hari' },
-      specified: { editor: 'Jalankan pada hari berikut:', preview: 'Jalankan setiap {values}' },
-      range: { editor: 'Jalankan dari {start} sampai {end} setiap minggu', preview: 'Jalankan dari {start} sampai {end} setiap minggu' },
-    },
-    year: {
-      every: { editor: 'Jalankan setiap tahun', preview: 'Jalankan setiap tahun' },
-      interval: { editor: 'Mulai pada tahun {start}, lalu jalankan setiap {step} tahun', preview: 'Jalankan dari tahun {start} setiap {step} tahun' },
-      specified: { editor: 'Jalankan pada tahun berikut:', preview: 'Jalankan pada tahun {values}' },
-      range: { editor: 'Jalankan dari tahun {start} sampai tahun {end}', preview: 'Jalankan dari tahun {start} sampai tahun {end}' },
-    },
-  },
-  valueLabels: {
-    month: {
-      JAN: 'Jan',
-      FEB: 'Feb',
-      MAR: 'Mar',
-      APR: 'Apr',
-      MAY: 'Mei',
-      JUN: 'Jun',
-      JUL: 'Jul',
-      AUG: 'Agu',
-      SEP: 'Sep',
-      OCT: 'Okt',
-      NOV: 'Nov',
-      DEC: 'Des',
-    },
-    week: {
-      SUN: 'Min',
-      MON: 'Sen',
-      TUE: 'Sel',
-      WED: 'Rab',
-      THU: 'Kam',
-      FRI: 'Jum',
-      SAT: 'Sab',
-    },
-  },
+  everyStep: 'Jalankan setiap {step} {field}',
+  intervalField: 'Mulai pada  {start}, lalu jalankan setiap {step} {field}',
+  specifiedField: '{values}',
+  rangeField: '{start} sampai {end}',
+  unspecifiedDay: 'Tanggal tidak ditentukan; ikuti kolom minggu',
+  unspecifiedWeek: 'Minggu tidak ditentukan; ikuti kolom hari',
   valueSeparator: ', ',
-  to: 'sampai',
-  or: ' atau ',
   expression: 'Ekspresi cron',
   fieldList: 'Bidang cron',
   fieldStart: '{field} mulai',
   fieldInterval: '{field} selang waktu',
   fieldRangeStart: '{field} rentang mulai',
   fieldRangeEnd: '{field} rentang berakhir',
-  fieldValue: 'nilai {field}',
   fieldValues: '{field} nilai',
   nextRun: 'Proses selanjutnya: {value}',
   noFutureRun: 'Tidak ada masa depan yang berjalan',
-  everySeconds: 'Setiap {value} detik',
-  everyMinutes: 'Setiap {value} menit',
-  everyDayAt: 'Setiap hari pukul {value}',
-  customSchedule: 'Jadwal khusus',
   specialLastDay: 'hari terakhir setiap bulan',
   specialLastWeekday: 'hari kerja terakhir setiap bulan',
   specialNearestWeekday: 'hari kerja terdekat ke tanggal {day} setiap bulan',
@@ -142,7 +68,7 @@ const cronLocale: CronLocale = {
     unsupportedSpecial: 'Sintaks khusus ini tidak didukung',
     invalidExpression: 'Ekspresi cron tidak valid',
   },
-}
+} satisfies CronLocale
 
 const proLocale = {
   ...locale,
