@@ -11,39 +11,28 @@ export type CronSize = 'small' | 'medium' | 'large'
 export type CronStatus = '' | 'error' | 'success' | 'validating' | 'warning'
 export type CronValidateStatus = 'valid' | 'invalid' | 'empty'
 
-export interface CronFieldModeDescription {
-  editor: string
-  preview: string
-}
-
-export type CronFieldDescriptions = Partial<Record<CronFieldName, Partial<Record<CronFieldMode, CronFieldModeDescription>>>>
-
 export interface CronLocale {
   fields: Record<CronFieldName, string>
   modes: Record<CronEditorMode, string> & { special: string }
-  any: string
   notSpecified: string
-  every: string
   everyField: string
-  fieldDescriptions?: CronFieldDescriptions
+  everyStep: string
+  intervalField: string
+  specifiedField: string
+  rangeField: string
+  unspecifiedDay: string
+  unspecifiedWeek: string
   valueLabels?: Partial<Record<CronFieldName, Record<string, string>>>
   valueSeparator?: string
-  to: string
-  or: string
   expression: string
   fieldList: string
   fieldStart: string
   fieldInterval: string
   fieldRangeStart: string
   fieldRangeEnd: string
-  fieldValue: string
   fieldValues: string
   nextRun: string
   noFutureRun: string
-  everySeconds: string
-  everyMinutes: string
-  everyDayAt: string
-  customSchedule: string
   specialLastDay: string
   specialLastWeekday: string
   specialNearestWeekday: string
@@ -175,7 +164,6 @@ export type CronStylesType = SemanticStylesType<CronProps, CronSemanticStyles>
 export interface CronEmits {
   'update:value': (value: string) => void
   change: (value: string) => void
-  input: (value: string) => void
   validate: (result: CronValidateResult) => void
   [key: string]: (...args: any[]) => void
 }

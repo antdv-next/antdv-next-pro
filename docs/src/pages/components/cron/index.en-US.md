@@ -39,7 +39,7 @@ group:
 | readonly | Keep the expression selectable but prevent edits | `boolean` | `false` | ✓ |
 | size | Control size | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
 | status | Set validation status explicitly; follows Form.Item by default | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - |
-| preview | Show the description and future local execution times | `boolean` | `false` | ✓ |
+| preview | Show the next local execution times and a natural-language Cron description | `boolean` | `false` | ✓ |
 | presets | Quick expression choices | `CronPreset[]` | `[]` | ✓ |
 | classes | Semantic class customization | `CronClassNamesType` | - | ✓ |
 | styles | Semantic style customization | `CronStylesType` | - | ✓ |
@@ -49,7 +49,6 @@ group:
 | Event | Description | Type |
 | --- | --- | --- |
 | change | Triggered when the expression becomes valid, or is recovered after an invalid draft; repeated valid values do not trigger it | `(value: string) => void` |
-| input | Triggered when the expression draft changes, including invalid drafts | `(value: string) => void` |
 | validate | Triggered after each expression validation and reports the current result | `(result: CronValidateResult) => void` |
 
 ### CronError
@@ -64,7 +63,7 @@ group:
 
 ### Form.Item
 
-`v-model:value` matches the input text, so Form.Item can validate the value being edited. Use `validateCronExpression` for format checks; keep `required` on Form.Item. Pass `{ format: 'unix' }` when validating Unix expressions.
+`v-model:value` matches the current Cron expression, so Form.Item can validate the controlled value. Use `validateCronExpression` for format checks; keep `required` on Form.Item. Pass `{ format: 'unix' }` when validating Unix expressions.
 
 ```vue
 <script setup lang="ts">

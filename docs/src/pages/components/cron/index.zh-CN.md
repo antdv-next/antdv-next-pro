@@ -1,7 +1,7 @@
 ---
 category: Pro Components
 title: Cron
-subtitle: Cron 表达式编辑器
+subtitle: 表达式编辑器
 description: 用于编辑 Quartz / Unix Cron 表达式的面板组件。
 demo:
   cols: 1
@@ -23,7 +23,7 @@ group:
   <demo src="./demo/format.vue">Cron 格式</demo>
   <demo src="./demo/dropdown.vue">下拉模式</demo>
   <demo src="./demo/form.vue">表单校验</demo>
-  <demo src="./demo/presets.vue">Preset 和预览</demo>
+  <demo src="./demo/presets.vue">预设和预览</demo>
   <demo src="./demo/semantic.vue">语义化样式</demo>
 </demo-group>
 
@@ -40,7 +40,7 @@ group:
 | readonly | 可选择和复制表达式，但不能编辑 | `boolean` | `false` | ✓ |
 | size | 组件尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
 | status | 手动设置校验状态，默认跟随 Form.Item | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - |
-| preview | 展示说明和本地时区的未来执行时间 | `boolean` | `false` | ✓ |
+| preview | 预览下次执行时间和 Cron 自然语言说明 | `boolean` | `false` | ✓ |
 | presets | 常用表达式快捷项 | `CronPreset[]` | `[]` | ✓ |
 | classes | 语义化 class 定制 | `CronClassNamesType` | - | ✓ |
 | styles | 语义化 style 定制 | `CronStylesType` | - | ✓ |
@@ -50,7 +50,6 @@ group:
 | 事件 | 说明 | 类型 |
 | --- | --- | --- |
 | change | 表达式变为有效，或从非法草稿恢复为有效表达式时触发；相同的有效值不会重复触发 | `(value: string) => void` |
-| input | 表达式草稿变化时触发，包括临时非法值 | `(value: string) => void` |
 | validate | 每次执行表达式校验后触发，并同步当前校验结果 | `(result: CronValidateResult) => void` |
 
 ### CronError
@@ -65,7 +64,7 @@ group:
 
 ### Form.Item
 
-`v-model:value` 与输入框内容一致，Form.Item 可以校验正在编辑的值。格式用 `validateCronExpression` 检查，必填仍由 Form.Item 负责。校验 Unix 表达式时传入 `{ format: 'unix' }`。
+`v-model:value` 与当前 Cron 表达式一致，Form.Item 可以校验受控值。格式用 `validateCronExpression` 检查，必填仍由 Form.Item 负责。校验 Unix 表达式时传入 `{ format: 'unix' }`。
 
 ```vue
 <script setup lang="ts">
