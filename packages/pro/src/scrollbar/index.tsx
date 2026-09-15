@@ -5,12 +5,14 @@ import { clsx } from '@v-c/util'
 import { getTransitionProps } from '@v-c/util/dist/utils/transition'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
 import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
+import { useToken } from 'antdv-next/theme/internal'
 import { computed, defineComponent, onBeforeUnmount, ref, shallowRef, Transition, watch } from 'vue'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
 import { useScrollbarDrag } from './hooks/useScrollbarDrag'
 import { useScrollbarState } from './hooks/useScrollbarState'
 import useStyle from './style'
+import { DEFAULT_SCROLLBAR_SIZE, resolveScrollbarInset } from './style/token'
 
 export type ScrollbarSemanticName = keyof ScrollbarSemanticClassNames & keyof ScrollbarSemanticStyles
 
@@ -148,6 +150,22 @@ const Scrollbar = defineComponent<
     const contentRef = shallowRef<HTMLElement>()
     const rootCls = useCSSVarCls(prefixCls)
     const [hashId, cssVarCls] = useStyle(prefixCls, rootCls)
+    const [, globalToken] = useToken()
+
+    /**
+     * Track inset, read from the same token the stylesheet uses for
+     * `&-track-y { top/right/bottom: inset }`. The thumb geometry needs it to
+     * size itself against the track rather than the container.
+     */
+    const scrollbarInset = computed(() => resolveScrollbarInset(globalToken.value))
+
+    /**
+     * Track thickness, needed because the two tracks give up a `size * size`
+     * corner square when both axes scroll. Taken from the shared constant the
+     * stylesheet also defaults to — `GlobalToken.size` is an unrelated value,
+     * so a token lookup would silently return 16 instead of the track width.
+     */
+    const scrollbarSize = computed(() => DEFAULT_SCROLLBAR_SIZE)
 
     const mergedVisibility = computed<ScrollbarVisibility>(() => {
       return props.visibility ?? proConfig.value.visibility ?? DEFAULT_VISIBILITY
@@ -247,6 +265,8 @@ const Scrollbar = defineComponent<
       contentRef,
       computed(() => mergedConfig.value.visibilityX),
       computed(() => mergedConfig.value.visibilityY),
+      scrollbarInset,
+      scrollbarSize,
     )
     const scrollFadeClassName = computed(() => {
       return resolveScrollFadeClassName(prefixCls.value, mergedScrollFade.value)
@@ -257,8 +277,10 @@ const Scrollbar = defineComponent<
     const scrollbarDrag = useScrollbarDrag(
       containerRef,
       scrollbarState.metrics,
-      scrollbarState.thumbSizeX,
-      scrollbarState.thumbSizeY,
+      scrollbarState.trackLengthX,
+      scrollbarState.trackLengthY,
+      scrollbarState.thumbTravelPercentX,
+      scrollbarState.thumbTravelPercentY,
       scrollbarState.sync,
       direction,
     )
@@ -444,7 +466,7 @@ const Scrollbar = defineComponent<
                       mergedStyles.value.thumb,
                       mergedStyles.value.thumbY,
                       {
-                        height: `${scrollbarState.thumbSizeY.value}px`,
+                        height: `${scrollbarState.thumbPercentY.value}%`,
                         transform: `translateY(${scrollbarState.thumbOffsetY.value}px)`,
                       },
                     ]}
@@ -483,7 +505,7 @@ const Scrollbar = defineComponent<
                       mergedStyles.value.thumb,
                       mergedStyles.value.thumbX,
                       {
-                        width: `${scrollbarState.thumbSizeX.value}px`,
+                        width: `${scrollbarState.thumbPercentX.value}%`,
                         transform: `translateX(${scrollbarState.thumbOffsetX.value}px)`,
                       },
                     ]}
@@ -498,7 +520,9 @@ const Scrollbar = defineComponent<
 
     return () => (
       <div
-        class={mergedClassName.value}
+        class={clsx(mergedClassName.value, {
+          [`${prefixCls.value}-both-axis`]: scrollbarState.bothAxis.value,
+        })}
         style={mergedStyle.value}
         data-visibility={mergedVisibility.value}
         data-visibility-x={mergedVisibilityX.value}

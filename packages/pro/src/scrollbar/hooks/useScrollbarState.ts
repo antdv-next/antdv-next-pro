@@ -11,6 +11,13 @@ interface ScrollMetrics {
   scrollTop: number
 }
 
+/**
+ * Minimum thumb length in px, kept grabbable.
+ *
+ * This is a *target* rather than a hard floor: it is translated into a
+ * percentage of the track and clamped to 100%, so it can never push the thumb
+ * past the end of a track that is shorter than this value.
+ */
 const MIN_THUMB_SIZE = 20
 
 export function useScrollbarState(
@@ -18,6 +25,8 @@ export function useScrollbarState(
   contentRef: ShallowRef<HTMLElement | undefined>,
   visibilityX: Ref<ScrollbarVisibility | undefined>,
   visibilityY: Ref<ScrollbarVisibility | undefined>,
+  inset: Ref<number>,
+  size: Ref<number>,
 ) {
   const metrics = ref<ScrollMetrics>({
     clientWidth: 0,
@@ -67,36 +76,94 @@ export function useScrollbarState(
     return canScrollY.value
   })
 
-  const thumbSizeX = computed(() => {
-    if (!metrics.value.clientWidth || !metrics.value.scrollWidth) {
+  /**
+   * Both axes need a track, so the two tracks have to give up the shared corner
+   * square. Mirrors the `&-both-axis` rule in `style/index.ts`; both conditions
+   * must agree or the thumb geometry drifts from the painted track.
+   */
+  const bothAxis = computed(() => showTrackX.value && showTrackY.value)
+
+  /**
+   * Track length in px, i.e. the space the thumb is positioned within.
+   *
+   * The track is inset from the container on both ends by the `inset` token
+   * (see `style/index.ts`), so its length is `client - 2 * inset`. Deriving it
+   * here instead of using the raw container size is what keeps the thumb inside
+   * the track: previously the thumb length and travel were both computed from
+   * `clientHeight`, which made the thumb overshoot the track by `inset` at the
+   * far end of its travel.
+   *
+   * When both axes scroll the track additionally stops one `size` short of the
+   * shared corner, hence the `size` term — without it the thumb would overshoot
+   * by `size` in the same way it used to overshoot by `inset`.
+   */
+  const trackLengthX = computed(() =>
+    Math.max(metrics.value.clientWidth - 2 * inset.value - (showTrackY.value ? size.value : 0), 0),
+  )
+  const trackLengthY = computed(() =>
+    Math.max(metrics.value.clientHeight - 2 * inset.value - (showTrackX.value ? size.value : 0), 0),
+  )
+
+  /**
+   * Thumb length as a percentage of the track.
+   *
+   * The visible fraction `client / scroll` maps directly onto the track length.
+   * The `MIN_THUMB_SIZE` floor is converted to a percentage of *this* track and
+   * clamped to 100%, so a short track yields a full-length thumb rather than an
+   * overflowing one.
+   */
+  const thumbPercentX = computed(() => {
+    const trackLength = trackLengthX.value
+    if (!metrics.value.clientWidth || !metrics.value.scrollWidth || trackLength <= 0) {
       return 0
     }
-    return Math.max((metrics.value.clientWidth / metrics.value.scrollWidth) * metrics.value.clientWidth, MIN_THUMB_SIZE)
+
+    const ratio = metrics.value.clientWidth / metrics.value.scrollWidth
+    const minPercent = Math.min((MIN_THUMB_SIZE / trackLength) * 100, 100)
+    return Math.min(Math.max(ratio * 100, minPercent), 100)
   })
 
-  const thumbSizeY = computed(() => {
-    if (!metrics.value.clientHeight || !metrics.value.scrollHeight) {
+  const thumbPercentY = computed(() => {
+    const trackLength = trackLengthY.value
+    if (!metrics.value.clientHeight || !metrics.value.scrollHeight || trackLength <= 0) {
       return 0
     }
-    return Math.max((metrics.value.clientHeight / metrics.value.scrollHeight) * metrics.value.clientHeight, MIN_THUMB_SIZE)
+
+    const ratio = metrics.value.clientHeight / metrics.value.scrollHeight
+    const minPercent = Math.min((MIN_THUMB_SIZE / trackLength) * 100, 100)
+    return Math.min(Math.max(ratio * 100, minPercent), 100)
   })
 
+  /**
+   * Thumb travel as a percentage of the track.
+   *
+   * The thumb occupies `thumbPercent`, so it can travel the remaining
+   * `100 - thumbPercent`. Both ends are track-relative, which is why no inset
+   * term appears here.
+   */
+  const thumbTravelPercentX = computed(() => Math.max(100 - thumbPercentX.value, 0))
+  const thumbTravelPercentY = computed(() => Math.max(100 - thumbPercentY.value, 0))
+
+  /**
+   * Thumb offset in px, converted from the track-relative travel percentage.
+   * Clamped to the travel range so the thumb always ends flush with the track.
+   */
   const thumbOffsetX = computed(() => {
     const maxScroll = metrics.value.scrollWidth - metrics.value.clientWidth
-    const maxTrack = metrics.value.clientWidth - thumbSizeX.value
-    if (maxScroll <= 0 || maxTrack <= 0) {
+    if (maxScroll <= 0) {
       return 0
     }
-    return (metrics.value.scrollLeft / maxScroll) * maxTrack
+    const ratio = Math.min(Math.max(metrics.value.scrollLeft / maxScroll, 0), 1)
+    return ratio * (thumbTravelPercentX.value / 100) * trackLengthX.value
   })
 
   const thumbOffsetY = computed(() => {
     const maxScroll = metrics.value.scrollHeight - metrics.value.clientHeight
-    const maxTrack = metrics.value.clientHeight - thumbSizeY.value
-    if (maxScroll <= 0 || maxTrack <= 0) {
+    if (maxScroll <= 0) {
       return 0
     }
-    return (metrics.value.scrollTop / maxScroll) * maxTrack
+    const ratio = Math.min(Math.max(metrics.value.scrollTop / maxScroll, 0), 1)
+    return ratio * (thumbTravelPercentY.value / 100) * trackLengthY.value
   })
 
   onMounted(() => {
@@ -153,8 +220,13 @@ export function useScrollbarState(
     canScrollY,
     showTrackX,
     showTrackY,
-    thumbSizeX,
-    thumbSizeY,
+    bothAxis,
+    trackLengthX,
+    trackLengthY,
+    thumbPercentX,
+    thumbPercentY,
+    thumbTravelPercentX,
+    thumbTravelPercentY,
     thumbOffsetX,
     thumbOffsetY,
     sync,

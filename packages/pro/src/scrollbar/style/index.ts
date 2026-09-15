@@ -146,6 +146,27 @@ const genScrollbarStyle: GenerateStyle<ScrollbarToken, CSSObject> = (token) => {
         },
       },
 
+      /**
+       * Corner reservation.
+       *
+       * Both tracks are anchored to `bottom`/`right: inset`, so when both axes
+       * scroll they paint the same `size * size` square in the bottom-right
+       * corner and — being rounded — visually fuse into a single L shape.
+       * Native scrollbars instead leave that square to the scrollbar corner, so
+       * each track stops one `size` short of it. Only applied when both tracks
+       * are actually shown, so a single-axis scrollbar still spans the full
+       * container, exactly like a native one.
+       */
+      [`&-both-axis`]: {
+        [`${componentCls}-track-y`]: {
+          bottom: `calc(${inset} + ${size})`,
+        },
+
+        [`${componentCls}-track-x`]: {
+          right: `calc(${inset} + ${size})`,
+        },
+      },
+
       [`${trackMotionCls}-enter-start`]: {
         opacity: 0,
         transform: 'translate3d(100%, 0, 0)',

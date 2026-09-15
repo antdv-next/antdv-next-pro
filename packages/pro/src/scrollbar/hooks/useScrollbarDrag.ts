@@ -47,8 +47,10 @@ export function getScrollOffsetByThumbTop(
 export function useScrollbarDrag(
   containerRef: ShallowRef<HTMLElement | undefined>,
   metrics: Ref<ScrollMetrics>,
-  thumbSizeX: Ref<number>,
-  thumbSizeY: Ref<number>,
+  trackLengthX: Ref<number>,
+  trackLengthY: Ref<number>,
+  thumbTravelPercentX: Ref<number>,
+  thumbTravelPercentY: Ref<number>,
   sync: () => void,
   direction?: Ref<'ltr' | 'rtl' | undefined>,
 ) {
@@ -57,6 +59,14 @@ export function useScrollbarDrag(
   const dragState = ref<DragState | null>(null)
 
   const isRtl = () => direction?.value === 'rtl'
+
+  /**
+   * Maximum thumb travel in px, derived from the track-relative travel
+   * percentage. This is the same quantity the renderer uses for `translate`,
+   * so drag and render stay in lockstep and both respect the track inset.
+   */
+  const maxTrackX = () => (thumbTravelPercentX.value / 100) * trackLengthX.value
+  const maxTrackY = () => (thumbTravelPercentY.value / 100) * trackLengthY.value
 
   const onMouseMove = (event: MouseEvent) => {
     const element = containerRef.value
@@ -67,7 +77,7 @@ export function useScrollbarDrag(
 
     if (state.axis === 'y') {
       const delta = event.clientY - state.startClient
-      const maxTrack = metrics.value.clientHeight - thumbSizeY.value
+      const maxTrack = maxTrackY()
       const maxScroll = metrics.value.scrollHeight - metrics.value.clientHeight
       if (maxTrack > 0 && maxScroll > 0) {
         const nextThumbTop = state.startScroll / maxScroll * maxTrack + delta
@@ -78,7 +88,7 @@ export function useScrollbarDrag(
     }
 
     const delta = event.clientX - state.startClient
-    const maxTrack = metrics.value.clientWidth - thumbSizeX.value
+    const maxTrack = maxTrackX()
     const maxScroll = metrics.value.scrollWidth - metrics.value.clientWidth
     if (maxTrack > 0 && maxScroll > 0) {
       const nextThumbTop = state.startScroll / maxScroll * maxTrack + delta
@@ -130,27 +140,40 @@ export function useScrollbarDrag(
     const maxScroll = isVertical
       ? metrics.value.scrollHeight - metrics.value.clientHeight
       : metrics.value.scrollWidth - metrics.value.clientWidth
-    const thumbSize = isVertical ? thumbSizeY.value : thumbSizeX.value
-    const maxTrack = (isVertical ? metrics.value.clientHeight : metrics.value.clientWidth) - thumbSize
+    const maxTrack = isVertical ? maxTrackY() : maxTrackX()
     if (maxScroll <= 0 || maxTrack <= 0) {
       return
     }
 
     const rect = trackEl.getBoundingClientRect()
-    const pagePosition = isVertical ? event.pageY : event.pageX
-    if (!Number.isFinite(pagePosition)) {
+    /**
+     * Client coordinates, not page coordinates.
+     *
+     * `getBoundingClientRect()` is viewport-relative, so the click has to be
+     * measured the same way. `pageY` is document-relative: pairing it with
+     * `rect.top` overshoots by twice the page scroll offset, which clamped
+     * `thumbTop` past `maxTrack` and sent the thumb to the bottom of the range
+     * for any click position once the page was scrolled.
+     */
+    const viewportPosition = isVertical ? event.clientY : event.clientX
+    if (!Number.isFinite(viewportPosition)) {
       return
     }
 
+    // Thumb length in the same px space as the track rect.
+    const thumbSize = isVertical
+      ? (100 - thumbTravelPercentY.value) / 100 * trackLengthY.value
+      : (100 - thumbTravelPercentX.value) / 100 * trackLengthX.value
+
     let thumbTop: number
     if (isVertical) {
-      thumbTop = pagePosition - rect.top - thumbSize / 2
+      thumbTop = viewportPosition - rect.top - thumbSize / 2
     }
     else if (isRtl()) {
-      thumbTop = rect.right - pagePosition - thumbSize / 2
+      thumbTop = rect.right - viewportPosition - thumbSize / 2
     }
     else {
-      thumbTop = pagePosition - rect.left - thumbSize / 2
+      thumbTop = viewportPosition - rect.left - thumbSize / 2
     }
 
     const nextScrollOffset = getScrollOffsetByThumbTop(thumbTop, maxScroll, maxTrack)

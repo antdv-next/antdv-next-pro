@@ -664,6 +664,226 @@ describe('Scrollbar', () => {
     }
   })
 
+  /**
+   * Regression test for the thumb overflowing the track.
+   *
+   * The track is inset from the container by `inset` on both ends, so the thumb
+   * must be sized and offset against `clientHeight - 2 * inset`. Sizing it
+   * against `clientHeight` made `offset + thumbHeight` equal
+   * `clientHeight + inset`, pushing the thumb past the end of the track at every
+   * scroll position.
+   */
+  describe('thumb stays inside the track', () => {
+    const INSET = 4
+    const SIZE = 8
+
+    /** Thumb length as a percentage of the track, read from the inline style. */
+    function thumbPercent(wrapper: ReturnType<typeof mount>, axis: 'x' | 'y') {
+      const style = (wrapper.find(`.ant-scrollbar-thumb-${axis}`).element as HTMLElement).style
+      return Number.parseFloat(axis === 'y' ? style.height : style.width)
+    }
+
+    /** Thumb offset in px, read from the inline translate. */
+    function thumbTranslatePx(wrapper: ReturnType<typeof mount>, axis: 'x' | 'y') {
+      const style = (wrapper.find(`.ant-scrollbar-thumb-${axis}`).element as HTMLElement).style
+      const matched = style.transform.match(/-?[\d.]+/)
+      return matched ? Number.parseFloat(matched[0]) : 0
+    }
+
+    it.each([
+      ['a short scroll range', 168],
+      ['a medium scroll range', 320],
+      ['a long scroll range', 800],
+    ])('keeps the vertical thumb within the track for %s', async (_label, scrollHeight) => {
+      const wrapper = mount(Scrollbar, {
+        props: { visibilityY: 'always' },
+      })
+
+      const clientHeight = 100
+      const container = wrapper.find('.ant-scrollbar-container')
+      mockScrollMetrics(container.element, {
+        clientHeight,
+        scrollHeight,
+        scrollTop: scrollHeight - clientHeight,
+        clientWidth: 100,
+        scrollWidth: 100,
+        scrollLeft: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      // Scrolled to the very end, so the thumb is at maximum travel.
+      const trackLength = clientHeight - 2 * INSET
+      const thumbHeightPx = (thumbPercent(wrapper, 'y') / 100) * trackLength
+      const offsetPx = thumbTranslatePx(wrapper, 'y')
+
+      expect(offsetPx + thumbHeightPx).toBeLessThanOrEqual(trackLength + 1e-6)
+    })
+
+    it('never lets the thumb exceed the track when the scroll range is tiny', async () => {
+      const wrapper = mount(Scrollbar, {
+        props: { visibilityY: 'always' },
+      })
+
+      const clientHeight = 100
+      const container = wrapper.find('.ant-scrollbar-container')
+      mockScrollMetrics(container.element, {
+        clientHeight,
+        scrollHeight: 120,
+        scrollTop: 20,
+        clientWidth: 100,
+        scrollWidth: 100,
+        scrollLeft: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      // scrollHeight barely above clientHeight is the case that used to overflow.
+      expect(thumbPercent(wrapper, 'y')).toBeLessThanOrEqual(100)
+    })
+
+    it('keeps the horizontal thumb within the track when scrolled fully right', async () => {
+      const wrapper = mount(Scrollbar, {
+        props: { visibilityX: 'always' },
+      })
+
+      const clientWidth = 100
+      const container = wrapper.find('.ant-scrollbar-container')
+      mockScrollMetrics(container.element, {
+        clientHeight: 100,
+        scrollHeight: 100,
+        clientWidth,
+        scrollWidth: 320,
+        scrollLeft: 220,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      const trackLength = clientWidth - 2 * INSET
+      const thumbWidthPx = (thumbPercent(wrapper, 'x') / 100) * trackLength
+      const offsetPx = thumbTranslatePx(wrapper, 'x')
+
+      expect(offsetPx + thumbWidthPx).toBeLessThanOrEqual(trackLength + 1e-6)
+    })
+
+    /**
+     * Regression test for the two tracks overlapping at the shared corner.
+     *
+     * Both tracks are anchored to `bottom`/`right: inset`, so with both axes
+     * scrolling they painted the same `size * size` square and fused into one
+     * L shape. They now each stop one `size` short of that square, which the
+     * thumb geometry has to subtract as well — otherwise the thumb overshoots
+     * by `size`, the same failure mode as the original inset bug.
+     */
+    it('shortens both tracks by one size when both axes scroll', async () => {
+      const wrapper = mount(Scrollbar, {
+        props: { visibility: 'always' },
+      })
+
+      const clientSize = 100
+      const container = wrapper.find('.ant-scrollbar-container')
+      mockScrollMetrics(container.element, {
+        clientWidth: clientSize,
+        clientHeight: clientSize,
+        scrollWidth: 300,
+        scrollHeight: 300,
+        scrollLeft: 200,
+        scrollTop: 200,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      expect(wrapper.classes()).toContain('ant-scrollbar-both-axis')
+
+      // Scrolled to the end on both axes, so each thumb is at maximum travel.
+      const trackLength = clientSize - 2 * INSET - SIZE
+      expect(trackLength).toBe(84)
+
+      const thumbHeightPx = (thumbPercent(wrapper, 'y') / 100) * trackLength
+      const thumbWidthPx = (thumbPercent(wrapper, 'x') / 100) * trackLength
+
+      expect(thumbTranslatePx(wrapper, 'y') + thumbHeightPx).toBeCloseTo(trackLength, 6)
+      expect(thumbTranslatePx(wrapper, 'x') + thumbWidthPx).toBeCloseTo(trackLength, 6)
+    })
+
+    it('keeps the track full length when only one axis scrolls', async () => {
+      const wrapper = mount(Scrollbar, {
+        props: { visibilityY: 'always' },
+      })
+
+      const clientHeight = 100
+      const container = wrapper.find('.ant-scrollbar-container')
+      mockScrollMetrics(container.element, {
+        clientHeight,
+        scrollHeight: 300,
+        scrollTop: 200,
+        clientWidth: 100,
+        scrollWidth: 100,
+        scrollLeft: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      expect(wrapper.classes()).not.toContain('ant-scrollbar-both-axis')
+
+      // Nothing to share the corner with, so the track uses the whole inset box.
+      const trackLength = clientHeight - 2 * INSET
+      expect(trackLength).toBe(92)
+
+      const thumbHeightPx = (thumbPercent(wrapper, 'y') / 100) * trackLength
+      expect(thumbTranslatePx(wrapper, 'y') + thumbHeightPx).toBeCloseTo(trackLength, 6)
+    })
+
+    it('drops the corner reservation once the second axis stops scrolling', async () => {
+      const wrapper = mount(Scrollbar)
+      const container = wrapper.find('.ant-scrollbar-container')
+
+      mockScrollMetrics(container.element, {
+        clientWidth: 100,
+        clientHeight: 100,
+        scrollWidth: 300,
+        scrollHeight: 300,
+        scrollLeft: 0,
+        scrollTop: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+      expect(wrapper.classes()).toContain('ant-scrollbar-both-axis')
+
+      // Content now fits vertically, so the vertical track is gone and the
+      // horizontal one may use the full run again.
+      mockScrollMetrics(container.element, { scrollHeight: 100, scrollTop: 0 })
+      await container.trigger('scroll')
+      await nextTick()
+      expect(wrapper.classes()).not.toContain('ant-scrollbar-both-axis')
+    })
+
+    /**
+     * The corner offset has to be emitted as a `calc()`.
+     *
+     * Component tokens reach the stylesheet as CSS variables, so `inset + size`
+     * was string-concatenated into `var(--a)var(--b)` — an invalid declaration
+     * that browsers drop silently, leaving the corner reservation inert.
+     */
+    it('emits the corner reservation as valid css', () => {
+      mount(Scrollbar, { props: { visibility: 'always' } })
+
+      const css = Array.from(document.querySelectorAll('style'))
+        .map(el => el.textContent ?? '')
+        .join('\n')
+        .replace(/\s+/g, '')
+
+      expect(css).toContain('calc(var(--ant-scrollbar-inset)+var(--ant-scrollbar-size))')
+      expect(css).not.toContain('var(--ant-scrollbar-inset)var(--ant-scrollbar-size)')
+    })
+  })
+
   it('updates scrollTop when dragging the vertical thumb', async () => {
     const wrapper = mount(Scrollbar)
     const container = wrapper.find('.ant-scrollbar-container')
@@ -737,6 +957,15 @@ describe('Scrollbar', () => {
   })
 
   describe('track click', () => {
+    /**
+     * The track does not span the full container: it is inset on both ends by
+     * the `inset` token (paddingXXS = 4), so with a 100px container the track
+     * measures 92px. Mocking the container size alone is not enough — the track
+     * rect has to match too, otherwise the thumb-centring math is off by the
+     * inset.
+     */
+    const TRACK_LENGTH = 92
+
     function mockRect(element: Element, rect: Partial<DOMRect>) {
       element.getBoundingClientRect = () => ({
         top: 0,
@@ -752,7 +981,10 @@ describe('Scrollbar', () => {
       }) as DOMRect
     }
 
-    function fireTrackMouseDown(element: Element, coord: Partial<Record<'pageX' | 'pageY', number>>) {
+    function fireTrackMouseDown(
+      element: Element,
+      coord: Partial<Record<'clientX' | 'clientY' | 'pageX' | 'pageY', number>>,
+    ) {
       const event = new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 0 })
       Object.entries(coord).forEach(([key, value]) => {
         Object.defineProperty(event, key, { value })
@@ -785,7 +1017,9 @@ describe('Scrollbar', () => {
       const container = wrapper.find('.ant-scrollbar-container')
       const getScrollTop = mockScrollTop(container.element)
 
-      // clientHeight=100, scrollHeight=300 → thumbSizeY=100/300*100≈33.33, maxTrack≈66.67, maxScroll=200
+      // clientHeight=100, scrollHeight=300 → visible ratio 1/3.
+      // Track length = clientHeight - 2 * inset = 100 - 8 = 92 (inset = paddingXXS = 4).
+      // thumbSize = 33.33% of 92 ≈ 30.67, maxTrack = 66.67% of 92 ≈ 61.33, maxScroll = 200.
       mockScrollMetrics(container.element, {
         clientHeight: 100,
         scrollHeight: 300,
@@ -798,13 +1032,60 @@ describe('Scrollbar', () => {
       await nextTick()
 
       const track = wrapper.find('.ant-scrollbar-track-y').element
-      mockRect(track, { top: 0, height: 100 })
+      mockRect(track, { top: 0, height: TRACK_LENGTH })
 
-      // thumbTop = 50 - 0 - 33.33/2 ≈ 33.33 → 33.33/66.67*200 ≈ 100
-      fireTrackMouseDown(track, { pageY: 50 })
+      // Click the track centre: thumbTop = 46 - 30.67/2 ≈ 30.67 → 30.67/61.33*200 ≈ 100
+      fireTrackMouseDown(track, { clientY: TRACK_LENGTH / 2 })
       await nextTick()
 
       expect(getScrollTop()).toBeCloseTo(100, 0)
+    })
+
+    /**
+     * Regression test for the track jump breaking on a scrolled page.
+     *
+     * `getBoundingClientRect()` is viewport-relative while `event.pageY` is
+     * document-relative, so reading `pageY` against `rect.top` overshot by twice
+     * the page scroll offset. On a scrolled docs page that pushed `thumbTop`
+     * past `maxTrack` for *any* click position, clamping to the end of the
+     * scroll range — the thumb jumped to the bottom and further clicks looked
+     * dead because the range was already exhausted.
+     */
+    it('is unaffected by the page scroll offset', async () => {
+      const wrapper = mount(Scrollbar)
+      const container = wrapper.find('.ant-scrollbar-container')
+      const getScrollTop = mockScrollTop(container.element)
+
+      mockScrollMetrics(container.element, {
+        clientHeight: 100,
+        scrollHeight: 300,
+        clientWidth: 100,
+        scrollWidth: 100,
+        scrollLeft: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      // The track sits 300px below the viewport top in both cases; only the
+      // page scroll offset differs, so both clicks are at the same place on the
+      // track and must land on the same scroll offset.
+      const track = wrapper.find('.ant-scrollbar-track-y').element
+      mockRect(track, { top: 300, height: TRACK_LENGTH })
+
+      const clickTrackCentre = (pageScroll: number) => {
+        const clientY = 300 + TRACK_LENGTH / 2
+        fireTrackMouseDown(track, { clientY, pageY: clientY + pageScroll })
+      }
+
+      clickTrackCentre(0)
+      const atTopOfPage = getScrollTop()
+
+      clickTrackCentre(1500)
+      expect(getScrollTop()).toBe(atTopOfPage)
+
+      // Centre of the track → half the scroll range.
+      expect(atTopOfPage).toBeCloseTo(100, 0)
     })
 
     it('clamps to the end when clicking past the vertical track', async () => {
@@ -824,9 +1105,9 @@ describe('Scrollbar', () => {
       await nextTick()
 
       const track = wrapper.find('.ant-scrollbar-track-y').element
-      mockRect(track, { top: 0, height: 100 })
+      mockRect(track, { top: 0, height: TRACK_LENGTH })
 
-      fireTrackMouseDown(track, { pageY: 9999 })
+      fireTrackMouseDown(track, { clientY: 9999 })
       await nextTick()
 
       expect(getScrollTop()).toBe(200)
@@ -849,11 +1130,11 @@ describe('Scrollbar', () => {
       await nextTick()
 
       const track = wrapper.find('.ant-scrollbar-track-y').element
-      mockRect(track, { top: 0, height: 100 })
+      mockRect(track, { top: 0, height: TRACK_LENGTH })
 
       // Bubbles from the thumb: stopPropagation must keep the track handler out.
       const thumb = wrapper.find('.ant-scrollbar-thumb-y').element
-      fireTrackMouseDown(thumb, { pageY: 50 })
+      fireTrackMouseDown(thumb, { clientY: 50 })
       await nextTick()
 
       expect(getScrollTop()).toBe(0)
@@ -876,10 +1157,10 @@ describe('Scrollbar', () => {
       await nextTick()
 
       const track = wrapper.find('.ant-scrollbar-track-y').element
-      mockRect(track, { top: 0, height: 100 })
+      mockRect(track, { top: 0, height: TRACK_LENGTH })
 
       const event = new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 2 })
-      Object.defineProperty(event, 'pageY', { value: 50 })
+      Object.defineProperty(event, 'clientY', { value: 50 })
       track.dispatchEvent(event)
       await nextTick()
 
@@ -903,10 +1184,10 @@ describe('Scrollbar', () => {
       await nextTick()
 
       const track = wrapper.find('.ant-scrollbar-track-x').element
-      mockRect(track, { left: 0, width: 100 })
+      mockRect(track, { left: 0, width: TRACK_LENGTH })
 
-      // Same math as vertical: thumbTop=33.33 → scrollLeft≈100
-      fireTrackMouseDown(track, { pageX: 50 })
+      // Same math as vertical: clicking the track centre lands at scrollLeft≈100
+      fireTrackMouseDown(track, { clientX: TRACK_LENGTH / 2 })
       await nextTick()
 
       expect(getScrollLeft()).toBeCloseTo(100, 0)
@@ -937,10 +1218,11 @@ describe('Scrollbar', () => {
       await nextTick()
 
       const track = wrapper.find('.ant-scrollbar-track-x').element
-      mockRect(track, { right: 100, width: 100 })
+      mockRect(track, { right: 100, width: TRACK_LENGTH })
 
-      // RTL: thumbTop = rect.right - pageX - thumbSize/2 = 100 - 50 - 16.67 ≈ 33.33
-      fireTrackMouseDown(track, { pageX: 50 })
+      // RTL mirrors the axis: thumbTop = rect.right - clientX - thumbSize/2.
+      // The track spans [8, 100], so its centre is at clientX = 100 - 92/2 = 54.
+      fireTrackMouseDown(track, { clientX: 54 })
       await nextTick()
 
       expect(getScrollLeft()).toBeCloseTo(100, 0)
@@ -968,9 +1250,9 @@ describe('Scrollbar', () => {
         await nextTick()
 
         const track = wrapper.find('.ant-scrollbar-track-y').element
-        mockRect(track, { top: 0, height: 100 })
+        mockRect(track, { top: 0, height: TRACK_LENGTH })
 
-        fireTrackMouseDown(track, { pageY: 50 })
+        fireTrackMouseDown(track, { clientY: TRACK_LENGTH / 2 })
         await nextTick()
 
         await vi.advanceTimersByTimeAsync(100)

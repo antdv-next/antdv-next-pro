@@ -428,7 +428,7 @@ exports[`scrollbar demo > renders controller correctly 1`] = `
     </span>
   </div>
   <div
-    class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+    class="ant-scrollbar css-var-root ant-scrollbar-css-var ant-scrollbar-both-axis"
     data-active=""
     data-visibility="auto"
     data-visibility-x="always"
@@ -684,7 +684,7 @@ exports[`scrollbar demo > renders controller correctly 1`] = `
       >
         <div
           class="ant-scrollbar-thumb ant-scrollbar-thumb-y"
-          style="height: 0px; transform: translateY(0px);"
+          style="height: 0%; transform: translateY(0px);"
         />
       </div>
     </transition-stub>
@@ -705,7 +705,7 @@ exports[`scrollbar demo > renders controller correctly 1`] = `
       >
         <div
           class="ant-scrollbar-thumb ant-scrollbar-thumb-x"
-          style="width: 0px; transform: translateX(0px);"
+          style="width: 0%; transform: translateX(0px);"
         />
       </div>
     </transition-stub>
@@ -1274,7 +1274,7 @@ exports[`scrollbar demo > renders semantic correctly 1`] = `
     >
       <div
         class="ant-scrollbar-thumb ant-scrollbar-thumb-y pro-scrollbar-demo-thumb"
-        style="height: 0px; transform: translateY(0px);"
+        style="height: 0%; transform: translateY(0px);"
       />
     </div>
   </transition-stub>
@@ -1740,7 +1740,7 @@ exports[`scrollbar demo > renders sider correctly 1`] = `
       >
         <div
           class="ant-scrollbar-thumb ant-scrollbar-thumb-y"
-          style="height: 0px; transform: translateY(0px);"
+          style="height: 0%; transform: translateY(0px);"
         />
       </div>
     </transition-stub>
@@ -2125,7 +2125,7 @@ exports[`scrollbar demo > renders visibility correctly 1`] = `
         class="ant-card-body"
       >
         <div
-          class="ant-scrollbar css-var-root ant-scrollbar-css-var"
+          class="ant-scrollbar css-var-root ant-scrollbar-css-var ant-scrollbar-both-axis"
           data-active=""
           data-visibility="always"
           data-visibility-x="always"
@@ -2305,7 +2305,7 @@ exports[`scrollbar demo > renders visibility correctly 1`] = `
             >
               <div
                 class="ant-scrollbar-thumb ant-scrollbar-thumb-y"
-                style="height: 0px; transform: translateY(0px);"
+                style="height: 0%; transform: translateY(0px);"
               />
             </div>
           </transition-stub>
@@ -2326,7 +2326,7 @@ exports[`scrollbar demo > renders visibility correctly 1`] = `
             >
               <div
                 class="ant-scrollbar-thumb ant-scrollbar-thumb-x"
-                style="width: 0px; transform: translateX(0px);"
+                style="width: 0%; transform: translateX(0px);"
               />
             </div>
           </transition-stub>
@@ -2556,7 +2556,7 @@ exports[`scrollbar demo > renders visibility correctly 1`] = `
             >
               <div
                 class="ant-scrollbar-thumb ant-scrollbar-thumb-x"
-                style="width: 0px; transform: translateX(0px);"
+                style="width: 0%; transform: translateX(0px);"
               />
             </div>
           </transition-stub>

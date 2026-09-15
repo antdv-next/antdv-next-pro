@@ -36,14 +36,38 @@ export interface ComponentToken {
   inset: number
 }
 
+/**
+ * Default track size, in px.
+ *
+ * Shared by `prepareComponentToken` (which feeds the CSS) and the component
+ * (which needs the same number in the thumb geometry).
+ *
+ * Note this cannot be read back off a design token the way `inset` can: `size`
+ * is a Scrollbar *component* token, while `GlobalToken` carries its own,
+ * unrelated `size` (16 in the default theme), so a token lookup would silently
+ * return the wrong number.
+ */
+export const DEFAULT_SCROLLBAR_SIZE = 8
+
+/**
+ * Resolve the track inset from a design token.
+ *
+ * Exported because the JS geometry in `useScrollbarState` has to agree with the
+ * CSS `inset` applied to the track in `style/index.ts`. Both read the value
+ * through this single helper so they cannot drift apart.
+ */
+export function resolveScrollbarInset(token: any): number {
+  return token?.paddingXXS ?? 0
+}
+
 export function prepareComponentToken(token: any): ComponentToken {
   return {
     trackBg: token.colorFillTertiary,
     thumbBg: token.colorTextTertiary,
     thumbHoverBg: token.colorTextSecondary,
     thumbActiveBg: token.colorText,
-    size: 8,
+    size: DEFAULT_SCROLLBAR_SIZE,
     radius: token.borderRadiusSM,
-    inset: token.paddingXXS,
+    inset: resolveScrollbarInset(token),
   }
 }
