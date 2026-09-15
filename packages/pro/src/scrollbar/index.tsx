@@ -260,6 +260,7 @@ const Scrollbar = defineComponent<
       scrollbarState.thumbSizeX,
       scrollbarState.thumbSizeY,
       scrollbarState.sync,
+      direction,
     )
     const hovering = ref(false)
     const overlaysVisible = ref(true)
@@ -354,6 +355,30 @@ const Scrollbar = defineComponent<
       scheduleHide()
     }
 
+    /**
+     * Dragging must not bubble up to the track, otherwise pressing the thumb
+     * would also be treated as a track jump.
+     */
+    function handleThumbMouseDownY(event: MouseEvent) {
+      event.stopPropagation()
+      scrollbarDrag.onThumbMouseDownY(event)
+    }
+
+    function handleThumbMouseDownX(event: MouseEvent) {
+      event.stopPropagation()
+      scrollbarDrag.onThumbMouseDownX(event)
+    }
+
+    function handleTrackMouseDownY(event: MouseEvent) {
+      scrollbarDrag.onTrackMouseDownY(event, event.currentTarget as HTMLElement)
+      showOverlays()
+    }
+
+    function handleTrackMouseDownX(event: MouseEvent) {
+      scrollbarDrag.onTrackMouseDownX(event, event.currentTarget as HTMLElement)
+      showOverlays()
+    }
+
     function scrollTo(options: ScrollToOptions): void
     function scrollTo(left: number, top?: number): void
     function scrollTo(leftOrOptions: number | ScrollToOptions, top = 0) {
@@ -406,6 +431,7 @@ const Scrollbar = defineComponent<
                     mergedClassNames.value.trackY,
                   )}
                   style={[mergedStyles.value.track, mergedStyles.value.trackY]}
+                  onMousedown={handleTrackMouseDownY}
                 >
                   <div
                     class={clsx(
@@ -422,7 +448,7 @@ const Scrollbar = defineComponent<
                         transform: `translateY(${scrollbarState.thumbOffsetY.value}px)`,
                       },
                     ]}
-                    onMousedown={scrollbarDrag.onThumbMouseDownY}
+                    onMousedown={handleThumbMouseDownY}
                   />
                 </div>
               )
@@ -444,6 +470,7 @@ const Scrollbar = defineComponent<
                     mergedClassNames.value.trackX,
                   )}
                   style={[mergedStyles.value.track, mergedStyles.value.trackX]}
+                  onMousedown={handleTrackMouseDownX}
                 >
                   <div
                     class={clsx(
@@ -460,7 +487,7 @@ const Scrollbar = defineComponent<
                         transform: `translateX(${scrollbarState.thumbOffsetX.value}px)`,
                       },
                     ]}
-                    onMousedown={scrollbarDrag.onThumbMouseDownX}
+                    onMousedown={handleThumbMouseDownX}
                   />
                 </div>
               )

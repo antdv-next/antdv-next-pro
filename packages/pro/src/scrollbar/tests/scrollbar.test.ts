@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils'
+import { ConfigProvider } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
 import { describe, expect, it, vi } from 'vitest'
 import { defineComponent, h, nextTick } from 'vue'
@@ -733,5 +734,253 @@ describe('Scrollbar', () => {
     ;(wrapper.vm as any).scrollTo(12, 34)
 
     expect(calls).toEqual([[12, 34]])
+  })
+
+  describe('track click', () => {
+    function mockRect(element: Element, rect: Partial<DOMRect>) {
+      element.getBoundingClientRect = () => ({
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: 0,
+        height: 0,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+        ...rect,
+      }) as DOMRect
+    }
+
+    function fireTrackMouseDown(element: Element, coord: Partial<Record<'pageX' | 'pageY', number>>) {
+      const event = new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 0 })
+      Object.entries(coord).forEach(([key, value]) => {
+        Object.defineProperty(event, key, { value })
+      })
+      element.dispatchEvent(event)
+    }
+
+    function mockScrollTop(element: Element) {
+      let scrollTop = 0
+      Object.defineProperty(element, 'scrollTop', {
+        configurable: true,
+        get: () => scrollTop,
+        set: value => (scrollTop = Number(value)),
+      })
+      return () => scrollTop
+    }
+
+    function mockScrollLeft(element: Element) {
+      let scrollLeft = 0
+      Object.defineProperty(element, 'scrollLeft', {
+        configurable: true,
+        get: () => scrollLeft,
+        set: value => (scrollLeft = Number(value)),
+      })
+      return () => scrollLeft
+    }
+
+    it('jumps to the clicked position on the vertical track', async () => {
+      const wrapper = mount(Scrollbar)
+      const container = wrapper.find('.ant-scrollbar-container')
+      const getScrollTop = mockScrollTop(container.element)
+
+      // clientHeight=100, scrollHeight=300 → thumbSizeY=100/300*100≈33.33, maxTrack≈66.67, maxScroll=200
+      mockScrollMetrics(container.element, {
+        clientHeight: 100,
+        scrollHeight: 300,
+        clientWidth: 100,
+        scrollWidth: 100,
+        scrollLeft: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      const track = wrapper.find('.ant-scrollbar-track-y').element
+      mockRect(track, { top: 0, height: 100 })
+
+      // thumbTop = 50 - 0 - 33.33/2 ≈ 33.33 → 33.33/66.67*200 ≈ 100
+      fireTrackMouseDown(track, { pageY: 50 })
+      await nextTick()
+
+      expect(getScrollTop()).toBeCloseTo(100, 0)
+    })
+
+    it('clamps to the end when clicking past the vertical track', async () => {
+      const wrapper = mount(Scrollbar)
+      const container = wrapper.find('.ant-scrollbar-container')
+      const getScrollTop = mockScrollTop(container.element)
+
+      mockScrollMetrics(container.element, {
+        clientHeight: 100,
+        scrollHeight: 300,
+        clientWidth: 100,
+        scrollWidth: 100,
+        scrollLeft: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      const track = wrapper.find('.ant-scrollbar-track-y').element
+      mockRect(track, { top: 0, height: 100 })
+
+      fireTrackMouseDown(track, { pageY: 9999 })
+      await nextTick()
+
+      expect(getScrollTop()).toBe(200)
+    })
+
+    it('does not jump when the press starts on the thumb itself', async () => {
+      const wrapper = mount(Scrollbar)
+      const container = wrapper.find('.ant-scrollbar-container')
+      const getScrollTop = mockScrollTop(container.element)
+
+      mockScrollMetrics(container.element, {
+        clientHeight: 100,
+        scrollHeight: 300,
+        clientWidth: 100,
+        scrollWidth: 100,
+        scrollLeft: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      const track = wrapper.find('.ant-scrollbar-track-y').element
+      mockRect(track, { top: 0, height: 100 })
+
+      // Bubbles from the thumb: stopPropagation must keep the track handler out.
+      const thumb = wrapper.find('.ant-scrollbar-thumb-y').element
+      fireTrackMouseDown(thumb, { pageY: 50 })
+      await nextTick()
+
+      expect(getScrollTop()).toBe(0)
+    })
+
+    it('ignores non-primary mouse buttons on the track', async () => {
+      const wrapper = mount(Scrollbar)
+      const container = wrapper.find('.ant-scrollbar-container')
+      const getScrollTop = mockScrollTop(container.element)
+
+      mockScrollMetrics(container.element, {
+        clientHeight: 100,
+        scrollHeight: 300,
+        clientWidth: 100,
+        scrollWidth: 100,
+        scrollLeft: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      const track = wrapper.find('.ant-scrollbar-track-y').element
+      mockRect(track, { top: 0, height: 100 })
+
+      const event = new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 2 })
+      Object.defineProperty(event, 'pageY', { value: 50 })
+      track.dispatchEvent(event)
+      await nextTick()
+
+      expect(getScrollTop()).toBe(0)
+    })
+
+    it('jumps to the clicked position on the horizontal track', async () => {
+      const wrapper = mount(Scrollbar)
+      const container = wrapper.find('.ant-scrollbar-container')
+      const getScrollLeft = mockScrollLeft(container.element)
+
+      mockScrollMetrics(container.element, {
+        clientHeight: 100,
+        scrollHeight: 100,
+        clientWidth: 100,
+        scrollWidth: 300,
+        scrollTop: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      const track = wrapper.find('.ant-scrollbar-track-x').element
+      mockRect(track, { left: 0, width: 100 })
+
+      // Same math as vertical: thumbTop=33.33 → scrollLeft≈100
+      fireTrackMouseDown(track, { pageX: 50 })
+      await nextTick()
+
+      expect(getScrollLeft()).toBeCloseTo(100, 0)
+    })
+
+    it('jumps using the mirrored axis on the horizontal track in rtl', async () => {
+      const wrapper = mount(ConfigProvider, {
+        props: { direction: 'rtl' },
+        slots: {
+          default: () => h(Scrollbar, { visibilityX: 'always' }),
+        },
+      })
+
+      expect(wrapper.find('.ant-scrollbar-rtl').exists()).toBe(true)
+
+      const container = wrapper.find('.ant-scrollbar-container')
+      const getScrollLeft = mockScrollLeft(container.element)
+
+      mockScrollMetrics(container.element, {
+        clientHeight: 100,
+        scrollHeight: 100,
+        clientWidth: 100,
+        scrollWidth: 300,
+        scrollTop: 0,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      const track = wrapper.find('.ant-scrollbar-track-x').element
+      mockRect(track, { right: 100, width: 100 })
+
+      // RTL: thumbTop = rect.right - pageX - thumbSize/2 = 100 - 50 - 16.67 ≈ 33.33
+      fireTrackMouseDown(track, { pageX: 50 })
+      await nextTick()
+
+      expect(getScrollLeft()).toBeCloseTo(100, 0)
+    })
+
+    it('keeps overlays visible after a track click', async () => {
+      vi.useFakeTimers()
+
+      try {
+        const wrapper = mount(Scrollbar, {
+          props: { hideDelay: 100 },
+        })
+
+        const container = wrapper.find('.ant-scrollbar-container')
+
+        mockScrollMetrics(container.element, {
+          clientHeight: 100,
+          scrollHeight: 300,
+          clientWidth: 100,
+          scrollWidth: 100,
+          scrollLeft: 0,
+        })
+
+        await container.trigger('scroll')
+        await nextTick()
+
+        const track = wrapper.find('.ant-scrollbar-track-y').element
+        mockRect(track, { top: 0, height: 100 })
+
+        fireTrackMouseDown(track, { pageY: 50 })
+        await nextTick()
+
+        await vi.advanceTimersByTimeAsync(100)
+        await nextTick()
+
+        expect(wrapper.find('.ant-scrollbar-track-y').exists()).toBe(true)
+      }
+      finally {
+        vi.useRealTimers()
+      }
+    })
   })
 })
