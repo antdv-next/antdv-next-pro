@@ -36510,7 +36510,7 @@ exports[`heatmap demo > renders interaction correctly 1`] = `
             class="ant-typography ant-typography-secondary css-var-root"
           >
             <!---->
-            未选择日期
+            No date selected
             <!---->
             <!---->
             <!---->

@@ -457,7 +457,7 @@ exports[`input-tag demo > renders form correctly 1`] = `
 
 exports[`input-tag demo > renders readonly correctly 1`] = `
 <span
-  class="ant-input-affix-wrapper ant-input-affix-wrapper-readonly ant-input-outlined ant-input-tag css-var-root ant-input-tag-css-var demo-input-tag css-var-root ant-input-css-var demo-input-tag"
+  class="ant-input-affix-wrapper ant-input-affix-wrapper-readonly ant-input-outlined ant-input-tag css-var-root ant-input-tag-css-var css-var-root ant-input-css-var"
 >
   <span
     class="ant-input-prefix"
@@ -477,7 +477,7 @@ exports[`input-tag demo > renders readonly correctly 1`] = `
       <span
         class="ant-tag ant-tag-filled css-var-root"
       >
-        semantic
+        locked
         <!---->
         <!---->
         <!---->
