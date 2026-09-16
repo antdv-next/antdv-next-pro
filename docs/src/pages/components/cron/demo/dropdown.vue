@@ -1,9 +1,9 @@
 <docs lang="zh-CN">
-用 Select 的 `popupRender` 承载 Cron 面板，并由确定 / 取消控制下拉开关，避免内部 Select 选中时把外层一起关掉。
+用 Select 的 `popupRender` 承载 Cron 面板，并由确定 / 取消控制下拉开关。
 </docs>
 
 <docs lang="en-US">
-Put the Cron panel in a Select dropdown and close it with OK / Cancel, so choosing a value in the inner Select does not close the outer dropdown.
+Put the Cron panel in a Select dropdown and close it with OK / Cancel.
 </docs>
 
 <script setup lang="ts">
