@@ -24,6 +24,7 @@ export const defaultComponents: DefaultComponentDefinition[] = [
       { name: 'heatmap', description: 'Default Heatmap configuration.', type: 'HeatmapConfig' },
       { name: 'scrollbar', description: 'Default Scrollbar configuration.', type: 'ScrollbarConfig' },
       { name: 'inputTag', description: 'Default InputTag configuration.', type: 'InputTagConfig' },
+      { name: 'messageScroller', description: 'Default MessageScroller configuration.', type: 'MessageScrollerConfig' },
     ],
     slots: [
       { name: 'default', description: 'Content rendered inside the provider.' },

@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Garbitu',
     showMore: 'Erakutsi etiketa denak',
   },
+  MessageScroller: {
+    viewportLabel: 'Elkarrizketa',
+    navigationLabel: 'Mezu-nabigazioa',
+    backToLatest: 'Itzuli azkenekora',
+    railItemLabel: 'Joan {index}. mezura, {total} mezu guztira',
+  },
 } satisfies ProLocale
 
 export default proLocale

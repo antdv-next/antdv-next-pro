@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Wissen',
     showMore: 'Alle tags weergeven',
   },
+  MessageScroller: {
+    viewportLabel: 'Gesprek',
+    navigationLabel: 'Berichtnavigatie',
+    backToLatest: 'Terug naar nieuwste',
+    railItemLabel: 'Ga naar bericht {index} van {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

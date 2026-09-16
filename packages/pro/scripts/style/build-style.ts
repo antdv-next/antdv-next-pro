@@ -8,6 +8,7 @@ import { renderToString } from 'vue/server-renderer'
 import Cron from '../../src/cron'
 import Heatmap from '../../src/heatmap'
 import InputTag from '../../src/input-tag'
+import MessageScroller from '../../src/message-scroller'
 import Scrollbar from '../../src/scrollbar'
 
 const antd = (_antd as any).components_exports ?? _antd
@@ -135,6 +136,7 @@ function defaultNode() {
     h(Heatmap),
     h(Scrollbar, { visibility: 'hidden', visibilityX: 'hidden', visibilityY: 'hidden' }, { default: () => h('div') }),
     h(InputTag, { defaultValue: ['InputTag'] }),
+    h(MessageScroller, { navigation: 'rail', backToBottom: true }, { default: () => h('div', { 'data-message-id': 'message-1' }) }),
   ])
 }
 

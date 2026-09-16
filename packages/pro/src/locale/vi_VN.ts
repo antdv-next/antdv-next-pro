@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Xóa',
     showMore: 'Hiện tất cả thẻ',
   },
+  MessageScroller: {
+    viewportLabel: 'Cuộc trò chuyện',
+    navigationLabel: 'Điều hướng tin nhắn',
+    backToLatest: 'Về mới nhất',
+    railItemLabel: 'Đến tin nhắn {index} trong {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

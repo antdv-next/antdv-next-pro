@@ -7,6 +7,7 @@ describe('@antdv-next/pro', () => {
       'Cron',
       'Heatmap',
       'InputTag',
+      'MessageScroller',
       'ProConfigProvider',
       'Scrollbar',
       'default',

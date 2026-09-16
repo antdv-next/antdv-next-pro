@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Hreinsa',
     showMore: 'Sýna öll merki',
   },
+  MessageScroller: {
+    viewportLabel: 'Samtal',
+    navigationLabel: 'Leiðsögn skilaboða',
+    backToLatest: 'Aftur á það nýjasta',
+    railItemLabel: 'Fara í skilaboð {index} af {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

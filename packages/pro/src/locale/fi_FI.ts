@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Tyhjennä',
     showMore: 'Näytä kaikki tunnisteet',
   },
+  MessageScroller: {
+    viewportLabel: 'Keskustelu',
+    navigationLabel: 'Viestinavigointi',
+    backToLatest: 'Siirry uusimpaan',
+    railItemLabel: 'Siirry viestiin {index} / {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

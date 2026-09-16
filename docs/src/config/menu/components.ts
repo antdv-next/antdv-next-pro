@@ -80,6 +80,7 @@ export const components: AntdvMenuItem[] = [
     type: 'group',
     children: [
       { key: '/components/heatmap', label: '/components/heatmap', tag: '1.1.0' },
+      { key: '/components/message-scroller', label: '/components/message-scroller', tag: '1.1.0' },
     ],
   },
   {

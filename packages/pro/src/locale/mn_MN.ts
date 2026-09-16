@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Цэвэрлэх',
     showMore: 'Бүх шошгыг харуулах',
   },
+  MessageScroller: {
+    viewportLabel: 'Харилцаа',
+    navigationLabel: 'Мессежийн навигаци',
+    backToLatest: 'Хамгийн сүүлийн рүү',
+    railItemLabel: '{index} / {total} мессеж рүү очих',
+  },
 } satisfies ProLocale
 
 export default proLocale

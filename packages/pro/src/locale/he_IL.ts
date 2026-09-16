@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'נקה',
     showMore: 'הצג את כל התגיות',
   },
+  MessageScroller: {
+    viewportLabel: 'שיחה',
+    navigationLabel: 'ניווט הודעות',
+    backToLatest: 'חזרה להודעה האחרונה',
+    railItemLabel: 'עבור להודעה {index} מתוך {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

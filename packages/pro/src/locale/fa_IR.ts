@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'پاک کردن',
     showMore: 'نمایش همه برچسب‌ها',
   },
+  MessageScroller: {
+    viewportLabel: 'گفتگو',
+    navigationLabel: 'پیمایش پیام‌ها',
+    backToLatest: 'بازگشت به آخرین',
+    railItemLabel: 'رفتن به پیام {index} از {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

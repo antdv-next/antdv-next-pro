@@ -40,6 +40,7 @@ export type {
   CronConfig,
   HeatmapConfig,
   InputTagConfig,
+  MessageScrollerConfig,
   ProConfigProviderEmits,
   ProConfigProviderProps,
   ProConfigProviderSlots,

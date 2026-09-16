@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Vymazať',
     showMore: 'Zobraziť všetky štítky',
   },
+  MessageScroller: {
+    viewportLabel: 'Konverzácia',
+    navigationLabel: 'Navigácia správ',
+    backToLatest: 'Späť na najnovšiu',
+    railItemLabel: 'Prejsť na správu {index} z {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

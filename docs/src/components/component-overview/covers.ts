@@ -22,6 +22,10 @@ export const covers: Covers = {
     cover: '/component-overview/input-tag.svg',
     coverDark: '/component-overview/input-tag-dark.svg',
   },
+  MessageScroller: {
+    cover: '/component-overview/message-scroller.svg',
+    coverDark: '/component-overview/message-scroller-dark.svg',
+  },
   Scrollbar: {
     cover: '/component-overview/scrollbar.svg',
     coverDark: '/component-overview/scrollbar-dark.svg',

@@ -16,5 +16,6 @@ export default {
     // Data Display
     dataDisplay: 'Data Display',
     heatmap: 'Heatmap',
+    messageScroller: 'MessageScroller',
   },
 } as const

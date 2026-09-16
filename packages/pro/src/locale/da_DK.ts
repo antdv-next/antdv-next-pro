@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Ryd',
     showMore: 'Vis alle tags',
   },
+  MessageScroller: {
+    viewportLabel: 'Samtale',
+    navigationLabel: 'Beskednavigation',
+    backToLatest: 'Til den nyeste',
+    railItemLabel: 'Gå til besked {index} af {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

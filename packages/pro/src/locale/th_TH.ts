@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'ล้าง',
     showMore: 'แสดงแท็กทั้งหมด',
   },
+  MessageScroller: {
+    viewportLabel: 'บทสนทนา',
+    navigationLabel: 'การนำทางข้อความ',
+    backToLatest: 'กลับไปล่าสุด',
+    railItemLabel: 'ไปที่ข้อความที่ {index} จาก {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

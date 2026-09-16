@@ -2,6 +2,7 @@ import type { App, Plugin } from 'vue'
 import type { ComponentToken as CronComponentToken } from './cron/style'
 import type { ComponentToken as HeatmapComponentToken } from './heatmap/style'
 import type { ComponentToken as InputTagComponentToken } from './input-tag/style'
+import type { ComponentToken as MessageScrollerComponentToken } from './message-scroller/style'
 import type { ComponentToken as ScrollbarComponentToken } from './scrollbar/style'
 import * as components from './components'
 
@@ -11,6 +12,7 @@ declare module 'antdv-next/theme/interface/components' {
     Heatmap?: HeatmapComponentToken
     Scrollbar?: ScrollbarComponentToken
     InputTag?: InputTagComponentToken
+    MessageScroller?: MessageScrollerComponentToken
   }
 }
 
@@ -20,6 +22,7 @@ export type {
   CronConfig,
   HeatmapConfig,
   InputTagConfig,
+  MessageScrollerConfig,
   ProConfigProviderProps,
   ScrollbarConfig,
   ScrollbarFade,
@@ -83,6 +86,19 @@ export type {
   InputTagTagProps,
   InputTagValue,
 } from './input-tag'
+export type {
+  MessageScrollerClassNamesType,
+  MessageScrollerEmits,
+  MessageScrollerItem,
+  MessageScrollerNavigation,
+  MessageScrollerProps,
+  MessageScrollerRef,
+  MessageScrollerSemanticClassNames,
+  MessageScrollerSemanticName,
+  MessageScrollerSemanticStyles,
+  MessageScrollerSlots,
+  MessageScrollerStylesType,
+} from './message-scroller'
 export type {
   ScrollbarClassNamesType,
   ScrollbarEmits,

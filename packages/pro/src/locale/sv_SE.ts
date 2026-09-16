@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Rensa',
     showMore: 'Visa alla taggar',
   },
+  MessageScroller: {
+    viewportLabel: 'Konversation',
+    navigationLabel: 'Meddelandenavigering',
+    backToLatest: 'Till senaste',
+    railItemLabel: 'Gå till meddelande {index} av {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

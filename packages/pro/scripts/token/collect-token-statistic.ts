@@ -5,6 +5,7 @@ import { theme } from 'antdv-next'
 import { prepareComponentToken as prepareCronToken } from '../../src/cron/style/token'
 import { prepareComponentToken as prepareHeatmapToken } from '../../src/heatmap/style/token'
 import { prepareComponentToken as prepareInputTagToken } from '../../src/input-tag/style/token'
+import { prepareComponentToken as prepareMessageScrollerToken } from '../../src/message-scroller/style/token'
 import { prepareComponentToken as prepareScrollbarToken } from '../../src/scrollbar/style/token'
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
@@ -65,6 +66,32 @@ async function main() {
         'motionEaseOutCirc',
       ],
       component: prepareScrollbarToken(globalToken),
+    },
+    MessageScroller: {
+      global: [
+        'colorBgElevated',
+        'colorBorderSecondary',
+        'colorPrimaryBorder',
+        'colorText',
+        'colorTextQuaternary',
+        'colorTextSecondary',
+        'boxShadowTertiary',
+        'borderRadiusLG',
+        'borderRadiusSM',
+        'controlHeightSM',
+        'fontSize',
+        'fontSizeSM',
+        'fontWeightStrong',
+        'lineHeight',
+        'lineHeightSM',
+        'lineWidth',
+        'marginXS',
+        'marginXXS',
+        'paddingSM',
+        'paddingXS',
+        'motionDurationMid',
+      ],
+      component: prepareMessageScrollerToken(globalToken),
     },
   }
 

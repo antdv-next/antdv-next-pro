@@ -62,12 +62,27 @@ describe('Pro locale', () => {
         noData: expect.any(String),
         level: expect.any(String),
       })
-      expect(locale?.InputTag, localeName).toMatchObject({
+      expect(locale?.InputTag).toMatchObject({
         clear: expect.any(String),
         showMore: expect.any(String),
       })
       expect(locale?.InputTag?.clear?.trim(), `${localeName}:InputTag.clear`).not.toBe('')
       expect(locale?.InputTag?.showMore?.trim(), `${localeName}:InputTag.showMore`).not.toBe('')
+
+      const messageScrollerKeys = ['viewportLabel', 'navigationLabel', 'backToLatest', 'railItemLabel'] as const
+      expect(locale?.MessageScroller, localeName).toMatchObject({
+        viewportLabel: expect.any(String),
+        navigationLabel: expect.any(String),
+        backToLatest: expect.any(String),
+        railItemLabel: expect.any(String),
+      })
+      for (const key of messageScrollerKeys) {
+        expect(locale?.MessageScroller?.[key]?.trim(), `${localeName}:MessageScroller.${key}`).not.toBe('')
+      }
+      expect(
+        getPlaceholders(locale?.MessageScroller?.railItemLabel ?? ''),
+        `${localeName}:MessageScroller.railItemLabel`,
+      ).toEqual(['index', 'total'])
 
       const messages = flattenCronLocale(locale!.Cron!)
       expect(Object.keys(messages).sort(), localeName).toEqual(expectedMessageKeys)
@@ -104,6 +119,21 @@ describe('Pro locale', () => {
     expect(proLocaleModules['../zh_TW.ts']?.InputTag).toMatchObject({
       clear: '清空',
       showMore: '展開全部標籤',
+    })
+  })
+
+  it('ships MessageScroller messages for representative locales', () => {
+    expect(enUS.MessageScroller).toMatchObject({
+      viewportLabel: 'Conversation',
+      navigationLabel: 'Message navigation',
+      backToLatest: 'Back to latest',
+      railItemLabel: 'Go to message {index} of {total}',
+    })
+    expect(frFR.MessageScroller?.backToLatest).toBe('Revenir au plus récent')
+    expect(proLocaleModules['../zh_TW.ts']?.MessageScroller).toMatchObject({
+      viewportLabel: '會話內容',
+      navigationLabel: '訊息導覽',
+      railItemLabel: '跳轉到第 {index} 則訊息，共 {total} 則',
     })
   })
 

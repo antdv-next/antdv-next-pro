@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Изчисти',
     showMore: 'Покажи всички етикети',
   },
+  MessageScroller: {
+    viewportLabel: 'Разговор',
+    navigationLabel: 'Навигация по съобщения',
+    backToLatest: 'Към най-новото',
+    railItemLabel: 'Към съобщение {index} от {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

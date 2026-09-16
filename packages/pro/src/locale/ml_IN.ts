@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'മായ്ക്കുക',
     showMore: 'എല്ലാ ടാഗുകളും കാണിക്കുക',
   },
+  MessageScroller: {
+    viewportLabel: 'സംഭാഷണം',
+    navigationLabel: 'സന്ദേശ നാവിഗേഷൻ',
+    backToLatest: 'ഏറ്റവും പുതിയതിലേക്ക്',
+    railItemLabel: 'സന്ദേശം {index} / {total} ലേക്ക് പോകുക',
+  },
 } satisfies ProLocale
 
 export default proLocale

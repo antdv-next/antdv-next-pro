@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Temizle',
     showMore: 'Tüm etiketleri göster',
   },
+  MessageScroller: {
+    viewportLabel: 'Konuşma',
+    navigationLabel: 'Mesaj gezinme',
+    backToLatest: 'En sona dön',
+    railItemLabel: '{index}. mesaja git, toplam {total} mesaj',
+  },
 } satisfies ProLocale
 
 export default proLocale

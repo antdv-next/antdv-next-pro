@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Təmizlə',
     showMore: 'Bütün teqləri göstər',
   },
+  MessageScroller: {
+    viewportLabel: 'Söhbət',
+    navigationLabel: 'Mesaj naviqasiyası',
+    backToLatest: 'Ən yeniyə qayıt',
+    railItemLabel: '{index} / {total} mesaja keç',
+  },
 } satisfies ProLocale
 
 export default proLocale

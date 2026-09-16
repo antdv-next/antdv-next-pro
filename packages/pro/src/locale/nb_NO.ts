@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Tøm',
     showMore: 'Vis alle tagger',
   },
+  MessageScroller: {
+    viewportLabel: 'Samtale',
+    navigationLabel: 'Meldingsnavigering',
+    backToLatest: 'Til nyeste',
+    railItemLabel: 'Gå til melding {index} av {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

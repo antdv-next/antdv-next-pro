@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'साफ करा',
     showMore: 'सर्व टॅग दाखवा',
   },
+  MessageScroller: {
+    viewportLabel: 'संभाषण',
+    navigationLabel: 'संदेश नेव्हिगेशन',
+    backToLatest: 'नवीनतम वर जा',
+    railItemLabel: 'क्रमांक {index} च्या संदेशावर जा (एकूण {total})',
+  },
 } satisfies ProLocale
 
 export default proLocale

@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'ತೆರವುಗೊಳಿಸಿ',
     showMore: 'ಎಲ್ಲಾ ಟ್ಯಾಗ್‌ಗಳನ್ನು ತೋರಿಸಿ',
   },
+  MessageScroller: {
+    viewportLabel: 'ಸಂವಾದದ ವಿಷಯ',
+    navigationLabel: 'ಸಂದೇಶ ನ್ಯಾವಿಗೇಷನ್',
+    backToLatest: 'ಇತ್ತೀಚಿನದಕ್ಕೆ ಹಿಂತಿರುಗಿ',
+    railItemLabel: 'ಸಂದೇಶ {index} / {total} ಗೆ ಹೋಗಿ',
+  },
 } satisfies ProLocale
 
 export default proLocale

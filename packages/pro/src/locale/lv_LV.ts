@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Notīrīt',
     showMore: 'Rādīt visus tagus',
   },
+  MessageScroller: {
+    viewportLabel: 'Sarunas saturs',
+    navigationLabel: 'Ziņojumu navigācija',
+    backToLatest: 'Atgriezties pie jaunākā',
+    railItemLabel: 'Pāriet uz {index}. ziņojumu no {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

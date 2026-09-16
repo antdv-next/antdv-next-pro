@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Tozalash',
     showMore: 'Barcha teglarni ko‘rsatish',
   },
+  MessageScroller: {
+    viewportLabel: 'Suhbat',
+    navigationLabel: 'Xabarlar navigatsiyasi',
+    backToLatest: 'Eng yangisiga qaytish',
+    railItemLabel: '{index}-xabarga o‘tish, jami {total} ta xabar',
+  },
 } satisfies ProLocale
 
 export default proLocale

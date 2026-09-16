@@ -1,0 +1,1764 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`message-scroller demo > renders basic correctly 1`] = `
+<div>
+  <div
+    class="ant-flex css-var-root ant-flex-align-center ant-flex-justify-space-between"
+    style="margin-bottom: 12px;"
+  >
+    <span
+      class="ant-typography ant-typography-secondary css-var-root"
+    >
+      <!---->
+      Streaming stopped
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+    </span>
+    <div
+      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small css-var-root"
+    >
+      <div
+        class="ant-space-item"
+      >
+        <button
+          class="ant-btn css-var-root ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
+          type="button"
+        >
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+            enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+            entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+            leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+            leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            name="ant-btn-loading-icon-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <span>
+             Send 
+          </span>
+          <!---->
+        </button>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div
+    class="ant-message-scroller css-var-root ant-message-scroller-css-var"
+    style="height: 320px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
+  >
+    <section
+      aria-label="Conversation"
+      class="ant-message-scroller-viewport"
+      tabindex="0"
+    >
+      <div
+        aria-live="polite"
+        aria-relevant="additions text"
+        class="ant-message-scroller-content"
+        role="log"
+      >
+        <div
+          data-from="user"
+          data-message-id="message-1"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              What should the first release include?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="assistant"
+          data-message-id="message-2"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Start with the smallest workflow that still feels complete.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="user"
+          data-message-id="message-3"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Include streaming and recovery states too.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="assistant"
+          data-message-id="message-4"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Yes. Those states make the first version feel dependable.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="user"
+          data-message-id="message-5"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              How should we present tool results?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="assistant"
+          data-message-id="message-6"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Keep results close to the action that produced them.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!---->
+    <!---->
+    <transition-stub
+      appear="false"
+      css="true"
+      name="ant-message-scroller-back-to-bottom-motion"
+      persisted="false"
+    >
+      <!---->
+    </transition-stub>
+  </div>
+</div>
+`;
+
+exports[`message-scroller demo > renders controller correctly 1`] = `
+<div>
+  <div
+    class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small css-var-root"
+    style="margin-bottom: 12px;"
+  >
+    <div
+      class="ant-space-item"
+    >
+      <button
+        class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+        type="button"
+      >
+        <transition-stub
+          appear="false"
+          css="true"
+          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+          name="ant-btn-loading-icon-motion"
+          persisted="false"
+        >
+          <!---->
+        </transition-stub>
+        <span>
+           scrollToItem('message-6') 
+        </span>
+        <!---->
+      </button>
+    </div>
+    <!---->
+    <div
+      class="ant-space-item"
+    >
+      <button
+        class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+        type="button"
+      >
+        <transition-stub
+          appear="false"
+          css="true"
+          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+          name="ant-btn-loading-icon-motion"
+          persisted="false"
+        >
+          <!---->
+        </transition-stub>
+        <span>
+           scrollToItem(last) 
+        </span>
+        <!---->
+      </button>
+    </div>
+    <!---->
+    <div
+      class="ant-space-item"
+    >
+      <button
+        class="ant-btn css-var-root ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
+        type="button"
+      >
+        <transition-stub
+          appear="false"
+          css="true"
+          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+          name="ant-btn-loading-icon-motion"
+          persisted="false"
+        >
+          <!---->
+        </transition-stub>
+        <span>
+           setFollowing(true) 
+        </span>
+        <!---->
+      </button>
+    </div>
+    <!---->
+  </div>
+  <div
+    class="ant-message-scroller css-var-root ant-message-scroller-css-var"
+    style="height: 300px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
+  >
+    <section
+      aria-label="Conversation"
+      class="ant-message-scroller-viewport"
+      tabindex="0"
+    >
+      <div
+        aria-live="polite"
+        aria-relevant="additions text"
+        class="ant-message-scroller-content"
+        role="log"
+      >
+        <div
+          data-message-id="message-1"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 1: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-2"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 2: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-3"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 3: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-4"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 4: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-5"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 5: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-6"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 6: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-7"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 7: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-8"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 8: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-9"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 9: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-10"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 10: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-11"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 11: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-12"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Message 12: the reader can jump here from outside the transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!---->
+    <!---->
+    <transition-stub
+      appear="false"
+      css="true"
+      name="ant-message-scroller-back-to-bottom-motion"
+      persisted="false"
+    >
+      <!---->
+    </transition-stub>
+  </div>
+</div>
+`;
+
+exports[`message-scroller demo > renders follow correctly 1`] = `
+<div>
+  <div
+    class="ant-flex css-var-root ant-flex-align-center ant-flex-justify-space-between"
+    style="margin-bottom: 12px;"
+  >
+    <div
+      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small css-var-root"
+    >
+      <div
+        class="ant-space-item"
+      >
+        <span
+          class="ant-tag ant-tag-filled ant-tag-success css-var-root"
+        >
+          Following
+          <!---->
+          <!---->
+          <!---->
+        </span>
+      </div>
+      <!---->
+      <div
+        class="ant-space-item"
+      >
+        <span
+          class="ant-typography ant-typography-secondary css-var-root"
+        >
+          <!---->
+           followChange × 0
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+        </span>
+      </div>
+      <!---->
+    </div>
+    <button
+      class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+      type="button"
+    >
+      <transition-stub
+        appear="false"
+        css="true"
+        enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+        enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+        entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+        leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+        leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        name="ant-btn-loading-icon-motion"
+        persisted="false"
+      >
+        <!---->
+      </transition-stub>
+      <span>
+         Toggle follow 
+      </span>
+      <!---->
+    </button>
+  </div>
+  <div
+    class="ant-message-scroller css-var-root ant-message-scroller-css-var"
+    style="height: 300px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
+  >
+    <section
+      aria-label="Conversation"
+      class="ant-message-scroller-viewport"
+      tabindex="0"
+    >
+      <div
+        aria-live="polite"
+        aria-relevant="additions text"
+        class="ant-message-scroller-content"
+        role="log"
+      >
+        <div
+          data-message-id="message-1"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 1: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-2"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 2: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-3"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 3: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-4"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 4: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-5"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 5: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-6"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 6: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-7"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 7: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-8"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 8: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-9"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 9: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-10"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 10: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-11"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 11: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-12"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 12: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-13"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 13: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-14"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Turn 14: scroll away from the bottom and the viewport stops following this transcript.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!---->
+    <!---->
+    <transition-stub
+      appear="false"
+      css="true"
+      name="ant-message-scroller-back-to-bottom-motion"
+      persisted="false"
+    >
+      <!---->
+    </transition-stub>
+  </div>
+</div>
+`;
+
+exports[`message-scroller demo > renders rail correctly 1`] = `
+<div>
+  <div
+    class="ant-flex css-var-root ant-flex-align-center ant-flex-justify-space-between"
+    style="margin-bottom: 12px;"
+  >
+    <span
+      class="ant-typography ant-typography-secondary css-var-root"
+    >
+      <!---->
+       Rail item selected: none
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+    </span>
+    <span
+      class="ant-typography ant-typography-secondary css-var-root"
+    >
+      <!---->
+       Click a tick to jump, hover to preview. 
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+    </span>
+  </div>
+  <div
+    class="ant-message-scroller css-var-root ant-message-scroller-css-var ant-message-scroller-rail-enabled"
+    style="height: 320px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
+  >
+    <section
+      aria-label="Conversation"
+      class="ant-message-scroller-viewport"
+      tabindex="0"
+    >
+      <div
+        aria-live="polite"
+        aria-relevant="additions text"
+        class="ant-message-scroller-content"
+        role="log"
+      >
+        <div
+          data-from="user"
+          data-message-id="message-1"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              What should the first release include?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="assistant"
+          data-message-id="message-2"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Start with the smallest workflow that still feels complete.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="user"
+          data-message-id="message-3"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Include streaming and recovery states too.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="assistant"
+          data-message-id="message-4"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Yes. Those states make the first version feel dependable.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="user"
+          data-message-id="message-5"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              How should we present tool results?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="assistant"
+          data-message-id="message-6"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Keep results close to the action that produced them.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="user"
+          data-message-id="message-7"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              What about actions that need confirmation?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="assistant"
+          data-message-id="message-8"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Pause the run, explain the impact, and ask before continuing.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="user"
+          data-message-id="message-9"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Can the transcript stay easy to navigate?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-from="assistant"
+          data-message-id="message-10"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Use the rail to jump between turns without losing your place.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!---->
+    <!---->
+    <transition-stub
+      appear="false"
+      css="true"
+      name="ant-message-scroller-back-to-bottom-motion"
+      persisted="false"
+    >
+      <!---->
+    </transition-stub>
+  </div>
+</div>
+`;
+
+exports[`message-scroller demo > renders semantic correctly 1`] = `
+<div
+  class="ant-message-scroller css-var-root ant-message-scroller-css-var ant-message-scroller-rail-enabled"
+  data-v-ab108db8=""
+  style="height: 320px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
+>
+  <section
+    aria-label="Conversation"
+    class="ant-message-scroller-viewport demo-message-scroller-viewport"
+    style="padding: 4px 0px;"
+    tabindex="0"
+  >
+    <div
+      aria-live="polite"
+      aria-relevant="additions text"
+      class="ant-message-scroller-content"
+      role="log"
+    >
+      <div
+        data-message-id="message-1"
+        data-v-ab108db8=""
+        style="padding: 8px 16px;"
+      >
+        <div
+          data-v-ab108db8=""
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 1: semantic slots make the transcript match any product theme.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-2"
+        data-v-ab108db8=""
+        style="padding: 8px 16px;"
+      >
+        <div
+          data-v-ab108db8=""
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 2: semantic slots make the transcript match any product theme.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-3"
+        data-v-ab108db8=""
+        style="padding: 8px 16px;"
+      >
+        <div
+          data-v-ab108db8=""
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 3: semantic slots make the transcript match any product theme.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-4"
+        data-v-ab108db8=""
+        style="padding: 8px 16px;"
+      >
+        <div
+          data-v-ab108db8=""
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 4: semantic slots make the transcript match any product theme.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-5"
+        data-v-ab108db8=""
+        style="padding: 8px 16px;"
+      >
+        <div
+          data-v-ab108db8=""
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 5: semantic slots make the transcript match any product theme.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-6"
+        data-v-ab108db8=""
+        style="padding: 8px 16px;"
+      >
+        <div
+          data-v-ab108db8=""
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 6: semantic slots make the transcript match any product theme.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-7"
+        data-v-ab108db8=""
+        style="padding: 8px 16px;"
+      >
+        <div
+          data-v-ab108db8=""
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 7: semantic slots make the transcript match any product theme.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-8"
+        data-v-ab108db8=""
+        style="padding: 8px 16px;"
+      >
+        <div
+          data-v-ab108db8=""
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 8: semantic slots make the transcript match any product theme.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-9"
+        data-v-ab108db8=""
+        style="padding: 8px 16px;"
+      >
+        <div
+          data-v-ab108db8=""
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 9: semantic slots make the transcript match any product theme.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-10"
+        data-v-ab108db8=""
+        style="padding: 8px 16px;"
+      >
+        <div
+          data-v-ab108db8=""
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 10: semantic slots make the transcript match any product theme.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!---->
+  <!---->
+  <transition-stub
+    appear="false"
+    css="true"
+    name="ant-message-scroller-back-to-bottom-motion"
+    persisted="false"
+  >
+    <!---->
+  </transition-stub>
+</div>
+`;
+
+exports[`message-scroller demo > renders slots correctly 1`] = `
+<div
+  class="ant-message-scroller css-var-root ant-message-scroller-css-var ant-message-scroller-rail-enabled"
+  style="height: 320px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
+>
+  <section
+    aria-label="Conversation"
+    class="ant-message-scroller-viewport"
+    tabindex="0"
+  >
+    <div
+      aria-live="polite"
+      aria-relevant="additions text"
+      class="ant-message-scroller-content"
+      role="log"
+    >
+      <div
+        data-message-id="message-1"
+        style="padding: 8px 16px;"
+      >
+        <div
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 1: slot-driven navigation keeps the rail readable at any density.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-2"
+        style="padding: 8px 16px;"
+      >
+        <div
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 2: slot-driven navigation keeps the rail readable at any density.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-3"
+        style="padding: 8px 16px;"
+      >
+        <div
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 3: slot-driven navigation keeps the rail readable at any density.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-4"
+        style="padding: 8px 16px;"
+      >
+        <div
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 4: slot-driven navigation keeps the rail readable at any density.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-5"
+        style="padding: 8px 16px;"
+      >
+        <div
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 5: slot-driven navigation keeps the rail readable at any density.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-6"
+        style="padding: 8px 16px;"
+      >
+        <div
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 6: slot-driven navigation keeps the rail readable at any density.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-7"
+        style="padding: 8px 16px;"
+      >
+        <div
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 7: slot-driven navigation keeps the rail readable at any density.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-8"
+        style="padding: 8px 16px;"
+      >
+        <div
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 8: slot-driven navigation keeps the rail readable at any density.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-9"
+        style="padding: 8px 16px;"
+      >
+        <div
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 9: slot-driven navigation keeps the rail readable at any density.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+      <div
+        data-message-id="message-10"
+        style="padding: 8px 16px;"
+      >
+        <div
+          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+        >
+          <span
+            class="ant-typography css-var-root"
+          >
+            <!---->
+            Message 10: slot-driven navigation keeps the rail readable at any density.
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!---->
+  <!---->
+  <transition-stub
+    appear="false"
+    css="true"
+    name="ant-message-scroller-back-to-bottom-motion"
+    persisted="false"
+  >
+    <!---->
+  </transition-stub>
+</div>
+`;

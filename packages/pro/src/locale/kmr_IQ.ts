@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Paqij bike',
     showMore: 'Hemû etîketan nîşan bide',
   },
+  MessageScroller: {
+    viewportLabel: 'Naveroka gotûbêjê',
+    navigationLabel: 'Navîgasyona peyaman',
+    backToLatest: 'Vegere ya herî nû',
+    railItemLabel: 'Here peyama {index} ji {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

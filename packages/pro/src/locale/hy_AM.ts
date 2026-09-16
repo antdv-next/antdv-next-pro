@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Մաքրել',
     showMore: 'Ցուցադրել բոլոր պիտակները',
   },
+  MessageScroller: {
+    viewportLabel: 'Զրույց',
+    navigationLabel: 'Հաղորդագրությունների նավարկում',
+    backToLatest: 'Վերադառնալ վերջինին',
+    railItemLabel: 'Անցնել {index}-րդ հաղորդագրությանը՝ {total}-ից',
+  },
 } satisfies ProLocale
 
 export default proLocale

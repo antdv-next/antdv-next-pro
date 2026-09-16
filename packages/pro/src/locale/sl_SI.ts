@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Počisti',
     showMore: 'Prikaži vse oznake',
   },
+  MessageScroller: {
+    viewportLabel: 'Pogovor',
+    navigationLabel: 'Krmarjenje po sporočilih',
+    backToLatest: 'Nazaj na najnovejše',
+    railItemLabel: 'Pojdi na sporočilo {index} od {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

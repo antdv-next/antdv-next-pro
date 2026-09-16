@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'அழி',
     showMore: 'அனைத்து குறிச்சொற்களையும் காட்டு',
   },
+  MessageScroller: {
+    viewportLabel: 'உரையாடல்',
+    navigationLabel: 'செய்தி வழிசெலுத்தல்',
+    backToLatest: 'சமீபத்தியதற்குத் திரும்பு',
+    railItemLabel: '{index}/{total} ஆவது செய்திக்குச் செல்',
+  },
 } satisfies ProLocale
 
 export default proLocale

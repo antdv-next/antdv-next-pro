@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Törlés',
     showMore: 'Összes címke megjelenítése',
   },
+  MessageScroller: {
+    viewportLabel: 'Beszélgetés',
+    navigationLabel: 'Üzenetnavigáció',
+    backToLatest: 'Vissza a legújabbra',
+    railItemLabel: 'Ugrás a(z) {index}. üzenetre, összesen {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

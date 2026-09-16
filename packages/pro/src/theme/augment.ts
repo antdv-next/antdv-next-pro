@@ -4,6 +4,7 @@ declare module 'antdv-next/theme/interface/components' {
     Scrollbar?: import('../scrollbar/style').ComponentToken
     Heatmap?: import('../heatmap/style').ComponentToken
     InputTag?: import('../input-tag/style').ComponentToken
+    MessageScroller?: import('../message-scroller/style').ComponentToken
   }
 }
 

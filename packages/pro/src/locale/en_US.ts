@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Clear',
     showMore: 'Show all tags',
   },
+  MessageScroller: {
+    viewportLabel: 'Conversation',
+    navigationLabel: 'Message navigation',
+    backToLatest: 'Back to latest',
+    railItemLabel: 'Go to message {index} of {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

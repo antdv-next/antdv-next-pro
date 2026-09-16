@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Glan',
     showMore: 'Taispeáin gach clib',
   },
+  MessageScroller: {
+    viewportLabel: 'Comhrá',
+    navigationLabel: 'Nascleanúint teachtaireachtaí',
+    backToLatest: 'Ar ais go dtí an ceann is déanaí',
+    railItemLabel: 'Téigh chuig teachtaireacht {index} as {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

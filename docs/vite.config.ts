@@ -77,6 +77,10 @@ export default defineConfig({
         replacement: path.resolve(baseUrl, '../packages/pro/src/input-tag/index.tsx'),
       },
       {
+        find: /^@antdv-next\/pro\/message-scroller$/,
+        replacement: path.resolve(baseUrl, '../packages/pro/src/message-scroller/index.tsx'),
+      },
+      {
         find: /^@antdv-next\/pro\/locale\/(.+)$/,
         replacement: path.resolve(baseUrl, '../packages/pro/src/locale/$1.ts'),
       },

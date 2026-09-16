@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'クリア',
     showMore: 'すべてのタグを表示',
   },
+  MessageScroller: {
+    viewportLabel: '会話内容',
+    navigationLabel: 'メッセージナビゲーション',
+    backToLatest: '最新へ戻る',
+    railItemLabel: 'メッセージ {index} / {total} へ移動',
+  },
 } satisfies ProLocale
 
 export default proLocale

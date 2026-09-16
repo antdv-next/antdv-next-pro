@@ -84,6 +84,12 @@ const proLocale = {
     clear: '清空',
     showMore: '展开全部标签',
   },
+  MessageScroller: {
+    viewportLabel: '会话内容',
+    navigationLabel: '消息导航',
+    backToLatest: '回到最新',
+    railItemLabel: '跳转到第 {index} 条消息，共 {total} 条',
+  },
 } satisfies ProLocale
 
 export default proLocale

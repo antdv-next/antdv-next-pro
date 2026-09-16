@@ -3,6 +3,7 @@ import type { CSSProperties } from 'vue'
 import type { CronConfig } from '../cron/types'
 import type { HeatmapConfig } from '../heatmap/types'
 import type { ProLocale } from '../locale/types'
+import type { MessageScrollerItem, MessageScrollerNavigation, MessageScrollerProps } from '../message-scroller/types'
 
 export type ScrollbarVisibility = 'auto' | 'always' | 'hidden'
 export type ScrollbarMotion = 'fade' | 'slide'
@@ -33,14 +34,28 @@ export interface InputTagConfig {
   styles?: Record<string, CSSProperties> | ((info: { props: any }) => Record<string, CSSProperties>)
 }
 
+export interface MessageScrollerConfig {
+  followThreshold?: number
+  smooth?: boolean
+  navigation?: MessageScrollerNavigation
+  items?: MessageScrollerItem[]
+  itemSelector?: string
+  backToBottom?: boolean
+  class?: string
+  style?: CSSProperties
+  classes?: Record<string, string> | ((info: { props: MessageScrollerProps }) => Record<string, string>)
+  styles?: Record<string, CSSProperties> | ((info: { props: MessageScrollerProps }) => Record<string, CSSProperties>)
+}
+
 export interface ProConfigContextProps {
   cron?: CronConfig
   heatmap?: HeatmapConfig
   scrollbar?: ScrollbarConfig
   inputTag?: InputTagConfig
+  messageScroller?: MessageScrollerConfig
 }
 
-export const PRO_CONFIG_KEYS = ['cron', 'heatmap', 'scrollbar', 'inputTag'] as const satisfies readonly (keyof ProConfigContextProps)[]
+export const PRO_CONFIG_KEYS = ['cron', 'heatmap', 'scrollbar', 'inputTag', 'messageScroller'] as const satisfies readonly (keyof ProConfigContextProps)[]
 
 export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'>, ProConfigContextProps {
   locale?: ProLocale

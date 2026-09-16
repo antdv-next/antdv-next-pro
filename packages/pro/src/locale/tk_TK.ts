@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Arassala',
     showMore: 'Ähli tegleri görkez',
   },
+  MessageScroller: {
+    viewportLabel: 'Söhbet',
+    navigationLabel: 'Habar nawigasiýasy',
+    backToLatest: 'Iň täzesine dolan',
+    railItemLabel: '{index}-nji habara git, jemi {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

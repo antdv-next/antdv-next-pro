@@ -16,5 +16,6 @@ export default {
     // Data Display
     dataDisplay: '数据展示',
     heatmap: 'Heatmap 热力图',
+    messageScroller: 'MessageScroller 会话流式滚动容器',
   },
 } as const

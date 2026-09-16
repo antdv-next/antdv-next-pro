@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'ရှင်းရန်',
     showMore: 'တဂ်အားလုံးကို ပြပါ',
   },
+  MessageScroller: {
+    viewportLabel: 'စကားပြောမှု',
+    navigationLabel: 'မက်ဆေ့ခ် လမ်းညွှန်',
+    backToLatest: 'နောက်ဆုံးသို့',
+    railItemLabel: 'မက်ဆေ့ခ် {index} / {total} သို့ သွားပါ',
+  },
 } satisfies ProLocale
 
 export default proLocale

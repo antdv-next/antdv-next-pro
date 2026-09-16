@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'মুছুন',
     showMore: 'সব ট্যাগ দেখান',
   },
+  MessageScroller: {
+    viewportLabel: 'কথোপকথন',
+    navigationLabel: 'বার্তা নেভিগেশন',
+    backToLatest: 'সর্বশেষে যান',
+    railItemLabel: '{index} নম্বর বার্তায় যান, মোট {total} টি',
+  },
 } satisfies ProLocale
 
 export default proLocale

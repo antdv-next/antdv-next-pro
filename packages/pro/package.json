@@ -39,6 +39,11 @@
       "import": "./dist/input-tag/index.js",
       "default": "./dist/input-tag/index.js"
     },
+    "./message-scroller": {
+      "types": "./dist/message-scroller/index.d.ts",
+      "import": "./dist/message-scroller/index.js",
+      "default": "./dist/message-scroller/index.js"
+    },
     "./locale": {
       "types": "./dist/locale/index.d.ts",
       "import": "./dist/locale/index.js",

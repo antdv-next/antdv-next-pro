@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Tühjenda',
     showMore: 'Kuva kõik sildid',
   },
+  MessageScroller: {
+    viewportLabel: 'Vestlus',
+    navigationLabel: 'Sõnumite navigeerimine',
+    backToLatest: 'Tagasi uusima juurde',
+    railItemLabel: 'Mine sõnumi {index} juurde, kokku {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'សម្អាត',
     showMore: 'បង្ហាញស្លាកទាំងអស់',
   },
+  MessageScroller: {
+    viewportLabel: 'ខ្លឹមសារសន្ទនា',
+    navigationLabel: 'ការរុករកសារ',
+    backToLatest: 'ត្រឡប់ទៅថ្មីបំផុត',
+    railItemLabel: 'ទៅកាន់សារទី {index} ក្នុងចំណោម {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

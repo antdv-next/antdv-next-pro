@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Hapus',
     showMore: 'Tampilkan semua tag',
   },
+  MessageScroller: {
+    viewportLabel: 'Percakapan',
+    navigationLabel: 'Navigasi pesan',
+    backToLatest: 'Kembali ke terbaru',
+    railItemLabel: 'Buka pesan {index} dari {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

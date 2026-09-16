@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Golește',
     showMore: 'Afișează toate etichetele',
   },
+  MessageScroller: {
+    viewportLabel: 'Conversație',
+    navigationLabel: 'Navigare prin mesaje',
+    backToLatest: 'Înapoi la cel mai recent',
+    railItemLabel: 'Mergi la mesajul {index} din {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

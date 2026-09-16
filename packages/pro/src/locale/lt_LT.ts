@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Išvalyti',
     showMore: 'Rodyti visas žymas',
   },
+  MessageScroller: {
+    viewportLabel: 'Pokalbio turinys',
+    navigationLabel: 'Pranešimų naršymas',
+    backToLatest: 'Grįžti į naujausią',
+    railItemLabel: 'Eiti į {index} pranešimą iš {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

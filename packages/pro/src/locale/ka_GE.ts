@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'გასუფთავება',
     showMore: 'ყველა ტეგის ჩვენება',
   },
+  MessageScroller: {
+    viewportLabel: 'საუბრის შიგთავსი',
+    navigationLabel: 'შეტყობინებების ნავიგაცია',
+    backToLatest: 'უახლესზე დაბრუნება',
+    railItemLabel: 'გადადი შეტყობინებაზე {index} / {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

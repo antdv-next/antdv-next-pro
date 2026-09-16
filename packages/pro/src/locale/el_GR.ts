@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'Καθαρισμός',
     showMore: 'Εμφάνιση όλων των ετικετών',
   },
+  MessageScroller: {
+    viewportLabel: 'Συνομιλία',
+    navigationLabel: 'Πλοήγηση μηνυμάτων',
+    backToLatest: 'Στο νεότερο',
+    railItemLabel: 'Μετάβαση στο μήνυμα {index} από {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale

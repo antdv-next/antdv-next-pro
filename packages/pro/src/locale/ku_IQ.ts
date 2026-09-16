@@ -84,6 +84,12 @@ const proLocale = {
     clear: 'پاککردنەوە',
     showMore: 'هەموو تاگەکان پیشان بدە',
   },
+  MessageScroller: {
+    viewportLabel: 'ناوەڕۆکی گفتوگۆ',
+    navigationLabel: 'ڕێدۆزی پەیامەکان',
+    backToLatest: 'گەڕانەوە بۆ نوێترین',
+    railItemLabel: 'بڕۆ بۆ پەیامی {index} لە {total}',
+  },
 } satisfies ProLocale
 
 export default proLocale
