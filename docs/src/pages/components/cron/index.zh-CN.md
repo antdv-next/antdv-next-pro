@@ -31,36 +31,36 @@ group:
 
 ### 属性
 
-| 参数 | 说明 | 类型 | 默认值 | [全局配置](/components/config-provider-cn#component-config) |
-| --- | --- | --- | --- | --- |
-| value | 受控的 Cron 表达式 | `string` | - | - |
-| format | Cron 方言 | `'quartz' \| 'unix'` | `'quartz'` | ✓ |
-| showYear | 使用七字段 Quartz 格式 | `boolean` | `false` | ✓ |
-| disabled | 禁用全部交互 | `boolean` | `false` | ✓ |
-| readonly | 可选择和复制表达式，但不能编辑 | `boolean` | `false` | ✓ |
-| size | 组件尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
-| status | 手动设置校验状态，默认跟随 Form.Item | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - |
-| preview | 预览下次执行时间和 Cron 自然语言说明 | `boolean` | `false` | ✓ |
-| presets | 常用表达式快捷项 | `CronPreset[]` | `[]` | ✓ |
-| classes | 语义化 class 定制 | `CronClassNamesType` | - | ✓ |
-| styles | 语义化 style 定制 | `CronStylesType` | - | ✓ |
+| 属性 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| value | 受控的 Cron 表达式 | `string` | - | - | - |
+| format | Cron 方言 | `'quartz' \| 'unix'` | `'quartz'` | - | ✓ |
+| showYear | 使用七字段 Quartz 格式 | `boolean` | `false` | - | ✓ |
+| disabled | 禁用全部交互 | `boolean` | `false` | - | ✓ |
+| readonly | 可选择和复制表达式，但不能编辑 | `boolean` | `false` | - | ✓ |
+| size | 组件尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` | - | ✓ |
+| status | 手动设置校验状态，默认跟随 Form.Item | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - | - |
+| preview | 预览下次执行时间和 Cron 自然语言说明 | `boolean` | `false` | - | ✓ |
+| presets | 常用表达式快捷项 | `CronPreset[]` | `[]` | - | ✓ |
+| classes | 语义化 class 定制 | `CronClassNamesType` | - | - | ✓ |
+| styles | 语义化 style 定制 | `CronStylesType` | - | - | ✓ |
 
 ### 事件
 
-| 事件 | 说明 | 类型 |
-| --- | --- | --- |
-| change | 表达式变为有效，或从非法草稿恢复为有效表达式时触发；相同的有效值不会重复触发 | `(value: string) => void` |
-| validate | 每次执行表达式校验后触发，并同步当前校验结果 | `(result: CronValidateResult) => void` |
+| 事件 | 说明 | 类型 | 版本 |
+| --- | --- | --- | --- |
+| change | 表达式变为有效，或从非法草稿恢复为有效表达式时触发；相同的有效值不会重复触发 | `(value: string) => void` | - |
+| validate | 每次执行表达式校验后触发，并同步当前校验结果 | `(result: CronValidateResult) => void` | - |
 
 ### CronError
 
 `validateCronExpression()` 和 `validate` 事件在表达式非法时返回 `errors`。请用 `code` 判断错误类型，不要依赖 `message` 文案。
 
-| 参数 | 说明 | 类型 |
-| --- | --- | --- |
-| field | 出错字段；整条表达式的错误为空 | `CronFieldName` |
-| code | 稳定错误码，不随 locale 变化 | `CronErrorCode` |
-| message | 本地化说明 | `string` |
+| 属性 | 说明 | 类型 | 版本 |
+| --- | --- | --- | --- |
+| field | 出错字段；整条表达式的错误为空 | `CronFieldName` | - |
+| code | 稳定错误码，不随 locale 变化 | `CronErrorCode` | - |
+| message | 本地化说明 | `string` | - |
 
 ### Form.Item
 
@@ -90,12 +90,12 @@ const rules = [
 
 ### 插槽
 
-| 插槽 | 说明 |
-| --- | --- |
-| field | 替换当前字段编辑器 |
-| presets | 替换预设区域 |
-| preview | 替换预览区域 |
-| error | 替换校验错误内容 |
+| 插槽 | 说明 | 类型 | 版本 |
+| --- | --- | --- | --- |
+| field | 替换当前字段编辑器 | - | - |
+| presets | 替换预设区域 | - | - |
+| preview | 替换预览区域 | - | - |
+| error | 替换校验错误内容 | - | - |
 
 ## Cron 格式
 

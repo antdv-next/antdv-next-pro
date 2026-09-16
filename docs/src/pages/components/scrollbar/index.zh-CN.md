@@ -33,7 +33,7 @@ group:
 
 ### 属性 {#properties}
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| 属性 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
 | prefixCls | 组件样式前缀 | `string` | - | - | × |
 | rootClass | 组件根元素 class | `string` | - | - | × |

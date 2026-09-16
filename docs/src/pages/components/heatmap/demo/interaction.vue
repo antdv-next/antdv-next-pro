@@ -13,7 +13,7 @@ const day = 86400000
 const today = new Date()
 const end = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
 const start = end - 364 * day
-const selected = ref('未选择日期')
+const selected = ref('No date selected')
 const data = Array.from({ length: 365 }, (_, index) => ({
   timestamp: start + index * day,
   value: index % 6 === 0 ? 0 : (index % 12) + 1,

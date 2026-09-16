@@ -1,9 +1,9 @@
 <docs lang="zh-CN">
-通过 `motion` 切换滚动条轨道的显隐动画。移出滚动区域，等待自动隐藏后再移入即可观察效果。
+通过 `motion` 切换滚动条轨道的显隐动画。
 </docs>
 
 <docs lang="en-US">
-Switch scrollbar track visibility motion with `motion`. Move the pointer out of the scroll area, wait for it to hide, then move it back in to observe the effect.
+Switch scrollbar track visibility motion with `motion`.
 </docs>
 
 <script setup lang="ts">

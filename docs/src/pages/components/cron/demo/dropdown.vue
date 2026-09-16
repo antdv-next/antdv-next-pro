@@ -1,5 +1,5 @@
 <docs lang="zh-CN">
-用 Select 的 `popupRender` 承载 Cron 面板，并由确定 / 取消控制下拉开关。
+把 Cron 编辑器放入 Select 下拉，通过确定 / 取消关闭下拉。
 </docs>
 
 <docs lang="en-US">

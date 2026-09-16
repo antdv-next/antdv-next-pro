@@ -3,7 +3,7 @@ category: Pro Components
 title: InputTag
 description: Text tag input without dropdown or search behavior.
 demo:
-  cols: 1
+  cols: 2
 group:
   title: Data Entry
   order: 2
@@ -24,7 +24,7 @@ Use it to enter string tags such as emails, keywords, or categories.
   <demo src="./demo/collapse.vue">Collapse tags</demo>
   <demo src="./demo/controlled.vue">Controlled</demo>
   <demo src="./demo/form.vue">Form validation</demo>
-  <demo src="./demo/readonly.vue">Readonly and semantic</demo>
+  <demo src="./demo/readonly.vue">Readonly</demo>
   <demo src="./demo/semantic.vue">Semantic styling</demo>
 </demo-group>
 

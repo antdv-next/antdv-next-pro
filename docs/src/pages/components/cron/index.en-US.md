@@ -30,36 +30,36 @@ group:
 
 ### Properties
 
-| Property | Description | Type | Default | Global Config |
-| --- | --- | --- | --- | --- |
-| value | Controlled cron expression | `string` | - | - |
-| format | Cron dialect | `'quartz' \| 'unix'` | `'quartz'` | ✓ |
-| showYear | Use the seven-field Quartz format | `boolean` | `false` | ✓ |
-| disabled | Disable all interaction | `boolean` | `false` | ✓ |
-| readonly | Keep the expression selectable but prevent edits | `boolean` | `false` | ✓ |
-| size | Control size | `'small' \| 'medium' \| 'large'` | `'medium'` | ✓ |
-| status | Set validation status explicitly; follows Form.Item by default | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - |
-| preview | Show the next local execution times and a natural-language Cron description | `boolean` | `false` | ✓ |
-| presets | Quick expression choices | `CronPreset[]` | `[]` | ✓ |
-| classes | Semantic class customization | `CronClassNamesType` | - | ✓ |
-| styles | Semantic style customization | `CronStylesType` | - | ✓ |
+| Property | Description | Type | Default | Version | Global Config |
+| --- | --- | --- | --- | --- | --- |
+| value | Controlled cron expression | `string` | - | - | - |
+| format | Cron dialect | `'quartz' \| 'unix'` | `'quartz'` | - | ✓ |
+| showYear | Use the seven-field Quartz format | `boolean` | `false` | - | ✓ |
+| disabled | Disable all interaction | `boolean` | `false` | - | ✓ |
+| readonly | Keep the expression selectable but prevent edits | `boolean` | `false` | - | ✓ |
+| size | Control size | `'small' \| 'medium' \| 'large'` | `'medium'` | - | ✓ |
+| status | Set validation status explicitly; follows Form.Item by default | `'' \| 'error' \| 'success' \| 'validating' \| 'warning'` | - | - | - |
+| preview | Show the next local execution times and a natural-language Cron description | `boolean` | `false` | - | ✓ |
+| presets | Quick expression choices | `CronPreset[]` | `[]` | - | ✓ |
+| classes | Semantic class customization | `CronClassNamesType` | - | - | ✓ |
+| styles | Semantic style customization | `CronStylesType` | - | - | ✓ |
 
 ### Events
 
-| Event | Description | Type |
-| --- | --- | --- |
-| change | Triggered when the expression becomes valid, or is recovered after an invalid draft; repeated valid values do not trigger it | `(value: string) => void` |
-| validate | Triggered after each expression validation and reports the current result | `(result: CronValidateResult) => void` |
+| Event | Description | Type | Version |
+| --- | --- | --- | --- |
+| change | Triggered when the expression becomes valid, or is recovered after an invalid draft; repeated valid values do not trigger it | `(value: string) => void` | - |
+| validate | Triggered after each expression validation and reports the current result | `(result: CronValidateResult) => void` | - |
 
 ### CronError
 
 `validateCronExpression()` and the `validate` event return `errors` when the expression is invalid. Match `code`, not the localized `message`.
 
-| Property | Description | Type |
-| --- | --- | --- |
-| field | The invalid field; omitted for expression-level errors | `CronFieldName` |
-| code | Stable error code that does not change with locale | `CronErrorCode` |
-| message | Localized explanation | `string` |
+| Property | Description | Type | Version |
+| --- | --- | --- | --- |
+| field | The invalid field; omitted for expression-level errors | `CronFieldName` | - |
+| code | Stable error code that does not change with locale | `CronErrorCode` | - |
+| message | Localized explanation | `string` | - |
 
 ### Form.Item
 
@@ -89,12 +89,12 @@ const rules = [
 
 ### Slots
 
-| Slot | Description |
-| --- | --- |
-| field | Replace the active field editor |
-| presets | Replace the preset area |
-| preview | Replace the preview area |
-| error | Replace validation error content |
+| Slot | Description | Type | Version |
+| --- | --- | --- | --- |
+| field | Replace the active field editor | - | - |
+| presets | Replace the preset area | - | - |
+| preview | Replace the preview area | - | - |
+| error | Replace validation error content | - | - |
 
 ## Cron Format
 
@@ -117,8 +117,6 @@ Quartz day/week fields support Croner special syntax:
 | `n#N` | Week | Nth weekday `n` of the month |
 
 `L-n` is not supported. Unix format does not accept these tokens.
-
-The specified mode uses a full-width multi-select control for every field. The year field also accepts custom values through tags input, while month and weekday options display their standard names.
 
 ## Semantic DOM {#semantic-dom}
 

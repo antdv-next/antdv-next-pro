@@ -4,7 +4,7 @@ title: InputTag
 subtitle: 标签输入
 description: 用于录入文本标签的输入组件，不提供下拉或搜索行为。
 demo:
-  cols: 1
+  cols: 2
 group:
   title: Data Entry
   order: 2
@@ -25,7 +25,7 @@ group:
   <demo src="./demo/collapse.vue">标签折叠</demo>
   <demo src="./demo/controlled.vue">受控用法</demo>
   <demo src="./demo/form.vue">表单校验</demo>
-  <demo src="./demo/readonly.vue">只读与语义化</demo>
+  <demo src="./demo/readonly.vue">只读</demo>
   <demo src="./demo/semantic.vue">语义化样式</demo>
 </demo-group>
 
@@ -33,7 +33,7 @@ group:
 
 ### 属性 {#properties}
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| 属性 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
 | prefixCls | 组件样式前缀 | `string` | - | - | × |
 | rootClass | 组件根元素 class | `string` | - | - | × |

@@ -113,29 +113,29 @@ import zhCN from '@antdv-next/pro/locale/zh_CN'
 
 以下属性与 `antdv-next` `ConfigProvider` 完全一致。完整的组件级配置（如 `button`、`table`、`input`、`select` 等）请参考 [Antdv ConfigProvider](https://www.antdv-next.com/components/config-provider-cn)。
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| locale | 语言包。Pro locale wrapper 与 Antdv locale 对象一致 | `ProLocale` | - |
-| direction | 布局方向 | `'ltr' \| 'rtl'` | `'ltr'` |
-| theme | 主题 Token、算法和组件级配置 | `ThemeConfig` | - |
-| componentSize | 后代组件默认尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` |
-| componentDisabled | 是否默认禁用后代组件 | `boolean` | `false` |
-| variant | 输入类组件的默认变体 | `'outlined' \| 'borderless' \| 'filled' \| 'underlined'` | `'outlined'` |
-| prefixCls / iconPrefixCls | CSS 和图标前缀 | `string` | `'ant'` / `'anticon'` |
-| getPopupContainer | 弹层挂载容器 | `(triggerNode?: HTMLElement) => HTMLElement` | - |
-| getTargetContainer | 固定元素和滚动容器 | `() => HTMLElement \| Window` | - |
-| csp | Content Security Policy 配置 | `{ nonce?: string }` | - |
-| virtual | 是否启用虚拟滚动 | `boolean` | `true` |
-| popupMatchSelectWidth | 弹层宽度是否匹配 Select | `boolean` | `true` |
-| popupOverflow | 弹层溢出策略 | `'viewport' \| 'scroll'` | `'viewport'` |
+| 属性 | 说明 | 类型 | 默认值 | 版本 |
+| --- | --- | --- | --- | --- |
+| locale | 语言包。Pro locale wrapper 与 Antdv locale 对象一致 | `ProLocale` | - | - |
+| direction | 布局方向 | `'ltr' \| 'rtl'` | `'ltr'` | - |
+| theme | 主题 Token、算法和组件级配置 | `ThemeConfig` | - | - |
+| componentSize | 后代组件默认尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` | - |
+| componentDisabled | 是否默认禁用后代组件 | `boolean` | `false` | - |
+| variant | 输入类组件的默认变体 | `'outlined' \| 'borderless' \| 'filled' \| 'underlined'` | `'outlined'` | - |
+| prefixCls / iconPrefixCls | CSS 和图标前缀 | `string` | `'ant'` / `'anticon'` | - |
+| getPopupContainer | 弹层挂载容器 | `(triggerNode?: HTMLElement) => HTMLElement` | - | - |
+| getTargetContainer | 固定元素和滚动容器 | `() => HTMLElement \| Window` | - | - |
+| csp | Content Security Policy 配置 | `{ nonce?: string }` | - | - |
+| virtual | 是否启用虚拟滚动 | `boolean` | `true` | - |
+| popupMatchSelectWidth | 弹层宽度是否匹配 Select | `boolean` | `true` | - |
+| popupOverflow | 弹层溢出策略 | `'viewport' \| 'scroll'` | `'viewport'` | - |
 
 ### Slots {#slots}
 
-| 插槽 | 说明 |
-| --- | --- |
-| default | Provider 包裹的内容 |
-| renderEmpty | 自定义 Table、List 等组件的空状态，可接收组件名称 |
-| transformCellText | 转换 Table 单元格文本，可作为属性或命名插槽使用，接收 `{ text, column, record, index }` |
+| 插槽 | 说明 | 类型 | 版本 |
+| --- | --- | --- | --- |
+| default | Provider 包裹的内容 | - | - |
+| renderEmpty | 自定义 Table、List 等组件的空状态，可接收组件名称 | - | - |
+| transformCellText | 转换 Table 单元格文本，可作为属性或命名插槽使用，接收 `{ text, column, record, index }` | - | - |
 
 ### 嵌套规则 {#nesting-rules}
 

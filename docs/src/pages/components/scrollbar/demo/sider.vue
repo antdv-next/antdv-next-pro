@@ -63,12 +63,6 @@ const items = [
 
     <a-card title="Panel Preview" style="height: 360px;">
       <a-flex vertical gap="middle">
-        <a-alert
-          show-icon
-          type="info"
-          message="This demo keeps the site layout untouched."
-          description="Scrollbar only handles the dense sider area inside the component itself."
-        />
         <a-skeleton active :paragraph="{ rows: 4 }" />
       </a-flex>
     </a-card>

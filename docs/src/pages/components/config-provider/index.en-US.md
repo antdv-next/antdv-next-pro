@@ -112,29 +112,29 @@ Customize empty content with a slot:
 
 All properties are identical to the `antdv-next` `ConfigProvider`. See [Antdv ConfigProvider](https://www.antdv-next.com/components/config-provider) for the complete component configuration surface (`button`, `table`, `input`, `select`, and more).
 
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| locale | Locale object. Pro locale wrappers have the same shape as Antdv locale objects | `ProLocale` | - |
-| direction | Layout direction | `'ltr' \| 'rtl'` | `'ltr'` |
-| theme | Theme tokens, algorithms, and component-level configuration | `ThemeConfig` | - |
-| componentSize | Default size for descendant components | `'small' \| 'medium' \| 'large'` | `'medium'` |
-| componentDisabled | Disable descendant components by default | `boolean` | `false` |
-| variant | Default variant for input-like components | `'outlined' \| 'borderless' \| 'filled' \| 'underlined'` | `'outlined'` |
-| prefixCls / iconPrefixCls | CSS and icon prefixes | `string` | `'ant'` / `'anticon'` |
-| getPopupContainer | Container for popup elements | `(triggerNode?: HTMLElement) => HTMLElement` | - |
-| getTargetContainer | Container for fixed and scrolling elements | `() => HTMLElement \| Window` | - |
-| csp | Content Security Policy configuration | `{ nonce?: string }` | - |
-| virtual | Enable virtual scrolling | `boolean` | `true` |
-| popupMatchSelectWidth | Match popup width to Select width | `boolean` | `true` |
-| popupOverflow | Popup overflow strategy | `'viewport' \| 'scroll'` | `'viewport'` |
+| Property | Description | Type | Default | Version |
+| --- | --- | --- | --- | --- |
+| locale | Locale object. Pro locale wrappers have the same shape as Antdv locale objects | `ProLocale` | - | - |
+| direction | Layout direction | `'ltr' \| 'rtl'` | `'ltr'` | - |
+| theme | Theme tokens, algorithms, and component-level configuration | `ThemeConfig` | - | - |
+| componentSize | Default size for descendant components | `'small' \| 'medium' \| 'large'` | `'medium'` | - |
+| componentDisabled | Disable descendant components by default | `boolean` | `false` | - |
+| variant | Default variant for input-like components | `'outlined' \| 'borderless' \| 'filled' \| 'underlined'` | `'outlined'` | - |
+| prefixCls / iconPrefixCls | CSS and icon prefixes | `string` | `'ant'` / `'anticon'` | - |
+| getPopupContainer | Container for popup elements | `(triggerNode?: HTMLElement) => HTMLElement` | - | - |
+| getTargetContainer | Container for fixed and scrolling elements | `() => HTMLElement \| Window` | - | - |
+| csp | Content Security Policy configuration | `{ nonce?: string }` | - | - |
+| virtual | Enable virtual scrolling | `boolean` | `true` | - |
+| popupMatchSelectWidth | Match popup width to Select width | `boolean` | `true` | - |
+| popupOverflow | Popup overflow strategy | `'viewport' \| 'scroll'` | `'viewport'` | - |
 
 ### Slots {#slots}
 
-| Slot | Description |
-| --- | --- |
-| default | Content wrapped by the provider |
-| renderEmpty | Custom empty state for Table, List, and other components; receives the component name |
-| transformCellText | Transform Table cell text as a prop or named slot; receives `{ text, column, record, index }` |
+| Slot | Description | Type | Version |
+| --- | --- | --- | --- |
+| default | Content wrapped by the provider | - | - |
+| renderEmpty | Custom empty state for Table, List, and other components; receives the component name | - | - |
+| transformCellText | Transform Table cell text as a prop or named slot; receives `{ text, column, record, index }` | - | - |
 
 ### Nesting Rules {#nesting-rules}
 
