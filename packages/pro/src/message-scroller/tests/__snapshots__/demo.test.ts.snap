@@ -6,53 +6,66 @@ exports[`message-scroller demo > renders basic correctly 1`] = `
     class="ant-flex css-var-root ant-flex-align-center ant-flex-justify-space-between"
     style="margin-bottom: 12px;"
   >
-    <span
-      class="ant-typography ant-typography-secondary css-var-root"
-    >
-      <!---->
-      Streaming stopped
-      <!---->
-      <!---->
-      <!---->
-      <!---->
-      <!---->
-      <!---->
-    </span>
     <div
       class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small css-var-root"
     >
       <div
         class="ant-space-item"
       >
-        <button
-          class="ant-btn css-var-root ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
-          type="button"
+        <span
+          class="ant-tag ant-tag-filled ant-tag-success css-var-root"
         >
-          <transition-stub
-            appear="false"
-            css="true"
-            enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-            enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-            entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-            leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-            leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-            leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-            name="ant-btn-loading-icon-motion"
-            persisted="false"
-          >
-            <!---->
-          </transition-stub>
-          <span>
-             Send 
-          </span>
+          Following
           <!---->
-        </button>
+          <!---->
+          <!---->
+        </span>
+      </div>
+      <!---->
+      <div
+        class="ant-space-item"
+      >
+        <span
+          class="ant-typography ant-typography-secondary css-var-root"
+        >
+          <!---->
+          Idle
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+        </span>
       </div>
       <!---->
     </div>
+    <button
+      class="ant-btn css-var-root ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
+      type="button"
+    >
+      <transition-stub
+        appear="false"
+        css="true"
+        enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+        enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+        entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+        leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+        leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        name="ant-btn-loading-icon-motion"
+        persisted="false"
+      >
+        <!---->
+      </transition-stub>
+      <span>
+         Send 
+      </span>
+      <!---->
+    </button>
   </div>
   <div
-    class="ant-message-scroller css-var-root ant-message-scroller-css-var"
+    class="ant-message-scroller css-var-root ant-message-scroller-css-var ant-message-scroller-rail-enabled"
     style="height: 320px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
   >
     <section
@@ -67,12 +80,11 @@ exports[`message-scroller demo > renders basic correctly 1`] = `
         role="log"
       >
         <div
-          data-from="user"
           data-message-id="message-1"
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
@@ -89,7 +101,6 @@ exports[`message-scroller demo > renders basic correctly 1`] = `
           </div>
         </div>
         <div
-          data-from="assistant"
           data-message-id="message-2"
           style="padding: 8px 16px;"
         >
@@ -111,12 +122,11 @@ exports[`message-scroller demo > renders basic correctly 1`] = `
           </div>
         </div>
         <div
-          data-from="user"
           data-message-id="message-3"
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
@@ -133,7 +143,6 @@ exports[`message-scroller demo > renders basic correctly 1`] = `
           </div>
         </div>
         <div
-          data-from="assistant"
           data-message-id="message-4"
           style="padding: 8px 16px;"
         >
@@ -144,7 +153,7 @@ exports[`message-scroller demo > renders basic correctly 1`] = `
               class="ant-typography css-var-root"
             >
               <!---->
-              Yes. Those states make the first version feel dependable.
+              Yes — those states are what make a first version feel dependable.
               <!---->
               <!---->
               <!---->
@@ -155,12 +164,11 @@ exports[`message-scroller demo > renders basic correctly 1`] = `
           </div>
         </div>
         <div
-          data-from="user"
           data-message-id="message-5"
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
@@ -177,7 +185,6 @@ exports[`message-scroller demo > renders basic correctly 1`] = `
           </div>
         </div>
         <div
-          data-from="assistant"
           data-message-id="message-6"
           style="padding: 8px 16px;"
         >
@@ -188,7 +195,91 @@ exports[`message-scroller demo > renders basic correctly 1`] = `
               class="ant-typography css-var-root"
             >
               <!---->
-              Keep results close to the action that produced them.
+              Keep every result next to the action that produced it.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-7"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              What about actions that need confirmation?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-8"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Pause the run, explain the impact, and ask before continuing.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-9"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Can the transcript stay easy to navigate?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-message-id="message-10"
+          style="padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Follow the live edge by default, and let the rail carry you back through history.
               <!---->
               <!---->
               <!---->
@@ -217,97 +308,135 @@ exports[`message-scroller demo > renders basic correctly 1`] = `
 exports[`message-scroller demo > renders controller correctly 1`] = `
 <div>
   <div
-    class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small css-var-root"
+    class="ant-flex css-var-root ant-flex-align-center ant-flex-justify-space-between"
     style="margin-bottom: 12px;"
   >
     <div
-      class="ant-space-item"
+      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small css-var-root"
     >
-      <button
-        class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
-        type="button"
+      <div
+        class="ant-space-item"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
+        <span
+          class="ant-tag ant-tag-filled ant-tag-success css-var-root"
+        >
+          Following
+          <!---->
+          <!---->
+          <!---->
+        </span>
+      </div>
+      <!---->
+      <div
+        class="ant-space-item"
+      >
+        <span
+          class="ant-typography ant-typography-secondary css-var-root"
         >
           <!---->
-        </transition-stub>
-        <span>
-           scrollToItem('message-6') 
+           Quoted “Message 5” lives above the current position. 
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
         </span>
-        <!---->
-      </button>
+      </div>
+      <!---->
     </div>
-    <!---->
     <div
-      class="ant-space-item"
+      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small css-var-root"
     >
-      <button
-        class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
-        type="button"
+      <div
+        class="ant-space-item"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
+        <button
+          class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+          type="button"
         >
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+            enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+            entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+            leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+            leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            name="ant-btn-loading-icon-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <span>
+             scrollToItem('message-5') 
+          </span>
           <!---->
-        </transition-stub>
-        <span>
-           scrollToItem(last) 
-        </span>
-        <!---->
-      </button>
-    </div>
-    <!---->
-    <div
-      class="ant-space-item"
-    >
-      <button
-        class="ant-btn css-var-root ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
-        type="button"
+        </button>
+      </div>
+      <!---->
+      <div
+        class="ant-space-item"
       >
-        <transition-stub
-          appear="false"
-          css="true"
-          enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-          enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-          entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-          leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-          leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-          name="ant-btn-loading-icon-motion"
-          persisted="false"
+        <button
+          class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+          type="button"
         >
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+            enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+            entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+            leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+            leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            name="ant-btn-loading-icon-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <span>
+             scrollToEnd() 
+          </span>
           <!---->
-        </transition-stub>
-        <span>
-           setFollowing(true) 
-        </span>
-        <!---->
-      </button>
+        </button>
+      </div>
+      <!---->
+      <div
+        class="ant-space-item"
+      >
+        <button
+          class="ant-btn css-var-root ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
+          type="button"
+        >
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+            enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+            entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+            leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+            leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            name="ant-btn-loading-icon-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <span>
+             setFollowing(true) 
+          </span>
+          <!---->
+        </button>
+      </div>
+      <!---->
     </div>
-    <!---->
   </div>
   <div
     class="ant-message-scroller css-var-root ant-message-scroller-css-var"
-    style="height: 300px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
+    style="height: 320px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
   >
     <section
       aria-label="Conversation"
@@ -325,13 +454,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 1: the reader can jump here from outside the transcript.
+              Message 1: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -346,13 +475,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 2: the reader can jump here from outside the transcript.
+              Message 2: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -367,13 +496,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 3: the reader can jump here from outside the transcript.
+              Message 3: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -388,13 +517,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 4: the reader can jump here from outside the transcript.
+              Message 4: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -409,13 +538,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 5: the reader can jump here from outside the transcript.
+              Message 5: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -430,13 +559,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 6: the reader can jump here from outside the transcript.
+              Message 6: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -451,13 +580,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 7: the reader can jump here from outside the transcript.
+              Message 7: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -472,13 +601,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 8: the reader can jump here from outside the transcript.
+              Message 8: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -493,13 +622,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 9: the reader can jump here from outside the transcript.
+              Message 9: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -514,13 +643,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 10: the reader can jump here from outside the transcript.
+              Message 10: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -535,13 +664,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 11: the reader can jump here from outside the transcript.
+              Message 11: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -556,13 +685,13 @@ exports[`message-scroller demo > renders controller correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Message 12: the reader can jump here from outside the transcript.
+              Message 12: this turn can be reached from outside the transcript, without rendering a rail.
               <!---->
               <!---->
               <!---->
@@ -628,33 +757,70 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
       </div>
       <!---->
     </div>
-    <button
-      class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
-      type="button"
+    <div
+      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small css-var-root"
     >
-      <transition-stub
-        appear="false"
-        css="true"
-        enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
-        enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
-        entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
-        leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-        leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
-        leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
-        name="ant-btn-loading-icon-motion"
-        persisted="false"
+      <div
+        class="ant-space-item"
       >
-        <!---->
-      </transition-stub>
-      <span>
-         Toggle follow 
-      </span>
+        <button
+          class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+          type="button"
+        >
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+            enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+            entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+            leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+            leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            name="ant-btn-loading-icon-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <span>
+             Detach 
+          </span>
+          <!---->
+        </button>
+      </div>
       <!---->
-    </button>
+      <div
+        class="ant-space-item"
+      >
+        <button
+          class="ant-btn css-var-root ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
+          type="button"
+        >
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+            enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+            entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+            leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+            leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            name="ant-btn-loading-icon-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <span>
+             Send 
+          </span>
+          <!---->
+        </button>
+      </div>
+      <!---->
+    </div>
   </div>
   <div
-    class="ant-message-scroller css-var-root ant-message-scroller-css-var"
-    style="height: 300px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
+    class="ant-message-scroller css-var-root ant-message-scroller-css-var ant-message-scroller-rail-enabled"
+    style="height: 320px; border: 1px solid var(--ant-color-border); border-radius: 14px; background: var(--ant-color-bg-container);"
   >
     <section
       aria-label="Conversation"
@@ -672,13 +838,13 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Turn 1: scroll away from the bottom and the viewport stops following this transcript.
+              Draft the release checklist.
               <!---->
               <!---->
               <!---->
@@ -693,13 +859,13 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Turn 2: scroll away from the bottom and the viewport stops following this transcript.
+              Ship the smallest complete loop: send, stream, recover, navigate.
               <!---->
               <!---->
               <!---->
@@ -714,13 +880,13 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Turn 3: scroll away from the bottom and the viewport stops following this transcript.
+              Where does recovery live?
               <!---->
               <!---->
               <!---->
@@ -735,13 +901,13 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Turn 4: scroll away from the bottom and the viewport stops following this transcript.
+              Recovery belongs to the host: retry the request, then push the failed turn back in.
               <!---->
               <!---->
               <!---->
@@ -756,13 +922,13 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Turn 5: scroll away from the bottom and the viewport stops following this transcript.
+              How do we keep reading history calm?
               <!---->
               <!---->
               <!---->
@@ -777,13 +943,13 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Turn 6: scroll away from the bottom and the viewport stops following this transcript.
+              Never move the viewport while the reader is detached — that is the whole contract.
               <!---->
               <!---->
               <!---->
@@ -798,13 +964,13 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Turn 7: scroll away from the bottom and the viewport stops following this transcript.
+              What drives the unread badge?
               <!---->
               <!---->
               <!---->
@@ -819,13 +985,13 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Turn 8: scroll away from the bottom and the viewport stops following this transcript.
+              Count every message that arrives while you are detached, and clear it on re-entry.
               <!---->
               <!---->
               <!---->
@@ -840,13 +1006,13 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Turn 9: scroll away from the bottom and the viewport stops following this transcript.
+              Do we need our own scrollbar?
               <!---->
               <!---->
               <!---->
@@ -861,97 +1027,13 @@ exports[`message-scroller demo > renders follow correctly 1`] = `
           style="padding: 8px 16px;"
         >
           <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
-              Turn 10: scroll away from the bottom and the viewport stops following this transcript.
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-            </span>
-          </div>
-        </div>
-        <div
-          data-message-id="message-11"
-          style="padding: 8px 16px;"
-        >
-          <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
-          >
-            <span
-              class="ant-typography css-var-root"
-            >
-              <!---->
-              Turn 11: scroll away from the bottom and the viewport stops following this transcript.
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-            </span>
-          </div>
-        </div>
-        <div
-          data-message-id="message-12"
-          style="padding: 8px 16px;"
-        >
-          <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
-          >
-            <span
-              class="ant-typography css-var-root"
-            >
-              <!---->
-              Turn 12: scroll away from the bottom and the viewport stops following this transcript.
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-            </span>
-          </div>
-        </div>
-        <div
-          data-message-id="message-13"
-          style="padding: 8px 16px;"
-        >
-          <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
-          >
-            <span
-              class="ant-typography css-var-root"
-            >
-              <!---->
-              Turn 13: scroll away from the bottom and the viewport stops following this transcript.
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-              <!---->
-            </span>
-          </div>
-        </div>
-        <div
-          data-message-id="message-14"
-          style="padding: 8px 16px;"
-        >
-          <div
-            style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
-          >
-            <span
-              class="ant-typography css-var-root"
-            >
-              <!---->
-              Turn 14: scroll away from the bottom and the viewport stops following this transcript.
+              No. The viewport is native, so drag, inertia, and keyboard all work for free.
               <!---->
               <!---->
               <!---->
@@ -983,23 +1065,45 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
     class="ant-flex css-var-root ant-flex-align-center ant-flex-justify-space-between"
     style="margin-bottom: 12px;"
   >
+    <div
+      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small css-var-root"
+    >
+      <div
+        class="ant-space-item"
+      >
+        <span
+          class="ant-tag ant-tag-filled ant-tag-success css-var-root"
+        >
+          Following
+          <!---->
+          <!---->
+          <!---->
+        </span>
+      </div>
+      <!---->
+      <div
+        class="ant-space-item"
+      >
+        <span
+          class="ant-typography ant-typography-secondary css-var-root"
+        >
+          <!---->
+           railItemSelect: none
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+        </span>
+      </div>
+      <!---->
+    </div>
     <span
       class="ant-typography ant-typography-secondary css-var-root"
     >
       <!---->
-       Rail item selected: none
-      <!---->
-      <!---->
-      <!---->
-      <!---->
-      <!---->
-      <!---->
-    </span>
-    <span
-      class="ant-typography ant-typography-secondary css-var-root"
-    >
-      <!---->
-       Click a tick to jump, hover to preview. 
+       Hover a tick to preview, click to jump. 
       <!---->
       <!---->
       <!---->
@@ -1024,12 +1128,11 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
         role="log"
       >
         <div
-          data-from="user"
-          data-message-id="message-1"
-          style="padding: 8px 16px;"
+          data-turn-id="turn-1"
+          style="display: flex; flex-direction: column; gap: 8px; padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; margin-inline-start: auto; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
@@ -1044,14 +1147,8 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
               <!---->
             </span>
           </div>
-        </div>
-        <div
-          data-from="assistant"
-          data-message-id="message-2"
-          style="padding: 8px 16px;"
-        >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
@@ -1068,12 +1165,11 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
           </div>
         </div>
         <div
-          data-from="user"
-          data-message-id="message-3"
-          style="padding: 8px 16px;"
+          data-turn-id="turn-2"
+          style="display: flex; flex-direction: column; gap: 8px; padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; margin-inline-start: auto; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
@@ -1088,14 +1184,8 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
               <!---->
             </span>
           </div>
-        </div>
-        <div
-          data-from="assistant"
-          data-message-id="message-4"
-          style="padding: 8px 16px;"
-        >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
@@ -1112,12 +1202,11 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
           </div>
         </div>
         <div
-          data-from="user"
-          data-message-id="message-5"
-          style="padding: 8px 16px;"
+          data-turn-id="turn-3"
+          style="display: flex; flex-direction: column; gap: 8px; padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; margin-inline-start: auto; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
@@ -1132,14 +1221,8 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
               <!---->
             </span>
           </div>
-        </div>
-        <div
-          data-from="assistant"
-          data-message-id="message-6"
-          style="padding: 8px 16px;"
-        >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
@@ -1156,12 +1239,11 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
           </div>
         </div>
         <div
-          data-from="user"
-          data-message-id="message-7"
-          style="padding: 8px 16px;"
+          data-turn-id="turn-4"
+          style="display: flex; flex-direction: column; gap: 8px; padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; margin-inline-start: auto; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
@@ -1176,14 +1258,8 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
               <!---->
             </span>
           </div>
-        </div>
-        <div
-          data-from="assistant"
-          data-message-id="message-8"
-          style="padding: 8px 16px;"
-        >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
@@ -1200,12 +1276,11 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
           </div>
         </div>
         <div
-          data-from="user"
-          data-message-id="message-9"
-          style="padding: 8px 16px;"
+          data-turn-id="turn-5"
+          style="display: flex; flex-direction: column; gap: 8px; padding: 8px 16px;"
         >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; margin-left: auto; background: var(--ant-color-primary-bg);"
+            style="max-width: 78%; margin-inline-start: auto; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-primary-bg);"
           >
             <span
               class="ant-typography css-var-root"
@@ -1220,20 +1295,125 @@ exports[`message-scroller demo > renders rail correctly 1`] = `
               <!---->
             </span>
           </div>
-        </div>
-        <div
-          data-from="assistant"
-          data-message-id="message-10"
-          style="padding: 8px 16px;"
-        >
           <div
-            style="max-width: 82%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
           >
             <span
               class="ant-typography css-var-root"
             >
               <!---->
               Use the rail to jump between turns without losing your place.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-turn-id="turn-6"
+          style="display: flex; flex-direction: column; gap: 8px; padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; margin-inline-start: auto; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Which node should a tick point at?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Any node the selector matches — a turn, a tool call, or a single message.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-turn-id="turn-7"
+          style="display: flex; flex-direction: column; gap: 8px; padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; margin-inline-start: auto; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              What happens on a touch screen?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Tapping a tick pins the preview card until the reader taps outside the rail.
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+        </div>
+        <div
+          data-turn-id="turn-8"
+          style="display: flex; flex-direction: column; gap: 8px; padding: 8px 16px;"
+        >
+          <div
+            style="max-width: 78%; margin-inline-start: auto; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-primary-bg);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              How dense can the rail get?
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </span>
+          </div>
+          <div
+            style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          >
+            <span
+              class="ant-typography css-var-root"
+            >
+              <!---->
+              Ticks shrink automatically so the whole conversation always fits the viewport.
               <!---->
               <!---->
               <!---->
@@ -1543,7 +1723,7 @@ exports[`message-scroller demo > renders slots correctly 1`] = `
         style="padding: 8px 16px;"
       >
         <div
-          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
         >
           <span
             class="ant-typography css-var-root"
@@ -1564,7 +1744,7 @@ exports[`message-scroller demo > renders slots correctly 1`] = `
         style="padding: 8px 16px;"
       >
         <div
-          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
         >
           <span
             class="ant-typography css-var-root"
@@ -1585,7 +1765,7 @@ exports[`message-scroller demo > renders slots correctly 1`] = `
         style="padding: 8px 16px;"
       >
         <div
-          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
         >
           <span
             class="ant-typography css-var-root"
@@ -1606,7 +1786,7 @@ exports[`message-scroller demo > renders slots correctly 1`] = `
         style="padding: 8px 16px;"
       >
         <div
-          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
         >
           <span
             class="ant-typography css-var-root"
@@ -1627,7 +1807,7 @@ exports[`message-scroller demo > renders slots correctly 1`] = `
         style="padding: 8px 16px;"
       >
         <div
-          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
         >
           <span
             class="ant-typography css-var-root"
@@ -1648,7 +1828,7 @@ exports[`message-scroller demo > renders slots correctly 1`] = `
         style="padding: 8px 16px;"
       >
         <div
-          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
         >
           <span
             class="ant-typography css-var-root"
@@ -1669,7 +1849,7 @@ exports[`message-scroller demo > renders slots correctly 1`] = `
         style="padding: 8px 16px;"
       >
         <div
-          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
         >
           <span
             class="ant-typography css-var-root"
@@ -1690,7 +1870,7 @@ exports[`message-scroller demo > renders slots correctly 1`] = `
         style="padding: 8px 16px;"
       >
         <div
-          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
         >
           <span
             class="ant-typography css-var-root"
@@ -1711,7 +1891,7 @@ exports[`message-scroller demo > renders slots correctly 1`] = `
         style="padding: 8px 16px;"
       >
         <div
-          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          style="max-width: 78%; padding: 8px 12px; border-radius: 12px; margin-inline-start: auto; background: var(--ant-color-primary-bg);"
         >
           <span
             class="ant-typography css-var-root"
@@ -1732,7 +1912,7 @@ exports[`message-scroller demo > renders slots correctly 1`] = `
         style="padding: 8px 16px;"
       >
         <div
-          style="padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
+          style="max-width: 78%; padding: 8px 12px; border-radius: 12px; background: var(--ant-color-fill-secondary);"
         >
           <span
             class="ant-typography css-var-root"
