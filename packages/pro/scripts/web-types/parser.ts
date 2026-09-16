@@ -15,6 +15,8 @@ const NAME_HEADERS = new Set([
   'props',
   'attribute',
   'attributes',
+  '参数',
+  '属性',
   'event',
   'events',
   '事件',
@@ -26,7 +28,9 @@ const NAME_HEADERS = new Set([
   'method',
   'methods',
   '方法',
+  '方法名',
   'name',
+  '名称',
 ])
 
 const DESC_HEADERS = new Set(['description', '说明'])
@@ -201,7 +205,9 @@ function parseApiSections(
     }
   }
 
-  return Array.from(components.values())
+  return Array.from(components.values()).filter(component =>
+    component.attributes.length > 0 || component.events.length > 0 || component.slots.length > 0,
+  )
 }
 
 export async function parseMarkdownFile(filePath: string): Promise<ParsedMarkdown | null> {
