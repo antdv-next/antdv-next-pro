@@ -1,0 +1,26 @@
+export const locales = {
+  cn: {
+    root: 'Comment 根元素，承载整体布局与主题。',
+    inner: '头像与内容区域的行容器。',
+    avatar: '头像区域，仅在提供头像时渲染。',
+    content: '内容列，包含头信息、正文、操作与嵌套评论。',
+    header: '作者与时间的行容器，承载两者的排布。',
+    author: '作者节点。',
+    datetime: '时间节点。',
+    body: '评论正文。',
+    actions: '评论操作区域，由 Space 排列各项；内置动作名渲染为纯图标。',
+    children: '嵌套评论容器，缩进跟随头像尺寸。',
+  },
+  en: {
+    root: 'Comment root element with the overall layout and theme.',
+    inner: 'Row container for the avatar and the content area.',
+    avatar: 'Avatar area, rendered only when an avatar is provided.',
+    content: 'Content column holding the header, body, actions, and nested comments.',
+    header: 'Row container that arranges the author and the datetime.',
+    author: 'Author node.',
+    datetime: 'Datetime node.',
+    body: 'Comment body.',
+    actions: 'Comment actions area, laid out by Space.',
+    children: 'Nested comment container, indented by the avatar size.',
+  },
+}

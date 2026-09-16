@@ -4,6 +4,7 @@ import * as Pro from '../src/index'
 describe('@antdv-next/pro', () => {
   it('exposes the plugin and public components from the package entry', () => {
     expect(Object.keys(Pro).sort()).toEqual([
+      'Comment',
       'Cron',
       'Heatmap',
       'InputTag',

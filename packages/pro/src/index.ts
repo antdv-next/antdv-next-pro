@@ -1,4 +1,5 @@
 import type { App, Plugin } from 'vue'
+import type { ComponentToken as CommentComponentToken } from './comment/style'
 import type { ComponentToken as CronComponentToken } from './cron/style'
 import type { ComponentToken as HeatmapComponentToken } from './heatmap/style'
 import type { ComponentToken as InputTagComponentToken } from './input-tag/style'
@@ -7,6 +8,7 @@ import * as components from './components'
 
 declare module 'antdv-next/theme/interface/components' {
   interface ComponentTokenMap {
+    Comment?: CommentComponentToken
     Cron?: CronComponentToken
     Heatmap?: HeatmapComponentToken
     Scrollbar?: ScrollbarComponentToken
@@ -14,9 +16,23 @@ declare module 'antdv-next/theme/interface/components' {
   }
 }
 
+export type {
+  CommentActionName,
+  CommentAlign,
+  CommentClassNamesType,
+  CommentDatetimePlacement,
+  CommentEmits,
+  CommentProps,
+  CommentSemanticClassNames,
+  CommentSemanticName,
+  CommentSemanticStyles,
+  CommentSlots,
+  CommentStylesType,
+} from './comment'
 export * from './components'
 export { default as ProConfigProvider } from './config-provider'
 export type {
+  CommentConfig,
   CronConfig,
   HeatmapConfig,
   InputTagConfig,
