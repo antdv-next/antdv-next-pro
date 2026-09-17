@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { theme } from 'antdv-next'
+import { prepareComponentToken as prepareCommentToken } from '../../src/comment/style/token'
 import { prepareComponentToken as prepareCronToken } from '../../src/cron/style/token'
 import { prepareComponentToken as prepareHeatmapToken } from '../../src/heatmap/style/token'
 import { prepareComponentToken as prepareInputTagToken } from '../../src/input-tag/style/token'
@@ -15,6 +16,20 @@ async function main() {
   const globalToken = theme.getDesignToken()
 
   const output = {
+    Comment: {
+      global: [
+        'colorText',
+        'colorTextTertiary',
+        'controlHeight',
+        'fontSize',
+        'fontSizeSM',
+        'fontWeightStrong',
+        'lineHeight',
+        'marginSM',
+        'marginXS',
+      ],
+      component: prepareCommentToken(globalToken),
+    },
     Cron: {
       global: [
         'colorBgContainer',

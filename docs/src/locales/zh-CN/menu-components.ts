@@ -15,6 +15,7 @@ export default {
     scrollbar: 'Scrollbar 滚动条',
     // Data Display
     dataDisplay: '数据展示',
+    comment: 'Comment 评论',
     heatmap: 'Heatmap 热力图',
   },
 } as const
