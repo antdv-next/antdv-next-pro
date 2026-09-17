@@ -830,7 +830,7 @@ exports[`comment demo > renders semantic correctly 1`] = `
               <!---->
             </transition-stub>
             <span>
-              回复
+               回复 
             </span>
             <!---->
           </button>
