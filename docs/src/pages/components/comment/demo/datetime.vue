@@ -1,9 +1,9 @@
 <docs lang="zh-CN">
-`datetimePlacement` 决定时间是否与作者同一行，`align` 决定时间在行内靠开始还是靠结束。两者都是逻辑方向，RTL 下自动镜像。
+`datetimePlacement` 控制时间的排布方式，`align` 控制时间在行内的对齐。
 </docs>
 
 <docs lang="en-US">
-`datetimePlacement` decides whether the datetime shares the author row, and `align` decides whether it sits at the start or the end of that row. Both use logical directions and mirror automatically in RTL.
+`datetimePlacement` controls how the datetime is laid out, and `align` controls its alignment within the row.
 </docs>
 
 <script setup lang="ts">
@@ -16,27 +16,27 @@ const avatar = 'https://api.dicebear.com/7.x/miniavs/svg?seed=ZhangSan'
       author="Zhang San"
       :avatar="avatar"
       datetime="5 minutes ago"
-      content="datetimePlacement: inline, align: start"
+      content="We supply a series of design principles, practical patterns and high quality design resources."
     />
     <a-comment
       author="Zhang San"
       :avatar="avatar"
       datetime="5 minutes ago"
-      content="datetimePlacement: inline, align: end"
+      content="The datetime sits at the end of the row when the author is short enough to leave room for it."
       align="end"
     />
     <a-comment
       author="Zhang San"
       :avatar="avatar"
       datetime="5 minutes ago"
-      content="datetimePlacement: block, align: start"
+      content="Switching to block placement moves the datetime onto its own line, which reads better on narrow screens."
       datetime-placement="block"
     />
     <a-comment
       author="Zhang San"
       :avatar="avatar"
       datetime="5 minutes ago"
-      content="datetimePlacement: block, align: end"
+      content="Block placement and end alignment can be combined to push the datetime to the trailing edge."
       datetime-placement="block"
       align="end"
     />

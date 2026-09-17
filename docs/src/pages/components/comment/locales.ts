@@ -8,7 +8,7 @@ export const locales = {
     author: '作者节点。',
     datetime: '时间节点。',
     body: '评论正文。',
-    actions: '评论操作区域，由 Space 排列各项；内置动作名渲染为纯图标。',
+    actions: '评论操作区域，由 Space 排列各项，内容来自 #actions 插槽。',
     children: '嵌套评论容器，缩进跟随头像尺寸。',
   },
   en: {
@@ -20,7 +20,7 @@ export const locales = {
     author: 'Author node.',
     datetime: 'Datetime node.',
     body: 'Comment body.',
-    actions: 'Comment actions area, laid out by Space.',
+    actions: 'Comment actions area, laid out by Space; content comes from the #actions slot.',
     children: 'Nested comment container, indented by the avatar size.',
   },
 }

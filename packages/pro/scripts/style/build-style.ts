@@ -137,8 +137,12 @@ function defaultNode() {
       avatar: 'https://antdv-next.com/avatar.png',
       datetime: '5 minutes ago',
       content: 'Comment content',
-      actions: ['Like', 'Reply'],
       align: 'end',
+    }, {
+      actions: () => [
+        h(antd.Button, { type: 'text', size: 'small' }, { default: () => 'Like' }),
+        h(antd.Button, { type: 'text', size: 'small' }, { default: () => 'Reply' }),
+      ],
     }),
     h(Cron),
     h(Heatmap),

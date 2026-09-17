@@ -16,7 +16,7 @@ group:
 - 展示 AI 对话反馈、审批意见等用户讨论内容。
 - 需要统一的作者、头像、时间、操作与嵌套缩进约定，不想每次手写 `Avatar + Flex`。
 
-`Comment` 是纯展示组件：不负责数据请求、分页、排序、提交、删除、点赞状态与评论树转换，也不解析 HTML / Markdown，这些都由业务层负责。
+`Comment` 是纯展示组件：数据请求、分页、提交、删除、点赞状态等都由业务层负责，组件不解析 HTML / Markdown。
 
 ## 代码演示 {#examples}
 
@@ -40,7 +40,6 @@ group:
 | avatar | 头像图片地址，内部转交 `Avatar` 的 `src`，并以 `author` 作为 `alt` | `string` | - | - | × |
 | datetime | 评论时间，组件不做任何格式化 | `string \| VNode` | - | - | × |
 | content | 评论正文，组件不做 HTML / Markdown 解析 | `string \| VNode` | - | - | × |
-| actions | 评论操作，`string` 按纯文本渲染 | `(string \| VNode)[]` | - | - | × |
 | datetimePlacement | 时间相对作者的排布方式 | `'inline' \| 'block'` | `'inline'` | - | ✓ |
 | align | 时间在所在行内的对齐方式，逻辑方向，RTL 下自动镜像 | `'start' \| 'end'` | `'start'` | - | ✓ |
 | classes | 自定义语义化 class，支持对象或函数 | `CommentClassNamesType` | - | - | ✓ |
@@ -56,57 +55,60 @@ group:
 | author | 自定义作者，可放链接、标签等 | `() => any` | - |
 | datetime | 自定义时间，可配合 Tooltip 展示完整时间 | `() => any` | - |
 | content | 自定义正文，可放图片、代码块等 | `() => any` | - |
-| actions | 自定义操作，请放真实的交互控件 | `() => any` | - |
+| actions | 自定义操作，建议使用 `a-button` | `() => any` | - |
 | default | 嵌套评论 | `() => any` | - |
 
 ## 嵌套评论 {#nested-comments}
 
-子评论放在默认插槽中即可，组件本身不限制嵌套层级。过深的层级会同时放大 DOM 深度和水平空间占用，建议业务层限制递归深度（通常不超过三层）。缩进量由头像尺寸决定，需要调整时可通过 `styles.children` 覆盖 `paddingInlineStart`。
+子评论放在默认插槽中即可，组件本身不限制嵌套层级。建议在业务层限制递归深度，通常不超过三层。缩进量可通过 `styles.children` 调整。
 
 ## 操作项 {#actions}
 
-`actions` 的每一项按三种方式渲染：
+操作区完全由 `#actions` 插槽定义，组件不内置任何动作名或图标映射。
 
-| 传入内容 | 渲染结果 |
+```vue
+<a-comment author="Zhang San" content="...">
+  <template #actions>
+    <a-button type="text" size="small" @click="onLike">
+      <template #icon><LikeOutlined /></template>
+      {{ likes }}
+    </a-button>
+    <a-button type="text" size="small" danger @click="onDelete">
+      <template #icon><DeleteOutlined /></template>
+      删除
+    </a-button>
+  </template>
+</a-comment>
+```
+
+操作项**建议使用 `a-button type="text" size="small"`**：它自带 hover / focus 反馈与按钮语义，危险操作加 `danger` 即可获得红色。图标通过 `<template #icon>` 传入，配合 `@antdv-next/icons` 使用。
+
+常用动作的参考写法：
+
+| 动作 | 图标 |
 | --- | --- |
-| 命中内置动作名的字符串 | 纯图标，名称由 `aria-label` 与 `title` 承载 |
-| 其它字符串 | 按传入文案原样渲染 |
-| `VNode`，或 `#actions` 插槽 | 完全由使用方控制，可放按钮、图标与状态 |
-
-内置动作名不区分大小写：
-
-| 动作名 | 图标 |
-| --- | --- |
-| `reply` `comment` | 消息 |
-| `like` | 点赞 |
-| `dislike` | 点踩 |
-| `edit` | 编辑 |
-| `delete` `remove` | 删除 |
-| `share` | 分享 |
-| `copy` | 复制 |
-| `flag` | 标记 |
-| `star` `favorite` | 收藏 |
-| `close` `cancel` | 关闭 |
-| `more` `ellipsis` | 更多 |
-| `back` | 返回 |
-| `report` | 警示 |
-
-> 内置动作名渲染为**纯图标而非按钮**：字符串条目没有地方挂载回调，渲染成按钮会给出「可点击」却没有响应的错误承诺，也会在纯展示组件里凭空制造可聚焦控件。图标本身不可交互，需要点击行为、禁用或二次确认时请使用 `#actions` 插槽。
-
-这样组件无需内置一份需要翻译的动作文案表 —— 可见文案始终由业务层决定。
+| 回复 / 评论 | `MessageOutlined` |
+| 点赞 | `LikeOutlined` / `LikeFilled` |
+| 点踩 | `DislikeOutlined` |
+| 编辑 | `EditOutlined` |
+| 分享 | `ShareAltOutlined` |
+| 复制 | `CopyOutlined` |
+| 删除 / 移除 | `DeleteOutlined` |
+| 举报 | `WarningOutlined` |
+| 更多 | `EllipsisOutlined` |
 
 ## 语义化 DOM {#semantic-dom}
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-`avatar`、`header`、`body`、`actions`、`children` 只在其内容存在时渲染。容器带有 Token 化的间距，组件不会为空内容补占位节点，以免凭空多出一份间距。
+`avatar`、`header`、`body`、`actions`、`children` 只在其内容存在时渲染。
 
 ## 无障碍 {#accessibility}
 
-- 组件本身不是交互控件，不会给任何节点附加 `role="button"` 或 `role="link"`。
+- 组件自身不承载交互逻辑，不对外派发事件。
 - 通过 `avatar` 属性传入图片时，组件会以 `author` 作为图片 `alt`；使用 `#avatar` 插槽时由使用方负责。
 - `datetime` 渲染为普通文本。需要机器可读时间时，请在 `#datetime` 插槽内自行使用 `<time>`。
-- `actions` 中的内置动作名渲染为带 `role="img"` 与 `aria-label` 的纯图标，不进入 Tab 顺序，也不会被读作按钮。需要交互时请在 `#actions` 插槽内使用真实控件（如 `a-button`），不要用 `span` 配合 `@click`。
+- `actions` 的操作项由使用方提供：请使用 `a-button` 等真实控件并绑定 `onClick`，纯图标按钮需要提供 `aria-label`（或可见文案）。
 
 ## 主题 Token {#design-tokens}
 

@@ -17,7 +17,6 @@ declare module 'antdv-next/theme/interface/components' {
 }
 
 export type {
-  CommentActionName,
   CommentAlign,
   CommentClassNamesType,
   CommentDatetimePlacement,

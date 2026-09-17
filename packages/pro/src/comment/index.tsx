@@ -1,21 +1,5 @@
 import type { App, SlotsType } from 'vue'
-import type { CommentActionName, CommentClassNamesType, CommentEmits, CommentProps, CommentSemanticClassNames, CommentSemanticStyles, CommentSlots, CommentStylesType } from './types'
-import {
-  CloseOutlined,
-  CopyOutlined,
-  DeleteOutlined,
-  DislikeOutlined,
-  EditOutlined,
-  EllipsisOutlined,
-  FlagOutlined,
-  HeartOutlined,
-  LikeOutlined,
-  MessageOutlined,
-  RollbackOutlined,
-  ShareAltOutlined,
-  StarOutlined,
-  WarningOutlined,
-} from '@antdv-next/icons'
+import type { CommentClassNamesType, CommentEmits, CommentProps, CommentSemanticClassNames, CommentSemanticStyles, CommentSlots, CommentStylesType } from './types'
 import { clsx } from '@v-c/util'
 import { Avatar, Flex, Space } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
@@ -24,51 +8,6 @@ import { computed, defineComponent } from 'vue'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
 import useStyle from './style'
-
-const ACTION_ICONS: Record<CommentActionName, typeof LikeOutlined> = {
-  reply: MessageOutlined,
-  comment: MessageOutlined,
-  like: LikeOutlined,
-  dislike: DislikeOutlined,
-  edit: EditOutlined,
-  delete: DeleteOutlined,
-  remove: DeleteOutlined,
-  share: ShareAltOutlined,
-  copy: CopyOutlined,
-  flag: FlagOutlined,
-  star: StarOutlined,
-  favorite: HeartOutlined,
-  close: CloseOutlined,
-  cancel: CloseOutlined,
-  more: EllipsisOutlined,
-  ellipsis: EllipsisOutlined,
-  back: RollbackOutlined,
-  report: WarningOutlined,
-}
-
-/**
- * `actions` 里的字符串若命中内置动作名（大小写不敏感），渲染为**纯图标**；
- * 未命中的字符串按纯文本渲染。
- *
- * 这里刻意不渲染 `Button`：字符串条目本身无法携带回调，渲染成按钮等于给出
- * 「可点击」的错误承诺，还会让组件在纯展示前提下凭空制造可聚焦控件。
- * 名称由图标的 `aria-label`（`role="img"`）与容器的 `title` 承载，因此组件
- * 不需要内置一份需要翻译的动作词表 —— 可见文案与交互都留给 `#actions` 插槽。
- */
-function resolveActionNode(action: string | unknown, prefix: string) {
-  if (typeof action !== 'string') {
-    return action
-  }
-  const Icon = ACTION_ICONS[action.toLowerCase() as CommentActionName]
-  if (!Icon) {
-    return action
-  }
-  return (
-    <span class={`${prefix}-action`} title={action}>
-      <Icon aria-label={action} />
-    </span>
-  )
-}
 
 function omitClassAndStyle(attrs: Record<string, any>) {
   const nextAttrs = { ...attrs }
@@ -160,11 +99,7 @@ const Comment = defineComponent<
             )
           : null
 
-      const rawActions = slots.actions ? slots.actions() : props.actions
-      const actionList = rawActions == null
-        ? []
-        : Array.isArray(rawActions) ? rawActions : [rawActions]
-      const actionNodes = actionList.map(action => resolveActionNode(action, prefix))
+      const actionsContent = slots.actions ? slots.actions() : null
 
       const hasAuthor = hasNode(authorContent)
       const hasDatetime = hasNode(datetimeContent)
@@ -216,14 +151,14 @@ const Comment = defineComponent<
                   {bodyContent}
                 </div>
               )}
-              {actionNodes.length > 0 && (
+              {hasNode(actionsContent) && (
                 <Space
                   class={clsx(`${prefix}-actions`, classNames.actions)}
                   style={styles.actions}
                   size={0}
                   wrap
                 >
-                  {actionNodes}
+                  {actionsContent}
                 </Space>
               )}
             </Flex>
@@ -252,7 +187,6 @@ const Comment = defineComponent<
 }
 
 export type {
-  CommentActionName,
   CommentAlign,
   CommentClassNamesType,
   CommentConfig,

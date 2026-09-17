@@ -1,9 +1,9 @@
 <docs lang="zh-CN">
-通过 `classes` 与 `styles` 定制 Comment 的十个语义化节点。头像区、头信息、正文与嵌套容器都可以单独控制。
+通过 `classes` 与 `styles` 定制语义化节点。
 </docs>
 
 <docs lang="en-US">
-Customize the ten semantic nodes of Comment with `classes` and `styles`. The avatar, header, body, and nested container can each be controlled separately.
+Customize semantic nodes with `classes` and `styles`.
 </docs>
 
 <script setup lang="ts">
@@ -31,9 +31,6 @@ const styles: CommentProps['styles'] = {
     borderRadius: '6px',
     backgroundColor: 'var(--ant-color-fill-quaternary)',
   },
-  body: {
-    fontStyle: 'italic',
-  },
   children: {
     paddingInlineStart: '24px',
     borderInlineStart: '2px solid var(--ant-color-border)',
@@ -46,16 +43,20 @@ const styles: CommentProps['styles'] = {
     author="Zhang San"
     :avatar="avatar('ZhangSan')"
     datetime="5 minutes ago"
-    content="每一条语义化 class 都对应 DOM 里的一个节点。"
-    :actions="['Reply']"
+    content="We supply a series of design principles, practical patterns and high quality design resources."
     :classes="classes"
     :styles="styles"
   >
+    <template #actions>
+      <a-button type="text" size="small">
+        回复
+      </a-button>
+    </template>
     <a-comment
       author="Li Si"
       :avatar="avatar('LiSi')"
       datetime="3 minutes ago"
-      content="嵌套评论容器同样可以定制。"
+      content="Nested comments are wrapped by the children container, which is styleable on its own."
     />
   </a-comment>
 </template>

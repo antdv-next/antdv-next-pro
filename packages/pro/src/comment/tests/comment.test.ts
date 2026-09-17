@@ -1,7 +1,7 @@
 import type { CommentProps } from '../types'
 import { mount } from '@vue/test-utils'
-import { ConfigProvider } from 'antdv-next'
-import { describe, expect, it } from 'vitest'
+import { Button, ConfigProvider } from 'antdv-next'
+import { describe, expect, it, vi } from 'vitest'
 import { h, nextTick } from 'vue'
 import rtlTest from '../../../../../tests/shared/rtlTest'
 import { ProConfigProvider } from '../../index'
@@ -33,52 +33,47 @@ function mountFull(props: CommentProps = {}, slots: Record<string, () => any> = 
 }
 
 describe('Comment', () => {
-  it('renders author, avatar, datetime, content and actions from props', () => {
-    const wrapper = mountFull({
-      avatar: 'https://example.com/avatar.png',
-      actions: ['Like', 'Reply'],
-    })
+  it('renders author, avatar, datetime and content from props', () => {
+    const wrapper = mountFull({ avatar: 'https://example.com/avatar.png' })
 
     expect(wrapper.find('.ant-comment-author').text()).toBe('Zhang San')
     expect(wrapper.find('.ant-comment-datetime').text()).toBe('5 minutes ago')
     expect(wrapper.find('.ant-comment-body').text()).toBe('This is a comment.')
-    expect(wrapper.findAll('.ant-comment-actions .ant-space-item')).toHaveLength(2)
   })
 
-  it('renders built-in action names as plain icons regardless of case', () => {
-    const wrapper = mountFull({ actions: ['Reply', 'DELETE', 'Share'] })
-
-    // 字符串条目无处挂回调，因此不能渲染成按钮，否则是「可点击」的错误承诺
-    expect(wrapper.find('.ant-comment-actions .ant-btn').exists()).toBe(false)
-
-    const actions = wrapper.findAll('.ant-comment-actions .ant-comment-action')
-    expect(actions).toHaveLength(3)
-
-    const icons = actions.map(action => action.find('.anticon'))
-    expect(icons[0]!.classes()).toContain('anticon-message')
-    expect(icons[1]!.classes()).toContain('anticon-delete')
-    expect(icons[2]!.classes()).toContain('anticon-share-alt')
-
-    // 名称由 role="img" + aria-label 与容器 title 承载，可见文案为空
-    expect(actions.map(action => action.text())).toEqual(['', '', ''])
-    expect(icons.map(icon => icon.attributes('aria-label'))).toEqual(['Reply', 'DELETE', 'Share'])
-    expect(actions.map(action => action.attributes('title'))).toEqual(['Reply', 'DELETE', 'Share'])
-  })
-
-  it('prefers the #actions slot, which is the only path that carries handlers', () => {
-    const wrapper = mountFull({ actions: ['Reply'] }, {
-      actions: () => h('button', { class: 'slot-action' }, 'Reply'),
+  it('renders actions only through the #actions slot', () => {
+    const wrapper = mountFull({}, {
+      actions: () => [
+        h(Button, { type: 'text', size: 'small' }, { default: () => 'Like' }),
+        h(Button, { type: 'text', size: 'small' }, { default: () => 'Reply' }),
+      ],
     })
 
-    expect(wrapper.find('.slot-action').exists()).toBe(true)
-    expect(wrapper.find('.ant-comment-actions .ant-btn').exists()).toBe(false)
+    const actions = wrapper.findAll('.ant-comment-actions .ant-space-item')
+    expect(actions).toHaveLength(2)
+    expect(actions.map(action => action.text())).toEqual(['Like', 'Reply'])
   })
 
-  it('keeps unknown action strings as plain text', () => {
-    const wrapper = mountFull({ actions: ['打赏', '置顶'] })
+  it('carries click handlers from the #actions slot', async () => {
+    const onDelete = vi.fn()
+    const wrapper = mountFull({}, {
+      actions: () => h(Button, { type: 'text', size: 'small', onClick: onDelete }, { default: () => 'Delete' }),
+    })
 
-    expect(wrapper.find('.ant-comment-actions .ant-btn').exists()).toBe(false)
-    expect(wrapper.findAll('.ant-space-item').map(item => item.text())).toEqual(['打赏', '置顶'])
+    await wrapper.find('.ant-comment-actions .ant-btn').trigger('click')
+    expect(onDelete).toHaveBeenCalledTimes(1)
+  })
+
+  it('keeps the actions container to Space and lets arbitrary content through', () => {
+    const wrapper = mountFull({}, {
+      actions: () => [h('span', { class: 'plain-action' }, '打赏'), h('a', { href: '#top' }, '置顶')],
+    })
+
+    const container = wrapper.find('.ant-comment-actions')
+    expect(container.classes()).toContain('ant-space')
+    // 组件不再解析字符串，任何内容都原样透出，由使用方负责控件语义
+    expect(wrapper.find('.plain-action').text()).toBe('打赏')
+    expect(wrapper.find('.ant-comment-actions a').attributes('href')).toBe('#top')
   })
 
   it('renders the string avatar through Avatar and derives the image alt from author', () => {
@@ -114,15 +109,25 @@ describe('Comment', () => {
     expect(wrapper.find('.ant-comment-avatar .ant-avatar').exists()).toBe(false)
   })
 
+  it('renders the header even when the actions slot is absent', () => {
+    const wrapper = mountFull()
+
+    expect(wrapper.find('.ant-comment-header').exists()).toBe(true)
+    // actions 是纯插槽，没有插槽时整个容器不渲染
+    expect(wrapper.find('.ant-comment-actions').exists()).toBe(false)
+  })
+
   it('applies every semantic class and style to its own node', () => {
     const wrapper = mountFull(
       {
         avatar: 'https://example.com/avatar.png',
-        actions: ['Like'],
         classes: semanticClasses,
         styles: { body: { color: 'rgb(1, 2, 3)' } },
       },
-      { default: () => h(Comment, { content: 'nested' }) },
+      {
+        actions: () => h('span', { class: 'semantic-action' }, 'Like'),
+        default: () => h(Comment, { content: 'nested' }),
+      },
     )
 
     expect(wrapper.find('.ant-comment').classes()).toContain('c-root')

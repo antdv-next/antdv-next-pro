@@ -26,14 +26,18 @@ const semantics = computed(() => [
         author="Zhang San"
         avatar="https://api.dicebear.com/7.x/miniavs/svg?seed=ZhangSan"
         datetime="5 minutes ago"
-        content="Semantic DOM preview."
-        :actions="['Reply']"
+        content="We supply a series of design principles, practical patterns and high quality design resources."
         :classes="classes"
       >
+        <template #actions>
+          <a-button type="text" size="small">
+            回复
+          </a-button>
+        </template>
         <a-comment
           author="Li Si"
           avatar="https://api.dicebear.com/7.x/miniavs/svg?seed=LiSi"
-          content="Nested comment."
+          content="Nested comments are wrapped by the children container, which is styleable on its own."
         />
       </a-comment>
     </template>

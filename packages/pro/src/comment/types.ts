@@ -16,32 +16,6 @@ export type CommentDatetimePlacement = 'inline' | 'block'
  */
 export type CommentAlign = 'start' | 'end'
 
-/**
- * 内置图标的动作名（大小写不敏感）。
- *
- * `actions` 中命中这些名称的字符串会渲染为「图标 + 文案」的文字按钮；
- * 未命中的字符串仍按纯文本渲染。
- */
-export type CommentActionName
-  = | 'reply'
-    | 'comment'
-    | 'like'
-    | 'dislike'
-    | 'edit'
-    | 'delete'
-    | 'remove'
-    | 'share'
-    | 'copy'
-    | 'flag'
-    | 'star'
-    | 'favorite'
-    | 'close'
-    | 'cancel'
-    | 'more'
-    | 'ellipsis'
-    | 'back'
-    | 'report'
-
 export interface CommentSemanticClassNames {
   /** 最外层容器 */
   root?: string
@@ -99,15 +73,6 @@ export interface CommentProps {
    */
   content?: string | VNode
   /**
-   * 评论操作。字符串**不区分大小写**地命中 {@link CommentActionName}
-   * （如 `'Reply'` / `'Delete'`）时渲染为纯图标，其余字符串按纯文本渲染。
-   *
-   * 内置图标不可交互 —— 字符串条目没有地方挂载回调，渲染成按钮会给出
-   * 「可点击」却没有响应的错误承诺。需要点击行为、禁用状态或自定义图标时
-   * 请使用 `#actions` 插槽。
-   */
-  actions?: (string | VNode)[]
-  /**
    * `datetime` 相对 `author` 的排布方式。
    * @default 'inline'
    */
@@ -136,6 +101,31 @@ export interface CommentSlots {
   author?: () => any
   datetime?: () => any
   content?: () => any
+  /**
+   * 评论操作。内容由外层 `Space` 排列（`columnGap` 取自 `actionGap` token，自动换行），
+   * 因此这里只需要放具体的操作项，容器与间距由组件负责。
+   *
+   * 操作项请使用真实控件（如 `a-button` `type="text"` `size="small"`）而非
+   * `span` 配合 `@click` —— 前者自带 hover / focus 反馈、禁用态与按钮语义。
+   *
+   * @example
+   * ```tsx
+   * <Comment
+   *   v-slots={{
+   *     actions: () => (
+   *       <>
+   *         <Button type="text" size="small" icon={<LikeOutlined />} onClick={onLike}>
+   *           {likes}
+   *         </Button>
+   *         <Button type="text" size="small" danger icon={<DeleteOutlined />} onClick={onDelete}>
+   *           Delete
+   *         </Button>
+   *       </>
+   *     ),
+   *   }}
+   * />
+   * ```
+   */
   actions?: () => any
   /**
    * 默认插槽承载嵌套评论，组件不限制嵌套层级。

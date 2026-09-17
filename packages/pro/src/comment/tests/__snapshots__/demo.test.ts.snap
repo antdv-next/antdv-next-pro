@@ -46,154 +46,7 @@ exports[`comment demo > renders actions correctly 1`] = `
           <div
             class="ant-comment-body"
           >
-            内置动作名渲染为纯图标；未命中的字符串（如「打赏」）仍按文本渲染。
-          </div>
-          <div
-            class="ant-space ant-space-horizontal ant-space-align-center ant-comment-actions css-var-root"
-            style="flex-wrap: wrap;"
-          >
-            <div
-              class="ant-space-item"
-            >
-              <span
-                class="ant-comment-action"
-                title="Reply"
-              >
-                <span
-                  aria-label="Reply"
-                  class="anticon anticon-message"
-                  role="img"
-                >
-                  <svg
-                    aria-hidden="true"
-                    data-icon="message"
-                    fill="currentColor"
-                    focusable="false"
-                    height="1em"
-                    viewBox="64 64 896 896"
-                    width="1em"
-                  >
-                    <path
-                      d="M464 512a48 48 0 1096 0 48 48 0 10-96 0zm200 0a48 48 0 1096 0 48 48 0 10-96 0zm-400 0a48 48 0 1096 0 48 48 0 10-96 0zm661.2-173.6c-22.6-53.7-55-101.9-96.3-143.3a444.35 444.35 0 00-143.3-96.3C630.6 75.7 572.2 64 512 64h-2c-60.6.3-119.3 12.3-174.5 35.9a445.35 445.35 0 00-142 96.5c-40.9 41.3-73 89.3-95.2 142.8-23 55.4-34.6 114.3-34.3 174.9A449.4 449.4 0 00112 714v152a46 46 0 0046 46h152.1A449.4 449.4 0 00510 960h2.1c59.9 0 118-11.6 172.7-34.3a444.48 444.48 0 00142.8-95.2c41.3-40.9 73.8-88.7 96.5-142 23.6-55.2 35.6-113.9 35.9-174.5.3-60.9-11.5-120-34.8-175.6zm-151.1 438C704 845.8 611 884 512 884h-1.7c-60.3-.3-120.2-15.3-173.1-43.5l-8.4-4.5H188V695.2l-4.5-8.4C155.3 633.9 140.3 574 140 513.7c-.4-99.7 37.7-193.3 107.6-263.8 69.8-70.5 163.1-109.5 262.8-109.9h1.7c50 0 98.5 9.7 144.2 28.9 44.6 18.7 84.6 45.6 119 80 34.3 34.3 61.3 74.4 80 119 19.4 46.2 29.1 95.2 28.9 145.8-.6 99.6-39.7 192.9-110.1 262.7z"
-                    />
-                  </svg>
-                </span>
-              </span>
-            </div>
-            <!---->
-            <div
-              class="ant-space-item"
-            >
-              <span
-                class="ant-comment-action"
-                title="Edit"
-              >
-                <span
-                  aria-label="Edit"
-                  class="anticon anticon-edit"
-                  role="img"
-                >
-                  <svg
-                    aria-hidden="true"
-                    data-icon="edit"
-                    fill="currentColor"
-                    focusable="false"
-                    height="1em"
-                    viewBox="64 64 896 896"
-                    width="1em"
-                  >
-                    <path
-                      d="M257.7 752c2 0 4-.2 6-.5L431.9 722c2-.4 3.9-1.3 5.3-2.8l423.9-423.9a9.96 9.96 0 000-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2a33.5 33.5 0 009.4 29.8c6.6 6.4 14.9 9.9 23.8 9.9zm67.4-174.4L687.8 215l73.3 73.3-362.7 362.6-88.9 15.7 15.6-89zM880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32z"
-                    />
-                  </svg>
-                </span>
-              </span>
-            </div>
-            <!---->
-            <div
-              class="ant-space-item"
-            >
-              <span
-                class="ant-comment-action"
-                title="Delete"
-              >
-                <span
-                  aria-label="Delete"
-                  class="anticon anticon-delete"
-                  role="img"
-                >
-                  <svg
-                    aria-hidden="true"
-                    data-icon="delete"
-                    fill="currentColor"
-                    focusable="false"
-                    height="1em"
-                    viewBox="64 64 896 896"
-                    width="1em"
-                  >
-                    <path
-                      d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                    />
-                  </svg>
-                </span>
-              </span>
-            </div>
-            <!---->
-            <div
-              class="ant-space-item"
-            >
-              打赏
-            </div>
-            <!---->
-          </div>
-        </div>
-      </div>
-      <!---->
-    </div>
-  </div>
-  <!---->
-  <div
-    class="ant-space-item"
-  >
-    <div
-      class="ant-comment css-var-root ant-comment-css-var"
-    >
-      <div
-        class="ant-flex css-var-root ant-flex-align-flex-start ant-comment-inner"
-      >
-        <div
-          class="ant-comment-avatar"
-        >
-          <span
-            class="ant-avatar ant-avatar-circle ant-avatar-image css-var-root ant-avatar-css-var ant-comment-avatar-inner"
-          >
-            <img
-              alt="Li Si"
-              src="https://api.dicebear.com/7.x/miniavs/svg?seed=LiSi"
-            />
-          </span>
-        </div>
-        <div
-          class="ant-flex css-var-root ant-flex-align-stretch ant-flex-vertical ant-comment-content"
-        >
-          <div
-            class="ant-flex css-var-root ant-flex-align-center ant-flex-justify-flex-start ant-comment-header"
-          >
-            <div
-              class="ant-comment-author"
-            >
-              Li Si
-            </div>
-            <div
-              class="ant-comment-datetime"
-            >
-              3 minutes ago
-            </div>
-          </div>
-          <div
-            class="ant-comment-body"
-          >
-            需要交互时改用 #actions 插槽，点赞状态由业务层持有。
+            We supply a series of design principles, practical patterns and high quality design resources, to help people and teams build their products efficiently.
           </div>
           <div
             class="ant-space ant-space-horizontal ant-space-align-center ant-comment-actions css-var-root"
@@ -267,7 +120,7 @@ exports[`comment demo > renders actions correctly 1`] = `
                   </span>
                 </span>
                 <span>
-                   Reply 
+                   回复 
                 </span>
                 <!---->
               </button>
@@ -304,7 +157,7 @@ exports[`comment demo > renders actions correctly 1`] = `
                   </span>
                 </span>
                 <span>
-                   Edit 
+                   编辑 
                 </span>
                 <!---->
               </button>
@@ -341,10 +194,117 @@ exports[`comment demo > renders actions correctly 1`] = `
                   </span>
                 </span>
                 <span>
-                   Delete 
+                   删除 
                 </span>
                 <!---->
               </button>
+            </div>
+            <!---->
+          </div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <!---->
+  <div
+    class="ant-space-item"
+  >
+    <div
+      class="ant-comment css-var-root ant-comment-css-var"
+    >
+      <div
+        class="ant-flex css-var-root ant-flex-align-flex-start ant-comment-inner"
+      >
+        <div
+          class="ant-comment-avatar"
+        >
+          <span
+            class="ant-avatar ant-avatar-circle ant-avatar-image css-var-root ant-avatar-css-var ant-comment-avatar-inner"
+          >
+            <img
+              alt="Li Si"
+              src="https://api.dicebear.com/7.x/miniavs/svg?seed=LiSi"
+            />
+          </span>
+        </div>
+        <div
+          class="ant-flex css-var-root ant-flex-align-stretch ant-flex-vertical ant-comment-content"
+        >
+          <div
+            class="ant-flex css-var-root ant-flex-align-center ant-flex-justify-flex-start ant-comment-header"
+          >
+            <div
+              class="ant-comment-author"
+            >
+              Li Si
+            </div>
+            <div
+              class="ant-comment-datetime"
+            >
+              3 minutes ago
+            </div>
+          </div>
+          <div
+            class="ant-comment-body"
+          >
+            Actions are not limited to buttons — links and plain text work just as well, and each item stays fully under your control.
+          </div>
+          <div
+            class="ant-space ant-space-horizontal ant-space-align-center ant-comment-actions css-var-root"
+            style="flex-wrap: wrap;"
+          >
+            <div
+              class="ant-space-item"
+            >
+              <button
+                class="ant-btn css-var-root ant-btn-text ant-btn-dangerous ant-btn-color-dangerous ant-btn-variant-text ant-btn-sm"
+                type="button"
+              >
+                <span
+                  class="ant-btn-icon"
+                >
+                  <span
+                    aria-label="delete"
+                    class="anticon anticon-delete"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      data-icon="delete"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+                <span>
+                   删除 
+                </span>
+                <!---->
+              </button>
+            </div>
+            <!---->
+            <div
+              class="ant-space-item"
+            >
+              <a>
+                置顶
+              </a>
+            </div>
+            <!---->
+            <div
+              class="ant-space-item"
+            >
+              <span>
+                打赏
+              </span>
             </div>
             <!---->
           </div>
@@ -396,7 +356,7 @@ exports[`comment demo > renders basic correctly 1`] = `
       <div
         class="ant-comment-body"
       >
-        We supply a series of design principles, practical patterns and high quality design resources.
+        We supply a series of design principles, practical patterns and high quality design resources, to help people and teams build their products efficiently.
       </div>
       <!---->
     </div>
@@ -451,7 +411,7 @@ exports[`comment demo > renders datetime correctly 1`] = `
           <div
             class="ant-comment-body"
           >
-            datetimePlacement: inline, align: start
+            We supply a series of design principles, practical patterns and high quality design resources.
           </div>
           <!---->
         </div>
@@ -501,7 +461,7 @@ exports[`comment demo > renders datetime correctly 1`] = `
           <div
             class="ant-comment-body"
           >
-            datetimePlacement: inline, align: end
+            The datetime sits at the end of the row when the author is short enough to leave room for it.
           </div>
           <!---->
         </div>
@@ -551,7 +511,7 @@ exports[`comment demo > renders datetime correctly 1`] = `
           <div
             class="ant-comment-body"
           >
-            datetimePlacement: block, align: start
+            Switching to block placement moves the datetime onto its own line, which reads better on narrow screens.
           </div>
           <!---->
         </div>
@@ -601,7 +561,7 @@ exports[`comment demo > renders datetime correctly 1`] = `
           <div
             class="ant-comment-body"
           >
-            datetimePlacement: block, align: end
+            Block placement and end alignment can be combined to push the datetime to the trailing edge.
           </div>
           <!---->
         </div>
@@ -652,7 +612,7 @@ exports[`comment demo > renders nested correctly 1`] = `
       <div
         class="ant-comment-body"
       >
-        Documentation feedback should stay close to the paragraph it refers to.
+        We supply a series of design principles, practical patterns and high quality design resources.
       </div>
       <!---->
     </div>
@@ -698,7 +658,7 @@ exports[`comment demo > renders nested correctly 1`] = `
           <div
             class="ant-comment-body"
           >
-            Agreed. Inline comments are easier to act on than a separate review page.
+            Keeping the discussion attached to the comment it refers to makes a long thread much easier to follow.
           </div>
           <!---->
         </div>
@@ -744,7 +704,7 @@ exports[`comment demo > renders nested correctly 1`] = `
               <div
                 class="ant-comment-body"
               >
-                The indent is driven by the avatar size token, so it mirrors automatically in RTL.
+                Three levels is usually enough — beyond that the indentation eats too much horizontal space.
               </div>
               <!---->
             </div>
@@ -791,7 +751,7 @@ exports[`comment demo > renders nested correctly 1`] = `
           <div
             class="ant-comment-body"
           >
-            Keeping the thread to three levels reads best on narrow screens.
+            Sibling replies stay at the same level, so a thread can branch without growing any deeper.
           </div>
           <!---->
         </div>
@@ -841,9 +801,8 @@ exports[`comment demo > renders semantic correctly 1`] = `
       </div>
       <div
         class="ant-comment-body comment-semantic-body"
-        style="font-style: italic;"
       >
-        每一条语义化 class 都对应 DOM 里的一个节点。
+        We supply a series of design principles, practical patterns and high quality design resources.
       </div>
       <div
         class="ant-space ant-space-horizontal ant-space-align-center ant-comment-actions comment-semantic-actions css-var-root"
@@ -852,30 +811,29 @@ exports[`comment demo > renders semantic correctly 1`] = `
         <div
           class="ant-space-item"
         >
-          <span
-            class="ant-comment-action"
-            title="Reply"
+          <button
+            class="ant-btn css-var-root ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm"
+            type="button"
           >
-            <span
-              aria-label="Reply"
-              class="anticon anticon-message"
-              role="img"
+            <transition-stub
+              appear="false"
+              css="true"
+              enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+              enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+              entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+              leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+              leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+              leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+              name="ant-btn-loading-icon-motion"
+              persisted="false"
             >
-              <svg
-                aria-hidden="true"
-                data-icon="message"
-                fill="currentColor"
-                focusable="false"
-                height="1em"
-                viewBox="64 64 896 896"
-                width="1em"
-              >
-                <path
-                  d="M464 512a48 48 0 1096 0 48 48 0 10-96 0zm200 0a48 48 0 1096 0 48 48 0 10-96 0zm-400 0a48 48 0 1096 0 48 48 0 10-96 0zm661.2-173.6c-22.6-53.7-55-101.9-96.3-143.3a444.35 444.35 0 00-143.3-96.3C630.6 75.7 572.2 64 512 64h-2c-60.6.3-119.3 12.3-174.5 35.9a445.35 445.35 0 00-142 96.5c-40.9 41.3-73 89.3-95.2 142.8-23 55.4-34.6 114.3-34.3 174.9A449.4 449.4 0 00112 714v152a46 46 0 0046 46h152.1A449.4 449.4 0 00510 960h2.1c59.9 0 118-11.6 172.7-34.3a444.48 444.48 0 00142.8-95.2c41.3-40.9 73.8-88.7 96.5-142 23.6-55.2 35.6-113.9 35.9-174.5.3-60.9-11.5-120-34.8-175.6zm-151.1 438C704 845.8 611 884 512 884h-1.7c-60.3-.3-120.2-15.3-173.1-43.5l-8.4-4.5H188V695.2l-4.5-8.4C155.3 633.9 140.3 574 140 513.7c-.4-99.7 37.7-193.3 107.6-263.8 69.8-70.5 163.1-109.5 262.8-109.9h1.7c50 0 98.5 9.7 144.2 28.9 44.6 18.7 84.6 45.6 119 80 34.3 34.3 61.3 74.4 80 119 19.4 46.2 29.1 95.2 28.9 145.8-.6 99.6-39.7 192.9-110.1 262.7z"
-                />
-              </svg>
+              <!---->
+            </transition-stub>
+            <span>
+              回复
             </span>
-          </span>
+            <!---->
+          </button>
         </div>
         <!---->
       </div>
@@ -923,7 +881,7 @@ exports[`comment demo > renders semantic correctly 1`] = `
           <div
             class="ant-comment-body"
           >
-            嵌套评论容器同样可以定制。
+            Nested comments are wrapped by the children container, which is styleable on its own.
           </div>
           <!---->
         </div>

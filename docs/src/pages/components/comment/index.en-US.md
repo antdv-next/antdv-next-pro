@@ -15,7 +15,7 @@ group:
 - Display user discussions such as AI feedback and approval notes.
 - Get consistent author, avatar, datetime, actions, and nesting conventions without rebuilding `Avatar + Flex` every time.
 
-`Comment` is a presentational component. It does not handle data fetching, pagination, sorting, submission, deletion, like state, or comment-tree conversion, and it never parses HTML or Markdown. Those belong to the business layer.
+`Comment` is a presentational component. Data fetching, pagination, submission, deletion, and like state belong to the business layer. The component never parses HTML or Markdown.
 
 ## Examples {#examples}
 
@@ -39,7 +39,6 @@ group:
 | avatar | Avatar image URL. It is forwarded to `Avatar`'s `src`, and `author` becomes the image `alt`. | `string` | - | - | × |
 | datetime | Comment time. The component never formats it. | `string \| VNode` | - | - | × |
 | content | Comment body. The component never parses HTML or Markdown. | `string \| VNode` | - | - | × |
-| actions | Comment actions. A string matching a built-in action name (see [Actions](#actions)) renders as a plain icon; any other string renders as-is. | `(string \| VNode)[]` | - | - | × |
 | datetimePlacement | How the datetime is placed relative to the author. | `'inline' \| 'block'` | `'inline'` | - | ✓ |
 | align | Alignment of the datetime within its row, using a logical direction that mirrors in RTL. | `'start' \| 'end'` | `'start'` | - | ✓ |
 | classes | Customize semantic classes with an object or function. | `CommentClassNamesType` | - | - | ✓ |
@@ -55,25 +54,60 @@ group:
 | author | Custom author, such as a link or a tag. | `() => any` | - |
 | datetime | Custom datetime, for example wrapped in a Tooltip. | `() => any` | - |
 | content | Custom body, such as images or code blocks. | `() => any` | - |
-| actions | Custom actions. Use real interactive controls. | `() => any` | - |
+| actions | Custom actions. `a-button` is recommended. | `() => any` | - |
 | default | Nested comments. | `() => any` | - |
 
 ## Nested comments {#nested-comments}
 
-Child comments go in the default slot; the component does not limit the depth. Deep nesting inflates both DOM depth and horizontal space, so limit the recursion depth in the business layer, usually to three levels. The indent derives from the avatar size; override `paddingInlineStart` through `styles.children` to change it.
+Child comments go in the default slot; the component does not limit the depth. Limit the recursion depth in the business layer, usually to three levels. Adjust the indent through `styles.children`.
+
+## Actions {#actions}
+
+The actions area is entirely defined by the `#actions` slot. The component ships no built-in action names or icon mapping.
+
+```vue
+<a-comment author="Zhang San" content="...">
+  <template #actions>
+    <a-button type="text" size="small" @click="onLike">
+      <template #icon><LikeOutlined /></template>
+      {{ likes }}
+    </a-button>
+    <a-button type="text" size="small" danger @click="onDelete">
+      <template #icon><DeleteOutlined /></template>
+      Delete
+    </a-button>
+  </template>
+</a-comment>
+```
+
+**`a-button type="text" size="small"` is recommended** for action items: it brings hover and focus feedback plus button semantics, and adding `danger` gives you the red treatment. Pass the icon through `<template #icon>` with a name from `@antdv-next/icons`.
+
+Common action icons:
+
+| Action | Icon |
+| --- | --- |
+| Reply / Comment | `MessageOutlined` |
+| Like | `LikeOutlined` / `LikeFilled` |
+| Dislike | `DislikeOutlined` |
+| Edit | `EditOutlined` |
+| Share | `ShareAltOutlined` |
+| Copy | `CopyOutlined` |
+| Delete / Remove | `DeleteOutlined` |
+| Report | `WarningOutlined` |
+| More | `EllipsisOutlined` |
 
 ## Semantic DOM {#semantic-dom}
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-`avatar`, `header`, `body`, `actions`, and `children` render only when they have content. Containers carry token-driven spacing, so the component never emits a placeholder node that would add a stray gap.
+`avatar`, `header`, `body`, `actions`, and `children` render only when they have content.
 
 ## Accessibility {#accessibility}
 
-- The component is not an interactive control and never adds `role="button"` or `role="link"`.
+- The component itself carries no interaction logic and never emits events.
 - When the image is passed through the `avatar` prop, `author` becomes the image `alt`. With the `#avatar` slot, that is up to the caller.
 - `datetime` renders as plain text. Wrap your own `<time>` in the `#datetime` slot when a machine-readable value is required.
-- Built-in action names in `actions` render as plain icons carrying `role="img"` and `aria-label`; they stay out of the tab order and are never announced as buttons. For interactive actions, use real controls such as `a-button` inside the `#actions` slot. Do not bind `@click` to a `span`.
+- Action items are supplied by the consumer: use real controls such as `a-button` with a bound `onClick`, and give icon-only buttons an `aria-label` (or visible text).
 
 ## Design Tokens {#design-tokens}
 

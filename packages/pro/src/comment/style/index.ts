@@ -85,13 +85,6 @@ const genCommentStyle: GenerateStyle<CommentToken, CSSObject> = (token) => {
         color: token.actionColor,
         columnGap: token.actionGap,
       },
-
-      // 内置动作名的纯图标形态。它不是控件，所以没有 hover / focus 反馈，
-      // 只保证与相邻文本基线对齐。
-      '&-action': {
-        display: 'inline-flex',
-        alignItems: 'center',
-      },
     },
 
     // 两个类名组合以提高特异性，稳定压过 Avatar 自身的尺寸样式。
