@@ -1,3 +1,4 @@
+import type { ScrollbarRef } from '../index'
 import { mount } from '@vue/test-utils'
 import { ConfigProvider } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
@@ -1052,15 +1053,46 @@ describe('Scrollbar', () => {
   it('exposes scrollTo method', async () => {
     const wrapper = mount(Scrollbar)
     const container = wrapper.find('.ant-scrollbar-container')
-    const calls: Array<[number, number]> = []
+    const calls: Array<any[]> = []
 
-    ;(container.element as HTMLElement).scrollTo = ((left: number, top: number) => {
-      calls.push([left, top])
+    ;(container.element as HTMLElement).scrollTo = ((...args: any[]) => {
+      calls.push(args)
     }) as any
 
     ;(wrapper.vm as any).scrollTo(12, 34)
+    ;(wrapper.vm as any).scrollTo({ left: 56, top: 78, behavior: 'smooth' })
 
-    expect(calls).toEqual([[12, 34]])
+    expect(calls).toEqual([
+      [12, 34],
+      [{ left: 56, top: 78, behavior: 'smooth' }],
+    ])
+  })
+
+  it('translates logical left offsets into native rtl scroll positions', async () => {
+    const wrapper = mount(ConfigProvider, {
+      props: { direction: 'rtl' },
+      slots: {
+        default: () => h(Scrollbar),
+      },
+    })
+
+    const container = wrapper.find('.ant-scrollbar-container')
+    const calls: Array<any[]> = []
+
+    ;(container.element as HTMLElement).scrollTo = ((...args: any[]) => {
+      calls.push(args)
+    }) as any
+
+    // `findComponent().vm` does not merge the child's `expose()` API the way
+    // the root wrapper does, so read the public instance off `$.exposed`.
+    const exposed = (wrapper.findComponent(Scrollbar).vm as any).$.exposed as ScrollbarRef
+    exposed.scrollTo(120, 34)
+    exposed.scrollTo({ left: 220, top: 140, behavior: 'smooth' })
+
+    expect(calls).toEqual([
+      [-120, 34],
+      [{ left: -220, top: 140, behavior: 'smooth' }],
+    ])
   })
 
   describe('track click', () => {

@@ -419,33 +419,40 @@ const Scrollbar = defineComponent<
     function scrollTo(options: ScrollToOptions): void
     function scrollTo(left: number, top?: number): void
     function scrollTo(leftOrOptions: number | ScrollToOptions, top = 0) {
-      // Native `Element.scrollTo` parity: `left` lives in the same signed
-      // space as `scrollLeft` (`[-maxScroll, 0]` in RTL), so no sign
-      // conversion is applied here — unlike the internal drag/track paths,
-      // which translate logical track offsets into native positions.
       const container = containerRef.value
       if (!container) {
         return
       }
 
+      /**
+       * `left` is a logical offset from the content start edge, matching the
+       * drag/track paths. Native `Element.scrollTo` expects the signed
+       * `scrollLeft` space (`[-maxScroll, 0]` in RTL), so flip before delegating.
+       */
+      const toNativeLeft = (left: number) => (direction.value === 'rtl' ? -left : left)
+
       if (typeof leftOrOptions === 'object') {
+        const options = { ...leftOrOptions }
+        if (options.left !== undefined) {
+          options.left = toNativeLeft(options.left)
+        }
         if (typeof container.scrollTo === 'function') {
-          container.scrollTo(leftOrOptions)
+          container.scrollTo(options)
         }
         else {
-          if (leftOrOptions.left !== undefined) {
-            container.scrollLeft = leftOrOptions.left
+          if (options.left !== undefined) {
+            container.scrollLeft = options.left
           }
-          if (leftOrOptions.top !== undefined) {
-            container.scrollTop = leftOrOptions.top
+          if (options.top !== undefined) {
+            container.scrollTop = options.top
           }
         }
       }
       else if (typeof container.scrollTo === 'function') {
-        container.scrollTo(leftOrOptions, top)
+        container.scrollTo(toNativeLeft(leftOrOptions), top)
       }
       else {
-        container.scrollLeft = leftOrOptions
+        container.scrollLeft = toNativeLeft(leftOrOptions)
         container.scrollTop = top
       }
 

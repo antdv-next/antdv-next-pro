@@ -65,7 +65,7 @@ group:
 
 | 名称 | 说明 | 参数 | 版本 |
 | --- | --- | --- | --- |
-| scrollTo | 滚动到目标位置，支持原生 `ScrollToOptions` 或数值坐标调用 | `(options: ScrollToOptions)` 或 `(left: number, top?: number)` | - |
+| scrollTo | 滚动到目标位置，支持 `ScrollToOptions` 或数值坐标调用；`left` 为距内容起始边缘的偏移，RTL 下自动转换为原生坐标 | `(options: ScrollToOptions)` 或 `(left: number, top?: number)` | - |
 | containerRef | 原生滚动容器引用 | - | - |
 
 ## 语义化 DOM {#semantic-dom}
