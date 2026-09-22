@@ -37,6 +37,16 @@ const genScrollbarStyle: GenerateStyle<ScrollbarToken, CSSObject> = (token) => {
 
       '&-rtl': {
         direction: 'rtl',
+
+        /**
+         * RTL scrolls start from the right edge, so the horizontal thumb is
+         * anchored to the track's right end and the renderer translates it
+         * with a negated offset — mirrored against the LTR `left: 0` anchor.
+         */
+        [`${componentCls}-thumb-x`]: {
+          left: 'auto',
+          right: 0,
+        },
       },
 
       [`&-container`]: {

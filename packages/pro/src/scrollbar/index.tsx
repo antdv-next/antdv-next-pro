@@ -105,6 +105,7 @@ function resolveScrollFadeStyle(
     scrollLeft: number
     scrollTop: number
   },
+  direction: 'ltr' | 'rtl' | undefined,
 ) {
   if (!scrollFade) {
     return undefined
@@ -127,10 +128,23 @@ function resolveScrollFadeStyle(
 
   if (scrollFade === 'horizontal' || scrollFade === 'both') {
     const maxScrollX = Math.max(metrics.scrollWidth - metrics.clientWidth, 0)
+    /**
+     * The two vars are physical: how much content hides beyond the left/right
+     * viewport edge. RTL reports `scrollLeft` in `[-maxScroll, 0]` measured
+     * from the right edge, so neither LTR expression survives as-is (a plain
+     * `maxScrollX - scrollLeft` would exceed `maxScrollX`): hidden past the
+     * left edge is `maxScrollX + scrollLeft`, past the right edge `-scrollLeft`.
+     */
+    const overflowLeft = direction === 'rtl'
+      ? maxScrollX + metrics.scrollLeft
+      : metrics.scrollLeft
+    const overflowRight = direction === 'rtl'
+      ? -metrics.scrollLeft
+      : maxScrollX - metrics.scrollLeft
 
     Object.assign(style, {
-      '--scrollbar-fade-overflow-left': `${Math.max(metrics.scrollLeft, 0)}px`,
-      '--scrollbar-fade-overflow-right': `${Math.max(maxScrollX - metrics.scrollLeft, 0)}px`,
+      '--scrollbar-fade-overflow-left': `${Math.max(overflowLeft, 0)}px`,
+      '--scrollbar-fade-overflow-right': `${Math.max(overflowRight, 0)}px`,
     })
   }
 
@@ -267,12 +281,13 @@ const Scrollbar = defineComponent<
       computed(() => mergedConfig.value.visibilityY),
       scrollbarInset,
       scrollbarSize,
+      direction,
     )
     const scrollFadeClassName = computed(() => {
       return resolveScrollFadeClassName(prefixCls.value, mergedScrollFade.value)
     })
     const scrollFadeStyle = computed(() => {
-      return resolveScrollFadeStyle(mergedScrollFade.value, mergedScrollFadeSize.value, scrollbarState.metrics.value)
+      return resolveScrollFadeStyle(mergedScrollFade.value, mergedScrollFadeSize.value, scrollbarState.metrics.value, direction.value)
     })
     const scrollbarDrag = useScrollbarDrag(
       containerRef,
@@ -404,6 +419,10 @@ const Scrollbar = defineComponent<
     function scrollTo(options: ScrollToOptions): void
     function scrollTo(left: number, top?: number): void
     function scrollTo(leftOrOptions: number | ScrollToOptions, top = 0) {
+      // Native `Element.scrollTo` parity: `left` lives in the same signed
+      // space as `scrollLeft` (`[-maxScroll, 0]` in RTL), so no sign
+      // conversion is applied here — unlike the internal drag/track paths,
+      // which translate logical track offsets into native positions.
       const container = containerRef.value
       if (!container) {
         return
@@ -506,7 +525,13 @@ const Scrollbar = defineComponent<
                       mergedStyles.value.thumbX,
                       {
                         width: `${scrollbarState.thumbPercentX.value}%`,
-                        transform: `translateX(${scrollbarState.thumbOffsetX.value}px)`,
+                        /**
+                         * `thumbOffsetX` is measured from the start edge
+                         * (left in LTR, right in RTL). The `-rtl` stylesheet
+                         * re-anchors the thumb to the track's right edge, so
+                         * the translation has to run the opposite way.
+                         */
+                        transform: `translateX(${direction.value === 'rtl' ? -scrollbarState.thumbOffsetX.value : scrollbarState.thumbOffsetX.value}px)`,
                       },
                     ]}
                     onMousedown={handleThumbMouseDownX}

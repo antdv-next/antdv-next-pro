@@ -27,6 +27,7 @@ export function useScrollbarState(
   visibilityY: Ref<ScrollbarVisibility | undefined>,
   inset: Ref<number>,
   size: Ref<number>,
+  direction?: Ref<'ltr' | 'rtl' | undefined>,
 ) {
   const metrics = ref<ScrollMetrics>({
     clientWidth: 0,
@@ -147,13 +148,18 @@ export function useScrollbarState(
   /**
    * Thumb offset in px, converted from the track-relative travel percentage.
    * Clamped to the travel range so the thumb always ends flush with the track.
+   *
+   * Per CSSOM View, an RTL container reports `scrollLeft` in `[-maxScroll, 0]`
+   * (0 at the initial right-most position). Normalize it to the distance
+   * scrolled from the start edge so the ratio stays a plain LTR-style fraction.
    */
   const thumbOffsetX = computed(() => {
     const maxScroll = metrics.value.scrollWidth - metrics.value.clientWidth
     if (maxScroll <= 0) {
       return 0
     }
-    const ratio = Math.min(Math.max(metrics.value.scrollLeft / maxScroll, 0), 1)
+    const scrollLeft = direction?.value === 'rtl' ? -metrics.value.scrollLeft : metrics.value.scrollLeft
+    const ratio = Math.min(Math.max(scrollLeft / maxScroll, 0), 1)
     return ratio * (thumbTravelPercentX.value / 100) * trackLengthX.value
   })
 
