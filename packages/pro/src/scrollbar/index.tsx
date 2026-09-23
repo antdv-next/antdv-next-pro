@@ -105,6 +105,7 @@ function resolveScrollFadeStyle(
     scrollLeft: number
     scrollTop: number
   },
+  direction: 'ltr' | 'rtl' | undefined,
 ) {
   if (!scrollFade) {
     return undefined
@@ -127,10 +128,23 @@ function resolveScrollFadeStyle(
 
   if (scrollFade === 'horizontal' || scrollFade === 'both') {
     const maxScrollX = Math.max(metrics.scrollWidth - metrics.clientWidth, 0)
+    /**
+     * The two vars are physical: how much content hides beyond the left/right
+     * viewport edge. RTL reports `scrollLeft` in `[-maxScroll, 0]` measured
+     * from the right edge, so neither LTR expression survives as-is (a plain
+     * `maxScrollX - scrollLeft` would exceed `maxScrollX`): hidden past the
+     * left edge is `maxScrollX + scrollLeft`, past the right edge `-scrollLeft`.
+     */
+    const overflowLeft = direction === 'rtl'
+      ? maxScrollX + metrics.scrollLeft
+      : metrics.scrollLeft
+    const overflowRight = direction === 'rtl'
+      ? -metrics.scrollLeft
+      : maxScrollX - metrics.scrollLeft
 
     Object.assign(style, {
-      '--scrollbar-fade-overflow-left': `${Math.max(metrics.scrollLeft, 0)}px`,
-      '--scrollbar-fade-overflow-right': `${Math.max(maxScrollX - metrics.scrollLeft, 0)}px`,
+      '--scrollbar-fade-overflow-left': `${Math.max(overflowLeft, 0)}px`,
+      '--scrollbar-fade-overflow-right': `${Math.max(overflowRight, 0)}px`,
     })
   }
 
@@ -267,12 +281,13 @@ const Scrollbar = defineComponent<
       computed(() => mergedConfig.value.visibilityY),
       scrollbarInset,
       scrollbarSize,
+      direction,
     )
     const scrollFadeClassName = computed(() => {
       return resolveScrollFadeClassName(prefixCls.value, mergedScrollFade.value)
     })
     const scrollFadeStyle = computed(() => {
-      return resolveScrollFadeStyle(mergedScrollFade.value, mergedScrollFadeSize.value, scrollbarState.metrics.value)
+      return resolveScrollFadeStyle(mergedScrollFade.value, mergedScrollFadeSize.value, scrollbarState.metrics.value, direction.value)
     })
     const scrollbarDrag = useScrollbarDrag(
       containerRef,
@@ -409,24 +424,35 @@ const Scrollbar = defineComponent<
         return
       }
 
+      /**
+       * `left` is a logical offset from the content start edge, matching the
+       * drag/track paths. Native `Element.scrollTo` expects the signed
+       * `scrollLeft` space (`[-maxScroll, 0]` in RTL), so flip before delegating.
+       */
+      const toNativeLeft = (left: number) => (direction.value === 'rtl' ? -left : left)
+
       if (typeof leftOrOptions === 'object') {
+        const options = { ...leftOrOptions }
+        if (options.left !== undefined) {
+          options.left = toNativeLeft(options.left)
+        }
         if (typeof container.scrollTo === 'function') {
-          container.scrollTo(leftOrOptions)
+          container.scrollTo(options)
         }
         else {
-          if (leftOrOptions.left !== undefined) {
-            container.scrollLeft = leftOrOptions.left
+          if (options.left !== undefined) {
+            container.scrollLeft = options.left
           }
-          if (leftOrOptions.top !== undefined) {
-            container.scrollTop = leftOrOptions.top
+          if (options.top !== undefined) {
+            container.scrollTop = options.top
           }
         }
       }
       else if (typeof container.scrollTo === 'function') {
-        container.scrollTo(leftOrOptions, top)
+        container.scrollTo(toNativeLeft(leftOrOptions), top)
       }
       else {
-        container.scrollLeft = leftOrOptions
+        container.scrollLeft = toNativeLeft(leftOrOptions)
         container.scrollTop = top
       }
 
@@ -506,7 +532,13 @@ const Scrollbar = defineComponent<
                       mergedStyles.value.thumbX,
                       {
                         width: `${scrollbarState.thumbPercentX.value}%`,
-                        transform: `translateX(${scrollbarState.thumbOffsetX.value}px)`,
+                        /**
+                         * `thumbOffsetX` is measured from the start edge
+                         * (left in LTR, right in RTL). The `-rtl` stylesheet
+                         * re-anchors the thumb to the track's right edge, so
+                         * the translation has to run the opposite way.
+                         */
+                        transform: `translateX(${direction.value === 'rtl' ? -scrollbarState.thumbOffsetX.value : scrollbarState.thumbOffsetX.value}px)`,
                       },
                     ]}
                     onMousedown={handleThumbMouseDownX}

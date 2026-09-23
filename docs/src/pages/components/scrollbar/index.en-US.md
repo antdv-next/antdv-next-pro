@@ -64,7 +64,7 @@ The component `ref` exposes the following instance API:
 
 | Name | Description | Parameters | Version |
 | --- | --- | --- | --- |
-| scrollTo | Scroll to a target position with native `ScrollToOptions` or numeric coordinates | `(options: ScrollToOptions)` or `(left: number, top?: number)` | - |
+| scrollTo | Scroll to a target position with `ScrollToOptions` or numeric coordinates; `left` is the offset from the content start edge, converted to the native RTL coordinate automatically | `(options: ScrollToOptions)` or `(left: number, top?: number)` | - |
 | containerRef | Reference to the native scroll container | - | - |
 
 ## Semantic DOM {#semantic-dom}

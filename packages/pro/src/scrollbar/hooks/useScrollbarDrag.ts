@@ -87,12 +87,18 @@ export function useScrollbarDrag(
       return
     }
 
-    const delta = event.clientX - state.startClient
+    const delta = isRtl() ? state.startClient - event.clientX : event.clientX - state.startClient
     const maxTrack = maxTrackX()
     const maxScroll = metrics.value.scrollWidth - metrics.value.clientWidth
     if (maxTrack > 0 && maxScroll > 0) {
       const nextThumbTop = state.startScroll / maxScroll * maxTrack + delta
-      element.scrollLeft = getScrollOffsetByThumbTop(nextThumbTop, maxScroll, maxTrack)
+      const nextScrollOffset = getScrollOffsetByThumbTop(nextThumbTop, maxScroll, maxTrack)
+      /**
+       * RTL reports `scrollLeft` in `[-maxScroll, 0]`, so the logical offset
+       * has to be written back negated — a real browser clamps a positive
+       * assignment straight back to 0, which would kill the drag entirely.
+       */
+      element.scrollLeft = isRtl() ? -nextScrollOffset : nextScrollOffset
       sync()
     }
   }
@@ -118,7 +124,14 @@ export function useScrollbarDrag(
     dragState.value = {
       axis,
       startClient: axis === 'y' ? event.clientY : event.clientX,
-      startScroll: axis === 'y' ? element.scrollTop : element.scrollLeft,
+      /**
+       * Normalize the horizontal start offset the same way `thumbOffsetX`
+       * reads it: RTL reports a negative `scrollLeft`, so flip it to the
+       * distance scrolled from the start (right) edge.
+       */
+      startScroll: axis === 'y'
+        ? element.scrollTop
+        : (isRtl() ? -element.scrollLeft : element.scrollLeft),
     }
     draggingX.value = axis === 'x'
     draggingY.value = axis === 'y'
@@ -182,7 +195,11 @@ export function useScrollbarDrag(
       element.scrollTop = nextScrollOffset
     }
     else {
-      element.scrollLeft = nextScrollOffset
+      /**
+       * `nextScrollOffset` is a track-relative logical offset in `[0, maxScroll]`;
+       * RTL scroll positions live in `[-maxScroll, 0]`, hence the negation.
+       */
+      element.scrollLeft = isRtl() ? -nextScrollOffset : nextScrollOffset
     }
 
     sync()

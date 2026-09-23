@@ -1,3 +1,4 @@
+import type { ScrollbarRef } from '../index'
 import { mount } from '@vue/test-utils'
 import { ConfigProvider } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
@@ -24,6 +25,23 @@ function mockScrollMetrics(element: Element, metrics: Partial<Record<'clientWidt
       value,
     })
   })
+}
+
+/**
+ * `rtl` mimics the CSSOM View sign convention: an RTL container reports
+ * `scrollLeft` in `[-maxScroll, 0]`, so a positive assignment is clamped
+ * straight back to 0 — exactly how real browsers behave. Without that
+ * clamp the mock happily stores any positive value and silently masks
+ * sign regressions in the drag/track-click math.
+ */
+function mockScrollLeft(element: Element, options?: { rtl?: boolean }) {
+  let scrollLeft = 0
+  Object.defineProperty(element, 'scrollLeft', {
+    configurable: true,
+    get: () => scrollLeft,
+    set: value => (scrollLeft = options?.rtl ? Math.min(Number(value), 0) : Number(value)),
+  })
+  return () => scrollLeft
 }
 
 class TestResizeObserver {
@@ -275,6 +293,36 @@ describe('Scrollbar', () => {
     const content = wrapper.find('.ant-scrollbar-container')
     expect(content.classes()).toContain('ant-scrollbar-container-fade-both')
     expect(content.attributes('style')).toContain('--scrollbar-fade-size: 24px')
+  })
+
+  it('mirrors the horizontal fade amounts in rtl', async () => {
+    const wrapper = mount(ConfigProvider, {
+      props: { direction: 'rtl' },
+      slots: {
+        default: () => h(Scrollbar, { scrollFade: 'horizontal' }),
+      },
+    })
+
+    const container = wrapper.find('.ant-scrollbar-container')
+    mockScrollMetrics(container.element, {
+      clientHeight: 100,
+      scrollHeight: 100,
+      clientWidth: 100,
+      scrollWidth: 240,
+      scrollTop: 0,
+      // RTL: scrolled 20px in from the right edge, reported as -20.
+      scrollLeft: -20,
+    })
+
+    await container.trigger('scroll')
+    await nextTick()
+
+    // maxScrollX = 140: 120px of content still hides beyond the left edge,
+    // 20px beyond the right. The LTR arithmetic would report 0/160 — the
+    // left frozen at 0, the right inflated to 140 - (-20).
+    const style = wrapper.find('.ant-scrollbar-container').attributes('style')
+    expect(style).toContain('--scrollbar-fade-overflow-left: 120px')
+    expect(style).toContain('--scrollbar-fade-overflow-right: 20px')
   })
 
   it('supports semantic classes and styles as functions', async () => {
@@ -769,6 +817,34 @@ describe('Scrollbar', () => {
       expect(offsetPx + thumbWidthPx).toBeLessThanOrEqual(trackLength + 1e-6)
     })
 
+    it('mirrors the horizontal thumb translate in rtl', async () => {
+      const wrapper = mount(ConfigProvider, {
+        props: { direction: 'rtl' },
+        slots: {
+          default: () => h(Scrollbar, { visibilityX: 'always' }),
+        },
+      })
+
+      const container = wrapper.find('.ant-scrollbar-container')
+      mockScrollMetrics(container.element, {
+        clientHeight: 100,
+        scrollHeight: 100,
+        clientWidth: 100,
+        scrollWidth: 300,
+        scrollTop: 0,
+        // Half the scroll range into the content; RTL reports it negative.
+        scrollLeft: -100,
+      })
+
+      await container.trigger('scroll')
+      await nextTick()
+
+      // The `-rtl` stylesheet anchors the thumb to the track's right edge, so
+      // scrolling into the content has to translate it leftwards. With the
+      // LTR sign convention the ratio clamps to 0 and the thumb never moves.
+      expect(thumbTranslatePx(wrapper, 'x')).toBeLessThan(0)
+    })
+
     /**
      * Regression test for the two tracks overlapping at the shared corner.
      *
@@ -942,18 +1018,81 @@ describe('Scrollbar', () => {
     expect(scrollLeft).toBeGreaterThan(0)
   })
 
+  it('updates scrollLeft with the rtl sign when dragging the horizontal thumb', async () => {
+    const wrapper = mount(ConfigProvider, {
+      props: { direction: 'rtl' },
+      slots: {
+        default: () => h(Scrollbar),
+      },
+    })
+
+    const container = wrapper.find('.ant-scrollbar-container')
+    const getScrollLeft = mockScrollLeft(container.element, { rtl: true })
+
+    mockScrollMetrics(container.element, {
+      clientHeight: 100,
+      scrollHeight: 100,
+      scrollTop: 0,
+      clientWidth: 100,
+      scrollWidth: 300,
+    })
+
+    await container.trigger('scroll')
+    await nextTick()
+
+    // Dragging the thumb leftwards moves into the RTL content: the logical
+    // offset grows, so the stored position must go negative — a real browser
+    // would clamp a positive assignment back to 0 and freeze the drag.
+    await wrapper.find('.ant-scrollbar-thumb-x').trigger('mousedown', { clientX: 50 })
+    document.dispatchEvent(new MouseEvent('mousemove', { clientX: 30 }))
+    document.dispatchEvent(new MouseEvent('mouseup'))
+
+    expect(getScrollLeft()).toBeLessThan(0)
+  })
+
   it('exposes scrollTo method', async () => {
     const wrapper = mount(Scrollbar)
     const container = wrapper.find('.ant-scrollbar-container')
-    const calls: Array<[number, number]> = []
+    const calls: Array<any[]> = []
 
-    ;(container.element as HTMLElement).scrollTo = ((left: number, top: number) => {
-      calls.push([left, top])
+    ;(container.element as HTMLElement).scrollTo = ((...args: any[]) => {
+      calls.push(args)
     }) as any
 
     ;(wrapper.vm as any).scrollTo(12, 34)
+    ;(wrapper.vm as any).scrollTo({ left: 56, top: 78, behavior: 'smooth' })
 
-    expect(calls).toEqual([[12, 34]])
+    expect(calls).toEqual([
+      [12, 34],
+      [{ left: 56, top: 78, behavior: 'smooth' }],
+    ])
+  })
+
+  it('translates logical left offsets into native rtl scroll positions', async () => {
+    const wrapper = mount(ConfigProvider, {
+      props: { direction: 'rtl' },
+      slots: {
+        default: () => h(Scrollbar),
+      },
+    })
+
+    const container = wrapper.find('.ant-scrollbar-container')
+    const calls: Array<any[]> = []
+
+    ;(container.element as HTMLElement).scrollTo = ((...args: any[]) => {
+      calls.push(args)
+    }) as any
+
+    // `findComponent().vm` does not merge the child's `expose()` API the way
+    // the root wrapper does, so read the public instance off `$.exposed`.
+    const exposed = (wrapper.findComponent(Scrollbar).vm as any).$.exposed as ScrollbarRef
+    exposed.scrollTo(120, 34)
+    exposed.scrollTo({ left: 220, top: 140, behavior: 'smooth' })
+
+    expect(calls).toEqual([
+      [-120, 34],
+      [{ left: -220, top: 140, behavior: 'smooth' }],
+    ])
   })
 
   describe('track click', () => {
@@ -1000,16 +1139,6 @@ describe('Scrollbar', () => {
         set: value => (scrollTop = Number(value)),
       })
       return () => scrollTop
-    }
-
-    function mockScrollLeft(element: Element) {
-      let scrollLeft = 0
-      Object.defineProperty(element, 'scrollLeft', {
-        configurable: true,
-        get: () => scrollLeft,
-        set: value => (scrollLeft = Number(value)),
-      })
-      return () => scrollLeft
     }
 
     it('jumps to the clicked position on the vertical track', async () => {
@@ -1204,7 +1333,7 @@ describe('Scrollbar', () => {
       expect(wrapper.find('.ant-scrollbar-rtl').exists()).toBe(true)
 
       const container = wrapper.find('.ant-scrollbar-container')
-      const getScrollLeft = mockScrollLeft(container.element)
+      const getScrollLeft = mockScrollLeft(container.element, { rtl: true })
 
       mockScrollMetrics(container.element, {
         clientHeight: 100,
@@ -1225,7 +1354,10 @@ describe('Scrollbar', () => {
       fireTrackMouseDown(track, { clientX: 54 })
       await nextTick()
 
-      expect(getScrollLeft()).toBeCloseTo(100, 0)
+      // RTL scroll positions are negative: half the scroll range into the
+      // content is scrollLeft = -100. The rtl mock clamps positive values to
+      // 0, so a sign regression here fails instead of silently "passing".
+      expect(getScrollLeft()).toBeCloseTo(-100, 0)
     })
 
     it('keeps overlays visible after a track click', async () => {
