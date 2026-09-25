@@ -79,6 +79,7 @@ export const components: AntdvMenuItem[] = [
     label: 'dataDisplay',
     type: 'group',
     children: [
+      { key: '/components/comment', label: '/components/comment', tag: '1.1.0' },
       { key: '/components/heatmap', label: '/components/heatmap', tag: '1.1.0' },
     ],
   },
