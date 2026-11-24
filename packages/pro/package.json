@@ -24,6 +24,11 @@
       "import": "./dist/scrollbar/index.js",
       "default": "./dist/scrollbar/index.js"
     },
+    "./comment": {
+      "types": "./dist/comment/index.d.ts",
+      "import": "./dist/comment/index.js",
+      "default": "./dist/comment/index.js"
+    },
     "./cron": {
       "types": "./dist/cron/index.d.ts",
       "import": "./dist/cron/index.js",
@@ -97,6 +102,7 @@
   },
   "dependencies": {
     "@antdv-next/cssinjs": "catalog:prod",
+    "@antdv-next/icons": "catalog:prod",
     "@v-c/util": "catalog:vc",
     "croner": "catalog:prod",
     "cronstrue": "catalog:prod",

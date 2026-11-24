@@ -24,6 +24,17 @@ const globalTokenSourceDir = path.resolve(
 const outputPath = path.resolve(repoRoot, 'docs/src/assets/token-meta.json')
 
 const componentGlobalTokens: Record<string, string[]> = {
+  Comment: [
+    'colorText',
+    'colorTextTertiary',
+    'controlHeight',
+    'fontSize',
+    'fontSizeSM',
+    'fontWeightStrong',
+    'lineHeight',
+    'marginSM',
+    'marginXS',
+  ],
   Cron: [
     'colorBgContainer',
     'colorBorderSecondary',

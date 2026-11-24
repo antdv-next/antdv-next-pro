@@ -15,6 +15,7 @@ export default {
     scrollbar: 'Scrollbar',
     // Data Display
     dataDisplay: 'Data Display',
+    comment: 'Comment',
     heatmap: 'Heatmap',
   },
 } as const
