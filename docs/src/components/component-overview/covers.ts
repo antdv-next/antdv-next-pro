@@ -6,6 +6,10 @@ interface Covers {
 }
 
 export const covers: Covers = {
+  Comment: {
+    cover: '/component-overview/comment.svg',
+    coverDark: '/component-overview/comment-dark.svg',
+  },
   ConfigProvider: {
     cover: 'https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*NVKORa7BCVwAAAAAAAAAAAAADrJ8AQ/original',
     coverDark: 'https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*YC4ERpGAddoAAAAAAAAAAAAADrJ8AQ/original',
