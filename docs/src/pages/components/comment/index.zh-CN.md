@@ -103,13 +103,6 @@ group:
 
 `avatar`、`header`、`body`、`actions`、`children` 只在其内容存在时渲染。
 
-## 无障碍 {#accessibility}
-
-- 组件自身不承载交互逻辑，不对外派发事件。
-- 通过 `avatar` 属性传入图片时，组件会以 `author` 作为图片 `alt`；使用 `#avatar` 插槽时由使用方负责。
-- `datetime` 渲染为普通文本。需要机器可读时间时，请在 `#datetime` 插槽内自行使用 `<time>`。
-- `actions` 的操作项由使用方提供：请使用 `a-button` 等真实控件并绑定 `onClick`，纯图标按钮需要提供 `aria-label`（或可见文案）。
-
 ## 主题 Token {#design-tokens}
 
 Comment 支持通过 `theme.components.Comment` 自定义组件样式 Token，默认值全部从全局 Token 派生。

@@ -102,13 +102,6 @@ Common action icons:
 
 `avatar`, `header`, `body`, `actions`, and `children` render only when they have content.
 
-## Accessibility {#accessibility}
-
-- The component itself carries no interaction logic and never emits events.
-- When the image is passed through the `avatar` prop, `author` becomes the image `alt`. With the `#avatar` slot, that is up to the caller.
-- `datetime` renders as plain text. Wrap your own `<time>` in the `#datetime` slot when a machine-readable value is required.
-- Action items are supplied by the consumer: use real controls such as `a-button` with a bound `onClick`, and give icon-only buttons an `aria-label` (or visible text).
-
 ## Design Tokens {#design-tokens}
 
 Customize Comment with `theme.components.Comment`. Every default derives from global Tokens.

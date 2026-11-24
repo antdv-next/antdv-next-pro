@@ -106,7 +106,7 @@ const Comment = defineComponent<
       const hasHeader = hasAuthor || hasDatetime
 
       return (
-        <div
+        <article
           class={mergedClassName.value}
           style={mergedStyle.value}
           {...omitClassAndStyle(attrs as Record<string, any>)}
@@ -172,7 +172,7 @@ const Comment = defineComponent<
               {slots.default()}
             </Flex>
           )}
-        </div>
+        </article>
       )
     }
   },

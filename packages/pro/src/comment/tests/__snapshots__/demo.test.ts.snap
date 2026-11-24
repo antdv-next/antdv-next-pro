@@ -8,7 +8,7 @@ exports[`comment demo > renders actions correctly 1`] = `
   <div
     class="ant-space-item"
   >
-    <div
+    <article
       class="ant-comment css-var-root ant-comment-css-var"
     >
       <div
@@ -204,13 +204,13 @@ exports[`comment demo > renders actions correctly 1`] = `
         </div>
       </div>
       <!---->
-    </div>
+    </article>
   </div>
   <!---->
   <div
     class="ant-space-item"
   >
-    <div
+    <article
       class="ant-comment css-var-root ant-comment-css-var"
     >
       <div
@@ -311,14 +311,14 @@ exports[`comment demo > renders actions correctly 1`] = `
         </div>
       </div>
       <!---->
-    </div>
+    </article>
   </div>
   <!---->
 </div>
 `;
 
 exports[`comment demo > renders basic correctly 1`] = `
-<div
+<article
   class="ant-comment css-var-root ant-comment-css-var"
 >
   <div
@@ -362,7 +362,7 @@ exports[`comment demo > renders basic correctly 1`] = `
     </div>
   </div>
   <!---->
-</div>
+</article>
 `;
 
 exports[`comment demo > renders datetime correctly 1`] = `
@@ -373,7 +373,7 @@ exports[`comment demo > renders datetime correctly 1`] = `
   <div
     class="ant-space-item"
   >
-    <div
+    <article
       class="ant-comment css-var-root ant-comment-css-var"
     >
       <div
@@ -417,13 +417,13 @@ exports[`comment demo > renders datetime correctly 1`] = `
         </div>
       </div>
       <!---->
-    </div>
+    </article>
   </div>
   <!---->
   <div
     class="ant-space-item"
   >
-    <div
+    <article
       class="ant-comment css-var-root ant-comment-css-var"
     >
       <div
@@ -467,13 +467,13 @@ exports[`comment demo > renders datetime correctly 1`] = `
         </div>
       </div>
       <!---->
-    </div>
+    </article>
   </div>
   <!---->
   <div
     class="ant-space-item"
   >
-    <div
+    <article
       class="ant-comment css-var-root ant-comment-css-var"
     >
       <div
@@ -517,13 +517,13 @@ exports[`comment demo > renders datetime correctly 1`] = `
         </div>
       </div>
       <!---->
-    </div>
+    </article>
   </div>
   <!---->
   <div
     class="ant-space-item"
   >
-    <div
+    <article
       class="ant-comment css-var-root ant-comment-css-var"
     >
       <div
@@ -567,14 +567,14 @@ exports[`comment demo > renders datetime correctly 1`] = `
         </div>
       </div>
       <!---->
-    </div>
+    </article>
   </div>
   <!---->
 </div>
 `;
 
 exports[`comment demo > renders nested correctly 1`] = `
-<div
+<article
   class="ant-comment css-var-root ant-comment-css-var"
 >
   <div
@@ -620,7 +620,7 @@ exports[`comment demo > renders nested correctly 1`] = `
   <div
     class="ant-flex css-var-root ant-flex-align-stretch ant-flex-vertical ant-comment-children"
   >
-    <div
+    <article
       class="ant-comment css-var-root ant-comment-css-var"
     >
       <div
@@ -666,7 +666,7 @@ exports[`comment demo > renders nested correctly 1`] = `
       <div
         class="ant-flex css-var-root ant-flex-align-stretch ant-flex-vertical ant-comment-children"
       >
-        <div
+        <article
           class="ant-comment css-var-root ant-comment-css-var"
         >
           <div
@@ -710,10 +710,10 @@ exports[`comment demo > renders nested correctly 1`] = `
             </div>
           </div>
           <!---->
-        </div>
+        </article>
       </div>
-    </div>
-    <div
+    </article>
+    <article
       class="ant-comment css-var-root ant-comment-css-var"
     >
       <div
@@ -757,13 +757,13 @@ exports[`comment demo > renders nested correctly 1`] = `
         </div>
       </div>
       <!---->
-    </div>
+    </article>
   </div>
-</div>
+</article>
 `;
 
 exports[`comment demo > renders semantic correctly 1`] = `
-<div
+<article
   class="ant-comment css-var-root ant-comment-css-var comment-semantic-root"
 >
   <div
@@ -843,7 +843,7 @@ exports[`comment demo > renders semantic correctly 1`] = `
     class="ant-flex css-var-root ant-flex-align-stretch ant-flex-vertical ant-comment-children comment-semantic-children"
     style="padding-inline-start: 24px; border-inline-start: 2px solid var(--ant-color-border);"
   >
-    <div
+    <article
       class="ant-comment css-var-root ant-comment-css-var"
     >
       <div
@@ -887,7 +887,7 @@ exports[`comment demo > renders semantic correctly 1`] = `
         </div>
       </div>
       <!---->
-    </div>
+    </article>
   </div>
-</div>
+</article>
 `;

@@ -4,7 +4,7 @@ exports[`rtl render > component should be rendered correctly in RTL direction 1`
 <div
   data-v-app=""
 >
-  <div
+  <article
     class="ant-comment css-var-root ant-comment-css-var ant-comment-rtl"
   >
     <div
@@ -20,6 +20,6 @@ exports[`rtl render > component should be rendered correctly in RTL direction 1`
       </div>
     </div>
     <!---->
-  </div>
+  </article>
 </div>
 `;

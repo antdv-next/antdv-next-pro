@@ -33,6 +33,16 @@ function mountFull(props: CommentProps = {}, slots: Record<string, () => any> = 
 }
 
 describe('Comment', () => {
+  it('uses article semantics and does not infer an avatar alt from a non-string author', () => {
+    const wrapper = mountFull({
+      author: h('span', 'Zhang San'),
+      avatar: 'https://example.com/avatar.png',
+    })
+
+    expect(wrapper.element.tagName).toBe('ARTICLE')
+    expect(wrapper.find('.ant-comment-avatar img').attributes('alt')).toBeUndefined()
+  })
+
   it('renders author, avatar, datetime and content from props', () => {
     const wrapper = mountFull({ avatar: 'https://example.com/avatar.png' })
 
