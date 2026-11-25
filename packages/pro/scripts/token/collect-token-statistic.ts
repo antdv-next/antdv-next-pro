@@ -5,6 +5,7 @@ import { theme } from 'antdv-next'
 import { prepareComponentToken as prepareCommentToken } from '../../src/comment/style/token'
 import { prepareComponentToken as prepareCronToken } from '../../src/cron/style/token'
 import { prepareComponentToken as prepareHeatmapToken } from '../../src/heatmap/style/token'
+import { prepareComponentToken as prepareHighlightToken } from '../../src/highlight/style/token'
 import { prepareComponentToken as prepareInputTagToken } from '../../src/input-tag/style/token'
 import { prepareComponentToken as prepareScrollbarToken } from '../../src/scrollbar/style/token'
 
@@ -63,6 +64,10 @@ async function main() {
         'motionDurationMid',
       ],
       component: prepareHeatmapToken(globalToken),
+    },
+    Highlight: {
+      global: ['borderRadiusXS', 'gold3'],
+      component: prepareHighlightToken(globalToken),
     },
     InputTag: {
       global: ['marginXXS', 'controlHeight', 'colorTextTertiary', 'colorText'],

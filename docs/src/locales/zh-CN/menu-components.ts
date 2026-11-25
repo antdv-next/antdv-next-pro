@@ -17,5 +17,6 @@ export default {
     dataDisplay: '数据展示',
     comment: 'Comment 评论',
     heatmap: 'Heatmap 热力图',
+    highlight: 'Highlight 文本高亮',
   },
 } as const

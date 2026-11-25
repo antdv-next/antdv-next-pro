@@ -3,6 +3,7 @@ import type { CSSProperties } from 'vue'
 import type { CommentConfig } from '../comment/types'
 import type { CronConfig } from '../cron/types'
 import type { HeatmapConfig } from '../heatmap/types'
+import type { HighlightConfig } from '../highlight/types'
 import type { InputTagConfig } from '../input-tag'
 import type { ProLocale } from '../locale/types'
 
@@ -28,11 +29,12 @@ export interface ProConfigContextProps {
   comment?: CommentConfig
   cron?: CronConfig
   heatmap?: HeatmapConfig
+  highlight?: HighlightConfig
   scrollbar?: ScrollbarConfig
   inputTag?: InputTagConfig
 }
 
-export const PRO_CONFIG_KEYS = ['comment', 'cron', 'heatmap', 'scrollbar', 'inputTag'] as const satisfies readonly (keyof ProConfigContextProps)[]
+export const PRO_CONFIG_KEYS = ['comment', 'cron', 'heatmap', 'highlight', 'scrollbar', 'inputTag'] as const satisfies readonly (keyof ProConfigContextProps)[]
 
 export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'>, ProConfigContextProps {
   locale?: ProLocale
@@ -47,4 +49,4 @@ export interface ProConfigProviderSlots {
 
 export type ProConfigProviderEmits = Record<string, any>
 
-export type { CommentConfig, CronConfig, HeatmapConfig, InputTagConfig }
+export type { CommentConfig, CronConfig, HeatmapConfig, HighlightConfig, InputTagConfig }

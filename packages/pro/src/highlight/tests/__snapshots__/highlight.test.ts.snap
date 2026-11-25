@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Highlight > renders a span root with mark chunks and bare text nodes 1`] = `"<span class="ant-highlight css-var-root ant-highlight-css-var"><mark class="ant-highlight-highlight">Free</mark> shipping on orders over <mark class="ant-highlight-highlight">$50</mark>.</span>"`;
+
+exports[`rtl render > component should be rendered correctly in RTL direction 1`] = `
+<div
+  data-v-app=""
+>
+  <span
+    class="ant-highlight css-var-root ant-highlight-css-var ant-highlight-rtl"
+  />
+</div>
+`;

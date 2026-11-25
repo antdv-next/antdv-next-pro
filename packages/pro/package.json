@@ -39,6 +39,11 @@
       "import": "./dist/heatmap/index.js",
       "default": "./dist/heatmap/index.js"
     },
+    "./highlight": {
+      "types": "./dist/highlight/index.d.ts",
+      "import": "./dist/highlight/index.js",
+      "default": "./dist/highlight/index.js"
+    },
     "./input-tag": {
       "types": "./dist/input-tag/index.d.ts",
       "import": "./dist/input-tag/index.js",

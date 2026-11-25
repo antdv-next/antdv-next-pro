@@ -77,6 +77,10 @@ export default defineConfig({
         replacement: path.resolve(baseUrl, '../packages/pro/src/heatmap/index.tsx'),
       },
       {
+        find: /^@antdv-next\/pro\/highlight$/,
+        replacement: path.resolve(baseUrl, '../packages/pro/src/highlight/index.tsx'),
+      },
+      {
         find: /^@antdv-next\/pro\/input-tag$/,
         replacement: path.resolve(baseUrl, '../packages/pro/src/input-tag/index.tsx'),
       },

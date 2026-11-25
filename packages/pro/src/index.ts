@@ -2,6 +2,7 @@ import type { App, Plugin } from 'vue'
 import type { ComponentToken as CommentComponentToken } from './comment/style'
 import type { ComponentToken as CronComponentToken } from './cron/style'
 import type { ComponentToken as HeatmapComponentToken } from './heatmap/style'
+import type { ComponentToken as HighlightComponentToken } from './highlight/style'
 import type { ComponentToken as InputTagComponentToken } from './input-tag/style'
 import type { ComponentToken as ScrollbarComponentToken } from './scrollbar/style'
 import * as components from './components'
@@ -11,6 +12,7 @@ declare module 'antdv-next/theme/interface/components' {
     Comment?: CommentComponentToken
     Cron?: CronComponentToken
     Heatmap?: HeatmapComponentToken
+    Highlight?: HighlightComponentToken
     Scrollbar?: ScrollbarComponentToken
     InputTag?: InputTagComponentToken
   }
@@ -34,6 +36,7 @@ export type {
   CommentConfig,
   CronConfig,
   HeatmapConfig,
+  HighlightConfig,
   InputTagConfig,
   ProConfigProviderProps,
   ScrollbarConfig,
@@ -87,6 +90,24 @@ export type {
   HeatmapTimeZone,
   HeatmapTooltipSlotProps,
 } from './heatmap'
+export type {
+  GetHighlightChunksOptions,
+  HighlightChunk,
+  HighlightClassNamesType,
+  HighlightEmits,
+  HighlightFindChunks,
+  HighlightFindChunksParams,
+  HighlightKeyword,
+  HighlightProps,
+  HighlightRange,
+  HighlightRef,
+  HighlightRenderInfo,
+  HighlightSemanticClassNames,
+  HighlightSemanticName,
+  HighlightSemanticStyles,
+  HighlightSlots,
+  HighlightStylesType,
+} from './highlight'
 export type {
   InputTagAllowClearConfig,
   InputTagClassNamesType,
