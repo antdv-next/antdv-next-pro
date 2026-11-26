@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Выберыце катэгорыю або шукайце',
+    clear: 'Ачысціць',
+    confirm: 'OK',
+    cancel: 'Адмена',
+    selectAll: 'Выбраць усё',
+    min: 'Мін.',
+    max: 'Макс.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Цеплавая карта',

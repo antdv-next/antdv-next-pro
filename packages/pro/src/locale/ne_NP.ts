@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'श्रेणी छान्नुहोस् वा खोज्नुहोस्',
+    clear: 'खाली गर्नुहोस्',
+    confirm: 'हो',
+    cancel: 'होईन',
+    selectAll: 'सबै छान्नुहोस्',
+    min: 'न्यूनतम',
+    max: 'अधिकतम',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'ताप नक्सा',

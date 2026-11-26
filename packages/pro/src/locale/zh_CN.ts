@@ -76,6 +76,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: '选择分类或输入关键字搜索',
+    clear: '清空',
+    confirm: '确定',
+    cancel: '取消',
+    selectAll: '全选',
+    min: '最小值',
+    max: '最大值',
+    rangeSeparator: ' ~ ',
+    valueSeparator: '、',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: '热力图',

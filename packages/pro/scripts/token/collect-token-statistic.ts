@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { theme } from 'antdv-next'
+import { prepareComponentToken as prepareCategorySearchToken } from '../../src/category-search/style/token'
 import { prepareComponentToken as prepareCommentToken } from '../../src/comment/style/token'
 import { prepareComponentToken as prepareCronToken } from '../../src/cron/style/token'
 import { prepareComponentToken as prepareHeatmapToken } from '../../src/heatmap/style/token'
@@ -45,6 +46,29 @@ async function main() {
         'motionDurationMid',
       ],
       component: prepareCronToken(globalToken),
+    },
+    CategorySearch: {
+      global: [
+        'controlHeight',
+        'controlHeightSM',
+        'marginXXS',
+        'marginXS',
+        'paddingXXS',
+        'paddingXS',
+        'paddingSM',
+        'fontSizeSM',
+        'fontWeightStrong',
+        'borderRadiusSM',
+        'colorText',
+        'colorTextSecondary',
+        'colorTextTertiary',
+        'colorTextDisabled',
+        'colorTextDescription',
+        'controlItemBgHover',
+        'controlItemBgActive',
+        'motionDurationMid',
+      ],
+      component: prepareCategorySearchToken(globalToken),
     },
     Heatmap: {
       global: [

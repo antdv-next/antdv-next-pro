@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Roghnaigh catagóir nó cuardaigh',
+    clear: 'Glan',
+    confirm: 'OK',
+    cancel: 'Cancel',
+    selectAll: 'Roghnaigh gach rud',
+    min: 'Íos.',
+    max: 'Uas.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Léarscáil teasa',

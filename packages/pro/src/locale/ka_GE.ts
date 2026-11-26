@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'აირჩიეთ კატეგორია ან მოძებნეთ',
+    clear: 'გასუფთავება',
+    confirm: 'კარგი',
+    cancel: 'გაუქმება',
+    selectAll: 'ყველას არჩევა',
+    min: 'მინ.',
+    max: 'მაქს.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'სითბოს რუკა',

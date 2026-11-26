@@ -1,4 +1,5 @@
 export interface ComponentTokenMap {
+  CategorySearch: import('../../category-search/style').ComponentToken
   Comment: import('../../comment/style').ComponentToken
   Cron: import('../../cron/style').ComponentToken
   Scrollbar: import('../../scrollbar/style').ComponentToken

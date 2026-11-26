@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Select a category or search',
+    clear: 'Clear',
+    confirm: 'OK',
+    cancel: 'Cancel',
+    selectAll: 'Select all',
+    min: 'Min',
+    max: 'Max',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Heatmap',

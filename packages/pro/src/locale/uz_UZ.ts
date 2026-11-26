@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Turkumni tanlang yoki qidiring',
+    clear: 'Tozalash',
+    confirm: 'OK',
+    cancel: 'Yopish',
+    selectAll: 'Hammasini tanlash',
+    min: 'Min.',
+    max: 'Maks.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Issiqlik xaritasi',

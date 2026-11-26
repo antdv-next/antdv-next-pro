@@ -76,6 +76,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Pilih kategori atau cari',
+    clear: 'Hapus',
+    confirm: 'OK',
+    cancel: 'Batal',
+    selectAll: 'Pilih semua',
+    min: 'Min',
+    max: 'Maks',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Peta panas',

@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Hautatu kategoria bat edo bilatu',
+    clear: 'Garbitu',
+    confirm: 'Onartu',
+    cancel: 'Utzi',
+    selectAll: 'Hautatu guztiak',
+    min: 'Min.',
+    max: 'Max.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Bero mapa',

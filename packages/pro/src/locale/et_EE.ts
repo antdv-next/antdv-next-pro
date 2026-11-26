@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Valige kategooria või otsige',
+    clear: 'Tühjenda',
+    confirm: 'OK',
+    cancel: 'Tühista',
+    selectAll: 'Vali kõik',
+    min: 'Min',
+    max: 'Max',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Kuumuskaart',

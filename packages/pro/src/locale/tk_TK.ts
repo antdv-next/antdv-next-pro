@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Kategoriýa saýlaň ýa-da gözläň',
+    clear: 'Arassala',
+    confirm: 'Bolýar',
+    cancel: 'Ýatyr',
+    selectAll: 'Hemmesini saýla',
+    min: 'Iň az',
+    max: 'Iň köp',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Ýylylyk kartasy',

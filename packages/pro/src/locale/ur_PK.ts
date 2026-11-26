@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'زمرہ منتخب کریں یا تلاش کریں',
+    clear: 'صاف کریں',
+    confirm: 'ٹھیک ہے',
+    cancel: 'منسوخ کریں',
+    selectAll: 'سب منتخب کریں',
+    min: 'کم از کم',
+    max: 'زیادہ سے زیادہ',
+    rangeSeparator: ' ~ ',
+    valueSeparator: '، ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'حرارتی نقشہ',

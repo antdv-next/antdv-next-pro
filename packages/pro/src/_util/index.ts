@@ -5,8 +5,10 @@ export { getSlotPropsFnRun } from 'antdv-next/dist/_util/tools'
 
 // antdv-next has no first-class ./form/context export; isolate the dist wildcard import here.
 export {
+  NoFormStyle,
   useFormItemInputContext,
   useFormItemInputContextProvider,
+  useFormItemProviderRest,
 } from 'antdv-next/dist/form/context'
 
 export function unwrapExposedElement<T extends HTMLElement>(value: unknown): T | null {

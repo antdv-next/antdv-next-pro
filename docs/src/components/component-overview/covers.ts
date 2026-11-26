@@ -6,6 +6,10 @@ interface Covers {
 }
 
 export const covers: Covers = {
+  CategorySearch: {
+    cover: '/component-overview/category-search.svg',
+    coverDark: '/component-overview/category-search-dark.svg',
+  },
   Comment: {
     cover: '/component-overview/comment.svg',
     coverDark: '/component-overview/comment-dark.svg',

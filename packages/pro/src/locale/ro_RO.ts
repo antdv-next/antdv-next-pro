@@ -76,6 +76,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Selectați o categorie sau căutați',
+    clear: 'Golește',
+    confirm: 'OK',
+    cancel: 'Anulare',
+    selectAll: 'Selectează tot',
+    min: 'Min.',
+    max: 'Max.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Hartă termică',

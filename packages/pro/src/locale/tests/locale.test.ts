@@ -66,6 +66,12 @@ describe('Pro locale', () => {
         clear: expect.any(String),
         showMore: expect.any(String),
       })
+      expect(locale?.CategorySearch, localeName).toBeDefined()
+      for (const key of Object.keys(enUS.CategorySearch!) as (keyof NonNullable<ProLocale['CategorySearch']>)[]) {
+        const message = locale?.CategorySearch?.[key]
+        expect(message, `${localeName}:CategorySearch.${key}`).toEqual(expect.any(String))
+        expect(message?.trim(), `${localeName}:CategorySearch.${key}`).not.toBe('')
+      }
       expect(locale?.InputTag?.clear?.trim(), `${localeName}:InputTag.clear`).not.toBe('')
       expect(locale?.InputTag?.showMore?.trim(), `${localeName}:InputTag.showMore`).not.toBe('')
 
@@ -107,6 +113,12 @@ describe('Pro locale', () => {
       clear: '清空',
       showMore: '展開全部標籤',
     })
+  })
+
+  it('ships CategorySearch messages for representative locales', () => {
+    expect(enUS.CategorySearch).toMatchObject({ placeholder: 'Select a category or search', confirm: 'OK', cancel: 'Cancel' })
+    expect(frFR.CategorySearch?.selectAll).toBe('Tout sélectionner')
+    expect(proLocaleModules['../zh_CN.ts']?.CategorySearch).toMatchObject({ confirm: '确定', valueSeparator: '、' })
   })
 
   it('is assignable to the antdv-next Locale type', () => {

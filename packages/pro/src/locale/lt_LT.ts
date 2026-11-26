@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Pasirinkite kategoriją arba ieškokite',
+    clear: 'Išvalyti',
+    confirm: 'Taip',
+    cancel: 'Atšaukti',
+    selectAll: 'Pasirinkti viską',
+    min: 'Min.',
+    max: 'Maks.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Šilumos žemėlapis',

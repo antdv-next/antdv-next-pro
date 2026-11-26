@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Kategoriyekê hilbijêre an jî bigere',
+    clear: 'Paqij bike',
+    confirm: 'Temam',
+    cancel: 'Betal ke',
+    selectAll: 'Hemûyan hilbijêre',
+    min: 'Kêmtirîn',
+    max: 'Herî zêde',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Nexşeya germê',

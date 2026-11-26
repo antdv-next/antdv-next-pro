@@ -24,6 +24,11 @@
       "import": "./dist/scrollbar/index.js",
       "default": "./dist/scrollbar/index.js"
     },
+    "./category-search": {
+      "types": "./dist/category-search/index.d.ts",
+      "import": "./dist/category-search/index.js",
+      "default": "./dist/category-search/index.js"
+    },
     "./comment": {
       "types": "./dist/comment/index.d.ts",
       "import": "./dist/comment/index.js",
