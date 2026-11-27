@@ -1,8 +1,12 @@
 import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/id_ID'
+import * as cronstrueId from 'cronstrue/locales/id.js'
+import { defineCronDescriptionLocale } from '../cron/utils/description'
 
 const cronLocale = {
+  // 整句描述只带上当前语言，不再打包 cronstrue 的全部语言。
+  descriptionLocale: defineCronDescriptionLocale('id', cronstrueId),
   fields: {
     second: 'Detik',
     minute: 'Menit',

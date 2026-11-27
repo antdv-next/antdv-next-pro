@@ -43,6 +43,7 @@ export type {
 } from './config-provider'
 export type {
   CronClassNamesType,
+  CronDescriptionLocale,
   CronEditorMode,
   CronEmits,
   CronError,

@@ -1,8 +1,12 @@
 import type { CronLocale } from '../cron/types'
 import type { ProLocale } from './types'
 import locale from 'antdv-next/locale/my_MM'
+import * as cronstrueMy from 'cronstrue/locales/my.js'
+import { defineCronDescriptionLocale } from '../cron/utils/description'
 
 const cronLocale = {
+  // 整句描述只带上当前语言，不再打包 cronstrue 的全部语言。
+  descriptionLocale: defineCronDescriptionLocale('my', cronstrueMy),
   fields: {
     second: 'ဒုတိယ',
     minute: 'မိနစ်',

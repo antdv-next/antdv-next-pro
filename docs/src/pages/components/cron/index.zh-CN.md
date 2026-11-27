@@ -29,11 +29,14 @@ group:
 
 ## API {#api}
 
-### 属性
+### 属性 {#properties}
 
 | 属性 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| value | 受控的 Cron 表达式 | `string` | - | - | - |
+| prefixCls | 组件样式前缀 | `string` | - | - | × |
+| rootClass | 组件根元素 class | `string` | - | - | × |
+| value | 受控的 Cron 表达式，支持 `v-model:value` | `string` | - | - | - |
+| defaultValue | 非受控的初始表达式，只在挂载时读取一次 | `string` | - | - | - |
 | format | Cron 方言 | `'quartz' \| 'unix'` | `'quartz'` | - | ✓ |
 | showYear | 使用七字段 Quartz 格式 | `boolean` | `false` | - | ✓ |
 | disabled | 禁用全部交互 | `boolean` | `false` | - | ✓ |
@@ -45,7 +48,7 @@ group:
 | classes | 语义化 class 定制 | `CronClassNamesType` | - | - | ✓ |
 | styles | 语义化 style 定制 | `CronStylesType` | - | - | ✓ |
 
-### 事件
+### 事件 {#events}
 
 | 事件 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
@@ -88,14 +91,27 @@ const rules = [
 </template>
 ```
 
-### 插槽
+### 插槽 {#slots}
 
 | 插槽 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
-| field | 替换当前字段编辑器 | - | - |
-| presets | 替换预设区域 | - | - |
-| preview | 替换预览区域 | - | - |
-| error | 替换校验错误内容 | - | - |
+| field | 替换当前字段编辑器 | `(props: CronFieldSlotProps) => any` | - |
+| presets | 替换预设区域。插槽优先于 `presets` 属性，可以只用插槽不传属性 | `() => any` | - |
+| preview | 替换预览区域 | `(props: CronPreviewResult) => any` | - |
+| error | 替换校验错误内容 | `(props: CronValidateResult) => any` | - |
+
+## 受控与非受控 {#controlled}
+
+- 受控：传 `value`（或 `v-model:value`），表达式始终跟随外部值。
+- 非受控：不传 `value`，用 `defaultValue` 给初始表达式，之后由组件内部维护，通过 `change` / `update:value` 取值。切换语言、`format` 或 `showYear` 时会保留用户已编辑的表达式，只重新校验。
+
+## 国际化 {#i18n}
+
+字段文案来自 `@antdv-next/pro/locale/<语言>`。预览里的整句自然语言描述（如「在 09:00」）由 [cronstrue](https://github.com/bradymholt/cRonstrue) 生成：每个内置语言包只带上自己对应的 cronstrue 语言，不再打包全部语言。
+
+- cronstrue 不支持的语言，整句描述回退为英文。
+- 自定义语言包可以自己带上 cronstrue 语言：`Cron: { ...messages, descriptionLocale: defineCronDescriptionLocale('fr', cronstrueFr) }`，其中 `import * as cronstrueFr from 'cronstrue/locales/fr.js'`，`defineCronDescriptionLocale` 从 `@antdv-next/pro` 导出。
+- 预览的执行时间用 dayjs 按当前语言格式化，需要自行引入对应的 dayjs 语言包（如 `import 'dayjs/locale/zh-cn'`），否则月份 / 星期仍显示英文。
 
 ## Cron 格式
 

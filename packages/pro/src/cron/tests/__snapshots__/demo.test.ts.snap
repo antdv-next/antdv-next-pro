@@ -25,66 +25,66 @@ exports[`cron demo > renders basic correctly 1`] = `
       role="tablist"
     >
       <span
-        aria-controls="cron-1-panel-second"
+        aria-controls="v-0-panel-second"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="second"
-        id="cron-1-tab-second"
+        id="v-0-tab-second"
         role="tab"
         tabindex="-1"
       >
         Second
       </span>
       <span
-        aria-controls="cron-1-panel-minute"
+        aria-controls="v-0-panel-minute"
         aria-selected="true"
         class="ant-cron-field-tab ant-cron-field-tab-label ant-cron-field-tab-active"
         data-field="minute"
-        id="cron-1-tab-minute"
+        id="v-0-tab-minute"
         role="tab"
         tabindex="0"
       >
         Minute
       </span>
       <span
-        aria-controls="cron-1-panel-hour"
+        aria-controls="v-0-panel-hour"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="hour"
-        id="cron-1-tab-hour"
+        id="v-0-tab-hour"
         role="tab"
         tabindex="-1"
       >
         Hour
       </span>
       <span
-        aria-controls="cron-1-panel-day"
+        aria-controls="v-0-panel-day"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="day"
-        id="cron-1-tab-day"
+        id="v-0-tab-day"
         role="tab"
         tabindex="-1"
       >
         Day
       </span>
       <span
-        aria-controls="cron-1-panel-month"
+        aria-controls="v-0-panel-month"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="month"
-        id="cron-1-tab-month"
+        id="v-0-tab-month"
         role="tab"
         tabindex="-1"
       >
         Month
       </span>
       <span
-        aria-controls="cron-1-panel-week"
+        aria-controls="v-0-panel-week"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="week"
-        id="cron-1-tab-week"
+        id="v-0-tab-week"
         role="tab"
         tabindex="-1"
       >
@@ -95,13 +95,13 @@ exports[`cron demo > renders basic correctly 1`] = `
       class="ant-cron-editor"
     >
       <div
-        aria-labelledby="cron-1-tab-minute"
+        aria-labelledby="v-0-tab-minute"
         class="ant-cron-field"
         data-disabled="false"
         data-field="minute"
         data-invalid="false"
         data-mode="specified"
-        id="cron-1-panel-minute"
+        id="v-0-panel-minute"
         role="tabpanel"
       >
         <div
@@ -129,7 +129,7 @@ exports[`cron demo > renders basic correctly 1`] = `
               >
                 <input
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -144,7 +144,7 @@ exports[`cron demo > renders basic correctly 1`] = `
               >
                 <input
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -160,7 +160,7 @@ exports[`cron demo > renders basic correctly 1`] = `
                 <input
                   checked=""
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -175,7 +175,7 @@ exports[`cron demo > renders basic correctly 1`] = `
               >
                 <input
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -424,66 +424,66 @@ exports[`cron demo > renders form correctly 1`] = `
                   role="tablist"
                 >
                   <span
-                    aria-controls="cron-2-panel-second"
+                    aria-controls="v-0-panel-second"
                     aria-selected="false"
                     class="ant-cron-field-tab ant-cron-field-tab-label"
                     data-field="second"
-                    id="cron-2-tab-second"
+                    id="v-0-tab-second"
                     role="tab"
                     tabindex="-1"
                   >
                     Second
                   </span>
                   <span
-                    aria-controls="cron-2-panel-minute"
+                    aria-controls="v-0-panel-minute"
                     aria-selected="true"
                     class="ant-cron-field-tab ant-cron-field-tab-label ant-cron-field-tab-active"
                     data-field="minute"
-                    id="cron-2-tab-minute"
+                    id="v-0-tab-minute"
                     role="tab"
                     tabindex="0"
                   >
                     Minute
                   </span>
                   <span
-                    aria-controls="cron-2-panel-hour"
+                    aria-controls="v-0-panel-hour"
                     aria-selected="false"
                     class="ant-cron-field-tab ant-cron-field-tab-label"
                     data-field="hour"
-                    id="cron-2-tab-hour"
+                    id="v-0-tab-hour"
                     role="tab"
                     tabindex="-1"
                   >
                     Hour
                   </span>
                   <span
-                    aria-controls="cron-2-panel-day"
+                    aria-controls="v-0-panel-day"
                     aria-selected="false"
                     class="ant-cron-field-tab ant-cron-field-tab-label"
                     data-field="day"
-                    id="cron-2-tab-day"
+                    id="v-0-tab-day"
                     role="tab"
                     tabindex="-1"
                   >
                     Day
                   </span>
                   <span
-                    aria-controls="cron-2-panel-month"
+                    aria-controls="v-0-panel-month"
                     aria-selected="false"
                     class="ant-cron-field-tab ant-cron-field-tab-label"
                     data-field="month"
-                    id="cron-2-tab-month"
+                    id="v-0-tab-month"
                     role="tab"
                     tabindex="-1"
                   >
                     Month
                   </span>
                   <span
-                    aria-controls="cron-2-panel-week"
+                    aria-controls="v-0-panel-week"
                     aria-selected="false"
                     class="ant-cron-field-tab ant-cron-field-tab-label"
                     data-field="week"
-                    id="cron-2-tab-week"
+                    id="v-0-tab-week"
                     role="tab"
                     tabindex="-1"
                   >
@@ -494,13 +494,13 @@ exports[`cron demo > renders form correctly 1`] = `
                   class="ant-cron-editor"
                 >
                   <div
-                    aria-labelledby="cron-2-tab-minute"
+                    aria-labelledby="v-0-tab-minute"
                     class="ant-cron-field"
                     data-disabled="false"
                     data-field="minute"
                     data-invalid="false"
                     data-mode="specified"
-                    id="cron-2-panel-minute"
+                    id="v-0-panel-minute"
                     role="tabpanel"
                   >
                     <div
@@ -528,7 +528,7 @@ exports[`cron demo > renders form correctly 1`] = `
                           >
                             <input
                               class="ant-segmented-item-input"
-                              name="v-0"
+                              name="v-1"
                               type="radio"
                             />
                             <div
@@ -543,7 +543,7 @@ exports[`cron demo > renders form correctly 1`] = `
                           >
                             <input
                               class="ant-segmented-item-input"
-                              name="v-0"
+                              name="v-1"
                               type="radio"
                             />
                             <div
@@ -559,7 +559,7 @@ exports[`cron demo > renders form correctly 1`] = `
                             <input
                               checked=""
                               class="ant-segmented-item-input"
-                              name="v-0"
+                              name="v-1"
                               type="radio"
                             />
                             <div
@@ -574,7 +574,7 @@ exports[`cron demo > renders form correctly 1`] = `
                           >
                             <input
                               class="ant-segmented-item-input"
-                              name="v-0"
+                              name="v-1"
                               type="radio"
                             />
                             <div
@@ -782,55 +782,55 @@ exports[`cron demo > renders form correctly 1`] = `
                   role="tablist"
                 >
                   <span
-                    aria-controls="cron-3-panel-minute"
+                    aria-controls="v-4-panel-minute"
                     aria-selected="true"
                     class="ant-cron-field-tab ant-cron-field-tab-label ant-cron-field-tab-active"
                     data-field="minute"
-                    id="cron-3-tab-minute"
+                    id="v-4-tab-minute"
                     role="tab"
                     tabindex="0"
                   >
                     Minute
                   </span>
                   <span
-                    aria-controls="cron-3-panel-hour"
+                    aria-controls="v-4-panel-hour"
                     aria-selected="false"
                     class="ant-cron-field-tab ant-cron-field-tab-label"
                     data-field="hour"
-                    id="cron-3-tab-hour"
+                    id="v-4-tab-hour"
                     role="tab"
                     tabindex="-1"
                   >
                     Hour
                   </span>
                   <span
-                    aria-controls="cron-3-panel-day"
+                    aria-controls="v-4-panel-day"
                     aria-selected="false"
                     class="ant-cron-field-tab ant-cron-field-tab-label"
                     data-field="day"
-                    id="cron-3-tab-day"
+                    id="v-4-tab-day"
                     role="tab"
                     tabindex="-1"
                   >
                     Day
                   </span>
                   <span
-                    aria-controls="cron-3-panel-month"
+                    aria-controls="v-4-panel-month"
                     aria-selected="false"
                     class="ant-cron-field-tab ant-cron-field-tab-label"
                     data-field="month"
-                    id="cron-3-tab-month"
+                    id="v-4-tab-month"
                     role="tab"
                     tabindex="-1"
                   >
                     Month
                   </span>
                   <span
-                    aria-controls="cron-3-panel-week"
+                    aria-controls="v-4-panel-week"
                     aria-selected="false"
                     class="ant-cron-field-tab ant-cron-field-tab-label"
                     data-field="week"
-                    id="cron-3-tab-week"
+                    id="v-4-tab-week"
                     role="tab"
                     tabindex="-1"
                   >
@@ -841,13 +841,13 @@ exports[`cron demo > renders form correctly 1`] = `
                   class="ant-cron-editor"
                 >
                   <div
-                    aria-labelledby="cron-3-tab-minute"
+                    aria-labelledby="v-4-tab-minute"
                     class="ant-cron-field"
                     data-disabled="false"
                     data-field="minute"
                     data-invalid="false"
                     data-mode="specified"
-                    id="cron-3-panel-minute"
+                    id="v-4-panel-minute"
                     role="tabpanel"
                   >
                     <div
@@ -875,7 +875,7 @@ exports[`cron demo > renders form correctly 1`] = `
                           >
                             <input
                               class="ant-segmented-item-input"
-                              name="v-3"
+                              name="v-5"
                               type="radio"
                             />
                             <div
@@ -890,7 +890,7 @@ exports[`cron demo > renders form correctly 1`] = `
                           >
                             <input
                               class="ant-segmented-item-input"
-                              name="v-3"
+                              name="v-5"
                               type="radio"
                             />
                             <div
@@ -906,7 +906,7 @@ exports[`cron demo > renders form correctly 1`] = `
                             <input
                               checked=""
                               class="ant-segmented-item-input"
-                              name="v-3"
+                              name="v-5"
                               type="radio"
                             />
                             <div
@@ -921,7 +921,7 @@ exports[`cron demo > renders form correctly 1`] = `
                           >
                             <input
                               class="ant-segmented-item-input"
-                              name="v-3"
+                              name="v-5"
                               type="radio"
                             />
                             <div
@@ -1230,66 +1230,66 @@ exports[`cron demo > renders format correctly 1`] = `
         role="tablist"
       >
         <span
-          aria-controls="cron-4-panel-second"
+          aria-controls="v-2-panel-second"
           aria-selected="false"
           class="ant-cron-field-tab ant-cron-field-tab-label"
           data-field="second"
-          id="cron-4-tab-second"
+          id="v-2-tab-second"
           role="tab"
           tabindex="-1"
         >
           Second
         </span>
         <span
-          aria-controls="cron-4-panel-minute"
+          aria-controls="v-2-panel-minute"
           aria-selected="true"
           class="ant-cron-field-tab ant-cron-field-tab-label ant-cron-field-tab-active"
           data-field="minute"
-          id="cron-4-tab-minute"
+          id="v-2-tab-minute"
           role="tab"
           tabindex="0"
         >
           Minute
         </span>
         <span
-          aria-controls="cron-4-panel-hour"
+          aria-controls="v-2-panel-hour"
           aria-selected="false"
           class="ant-cron-field-tab ant-cron-field-tab-label"
           data-field="hour"
-          id="cron-4-tab-hour"
+          id="v-2-tab-hour"
           role="tab"
           tabindex="-1"
         >
           Hour
         </span>
         <span
-          aria-controls="cron-4-panel-day"
+          aria-controls="v-2-panel-day"
           aria-selected="false"
           class="ant-cron-field-tab ant-cron-field-tab-label"
           data-field="day"
-          id="cron-4-tab-day"
+          id="v-2-tab-day"
           role="tab"
           tabindex="-1"
         >
           Day
         </span>
         <span
-          aria-controls="cron-4-panel-month"
+          aria-controls="v-2-panel-month"
           aria-selected="false"
           class="ant-cron-field-tab ant-cron-field-tab-label"
           data-field="month"
-          id="cron-4-tab-month"
+          id="v-2-tab-month"
           role="tab"
           tabindex="-1"
         >
           Month
         </span>
         <span
-          aria-controls="cron-4-panel-week"
+          aria-controls="v-2-panel-week"
           aria-selected="false"
           class="ant-cron-field-tab ant-cron-field-tab-label"
           data-field="week"
-          id="cron-4-tab-week"
+          id="v-2-tab-week"
           role="tab"
           tabindex="-1"
         >
@@ -1300,13 +1300,13 @@ exports[`cron demo > renders format correctly 1`] = `
         class="ant-cron-editor"
       >
         <div
-          aria-labelledby="cron-4-tab-minute"
+          aria-labelledby="v-2-tab-minute"
           class="ant-cron-field"
           data-disabled="false"
           data-field="minute"
           data-invalid="false"
           data-mode="specified"
-          id="cron-4-panel-minute"
+          id="v-2-panel-minute"
           role="tabpanel"
         >
           <div
@@ -1334,7 +1334,7 @@ exports[`cron demo > renders format correctly 1`] = `
                 >
                   <input
                     class="ant-segmented-item-input"
-                    name="v-2"
+                    name="v-3"
                     type="radio"
                   />
                   <div
@@ -1349,7 +1349,7 @@ exports[`cron demo > renders format correctly 1`] = `
                 >
                   <input
                     class="ant-segmented-item-input"
-                    name="v-2"
+                    name="v-3"
                     type="radio"
                   />
                   <div
@@ -1365,7 +1365,7 @@ exports[`cron demo > renders format correctly 1`] = `
                   <input
                     checked=""
                     class="ant-segmented-item-input"
-                    name="v-2"
+                    name="v-3"
                     type="radio"
                   />
                   <div
@@ -1380,7 +1380,7 @@ exports[`cron demo > renders format correctly 1`] = `
                 >
                   <input
                     class="ant-segmented-item-input"
-                    name="v-2"
+                    name="v-3"
                     type="radio"
                   />
                   <div
@@ -1539,66 +1539,66 @@ exports[`cron demo > renders presets correctly 1`] = `
       role="tablist"
     >
       <span
-        aria-controls="cron-5-panel-second"
+        aria-controls="v-0-panel-second"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="second"
-        id="cron-5-tab-second"
+        id="v-0-tab-second"
         role="tab"
         tabindex="-1"
       >
         Second
       </span>
       <span
-        aria-controls="cron-5-panel-minute"
+        aria-controls="v-0-panel-minute"
         aria-selected="true"
         class="ant-cron-field-tab ant-cron-field-tab-label ant-cron-field-tab-active"
         data-field="minute"
-        id="cron-5-tab-minute"
+        id="v-0-tab-minute"
         role="tab"
         tabindex="0"
       >
         Minute
       </span>
       <span
-        aria-controls="cron-5-panel-hour"
+        aria-controls="v-0-panel-hour"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="hour"
-        id="cron-5-tab-hour"
+        id="v-0-tab-hour"
         role="tab"
         tabindex="-1"
       >
         Hour
       </span>
       <span
-        aria-controls="cron-5-panel-day"
+        aria-controls="v-0-panel-day"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="day"
-        id="cron-5-tab-day"
+        id="v-0-tab-day"
         role="tab"
         tabindex="-1"
       >
         Day
       </span>
       <span
-        aria-controls="cron-5-panel-month"
+        aria-controls="v-0-panel-month"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="month"
-        id="cron-5-tab-month"
+        id="v-0-tab-month"
         role="tab"
         tabindex="-1"
       >
         Month
       </span>
       <span
-        aria-controls="cron-5-panel-week"
+        aria-controls="v-0-panel-week"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="week"
-        id="cron-5-tab-week"
+        id="v-0-tab-week"
         role="tab"
         tabindex="-1"
       >
@@ -1609,13 +1609,13 @@ exports[`cron demo > renders presets correctly 1`] = `
       class="ant-cron-editor"
     >
       <div
-        aria-labelledby="cron-5-tab-minute"
+        aria-labelledby="v-0-tab-minute"
         class="ant-cron-field"
         data-disabled="false"
         data-field="minute"
         data-invalid="false"
         data-mode="every"
-        id="cron-5-panel-minute"
+        id="v-0-panel-minute"
         role="tabpanel"
       >
         <div
@@ -1644,7 +1644,7 @@ exports[`cron demo > renders presets correctly 1`] = `
                 <input
                   checked=""
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -1659,7 +1659,7 @@ exports[`cron demo > renders presets correctly 1`] = `
               >
                 <input
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -1674,7 +1674,7 @@ exports[`cron demo > renders presets correctly 1`] = `
               >
                 <input
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -1689,7 +1689,7 @@ exports[`cron demo > renders presets correctly 1`] = `
               >
                 <input
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -1908,66 +1908,66 @@ exports[`cron demo > renders semantic correctly 1`] = `
       role="tablist"
     >
       <span
-        aria-controls="cron-6-panel-second"
+        aria-controls="v-0-panel-second"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="second"
-        id="cron-6-tab-second"
+        id="v-0-tab-second"
         role="tab"
         tabindex="-1"
       >
         Second
       </span>
       <span
-        aria-controls="cron-6-panel-minute"
+        aria-controls="v-0-panel-minute"
         aria-selected="true"
         class="ant-cron-field-tab ant-cron-field-tab-label ant-cron-field-tab-active"
         data-field="minute"
-        id="cron-6-tab-minute"
+        id="v-0-tab-minute"
         role="tab"
         tabindex="0"
       >
         Minute
       </span>
       <span
-        aria-controls="cron-6-panel-hour"
+        aria-controls="v-0-panel-hour"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="hour"
-        id="cron-6-tab-hour"
+        id="v-0-tab-hour"
         role="tab"
         tabindex="-1"
       >
         Hour
       </span>
       <span
-        aria-controls="cron-6-panel-day"
+        aria-controls="v-0-panel-day"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="day"
-        id="cron-6-tab-day"
+        id="v-0-tab-day"
         role="tab"
         tabindex="-1"
       >
         Day
       </span>
       <span
-        aria-controls="cron-6-panel-month"
+        aria-controls="v-0-panel-month"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="month"
-        id="cron-6-tab-month"
+        id="v-0-tab-month"
         role="tab"
         tabindex="-1"
       >
         Month
       </span>
       <span
-        aria-controls="cron-6-panel-week"
+        aria-controls="v-0-panel-week"
         aria-selected="false"
         class="ant-cron-field-tab ant-cron-field-tab-label"
         data-field="week"
-        id="cron-6-tab-week"
+        id="v-0-tab-week"
         role="tab"
         tabindex="-1"
       >
@@ -1978,13 +1978,13 @@ exports[`cron demo > renders semantic correctly 1`] = `
       class="ant-cron-editor cron-demo-editor"
     >
       <div
-        aria-labelledby="cron-6-tab-minute"
+        aria-labelledby="v-0-tab-minute"
         class="ant-cron-field"
         data-disabled="false"
         data-field="minute"
         data-invalid="false"
         data-mode="specified"
-        id="cron-6-panel-minute"
+        id="v-0-panel-minute"
         role="tabpanel"
         style="background: color-mix(in srgb, var(--ant-color-info-bg), white 25%);"
       >
@@ -2013,7 +2013,7 @@ exports[`cron demo > renders semantic correctly 1`] = `
               >
                 <input
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -2028,7 +2028,7 @@ exports[`cron demo > renders semantic correctly 1`] = `
               >
                 <input
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -2044,7 +2044,7 @@ exports[`cron demo > renders semantic correctly 1`] = `
                 <input
                   checked=""
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div
@@ -2059,7 +2059,7 @@ exports[`cron demo > renders semantic correctly 1`] = `
               >
                 <input
                   class="ant-segmented-item-input"
-                  name="v-0"
+                  name="v-1"
                   type="radio"
                 />
                 <div

@@ -23,8 +23,10 @@ import { useBaseConfig } from 'antdv-next/config-provider/context'
 import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
 import { useLocaleContext } from 'antdv-next/locale/index'
 import dayjs from 'dayjs'
+import * as Vue from 'vue'
 import { computed, defineComponent, nextTick, ref, watch } from 'vue'
 import { useFormItemInputContext, useFormItemInputContextProvider } from '../_util'
+import { filterEmpty } from '../_util/node'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
 import enUSLocale from '../locale/en_US'
@@ -55,6 +57,17 @@ import {
 import { parseSpecial, serializeSpecial } from './utils/special'
 
 let cronIdSeed = 0
+
+/**
+ * tab / panel 的 id 前缀。
+ *
+ * Vue 3.5+ 用 `useId`，服务端与客户端生成的 id 一致，避免水合不匹配；
+ * 更低版本（peer 范围是 `>=3.2.0`）没有 `useId`，退回模块级计数器。
+ */
+function useCronId() {
+  const useId = (Vue as { useId?: () => string | undefined }).useId
+  return (typeof useId === 'function' ? useId() : undefined) ?? `cron-${++cronIdSeed}`
+}
 
 const MODE_VALUES: CronEditorMode[] = ['every', 'interval', 'specified', 'range']
 const enUS = enUSLocale.Cron!
@@ -171,7 +184,8 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       return pickerLocale?.fieldDateTimeFormat ?? 'YYYY-MM-DD HH:mm:ss'
     })
     const editable = computed(() => !mergedDisabled.value && !mergedReadonly.value)
-    const draftExpression = ref(props.value ?? '')
+    // 受控时跟随 `value`；非受控时以 `defaultValue` 为初值，之后由内部草稿持有。
+    const draftExpression = ref(props.value ?? props.defaultValue ?? '')
     const fields = ref<CronFields>(createDefaultFields(cronOptions.value))
     const activeField = ref<CronFieldName>('minute')
     const fieldTabRefs: Partial<Record<CronFieldName, HTMLElement>> = {}
@@ -197,7 +211,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       computed(() => ({ props: mergedSemanticProps.value })),
     )
     const displayedFields = computed<CronFieldName[]>(() => getFieldNames(cronOptions.value))
-    const cronId = `cron-${++cronIdSeed}`
+    const cronId = useCronId()
     const activeValue = computed(() => fields.value[activeField.value] ?? '')
     const activeMode = computed<CronFieldMode>(() => {
       const mode = getFieldMode(activeValue.value, activeField.value)
@@ -338,6 +352,7 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
             formatExpression(fields.value, cronOptions.value),
             cronLocaleCode.value,
             cronOptions.value,
+            locale.value.descriptionLocale,
           )
         }
         catch {
@@ -514,17 +529,46 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
       return wrapControls(<Input value={value} size={mergedSize.value} disabled={!editable.value} aria-label={formatCronMessage(locale.value.fieldValues, { field: locale.value.fields[field] })} onUpdate:value={nextValue => applyFieldValue(field, String(nextValue ?? ''))} />)
     }
 
-    watch([() => props.value, mergedShowYear, mergedFormat, locale], ([value]) => {
-      const expression = value ?? ''
+    function syncExpression(expression: string) {
       draftExpression.value = expression
       const result = updateValidation(expression)
       fields.value = (result.status === 'valid' ? parseExpression(expression, cronOptions.value, locale.value) : undefined) ?? createDefaultFields(cronOptions.value)
       if (!displayedFields.value.includes(activeField.value))
         activeField.value = 'minute'
-    }, { immediate: true })
+    }
+
+    // 受控值变化：跟随 `value`。从有值变回 `undefined` 视为清空。
+    watch(() => props.value, (value, previousValue) => {
+      if (value !== undefined)
+        syncExpression(value)
+      else if (previousValue !== undefined)
+        syncExpression('')
+    })
+    // 语言 / 格式 / 年份字段变化：只重新校验和解析当前表达式。
+    // 非受控时当前表达式是内部草稿，不能用 `props.value ?? ''` 把用户已编辑的内容冲掉。
+    watch([mergedShowYear, mergedFormat, locale], () => {
+      syncExpression(props.value ?? draftExpression.value)
+    })
+    syncExpression(draftExpression.value)
+
+    function renderPresets() {
+      // slot 优先：插槽有内容就用插槽（不要求同时传 `presets`），否则用 `presets` 兜底。
+      const slotNodes = slots.presets ? filterEmpty(slots.presets()) : []
+      if (slotNodes.length)
+        return slotNodes
+      if (!mergedPresets.value.length)
+        return null
+      return mergedPresets.value.map((preset) => {
+        const button = <Button key={preset.value} size="small" disabled={!editable.value} onClick={() => applyExpression(preset.value)}>{preset.label}</Button>
+        return preset.description
+          ? <Tooltip key={preset.value} title={preset.description}>{button}</Tooltip>
+          : button
+      })
+    }
 
     return () => {
       const { rootAttrs, controlAttrs } = splitRootAndControlAttrs(attrs as Record<string, any>)
+      const presetNodes = renderPresets()
       return (
         <div class={rootClassName.value} style={rootStyle.value} data-size={mergedSize.value} data-format={mergedFormat.value} data-disabled={mergedDisabled.value ? 'true' : 'false'} data-readonly={mergedReadonly.value ? 'true' : 'false'} data-status={mergedStatus.value || undefined} aria-readonly={mergedReadonly.value || undefined} {...rootAttrs}>
           <Input value={draftExpression.value} size={mergedSize.value} readonly disabled={mergedDisabled.value} class={mergedClassNames.value.input} style={mergedStyles.value.input} aria-label={locale.value.expression} {...controlAttrs} />
@@ -575,14 +619,9 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
               </div>
             </div>
           </div>
-          {mergedPresets.value.length > 0 && (
+          {presetNodes && (
             <div class={clsx(`${prefixCls.value}-presets`, mergedClassNames.value.presets)} style={mergedStyles.value.presets}>
-              {slots.presets?.() ?? mergedPresets.value.map((preset) => {
-                const button = <Button size="small" disabled={!editable.value} onClick={() => applyExpression(preset.value)}>{preset.label}</Button>
-                return preset.description
-                  ? <Tooltip key={preset.value} title={preset.description}>{button}</Tooltip>
-                  : <Button key={preset.value} size="small" disabled={!editable.value} onClick={() => applyExpression(preset.value)}>{preset.label}</Button>
-              })}
+              {presetNodes}
             </div>
           )}
           {preview.value && (
@@ -617,7 +656,8 @@ const Cron = defineComponent<CronProps, CronEmits, string, SlotsType<CronSlots>>
 
 ;(Cron as any).install = (app: App) => app.component(Cron.name, Cron)
 
-export type { CronClassNamesType, CronConfig, CronEditorMode, CronEmits, CronError, CronErrorCode, CronFieldMode, CronFieldName, CronFields, CronFieldSlotProps, CronFormat, CronLocale, CronOptions, CronPreset, CronPreviewResult, CronProps, CronSemanticClassNames, CronSemanticName, CronSemanticStyles, CronSize, CronSlots, CronStatus, CronStylesType, CronValidateResult, CronValidateStatus } from './types'
+export type { CronClassNamesType, CronConfig, CronDescriptionLocale, CronEditorMode, CronEmits, CronError, CronErrorCode, CronFieldMode, CronFieldName, CronFields, CronFieldSlotProps, CronFormat, CronLocale, CronOptions, CronPreset, CronPreviewResult, CronProps, CronSemanticClassNames, CronSemanticName, CronSemanticStyles, CronSize, CronSlots, CronStatus, CronStylesType, CronValidateResult, CronValidateStatus } from './types'
 export default Cron
 export { Cron }
 export { validateExpression as validateCronExpression } from './utils'
+export { defineCronDescriptionLocale } from './utils/description'
