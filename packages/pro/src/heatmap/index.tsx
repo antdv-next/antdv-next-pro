@@ -1,5 +1,5 @@
 import type { App, CSSProperties, SlotsType } from 'vue'
-import type { ProLocale } from '../locale/types'
+import type { HeatmapLocale, ProLocale } from '../locale/types'
 import type {
   HeatmapClassNamesType,
   HeatmapColorScale,
@@ -17,13 +17,22 @@ import { Tooltip } from 'antdv-next'
 import { useConfig as useAntConfig, useBaseConfig } from 'antdv-next/config-provider/context'
 import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
 import { computed, defineComponent } from 'vue'
+import { filterEmpty } from '../_util/node'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
 import useStyle from './style'
-import { HEATMAP_COLOR_THEMES, isHeatmapColorScale } from './types'
+import { HEATMAP_ACTIVE_COLOR_COUNT, HEATMAP_COLOR_THEMES, isHeatmapColorScale } from './types'
 import { createCalendar, formatGap, normalizeData, resolveRange } from './utils'
 
-const DEFAULT_ACTIVE_COLORS = HEATMAP_COLOR_THEMES.green
+// 语言包缺少 Heatmap 字段（或只提供了部分字段）时的逐字段英文兜底。
+const DEFAULT_LOCALE: HeatmapLocale = {
+  label: 'Heatmap',
+  less: 'Less',
+  more: 'More',
+  noData: 'No data',
+  level: 'Level',
+}
+const LEVELS = Array.from({ length: HEATMAP_ACTIVE_COLOR_COUNT + 1 }, (_, index) => index + 1)
 
 function omitClassAndStyle(attrs: Record<string, any>) {
   const nextAttrs = { ...attrs }
@@ -43,7 +52,18 @@ function normalizeColors(colors: unknown): HeatmapColorScale | undefined {
 }
 
 function isColorTheme(value: unknown): value is HeatmapColorTheme {
-  return typeof value === 'string' && Object.prototype.hasOwnProperty.call(HEATMAP_COLOR_THEMES, value)
+  return typeof value === 'string' && (HEATMAP_COLOR_THEMES as readonly string[]).includes(value)
+}
+
+/**
+ * slot 优先：插槽存在且过滤空节点（注释、空 Fragment、空白文本）后仍有内容才采用，否则返回 null 交给兜底。
+ */
+function renderSlot(slot: ((...args: any[]) => any) | undefined, ...args: any[]) {
+  if (!slot) {
+    return null
+  }
+  const nodes = filterEmpty(slot(...args))
+  return nodes.length ? nodes : null
 }
 
 const Heatmap = defineComponent<
@@ -58,6 +78,8 @@ const Heatmap = defineComponent<
     const proConfig = useProComponentConfig('heatmap')
     const rootCls = useCSSVarCls(prefixCls)
     const [hashId, cssVarCls] = useStyle(prefixCls, rootCls)
+    // 1.x 的 kebab-case 插槽名继续可用，文档只保留 camelCase。
+    const legacySlots = slots as Record<string, ((...args: any[]) => any) | undefined>
 
     const mergedFirstDayOfWeek = computed(() => props.firstDayOfWeek ?? proConfig.value.firstDayOfWeek ?? 0)
     const mergedShowMonthLabels = computed(() => props.showMonthLabels ?? proConfig.value.showMonthLabels ?? true)
@@ -71,21 +93,21 @@ const Heatmap = defineComponent<
     const mergedColorTheme = computed(() => props.colorTheme ?? proConfig.value.colorTheme)
     const mergedActiveColors = computed(() => normalizeColors(props.activeColors ?? proConfig.value.activeColors))
     const mergedMinimumColor = computed(() => props.minimumColor ?? proConfig.value.minimumColor)
+    const mergedTimeZone = computed(() => (props.timeZone ?? proConfig.value.timeZone) === 'local' ? 'local' : 'UTC')
 
-    const resolvedActiveColors = computed(() => {
+    // 内置主题与默认色阶都由样式（Token）提供，这里只有用户传入的颜色才走内联样式。
+    const themeCls = computed(() => {
       const colorTheme = mergedColorTheme.value
-      return mergedActiveColors.value
-        ?? (isColorTheme(colorTheme) ? HEATMAP_COLOR_THEMES[colorTheme] : DEFAULT_ACTIVE_COLORS)
+      return !mergedActiveColors.value && isColorTheme(colorTheme)
+        ? `${prefixCls.value}-theme-${colorTheme}`
+        : undefined
     })
-    const usesCustomActiveColors = computed(() => Boolean(mergedActiveColors.value || mergedColorTheme.value))
-    const usesCustomMinimumColor = computed(() => Boolean(mergedMinimumColor.value))
-    const resolvedColors = computed(() => [mergedMinimumColor.value, ...resolvedActiveColors.value])
 
     function getCustomLevelStyle(level: number): CSSProperties | undefined {
       const backgroundColor = level === 1
-        ? (usesCustomMinimumColor.value ? mergedMinimumColor.value : undefined)
-        : level > 1 && usesCustomActiveColors.value
-          ? resolvedActiveColors.value[level - 2]
+        ? mergedMinimumColor.value
+        : level > 1
+          ? mergedActiveColors.value?.[level - 2]
           : undefined
       return backgroundColor ? { backgroundColor } : undefined
     }
@@ -104,6 +126,7 @@ const Heatmap = defineComponent<
       colorTheme: mergedColorTheme.value,
       activeColors: mergedActiveColors.value,
       minimumColor: mergedMinimumColor.value,
+      timeZone: mergedTimeZone.value,
     }))
     const [mergedClassNames, mergedStyles] = useMergeSemantic<
       HeatmapSemanticClassNames,
@@ -115,12 +138,13 @@ const Heatmap = defineComponent<
       computed(() => ({ props: mergedSemanticProps.value })),
     )
 
-    const displayedRange = computed(() => resolveRange(props.range))
+    const displayedRange = computed(() => resolveRange(props.range, Date.now(), mergedTimeZone.value))
     const calendar = computed(() => createCalendar(
       displayedRange.value,
-      normalizeData(props.data),
+      normalizeData(props.data, mergedTimeZone.value),
       mergedFirstDayOfWeek.value,
       mergedFillCalendarLeading.value,
+      mergedTimeZone.value,
     ))
 
     const localeCode = computed(() => antConfig.value.locale?.locale)
@@ -139,13 +163,10 @@ const Heatmap = defineComponent<
       day: 'numeric',
       timeZone: 'UTC',
     }))
-    const localeText = computed(() => (antConfig.value.locale as ProLocale | undefined)?.Heatmap ?? {
-      label: 'Heatmap',
-      less: 'Less',
-      more: 'More',
-      noData: 'No data',
-      level: 'Level',
-    })
+    const localeText = computed<HeatmapLocale>(() => ({
+      ...DEFAULT_LOCALE,
+      ...(antConfig.value.locale as ProLocale | undefined)?.Heatmap,
+    }))
 
     const weekLabels = computed(() => Array.from({ length: 7 }, (_, index) => {
       const dayIndex = (mergedFirstDayOfWeek.value + index) % 7
@@ -161,11 +182,13 @@ const Heatmap = defineComponent<
       const headers: Array<{ label: string, colspan: number }> = []
 
       for (let column = 0; column < (calendar.value[0]?.length ?? 0); column += 1) {
-        const cell = calendar.value.map(row => row[column]).find(current => current?.timestamp)
-        if (!cell?.date) {
+        const cell = calendar.value.map(row => row[column]).find(current => current?.dayKey !== undefined)
+        if (cell?.dayKey === undefined) {
           continue
         }
-        const month = `${cell.date.getUTCFullYear()}-${cell.date.getUTCMonth()}`
+        // dayKey 是日历日的 UTC 零点，月份 / 格式化统一按 UTC 读取，与 timeZone 无关。
+        const day = new Date(cell.dayKey)
+        const month = `${day.getUTCFullYear()}-${day.getUTCMonth()}`
         if (month === previousMonth) {
           headers[headers.length - 1]!.colspan += 1
           continue
@@ -173,8 +196,8 @@ const Heatmap = defineComponent<
         previousMonth = month
         const pickerMonths = pickerLang.value?.shortMonths
         const label = pickerMonths?.length === 12
-          ? pickerMonths[cell.date.getUTCMonth()]!
-          : monthFormatter.value.format(cell.date)
+          ? pickerMonths[day.getUTCMonth()]!
+          : monthFormatter.value.format(day)
         headers.push({ label, colspan: 1 })
       }
 
@@ -187,6 +210,7 @@ const Heatmap = defineComponent<
       hashId.value,
       cssVarCls.value,
       rootCls.value,
+      themeCls.value,
       { [`${prefixCls.value}-rtl`]: direction.value === 'rtl' },
       proConfig.value.class,
       props.rootClass,
@@ -202,17 +226,18 @@ const Heatmap = defineComponent<
       borderSpacing: `${formatGap(mergedXGap.value) ?? '3px'} ${formatGap(mergedYGap.value) ?? '3px'}`,
     }))
 
-    function formatTooltip(cell: { date?: Date, value: number | null, level: number }) {
-      if (!cell.date) {
+    function formatTooltip(cell: { dayKey?: number, value: number | null, level: number }) {
+      if (cell.dayKey === undefined) {
         return ''
       }
       const value = cell.value === null ? localeText.value.noData : cell.value
-      return `${dateFormatter.value.format(cell.date)}: ${value} (${localeText.value.level} ${cell.level})`
+      return `${dateFormatter.value.format(new Date(cell.dayKey))}: ${value} (${localeText.value.level} ${cell.level})`
     }
 
     function renderIndicator() {
-      if (slots.indicator) {
-        return slots.indicator()
+      const customIndicator = renderSlot(slots.indicator)
+      if (customIndicator) {
+        return customIndicator
       }
       if (!mergedShowColorIndicator.value) {
         return null
@@ -223,20 +248,20 @@ const Heatmap = defineComponent<
           class={clsx(`${prefixCls.value}-indicator`, mergedClassNames.value.indicator)}
           style={mergedStyles.value.indicator}
         >
-          <span>{slots['indicator-leading-text']?.() ?? localeText.value.less}</span>
+          <span>{renderSlot(slots.indicatorLeadingText ?? legacySlots['indicator-leading-text']) ?? localeText.value.less}</span>
           <div class={`${prefixCls.value}-indicator-colors`}>
-            {resolvedColors.value.map((_, index) => (
+            {LEVELS.map(level => (
               <span
-                key={index}
+                key={level}
                 class={`${prefixCls.value}-indicator-color`}
-                data-level={index + 1}
+                data-level={level}
                 role="img"
-                aria-label={`${localeText.value.level} ${index + 1}`}
-                style={getCustomLevelStyle(index + 1)}
+                aria-label={`${localeText.value.level} ${level}`}
+                style={getCustomLevelStyle(level)}
               />
             ))}
           </div>
-          <span>{slots['indicator-trailing-text']?.() ?? localeText.value.more}</span>
+          <span>{renderSlot(slots.indicatorTrailingText ?? legacySlots['indicator-trailing-text']) ?? localeText.value.more}</span>
         </div>
       )
     }
@@ -244,13 +269,13 @@ const Heatmap = defineComponent<
     function renderCell(cell: HeatmapCell, row: number, column: number) {
       const cellStyle = getCustomLevelStyle(cell.level)
       const isInteractive = Boolean(cell.item)
-      const cellLabel = cell.date ? formatTooltip(cell) : undefined
+      const cellLabel = cell.dayKey !== undefined ? formatTooltip(cell) : undefined
       const slotProps = cell.date
         ? { timestamp: cell.timestamp!, value: cell.value, date: cell.date, level: cell.level }
         : undefined
       const onClick = (event: MouseEvent) => {
         if (cell.item) {
-          emit('cell-click', cell.item, event)
+          emit('cellClick', cell.item, event)
         }
       }
       const cellProps = {
@@ -275,7 +300,7 @@ const Heatmap = defineComponent<
             <Tooltip
               {...(typeof tooltip === 'object' ? tooltip : {})}
               trigger={(typeof tooltip === 'object' && tooltip.trigger) ? tooltip.trigger : ['hover', 'focus'] as any}
-              title={slots.tooltip?.(slotProps) ?? (typeof tooltip === 'object' ? tooltip.title : undefined) ?? formatTooltip(cell)}
+              title={(renderSlot(slots.tooltip, slotProps) as any) ?? (typeof tooltip === 'object' ? tooltip.title : undefined) ?? formatTooltip(cell)}
             >
               {node}
             </Tooltip>
@@ -295,7 +320,8 @@ const Heatmap = defineComponent<
 
     return () => {
       const indicator = renderIndicator()
-      const hasFooter = Boolean(slots.footer || indicator)
+      const footer = renderSlot(slots.footer)
+      const hasFooter = Boolean(footer || indicator)
 
       return (
         <div
@@ -346,7 +372,7 @@ const Heatmap = defineComponent<
                   class={clsx(`${prefixCls.value}-footer`, mergedClassNames.value.footer)}
                   style={mergedStyles.value.footer}
                 >
-                  <div>{slots.footer?.()}</div>
+                  {footer && <div>{footer}</div>}
                   {indicator}
                 </div>
               )}
@@ -383,6 +409,7 @@ export type {
   HeatmapSize,
   HeatmapSlots,
   HeatmapStylesType,
+  HeatmapTimeZone,
   HeatmapTooltipSlotProps,
 } from './types'
 export default Heatmap

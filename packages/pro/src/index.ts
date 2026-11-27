@@ -84,6 +84,7 @@ export type {
   HeatmapSize,
   HeatmapSlots,
   HeatmapStylesType,
+  HeatmapTimeZone,
   HeatmapTooltipSlotProps,
 } from './heatmap'
 export type {

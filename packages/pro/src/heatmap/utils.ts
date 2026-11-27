@@ -1,4 +1,4 @@
-import type { HeatmapData, HeatmapDataItem, HeatmapFirstDayOfWeek, HeatmapRange } from './types'
+import type { HeatmapData, HeatmapDataItem, HeatmapFirstDayOfWeek, HeatmapRange, HeatmapTimeZone } from './types'
 import { HEATMAP_ACTIVE_COLOR_COUNT } from './types'
 
 const DAY_MS = 24 * 60 * 60 * 1000
@@ -7,8 +7,17 @@ const MAX_CALENDAR_YEAR = 2100
 const warnedInvalidRangeYears = new Set<number>()
 
 export interface HeatmapCell {
+  /**
+   * 该日期在 `timeZone` 下零点的时间戳（`UTC` 为 UTC 零点，`local` 为本地零点）。
+   */
   timestamp?: number
+  /** 与 `timestamp` 对应的 Date。 */
   date?: Date
+  /**
+   * 日历日的内部键：该日历日（年 / 月 / 日）的 UTC 零点时间戳。
+   * 日历运算与格式化都基于它，因此不受夏令时影响。
+   */
+  dayKey?: number
   value: number | null
   item?: HeatmapDataItem
   level: number
@@ -20,22 +29,37 @@ export interface CalendarRange {
   end: number
 }
 
-function utcDayTimestamp(timestamp: number) {
+/**
+ * 把任意时间戳归一成「日历日键」：该时间戳在 `timeZone` 下所属日历日的 UTC 零点。
+ */
+export function toDayKey(timestamp: number, timeZone: HeatmapTimeZone = 'UTC') {
   const date = new Date(timestamp)
-  return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+  return timeZone === 'local'
+    ? Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    : Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
 }
 
-function dayOfWeek(timestamp: number) {
-  return new Date(timestamp).getUTCDay()
+/**
+ * 把日历日键还原成 `timeZone` 下该日零点的 Date。
+ */
+export function fromDayKey(dayKey: number, timeZone: HeatmapTimeZone = 'UTC') {
+  const date = new Date(dayKey)
+  return timeZone === 'local'
+    ? new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+    : date
 }
 
-function startOfWeek(timestamp: number, firstDayOfWeek: HeatmapFirstDayOfWeek) {
-  const offset = (dayOfWeek(timestamp) - firstDayOfWeek + 7) % 7
-  return timestamp - offset * DAY_MS
+function dayOfWeek(dayKey: number) {
+  return new Date(dayKey).getUTCDay()
 }
 
-function endOfWeek(timestamp: number, firstDayOfWeek: HeatmapFirstDayOfWeek) {
-  return startOfWeek(timestamp, firstDayOfWeek) + 6 * DAY_MS
+function startOfWeek(dayKey: number, firstDayOfWeek: HeatmapFirstDayOfWeek) {
+  const offset = (dayOfWeek(dayKey) - firstDayOfWeek + 7) % 7
+  return dayKey - offset * DAY_MS
+}
+
+function endOfWeek(dayKey: number, firstDayOfWeek: HeatmapFirstDayOfWeek) {
+  return startOfWeek(dayKey, firstDayOfWeek) + 6 * DAY_MS
 }
 
 function isTimestamp(value: unknown): value is number {
@@ -53,8 +77,15 @@ function warnInvalidRangeYear(year: number) {
   )
 }
 
-export function resolveRange(range: 'recent' | number | HeatmapRange | undefined, now = Date.now()): CalendarRange {
-  const today = utcDayTimestamp(now)
+/**
+ * 返回的 `start` / `end` 是日历日键（见 `toDayKey`）。
+ */
+export function resolveRange(
+  range: 'recent' | number | HeatmapRange | undefined,
+  now = Date.now(),
+  timeZone: HeatmapTimeZone = 'UTC',
+): CalendarRange {
+  const today = toDayKey(now, timeZone)
 
   if (range === undefined || range === 'recent') {
     return { start: today - 364 * DAY_MS, end: today }
@@ -72,15 +103,18 @@ export function resolveRange(range: 'recent' | number | HeatmapRange | undefined
   }
 
   if (typeof range === 'object' && range && isTimestamp(range.start) && isTimestamp(range.end)) {
-    const start = utcDayTimestamp(range.start)
-    const end = utcDayTimestamp(range.end)
+    const start = toDayKey(range.start, timeZone)
+    const end = toDayKey(range.end, timeZone)
     return start <= end ? { start, end } : { start: end, end: start }
   }
 
   return { start: today - 364 * DAY_MS, end: today }
 }
 
-export function normalizeData(data: HeatmapData | undefined) {
+/**
+ * 返回以日历日键为 key 的数据表。
+ */
+export function normalizeData(data: HeatmapData | undefined, timeZone: HeatmapTimeZone = 'UTC') {
   const result = new Map<number, HeatmapDataItem>()
 
   for (const item of data ?? []) {
@@ -90,7 +124,7 @@ export function normalizeData(data: HeatmapData | undefined) {
     if (item.value !== undefined && item.value !== null && (!Number.isFinite(item.value) || item.value < 0)) {
       continue
     }
-    result.set(utcDayTimestamp(item.timestamp), item)
+    result.set(toDayKey(item.timestamp, timeZone), item)
   }
 
   return result
@@ -115,30 +149,33 @@ export function createCalendar(
   data: Map<number, HeatmapDataItem>,
   firstDayOfWeek: HeatmapFirstDayOfWeek,
   fillCalendarLeading: boolean,
+  timeZone: HeatmapTimeZone = 'UTC',
 ) {
   const calendarStart = startOfWeek(range.start, firstDayOfWeek)
   const calendarDataStart = fillCalendarLeading ? calendarStart : range.start
   const calendarEnd = endOfWeek(range.end, firstDayOfWeek)
   const values = [...data.entries()]
-    .filter(([timestamp, item]) => timestamp >= range.start && timestamp <= range.end && typeof item.value === 'number')
+    .filter(([dayKey, item]) => dayKey >= range.start && dayKey <= range.end && typeof item.value === 'number')
     .map(([, item]) => item.value as number)
   const minimum = values.length ? Math.min(...values) : 0
   const maximum = values.length ? Math.max(...values) : 0
   const columns = Math.floor((calendarEnd - calendarStart) / (7 * DAY_MS)) + 1
 
   return Array.from({ length: 7 }, (_, row) => Array.from({ length: columns }, (_, column) => {
-    const timestamp = calendarStart + (column * 7 + row) * DAY_MS
-    const inRange = timestamp >= calendarDataStart && timestamp <= range.end
+    const dayKey = calendarStart + (column * 7 + row) * DAY_MS
+    const inRange = dayKey >= calendarDataStart && dayKey <= range.end
 
     if (!inRange) {
       return { value: null, level: 0, placeholder: true } satisfies HeatmapCell
     }
 
-    const item = data.get(timestamp)
+    const item = data.get(dayKey)
     const value = typeof item?.value === 'number' ? item.value : null
+    const date = fromDayKey(dayKey, timeZone)
     return {
-      timestamp,
-      date: new Date(timestamp),
+      timestamp: date.getTime(),
+      date,
+      dayKey,
       value,
       item,
       level: getColorLevel(value, minimum, maximum),
