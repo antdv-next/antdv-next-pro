@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { ConfigProvider, Form, FormItem } from 'antdv-next'
 import { describe, expect, it, vi } from 'vitest'
-import { defineComponent, h, isRef, nextTick, reactive, ref } from 'vue'
+import { createCommentVNode, defineComponent, h, isRef, nextTick, reactive, ref } from 'vue'
 import { InputTag, ProConfigProvider } from '../../index'
 import enUS from '../../locale/en_US'
 import frFR from '../../locale/fr_FR'
@@ -401,9 +401,9 @@ describe('InputTag', () => {
     expect(tags[1]!.classes()).not.toContain('ant-input-tag-tag-drag-after')
   })
 
-  it('collapses tags when configured', () => {
+  it('collapses tags beyond maxTagCount', () => {
     const wrapper = mount(InputTag, {
-      props: { defaultValue: ['one', 'two', 'three', 'four'], collapseTags: true, maxCollapseTags: 2 },
+      props: { defaultValue: ['one', 'two', 'three', 'four'], maxTagCount: 2 },
     })
 
     expect(wrapper.findAll('.ant-tag').map(tag => tag.text())).toEqual(['one', 'two', '+ 2'])
@@ -413,9 +413,8 @@ describe('InputTag', () => {
     const wrapper = mount(InputTag, {
       props: {
         defaultValue: ['one', 'two', 'three', 'four'],
-        collapseTags: true,
-        collapseTagsTooltip: true,
-        maxCollapseTags: 2,
+        maxTagCount: 2,
+        maxTagTooltip: true,
         draggable: true,
         allowClear: true,
       },
@@ -464,8 +463,8 @@ describe('InputTag', () => {
         default: () => h(InputTag, {
           defaultValue: ['one', 'two', 'three'],
           allowClear: true,
-          collapseTags: true,
-          maxCollapseTags: 1,
+          maxTagCount: 1,
+          maxTagTooltip: true,
         }),
       },
     })
@@ -490,9 +489,8 @@ describe('InputTag', () => {
     const wrapper = mount(InputTag, {
       props: {
         defaultValue: ['one', 'two', 'three', 'four'],
-        collapseTags: true,
-        collapseTagsTooltip: true,
-        maxCollapseTags: 2,
+        maxTagCount: 2,
+        maxTagTooltip: true,
       },
     })
 
@@ -513,9 +511,8 @@ describe('InputTag', () => {
     const wrapper = mount(InputTag, {
       props: {
         defaultValue: ['one', 'two', 'three', 'four'],
-        collapseTags: true,
-        collapseTagsTooltip: true,
-        maxCollapseTags: 2,
+        maxTagCount: 2,
+        maxTagTooltip: true,
       },
     })
 
@@ -752,5 +749,201 @@ describe('InputTag', () => {
     expect(document.activeElement).toBe(inputEl)
 
     wrapper.unmount()
+  })
+
+  describe('maxTagCount / maxTagPlaceholder', () => {
+    const values = ['one', 'two', 'three', 'four']
+
+    it('shows every tag when maxTagCount is not set and ignores the removed collapse props', () => {
+      const wrapper = mount(InputTag, {
+        props: { defaultValue: values },
+        attrs: { collapseTags: true, maxCollapseTags: 1 },
+      })
+      expect(wrapper.findAll('.ant-tag').map(tag => tag.text())).toEqual(values)
+    })
+
+    it('supports maxTagCount 0 and does not collapse when nothing overflows', () => {
+      const zero = mount(InputTag, { props: { defaultValue: values, maxTagCount: 0 } })
+      expect(zero.findAll('.ant-tag').map(tag => tag.text())).toEqual(['+ 4'])
+
+      const enough = mount(InputTag, { props: { defaultValue: values, maxTagCount: 4 } })
+      expect(enough.find('.ant-input-tag-collapse').exists()).toBe(false)
+    })
+
+    it('renders maxTagPlaceholder from a node, a function, and lets the slot win', () => {
+      const node = mount(InputTag, { props: { defaultValue: values, maxTagCount: 2, maxTagPlaceholder: 'more' } })
+      expect(node.find('.ant-input-tag-collapse').text()).toBe('more')
+
+      const fn = mount(InputTag, {
+        props: {
+          defaultValue: values,
+          maxTagCount: 1,
+          maxTagPlaceholder: (omitted: string[]) => `+${omitted.length}: ${omitted.join('/')}`,
+        },
+      })
+      expect(fn.find('.ant-input-tag-collapse').text()).toBe('+3: two/three/four')
+
+      const slot = mount(InputTag, {
+        props: { defaultValue: values, maxTagCount: 2, maxTagPlaceholder: 'from prop' },
+        slots: {
+          maxTagPlaceholder: ({ omittedValues }: { omittedValues: string[] }) => h('b', { class: 'slot-placeholder' }, `${omittedValues.length} hidden`),
+        },
+      })
+      expect(slot.find('.ant-input-tag-collapse .slot-placeholder').text()).toBe('2 hidden')
+
+      const emptySlot = mount(InputTag, {
+        props: { defaultValue: values, maxTagCount: 2 },
+        slots: { maxTagPlaceholder: () => [createCommentVNode('v-if', true)] },
+      })
+      expect(emptySlot.find('.ant-input-tag-collapse').text()).toBe('+ 2')
+    })
+
+    it('keeps the placeholder tag out of the tab order unless maxTagTooltip is enabled', () => {
+      const plain = mount(InputTag, { props: { defaultValue: values, maxTagCount: 2 } })
+      const plainTag = plain.find('.ant-input-tag-collapse')
+      expect(plainTag.attributes('tabindex')).toBeUndefined()
+      expect(plainTag.attributes('role')).toBeUndefined()
+
+      const withTooltip = mount(InputTag, { props: { defaultValue: values, maxTagCount: 2, maxTagTooltip: true } })
+      const tooltipTag = withTooltip.find('.ant-input-tag-collapse')
+      expect(tooltipTag.attributes('tabindex')).toBe('0')
+      expect(tooltipTag.attributes('role')).toBe('button')
+    })
+  })
+
+  describe('prefix / suffix / clearIcon props', () => {
+    it('renders prefix and suffix from props and lets slots win', () => {
+      const fromProps = mount(InputTag, {
+        props: {
+          defaultValue: ['one'],
+          prefix: h('span', { class: 'prop-prefix' }, 'P'),
+          suffix: () => h('span', { class: 'prop-suffix' }, 'S'),
+        },
+      })
+      expect(fromProps.find('.ant-input-tag-content .prop-prefix').text()).toBe('P')
+      expect(fromProps.find('.ant-input-tag-suffix .prop-suffix').text()).toBe('S')
+
+      const fromSlots = mount(InputTag, {
+        props: {
+          defaultValue: ['one'],
+          prefix: h('span', { class: 'prop-prefix' }, 'P'),
+          suffix: h('span', { class: 'prop-suffix' }, 'S'),
+        },
+        slots: {
+          prefix: () => h('span', { class: 'slot-prefix' }, 'p'),
+          suffix: () => h('span', { class: 'slot-suffix' }, 's'),
+        },
+      })
+      expect(fromSlots.find('.slot-prefix').exists()).toBe(true)
+      expect(fromSlots.find('.slot-suffix').exists()).toBe(true)
+      expect(fromSlots.find('.prop-prefix').exists()).toBe(false)
+      expect(fromSlots.find('.prop-suffix').exists()).toBe(false)
+    })
+
+    it('does not render a suffix wrapper when neither suffix nor clear button exists', () => {
+      const wrapper = mount(InputTag, { props: { defaultValue: ['one'] } })
+      expect(wrapper.find('.ant-input-tag-suffix').exists()).toBe(false)
+    })
+
+    it('uses the same default clear icon as Input', () => {
+      const wrapper = mount(InputTag, { props: { defaultValue: ['one'], allowClear: true } })
+      const clear = wrapper.find('.ant-input-tag-clear')
+      expect(clear.find('.anticon-close-circle').exists()).toBe(true)
+      expect(clear.text()).toBe('')
+    })
+
+    it('resolves the clear icon as slot > clearIcon > allowClear.clearIcon', () => {
+      const fromAllowClear = mount(InputTag, {
+        props: { defaultValue: ['one'], allowClear: { clearIcon: h('i', { class: 'allow-clear-icon' }) } },
+      })
+      expect(fromAllowClear.find('.ant-input-tag-clear .allow-clear-icon').exists()).toBe(true)
+
+      const fromProp = mount(InputTag, {
+        props: {
+          defaultValue: ['one'],
+          allowClear: { clearIcon: h('i', { class: 'allow-clear-icon' }) },
+          clearIcon: h('i', { class: 'prop-clear-icon' }),
+        },
+      })
+      expect(fromProp.find('.ant-input-tag-clear .prop-clear-icon').exists()).toBe(true)
+      expect(fromProp.find('.allow-clear-icon').exists()).toBe(false)
+
+      const fromSlot = mount(InputTag, {
+        props: { defaultValue: ['one'], allowClear: true, clearIcon: h('i', { class: 'prop-clear-icon' }) },
+        slots: { clearIcon: () => h('i', { class: 'slot-clear-icon' }) },
+      })
+      expect(fromSlot.find('.ant-input-tag-clear .slot-clear-icon').exists()).toBe(true)
+      expect(fromSlot.find('.prop-clear-icon').exists()).toBe(false)
+    })
+
+    it('still clears when allowClear is an object', async () => {
+      const wrapper = mount(InputTag, {
+        props: { defaultValue: ['one', 'two'], allowClear: { clearIcon: h('i', { class: 'allow-clear-icon' }) } },
+      })
+      await wrapper.find('.ant-input-tag-clear').trigger('click')
+      expect(wrapper.findAll('.ant-tag')).toHaveLength(0)
+      expect(wrapper.emitted('clear')).toHaveLength(1)
+    })
+  })
+
+  describe('keydown / keyup', () => {
+    it('forwards keydown and keyup to user listeners without breaking the built-in handling', async () => {
+      const onKeydown = vi.fn()
+      const onKeyup = vi.fn()
+      const wrapper = mount(InputTag, {
+        props: { defaultValue: ['one'], trigger: 'space', onKeydown, onKeyup } as any,
+      })
+      const input = getInput(wrapper)
+
+      await input.setValue('two')
+      await input.trigger('keydown', { key: 'a' })
+      await input.trigger('keyup', { key: ' ', code: 'Space' })
+
+      expect(onKeydown).toHaveBeenCalledTimes(1)
+      expect(onKeydown.mock.calls[0]![0]).toBeInstanceOf(KeyboardEvent)
+      expect(onKeyup).toHaveBeenCalledTimes(1)
+      // 内部的 space 提交逻辑仍然生效
+      expect(wrapper.findAll('.ant-tag').map(tag => tag.text())).toEqual(['one', 'two'])
+    })
+
+    it('forwards keydown before removing the last tag on Backspace', async () => {
+      const order: string[] = []
+      const wrapper = mount(InputTag, {
+        props: {
+          defaultValue: ['one'],
+          onKeydown: () => order.push('keydown'),
+          onRemove: () => order.push('remove'),
+        } as any,
+      })
+
+      await getInput(wrapper).trigger('keydown', { key: 'Backspace' })
+      expect(order).toEqual(['keydown', 'remove'])
+    })
+  })
+
+  it('applies the root semantic class and style exactly once', () => {
+    const wrapper = mount(InputTag, {
+      props: {
+        defaultValue: ['one'],
+        classes: { root: 'semantic-root' },
+        styles: { root: { marginTop: '3px' } },
+      },
+    })
+
+    const root = wrapper.find('.ant-input-tag')
+    expect(root.classes().filter(name => name === 'semantic-root')).toHaveLength(1)
+    expect(root.attributes('class')!.split(/\s+/).filter(name => name === 'semantic-root')).toHaveLength(1)
+    expect(root.attributes('style')!.match(/margin-top/g)).toHaveLength(1)
+  })
+
+  it('follows the control height of each size', () => {
+    mount(InputTag, { props: { defaultValue: ['one'], size: 'small' } })
+    const css = Array.from(document.querySelectorAll('style'))
+      .map(el => el.textContent ?? '')
+      .join('\n')
+      .replace(/\s+/g, '')
+
+    expect(css).toContain('.ant-input-tag.ant-input-affix-wrapper-sm{min-height:var(--ant-control-height-sm)')
+    expect(css).toContain('.ant-input-tag.ant-input-affix-wrapper-lg{min-height:var(--ant-control-height-lg)')
   })
 })

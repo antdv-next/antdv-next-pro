@@ -27,7 +27,7 @@ export interface InputTagConfig {
   maxCount?: number
   tokenSeparators?: string[]
   allowDuplicate?: boolean
-  allowClear?: boolean
+  allowClear?: boolean | { clearIcon?: any }
   class?: string
   style?: CSSProperties
   classes?: Record<string, string> | ((info: { props: any }) => Record<string, string>)

@@ -1,9 +1,11 @@
 import type { InputProps, InputRef, SizeType, TagProps } from 'antdv-next'
 import type { Variant } from 'antdv-next/config-provider/context'
 import type { App, ComputedRef, CSSProperties, ShallowRef, SlotsType } from 'vue'
+import type { VueNode } from '../_util/node'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semantic'
 import type { InputTagConfig } from '../config-provider'
 import type { InputTagLocale, ProLocale } from '../locale/types'
+import { CloseCircleFilled } from '@antdv-next/icons'
 import { clsx, useMergedState } from '@v-c/util'
 import { Input as AInput, Tag as ATag, Tooltip as ATooltip } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
@@ -12,6 +14,7 @@ import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
 import { useLocaleContext } from 'antdv-next/locale/index'
 import { computed, defineComponent, h, nextTick, ref, shallowRef, watch } from 'vue'
 import { unwrapExposedElement } from '../_util'
+import { filterEmpty, getSlotPropsFnRun } from '../_util/node'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
 import enUSLocale from '../locale/en_US'
@@ -65,6 +68,12 @@ export type InputTagClassNamesType = SemanticClassNamesType<InputTagProps, Input
 export type InputTagStylesType = SemanticStylesType<InputTagProps, InputTagSemanticStyles>
 export type InputTagSemanticName = keyof InputTagSemanticClassNames & keyof InputTagSemanticStyles
 export type InputTagStatus = NonNullable<InputProps['status']>
+/**
+ * `allowClear` 的对象形式，与 antdv-next Input 一致。
+ */
+export interface InputTagAllowClearConfig {
+  clearIcon?: VueNode
+}
 
 export interface InputTagProps {
   prefixCls?: string
@@ -83,13 +92,39 @@ export interface InputTagProps {
   maxCount?: number
   tokenSeparators?: string[]
   allowDuplicate?: boolean
-  allowClear?: boolean
+  /**
+   * 是否显示清空按钮；传对象可以自定义清空图标。
+   */
+  allowClear?: boolean | InputTagAllowClearConfig
+  /**
+   * 前缀内容，显示在标签之前。同名插槽优先。
+   */
+  prefix?: VueNode
+  /**
+   * 后缀内容，显示在清空按钮之后。同名插槽优先。
+   */
+  suffix?: VueNode
+  /**
+   * 自定义清空图标。优先级：`#clearIcon` 插槽 > `clearIcon` > `allowClear.clearIcon` > 默认图标。
+   */
+  clearIcon?: VueNode
   trigger?: 'enter' | 'space'
   saveOnBlur?: boolean
   draggable?: boolean
-  collapseTags?: boolean
-  collapseTagsTooltip?: boolean
-  maxCollapseTags?: number
+  /**
+   * 最多显示多少个标签，超出的折叠成一个占位标签（与 antdv-next Select 的 `maxTagCount` 一致）。
+   * 不设置时显示全部。
+   */
+  maxTagCount?: number
+  /**
+   * 折叠占位标签的内容，可以是节点，或接收被折叠值的函数。默认显示 `+ N`。同名插槽优先。
+   */
+  maxTagPlaceholder?: VueNode | ((omittedValues: string[]) => VueNode)
+  /**
+   * 是否通过 Tooltip 展示被折叠的标签。开启后占位标签可聚焦，支持 hover / focus / click。
+   * @default false
+   */
+  maxTagTooltip?: boolean
   inputProps?: InputTagInputProps
   tagProps?: InputTagTagProps
   classes?: InputTagClassNamesType
@@ -117,6 +152,8 @@ export interface InputTagEmits {
   blur: (event: FocusEvent) => void
   compositionstart: (event: CompositionEvent) => void
   compositionend: (event: CompositionEvent) => void
+  keydown: (event: KeyboardEvent) => void
+  keyup: (event: KeyboardEvent) => void
   [key: string]: (...args: any[]) => void
 }
 
@@ -124,6 +161,7 @@ export interface InputTagSlots {
   prefix?: () => any
   suffix?: () => any
   clearIcon?: () => any
+  maxTagPlaceholder?: (props: { omittedValues: string[] }) => any
   tag?: (props: { value: string, index: number, closable: boolean, onClose: (event: MouseEvent) => void }) => any
 }
 
@@ -139,6 +177,14 @@ function omitClassAndStyle(attrs: Record<string, any>) {
   delete nextAttrs.class
   delete nextAttrs.style
   return nextAttrs
+}
+
+/**
+ * 渲染型 prop 允许传函数；布尔值（未传的 prop 会被 Vue 转成 `false`）和空串都视为没有内容。
+ */
+function resolveNode(value: unknown, ...args: any[]) {
+  const node = typeof value === 'function' ? value(...args) : value
+  return node == null || node === false || node === true || node === '' ? null : node
 }
 
 function resolveSemanticRecord<T extends object>(value: T | ((info: any) => T) | undefined) {
@@ -384,6 +430,8 @@ const InputTag = defineComponent<
     }
 
     function handleKeydown(event: KeyboardEvent) {
+      // 先透传给使用方，再做内部处理：内部的监听会覆盖 attrs 上的同名监听，不转发的话用户收不到
+      emit('keydown', event)
       if (event.key === 'Backspace' && !mergedInputValue.value && mergedValue.value.length) {
         event.preventDefault()
         removeTag(mergedValue.value.length - 1, 'backspace', event)
@@ -391,6 +439,7 @@ const InputTag = defineComponent<
     }
 
     function handleKeyup(event: KeyboardEvent) {
+      emit('keyup', event)
       if (event.isComposing || composing.value || mergedDisabled.value || mergedReadonly.value)
         return
       if (mergedTrigger.value !== 'space' || (event.key !== ' ' && event.code !== 'Space'))
@@ -556,28 +605,43 @@ const InputTag = defineComponent<
     expose(api)
 
     return () => {
-      const visibleValues = props.collapseTags
-        ? mergedValue.value.slice(0, Math.max(0, props.maxCollapseTags ?? 1))
-        : mergedValue.value
-      const collapsedValues = props.collapseTags
-        ? mergedValue.value.slice(Math.max(0, props.maxCollapseTags ?? 1))
-        : []
+      const maxTagCount = typeof props.maxTagCount === 'number' && props.maxTagCount >= 0
+        ? Math.floor(props.maxTagCount)
+        : undefined
+      const visibleValues = maxTagCount === undefined
+        ? mergedValue.value
+        : mergedValue.value.slice(0, maxTagCount)
+      const collapsedValues = maxTagCount === undefined
+        ? []
+        : mergedValue.value.slice(maxTagCount)
+      const showTooltip = Boolean(props.maxTagTooltip)
+      const renderPlaceholder = () => {
+        const fromSlot = slots.maxTagPlaceholder ? filterEmpty(slots.maxTagPlaceholder({ omittedValues: collapsedValues })) : []
+        if (fromSlot.length)
+          return fromSlot
+        return resolveNode(props.maxTagPlaceholder, collapsedValues) ?? `+ ${collapsedValues.length}`
+      }
       const collapsedTag = collapsedValues.length
         ? h(ATag, {
             closable: false,
             disabled: mergedDisabled.value,
             class: `${prefixCls.value}-collapse`,
-            tabindex: 0,
-            role: 'button',
-            'aria-label': showMoreLabel.value,
-            // role=button 的键盘契约：Enter/Space 与 click 等效
-            onKeydown: (event: KeyboardEvent) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault()
-                ;(event.currentTarget as HTMLElement | null)?.click()
-              }
-            },
-          } as any, { default: () => `+ ${collapsedValues.length}` })
+            // 只有开启 Tooltip 时占位标签才可交互；否则它只是数量提示，不应进入 Tab 序列
+            ...(showTooltip
+              ? {
+                  tabindex: 0,
+                  role: 'button',
+                  'aria-label': showMoreLabel.value,
+                  // role=button 的键盘契约：Enter/Space 与 click 等效
+                  onKeydown: (event: KeyboardEvent) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault()
+                      ;(event.currentTarget as HTMLElement | null)?.click()
+                    }
+                  },
+                }
+              : {}),
+          } as any, { default: renderPlaceholder })
         : null
       const collapseContent = collapsedValues.length
         ? h('div', { class: `${prefixCls.value}-collapse-content` }, collapsedValues.map((value, index) => renderStaticTag(value, index + visibleValues.length)))
@@ -586,13 +650,14 @@ const InputTag = defineComponent<
         class: clsx(`${prefixCls.value}-content`, mergedClassNames.value.content),
         style: mergedStyles.value.content,
       }, [
-        slots.prefix?.(),
+        resolveNode(getSlotPropsFnRun(slots, props, 'prefix')),
         ...visibleValues.map(renderTag),
-        collapseContent && props.collapseTagsTooltip
+        collapseContent && showTooltip
           ? h(ATooltip, { title: collapseContent, placement: 'top', trigger: ['hover', 'focus', 'click'] }, { default: () => collapsedTag })
           : collapsedTag,
       ])
-      const canClear = mergedAllowClear.value && !mergedDisabled.value && !mergedReadonly.value
+      const allowClear = mergedAllowClear.value
+      const canClear = Boolean(allowClear) && !mergedDisabled.value && !mergedReadonly.value
         && (mergedValue.value.length > 0 || Boolean(mergedInputValue.value))
       const clearButton = canClear
         ? h('button', {
@@ -602,9 +667,12 @@ const InputTag = defineComponent<
             'aria-label': clearLabel.value,
             onMousedown: (event: MouseEvent) => event.preventDefault(),
             onClick: handleClear,
-          }, slots.clearIcon?.() ?? h('span', { 'aria-hidden': 'true' }, '×'))
+          }, resolveNode(getSlotPropsFnRun(slots, props, 'clearIcon'))
+          ?? resolveNode(typeof allowClear === 'object' ? allowClear.clearIcon : undefined)
+          // 默认图标与 antdv-next Input 的 allowClear 保持一致
+          ?? h(CloseCircleFilled, { 'aria-hidden': 'true' }))
         : null
-      const suffixContent = slots.suffix?.()
+      const suffixContent = resolveNode(getSlotPropsFnRun(slots, props, 'suffix'))
       const suffix = clearButton || suffixContent ? [clearButton, suffixContent] : undefined
       const inputClassNames = resolveSemanticRecord(mergedInputProps.value.classes)
       const inputStyles = resolveSemanticRecord(mergedInputProps.value.styles)
@@ -629,13 +697,14 @@ const InputTag = defineComponent<
         'data-readonly': inputReadonly.value ? 'true' : undefined,
         classes: {
           ...inputClassNames,
-          root: clsx(inputClassNames?.root, mergedClassNames.value.root),
+          // root 的语义 class / style 已经通过上面的 class / style 落到根节点，这里不再重复传一次
+          root: inputClassNames?.root,
           input: clsx(inputClassNames?.input, mergedClassNames.value.input),
           suffix: clsx(`${prefixCls.value}-suffix`, inputClassNames?.suffix, mergedClassNames.value.suffix),
         },
         styles: {
           ...inputStyles,
-          root: { ...inputStyles?.root, ...mergedStyles.value.root },
+          root: inputStyles?.root,
           input: { ...inputStyles?.input, ...mergedStyles.value.input },
           suffix: { ...inputStyles?.suffix, ...mergedStyles.value.suffix },
         },

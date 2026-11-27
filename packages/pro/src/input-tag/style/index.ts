@@ -1,5 +1,6 @@
 import type { CSSObject } from '@antdv-next/cssinjs'
 import type { FullToken, GenerateStyle } from 'antdv-next/theme/internal'
+import { unit } from '@antdv-next/cssinjs'
 import { genStyleHooks } from 'antdv-next/theme/internal'
 import { prepareComponentToken } from './token'
 
@@ -19,6 +20,15 @@ const genInputTagStyle: GenerateStyle<InputTagToken, CSSObject> = (token) => {
       minHeight: token.controlHeight,
       alignItems: 'center',
       flexWrap: 'wrap',
+
+      // 根节点就是 Input 的 affix wrapper，尺寸类名由它给出；最小高度要跟着尺寸走
+      [`&${antCls}-input-affix-wrapper-sm`]: {
+        minHeight: token.controlHeightSM,
+      },
+
+      [`&${antCls}-input-affix-wrapper-lg`]: {
+        minHeight: token.controlHeightLG,
+      },
 
       [`& ${antCls}-input-prefix`]: {
         display: 'contents',
@@ -49,7 +59,7 @@ const genInputTagStyle: GenerateStyle<InputTagToken, CSSObject> = (token) => {
       },
 
       '&-tag-dragging': {
-        opacity: 0.5,
+        opacity: token.opacityLoading,
       },
 
       // 插入位置指示：inline-start 半区 -> 目标前，inline-end 半区 -> 目标后
@@ -93,11 +103,26 @@ const genInputTagStyle: GenerateStyle<InputTagToken, CSSObject> = (token) => {
         margin: 0,
         padding: 0,
         border: 0,
-        color: token.colorTextTertiary,
+        lineHeight: 0,
+        color: token.colorTextQuaternary,
+        fontSize: token.fontSizeIcon,
         background: 'transparent',
         cursor: 'pointer',
+        outline: 'none',
+        transition: `color ${token.motionDurationSlow}`,
 
         '&:hover': {
+          color: token.colorIcon,
+        },
+
+        '&:focus-visible': {
+          color: token.colorIcon,
+          borderRadius: token.borderRadiusSM,
+          outline: `${unit(token.lineWidthFocus)} solid ${token.colorPrimaryBorder}`,
+          outlineOffset: 1,
+        },
+
+        '&:active': {
           color: token.colorText,
         },
       },
