@@ -9,11 +9,11 @@ const semantics = computed(() => [
   { name: 'root', desc: t('root'), version: '1.1.0' },
   { name: 'inner', desc: t('inner'), version: '1.1.0' },
   { name: 'avatar', desc: t('avatar'), version: '1.1.0' },
-  { name: 'content', desc: t('content'), version: '1.1.0' },
+  { name: 'main', desc: t('main'), version: '1.1.0' },
   { name: 'header', desc: t('header'), version: '1.1.0' },
   { name: 'author', desc: t('author'), version: '1.1.0' },
   { name: 'datetime', desc: t('datetime'), version: '1.1.0' },
-  { name: 'body', desc: t('body'), version: '1.1.0' },
+  { name: 'content', desc: t('content'), version: '1.1.0' },
   { name: 'actions', desc: t('actions'), version: '1.1.0' },
   { name: 'children', desc: t('children'), version: '1.1.0' },
 ])

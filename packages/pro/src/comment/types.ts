@@ -1,4 +1,5 @@
-import type { CSSProperties, VNode } from 'vue'
+import type { CSSProperties } from 'vue'
+import type { VueNode } from '../_util/node'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semantic'
 
 /**
@@ -10,7 +11,7 @@ import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semant
 export type CommentDatetimePlacement = 'inline' | 'block'
 
 /**
- * `datetime` / `actions` 在各自行内的对齐方式。
+ * `datetime` 在 header 行内的对齐方式（不影响 `actions`）。
  *
  * 使用逻辑方向，`direction="rtl"` 时自动镜像。
  */
@@ -23,16 +24,16 @@ export interface CommentSemanticClassNames {
   inner?: string
   /** 头像区域 */
   avatar?: string
-  /** 内容列 */
-  content?: string
+  /** 主体列，包含 header、正文与操作 */
+  main?: string
   /** author 与 datetime 的行容器 */
   header?: string
   /** 作者节点 */
   author?: string
   /** 时间节点 */
   datetime?: string
-  /** 正文 */
-  body?: string
+  /** 正文，对应 `content` 属性 / 插槽 */
+  content?: string
   /** 操作区域 */
   actions?: string
   /** 嵌套评论容器 */
@@ -43,11 +44,11 @@ export interface CommentSemanticStyles {
   root?: CSSProperties
   inner?: CSSProperties
   avatar?: CSSProperties
-  content?: CSSProperties
+  main?: CSSProperties
   header?: CSSProperties
   author?: CSSProperties
   datetime?: CSSProperties
-  body?: CSSProperties
+  content?: CSSProperties
   actions?: CSSProperties
   children?: CSSProperties
 }
@@ -56,9 +57,9 @@ export interface CommentProps {
   prefixCls?: string
   rootClass?: string
   /**
-   * 评论作者。`string` 按纯文本渲染，复杂内容请使用 `#author` 插槽。
+   * 评论作者。`string` 按纯文本渲染，也可以传 VNode 或渲染函数；同名插槽优先。
    */
-  author?: string | VNode
+  author?: VueNode
   /**
    * 头像图片地址。组件会转交 `avatar` 组件的 `src`，并以 `author` 作为 `alt`。
    * 需要文字头像、图标头像或自定义头像时使用 `#avatar` 插槽。
@@ -67,11 +68,16 @@ export interface CommentProps {
   /**
    * 评论时间。组件不做任何格式化，复杂内容（如 Tooltip 包裹）请使用 `#datetime` 插槽。
    */
-  datetime?: string | VNode
+  datetime?: VueNode
   /**
    * 评论正文。组件不做 HTML / Markdown 解析，复杂内容请使用 `#content` 插槽。
    */
-  content?: string | VNode
+  content?: VueNode
+  /**
+   * 评论操作，支持 VNode 或渲染函数。与 `#actions` 插槽等价，同时存在时以插槽为准；
+   * 内容由外层 `Space` 排列。
+   */
+  actions?: VueNode
   /**
    * `datetime` 相对 `author` 的排布方式。
    * @default 'inline'

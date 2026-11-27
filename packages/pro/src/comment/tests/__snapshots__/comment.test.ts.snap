@@ -12,7 +12,7 @@ exports[`rtl render > component should be rendered correctly in RTL direction 1`
     >
       <!---->
       <div
-        class="ant-flex css-var-root ant-flex-align-stretch ant-flex-rtl ant-flex-vertical ant-comment-content"
+        class="ant-flex css-var-root ant-flex-align-stretch ant-flex-rtl ant-flex-vertical ant-comment-main"
       >
         <!---->
         <!---->

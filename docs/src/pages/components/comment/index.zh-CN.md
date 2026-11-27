@@ -36,10 +36,11 @@ group:
 | --- | --- | --- | --- | --- | --- |
 | prefixCls | 组件样式前缀 | `string` | - | - | × |
 | rootClass | 组件根元素 class | `string` | - | - | × |
-| author | 评论作者，`string` 按纯文本渲染 | `string \| VNode` | - | - | × |
+| author | 评论作者，`string` 按纯文本渲染 | `VueNode` | - | - | × |
 | avatar | 头像图片地址，内部转交 `Avatar` 的 `src`，并以 `author` 作为 `alt` | `string` | - | - | × |
-| datetime | 评论时间，组件不做任何格式化 | `string \| VNode` | - | - | × |
-| content | 评论正文，组件不做 HTML / Markdown 解析 | `string \| VNode` | - | - | × |
+| datetime | 评论时间，组件不做任何格式化 | `VueNode` | - | - | × |
+| content | 评论正文，组件不做 HTML / Markdown 解析 | `VueNode` | - | - | × |
+| actions | 评论操作，内容由 `Space` 排列 | `VueNode` | - | - | × |
 | datetimePlacement | 时间相对作者的排布方式 | `'inline' \| 'block'` | `'inline'` | - | ✓ |
 | align | 时间在所在行内的对齐方式，逻辑方向，RTL 下自动镜像 | `'start' \| 'end'` | `'start'` | - | ✓ |
 | classes | 自定义语义化 class，支持对象或函数 | `CommentClassNamesType` | - | - | ✓ |
@@ -64,7 +65,7 @@ group:
 
 ## 操作项 {#actions}
 
-操作区完全由 `#actions` 插槽定义，组件不内置任何动作名或图标映射。
+操作区由 `#actions` 插槽或 `actions` 属性定义（同时存在时以插槽为准），组件不内置任何动作名或图标映射。
 
 ```vue
 <a-comment author="Zhang San" content="...">
@@ -101,7 +102,7 @@ group:
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-`avatar`、`header`、`body`、`actions`、`children` 只在其内容存在时渲染。
+`avatar`、`header`、`content`、`actions`、`children` 只在其内容存在时渲染；插槽内容为空（例如 `v-if` 为假）时同样不渲染。
 
 ## 主题 Token {#design-tokens}
 

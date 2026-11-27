@@ -15,17 +15,17 @@ const classes: CommentProps['classes'] = {
   root: 'comment-semantic-root',
   inner: 'comment-semantic-inner',
   avatar: 'comment-semantic-avatar',
-  content: 'comment-semantic-content',
+  main: 'comment-semantic-main',
   header: 'comment-semantic-header',
   author: 'comment-semantic-author',
   datetime: 'comment-semantic-datetime',
-  body: 'comment-semantic-body',
+  content: 'comment-semantic-content',
   actions: 'comment-semantic-actions',
   children: 'comment-semantic-children',
 }
 
 const styles: CommentProps['styles'] = {
-  content: {
+  main: {
     padding: '12px 16px',
     border: '2px dashed var(--ant-color-primary)',
     borderRadius: '6px',
