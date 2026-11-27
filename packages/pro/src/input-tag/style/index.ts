@@ -13,6 +13,9 @@ interface InputTagToken extends FullToken<'InputTag'> {
 
 const genInputTagStyle: GenerateStyle<InputTagToken, CSSObject> = (token) => {
   const { componentCls, antCls, tagGap, inputMinWidth } = token
+  // 插入位置指示线：宽度取 lineWidthBold，负方向用 calc 取反（CSS 变量模式下 token 是 var() 字符串）
+  const indicatorOffset = unit(token.lineWidthBold)
+  const indicatorOffsetNegative = unit(token.calc(token.lineWidthBold).mul(-1).equal())
 
   return {
     [componentCls]: {
@@ -64,19 +67,25 @@ const genInputTagStyle: GenerateStyle<InputTagToken, CSSObject> = (token) => {
 
       // 插入位置指示：inline-start 半区 -> 目标前，inline-end 半区 -> 目标后
       '&-tag-drag-before': {
-        boxShadow: `-2px 0 0 0 ${token.colorPrimary}`,
+        boxShadow: `${indicatorOffsetNegative} 0 0 0 ${token.colorPrimary}`,
       },
 
       '&-tag-drag-after': {
-        boxShadow: `2px 0 0 0 ${token.colorPrimary}`,
+        boxShadow: `${indicatorOffset} 0 0 0 ${token.colorPrimary}`,
       },
 
       [`&-rtl ${componentCls}-tag-drag-before`]: {
-        boxShadow: `2px 0 0 0 ${token.colorPrimary}`,
+        boxShadow: `${indicatorOffset} 0 0 0 ${token.colorPrimary}`,
       },
 
       [`&-rtl ${componentCls}-tag-drag-after`]: {
-        boxShadow: `-2px 0 0 0 ${token.colorPrimary}`,
+        boxShadow: `${indicatorOffsetNegative} 0 0 0 ${token.colorPrimary}`,
+      },
+
+      // 可拖拽的标签可以聚焦（Alt + 方向键排序），需要可见的焦点样式
+      '& [data-tag-index]:focus-visible': {
+        outline: `${unit(token.lineWidthFocus)} solid ${token.colorPrimaryBorder}`,
+        outlineOffset: 1,
       },
 
       '&-collapse': {

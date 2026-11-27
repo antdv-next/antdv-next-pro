@@ -3,7 +3,6 @@ import type { Variant } from 'antdv-next/config-provider/context'
 import type { App, ComputedRef, CSSProperties, ShallowRef, SlotsType } from 'vue'
 import type { VueNode } from '../_util/node'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semantic'
-import type { InputTagConfig } from '../config-provider'
 import type { InputTagLocale, ProLocale } from '../locale/types'
 import { CloseCircleFilled } from '@antdv-next/icons'
 import { clsx, useMergedState } from '@v-c/util'
@@ -17,7 +16,6 @@ import { unwrapExposedElement } from '../_util'
 import { filterEmpty, getSlotPropsFnRun } from '../_util/node'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
-import enUSLocale from '../locale/en_US'
 import useStyle from './style'
 
 export type InputTagValue = string[]
@@ -131,7 +129,7 @@ export interface InputTagProps {
   styles?: InputTagStylesType
 }
 
-export type InputTagChangeTrigger = 'enter' | 'space' | 'blur' | 'drag' | 'token-separator' | 'paste' | 'tag-remove' | 'backspace' | 'clear'
+export type InputTagChangeTrigger = 'enter' | 'space' | 'blur' | 'drag' | 'token-separator' | 'tag-remove' | 'backspace' | 'clear'
 
 export interface InputTagChangeInfo {
   trigger: InputTagChangeTrigger
@@ -147,7 +145,7 @@ export interface InputTagEmits {
   remove: (value: string, info: { index: number, trigger: 'tag-remove' | 'backspace', event?: Event }) => void
   clear: (event: MouseEvent) => void
   pressEnter: (inputValue: string, event: KeyboardEvent) => void
-  dragTag: (oldIndex: number, newIndex: number, value: string, event?: DragEvent) => void
+  dragTag: (oldIndex: number, newIndex: number, value: string, event?: DragEvent | KeyboardEvent) => void
   focus: (event: FocusEvent) => void
   blur: (event: FocusEvent) => void
   compositionstart: (event: CompositionEvent) => void
@@ -163,6 +161,24 @@ export interface InputTagSlots {
   clearIcon?: () => any
   maxTagPlaceholder?: (props: { omittedValues: string[] }) => any
   tag?: (props: { value: string, index: number, closable: boolean, onClose: (event: MouseEvent) => void }) => any
+}
+
+/**
+ * 可以通过 `ProConfigProvider` 的 `inputTag` 全局配置的默认值。
+ */
+export interface InputTagConfig {
+  size?: SizeType
+  variant?: Variant
+  maxCount?: number
+  tokenSeparators?: string[]
+  allowDuplicate?: boolean
+  allowClear?: boolean | InputTagAllowClearConfig
+  trigger?: 'enter' | 'space'
+  saveOnBlur?: boolean
+  class?: string
+  style?: CSSProperties
+  classes?: InputTagClassNamesType
+  styles?: InputTagStylesType
 }
 
 export interface InputTagRef {
@@ -202,17 +218,18 @@ function createSeparatorRegExp(separators: string[]) {
 
 function splitInput(value: string, separators: string[]) {
   const regexp = createSeparatorRegExp(separators)
-  if (!regexp) {
-    return { values: value.trim() ? [value.trim()] : [], rest: '' }
-  }
+  if (!regexp)
+    return value.trim() ? [value.trim()] : []
 
-  return {
-    values: value.split(regexp).map(part => part.trim()).filter(Boolean),
-    rest: '',
-  }
+  return value.split(regexp).map(part => part.trim()).filter(Boolean)
 }
 
-const enUSInputTag = enUSLocale.InputTag!
+// 语言包缺少 InputTag 字段时的英文兜底。直接写在组件里，避免为了两条文案把整份 en_US
+// （antdv-next 的 en_US 加上 Cron 文案）带进 InputTag 的子路径产物。
+const DEFAULT_LOCALE: InputTagLocale = {
+  clear: 'Clear',
+  showMore: 'Show all tags',
+}
 
 const InputTag = defineComponent<
   InputTagProps,
@@ -248,7 +265,7 @@ const InputTag = defineComponent<
     )
 
     const localeText = computed<InputTagLocale>(() => ({
-      ...enUSInputTag,
+      ...DEFAULT_LOCALE,
       ...((localeContext.locale.value as ProLocale | undefined)?.InputTag ?? {}),
     }))
     const clearLabel = computed(() => localeText.value.clear)
@@ -260,8 +277,10 @@ const InputTag = defineComponent<
     const mergedSeparators = computed(() => props.tokenSeparators ?? proConfig.value.tokenSeparators ?? [])
     const mergedAllowDuplicate = computed(() => props.allowDuplicate ?? proConfig.value.allowDuplicate ?? false)
     const mergedAllowClear = computed(() => props.allowClear ?? proConfig.value.allowClear ?? false)
-    const mergedTrigger = computed(() => props.trigger ?? 'enter')
-    const mergedSaveOnBlur = computed(() => props.saveOnBlur ?? false)
+    const mergedTrigger = computed(() => props.trigger ?? proConfig.value.trigger ?? 'enter')
+    const mergedSaveOnBlur = computed(() => props.saveOnBlur ?? proConfig.value.saveOnBlur ?? false)
+    const mergedSize = computed(() => props.size ?? proConfig.value.size)
+    const mergedVariant = computed(() => props.variant ?? proConfig.value.variant)
     const mergedInputProps = computed(() => props.inputProps ?? {})
 
     const valueRef = computed(() => props.value) as ComputedRef<InputTagValue>
@@ -370,10 +389,11 @@ const InputTag = defineComponent<
         return
 
       const input = mergedInputValue.value
-      const { values, rest } = splitInput(input, mergedSeparators.value)
-      const accepted = commitTokens(values, trigger, event)
-      if (values.length && (accepted.length || rest !== input))
-        updateInputValue(rest, event, true)
+      const values = splitInput(input, mergedSeparators.value)
+      commitTokens(values, trigger, event)
+      // 只要输入里有可提交的内容就清空草稿，即使全部被去重 / maxCount 拦下
+      if (values.length)
+        updateInputValue('', event, true)
     }
 
     function removeTag(index: number, trigger: 'tag-remove' | 'backspace', event?: Event) {
@@ -525,6 +545,36 @@ const InputTag = defineComponent<
       handleDragEnd()
     }
 
+    function focusTag(index: number) {
+      nativeElementRef.value?.querySelector<HTMLElement>(`[data-tag-index="${index}"]`)?.focus()
+    }
+
+    /**
+     * 拖拽排序的键盘等价操作：焦点在标签上时 Alt + ←/→ 把它向前 / 向后移动一位。
+     * 方向键按视觉方向解释，RTL 下自动镜像，与拖拽时的左右半区判断保持一致。
+     */
+    function handleTagKeydown(index: number, event: KeyboardEvent) {
+      if (!event.altKey || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight'))
+        return
+      if (!props.draggable || mergedDisabled.value || mergedReadonly.value)
+        return
+      event.preventDefault()
+      event.stopPropagation()
+      const forward = (event.key === 'ArrowRight') !== (direction.value === 'rtl')
+      const newIndex = index + (forward ? 1 : -1)
+      if (newIndex < 0 || newIndex >= mergedValue.value.length)
+        return
+      const next = [...mergedValue.value]
+      const [value] = next.splice(index, 1)
+      if (value === undefined)
+        return
+      next.splice(newIndex, 0, value)
+      updateTagValue(next, 'drag', event)
+      emit('dragTag', index, newIndex, value, event)
+      // 标签以 value + index 为 key，移动后节点会重建，需要把焦点带到新位置
+      nextTick(() => focusTag(newIndex))
+    }
+
     function handleDragEnd() {
       draggingIndex.value = null
       dragOverIndex.value = null
@@ -554,6 +604,10 @@ const InputTag = defineComponent<
       const dragAttrs = draggable
         ? {
             draggable: true,
+            tabindex: 0,
+            'data-tag-index': index,
+            'aria-keyshortcuts': 'Alt+ArrowLeft Alt+ArrowRight',
+            onKeydown: (event: KeyboardEvent) => handleTagKeydown(index, event),
             onDragstart: (event: DragEvent) => handleDragStart(index, event),
             onDragover: (event: DragEvent) => handleDragOver(index, event),
             onDrop: (event: DragEvent) => handleDrop(index, event),
@@ -690,9 +744,9 @@ const InputTag = defineComponent<
         autoFocus: props.autoFocus,
         disabled: mergedDisabled.value,
         readonly: inputReadonly.value,
-        size: props.size,
+        size: mergedSize.value,
         status: props.status,
-        variant: props.variant,
+        variant: mergedVariant.value,
         allowClear: false,
         'data-readonly': inputReadonly.value ? 'true' : undefined,
         classes: {
@@ -732,6 +786,5 @@ const InputTag = defineComponent<
   app.component(InputTag.name, InputTag)
 }
 
-export type { InputTagConfig }
 export default InputTag
 export { InputTag }

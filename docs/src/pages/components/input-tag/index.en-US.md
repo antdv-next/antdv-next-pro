@@ -44,9 +44,9 @@ Use it to enter string tags such as emails, keywords, or categories.
 | disabled | Disable the component | `boolean` | `false` | - | × |
 | readonly | Make the component readonly | `boolean` | `false` | - | × |
 | autoFocus | Autofocus the input | `boolean` | `false` | - | × |
-| size | Input size | `SizeType` | - | - | × |
+| size | Input size | `SizeType` | - | - | ✓ |
 | status | Manually set validation status; follows Form.Item by default | `InputProps['status']` | - | - | × |
-| variant | Input variant | `Variant` | - | - | × |
+| variant | Input variant | `Variant` | - | - | ✓ |
 | maxCount | Maximum number of tags | `number` | - | - | ✓ |
 | tokenSeparators | Separators used to split tags when submitting with the trigger key | `string[]` | `[]` | - | ✓ |
 | allowDuplicate | Allow duplicate tags | `boolean` | `false` | - | ✓ |
@@ -54,9 +54,9 @@ Use it to enter string tags such as emails, keywords, or categories.
 | prefix | Content before the tag list | `VueNode` | - | - | × |
 | suffix | Content at the end of the input, after the clear action | `VueNode` | - | - | × |
 | clearIcon | Custom clear icon, takes precedence over `allowClear.clearIcon` | `VueNode` | - | - | × |
-| trigger | Key used to submit a tag | `'enter' \| 'space'` | `'enter'` | - | × |
-| saveOnBlur | Submit the input value on blur | `boolean` | `false` | - | × |
-| draggable | Allow tags to be reordered by dragging | `boolean` | `false` | - | × |
+| trigger | Key used to submit a tag | `'enter' \| 'space'` | `'enter'` | - | ✓ |
+| saveOnBlur | Submit the input value on blur | `boolean` | `false` | - | ✓ |
+| draggable | Allow tags to be reordered by dragging. Tags become focusable and support `Alt + ←/→` keyboard reordering | `boolean` | `false` | - | × |
 | maxTagCount | Maximum number of visible tags; the rest collapse into one placeholder tag. All tags are shown when unset | `number` | - | - | × |
 | maxTagPlaceholder | Content of the collapsed placeholder tag | `VueNode \| ((omittedValues: string[]) => VueNode)` | `+ N` | - | × |
 | maxTagTooltip | Show the collapsed tags in a Tooltip | `boolean` | `false` | - | × |
@@ -75,7 +75,7 @@ Use it to enter string tags such as emails, keywords, or categories.
 | remove | Triggered after a tag is removed | `(value: string, info: { index: number, trigger: 'tag-remove' \| 'backspace', event?: Event }) => void` | - |
 | clear | Triggered after the clear action is clicked | `(event: MouseEvent) => void` | - |
 | pressEnter | Triggered when the input receives Enter | `(inputValue: string, event: KeyboardEvent) => void` | - |
-| dragTag | Triggered after tags are reordered by dragging | `(oldIndex: number, newIndex: number, value: string, event?: DragEvent) => void` | - |
+| dragTag | Triggered after tags are reordered by dragging or by keyboard | `(oldIndex: number, newIndex: number, value: string, event?: DragEvent \| KeyboardEvent) => void` | - |
 | focus | Triggered when the input receives focus | `(event: FocusEvent) => void` | - |
 | blur | Triggered when the input loses focus | `(event: FocusEvent) => void` | - |
 | keydown | Triggered on key down in the input, before the built-in key handling | `(event: KeyboardEvent) => void` | - |
@@ -148,6 +148,8 @@ Duplicates are detected by strict string equality (case-sensitive). For example,
 #### How is the insertion position decided when dragging tags?
 
 With `draggable` enabled, hovering a dragged tag over a target tag inserts it based on the mouse position: the **left half** of the target inserts the tag before it, the **right half** inserts it after. An insertion indicator line is shown on the target tag while dragging.
+
+Without a mouse, focus a tag with Tab and press `Alt + ←` / `Alt + →` to move it one position backward or forward (mirrored in RTL). Keyboard reordering also triggers `change` (with `info.trigger` set to `drag`) and `dragTag`.
 
 #### Which properties do `inputProps` / `tagProps` support?
 

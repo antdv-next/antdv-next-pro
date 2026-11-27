@@ -946,4 +946,138 @@ describe('InputTag', () => {
     expect(css).toContain('.ant-input-tag.ant-input-affix-wrapper-sm{min-height:var(--ant-control-height-sm)')
     expect(css).toContain('.ant-input-tag.ant-input-affix-wrapper-lg{min-height:var(--ant-control-height-lg)')
   })
+
+  describe('keyboard reordering', () => {
+    function mountDraggable(props: Record<string, any> = {}, rtl = false) {
+      return mount({
+        render() {
+          return h(ConfigProvider, { direction: rtl ? 'rtl' : 'ltr' }, {
+            default: () => h(InputTag, { defaultValue: ['one', 'two', 'three'], draggable: true, ...props }),
+          })
+        },
+      }, { attachTo: document.body })
+    }
+
+    function tagTexts(wrapper: ReturnType<typeof mount>) {
+      return wrapper.findAll('.ant-tag').map(tag => tag.text())
+    }
+
+    it('makes draggable tags focusable and moves them with Alt + arrow keys', async () => {
+      const onChange = vi.fn()
+      const onDragTag = vi.fn()
+      const wrapper = mountDraggable({ onChange, onDragTag })
+
+      const first = wrapper.findAll('.ant-tag')[0]!
+      expect(first.attributes('tabindex')).toBe('0')
+      expect(first.attributes('aria-keyshortcuts')).toBe('Alt+ArrowLeft Alt+ArrowRight')
+
+      await first.trigger('keydown', { key: 'ArrowRight', altKey: true })
+      await nextTick()
+
+      expect(tagTexts(wrapper)).toEqual(['two', 'one', 'three'])
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange.mock.calls[0]![0]).toEqual(['two', 'one', 'three'])
+      expect(onChange.mock.calls[0]![1]).toMatchObject({ trigger: 'drag' })
+      expect(onDragTag).toHaveBeenCalledWith(0, 1, 'one', expect.any(KeyboardEvent))
+      // 焦点跟着被移动的标签走，可以连续按键
+      expect(document.activeElement).toBe(wrapper.findAll('.ant-tag')[1]!.element)
+
+      await wrapper.findAll('.ant-tag')[1]!.trigger('keydown', { key: 'ArrowLeft', altKey: true })
+      await nextTick()
+      expect(tagTexts(wrapper)).toEqual(['one', 'two', 'three'])
+
+      wrapper.unmount()
+    })
+
+    it('ignores plain arrow keys and moves that would leave the list', async () => {
+      const onChange = vi.fn()
+      const wrapper = mountDraggable({ onChange })
+      const tags = wrapper.findAll('.ant-tag')
+
+      await tags[0]!.trigger('keydown', { key: 'ArrowRight' })
+      await tags[0]!.trigger('keydown', { key: 'ArrowLeft', altKey: true })
+      await tags[2]!.trigger('keydown', { key: 'ArrowRight', altKey: true })
+
+      expect(onChange).not.toHaveBeenCalled()
+      expect(tagTexts(wrapper)).toEqual(['one', 'two', 'three'])
+      wrapper.unmount()
+    })
+
+    it('mirrors the arrow keys in RTL', async () => {
+      const wrapper = mountDraggable({}, true)
+
+      await wrapper.findAll('.ant-tag')[0]!.trigger('keydown', { key: 'ArrowLeft', altKey: true })
+      await nextTick()
+
+      expect(tagTexts(wrapper)).toEqual(['two', 'one', 'three'])
+      wrapper.unmount()
+    })
+
+    it('does not make tags focusable when not draggable, disabled, or readonly', () => {
+      for (const props of [{ draggable: false }, { disabled: true }, { readonly: true }]) {
+        const wrapper = mountDraggable(props)
+        expect(wrapper.findAll('.ant-tag')[0]!.attributes('tabindex')).toBeUndefined()
+        wrapper.unmount()
+      }
+    })
+  })
+
+  it('reads size, variant, trigger, and saveOnBlur from ProConfigProvider and lets props win', async () => {
+    const wrapper = mount(ProConfigProvider, {
+      props: {
+        inputTag: { size: 'small', variant: 'filled', trigger: 'space', saveOnBlur: true },
+      },
+      slots: {
+        default: () => [
+          h(InputTag, { class: 'from-config' }),
+          h(InputTag, { class: 'from-props', size: 'large', variant: 'outlined', trigger: 'enter', saveOnBlur: false }),
+        ],
+      },
+    })
+
+    const fromConfig = wrapper.find('.from-config')
+    expect(fromConfig.classes()).toContain('ant-input-affix-wrapper-sm')
+    expect(fromConfig.classes()).toContain('ant-input-filled')
+
+    const configInput = fromConfig.find('input')
+    await configInput.setValue('one')
+    await configInput.trigger('keyup', { key: ' ', code: 'Space' })
+    expect(fromConfig.findAll('.ant-tag').map(tag => tag.text())).toEqual(['one'])
+    await configInput.setValue('two')
+    await configInput.trigger('blur')
+    expect(fromConfig.findAll('.ant-tag').map(tag => tag.text())).toEqual(['one', 'two'])
+
+    const fromProps = wrapper.find('.from-props')
+    expect(fromProps.classes()).toContain('ant-input-affix-wrapper-lg')
+    expect(fromProps.classes()).toContain('ant-input-outlined')
+
+    const propsInput = fromProps.find('input')
+    await propsInput.setValue('one')
+    await propsInput.trigger('keyup', { key: ' ', code: 'Space' })
+    await propsInput.trigger('blur')
+    expect(fromProps.findAll('.ant-tag')).toHaveLength(0)
+  })
+
+  it('clears the draft even when every submitted value is rejected as a duplicate', async () => {
+    const wrapper = mount(InputTag, { props: { defaultValue: ['one'] } })
+    const input = getInput(wrapper)
+
+    await input.setValue('one')
+    await input.trigger('keydown', { key: 'Enter' })
+
+    expect(wrapper.findAll('.ant-tag').map(tag => tag.text())).toEqual(['one'])
+    expect(input.element.value).toBe('')
+  })
+
+  it('derives the drag indicator from the lineWidthBold token', () => {
+    mount(InputTag, { props: { defaultValue: ['one'], draggable: true } })
+    const css = Array.from(document.querySelectorAll('style'))
+      .map(el => el.textContent ?? '')
+      .join('\n')
+      .replace(/\s+/g, '')
+
+    expect(css).toContain('.ant-input-tag-tag-drag-after{box-shadow:var(--ant-line-width-bold)000var(--ant-color-primary)')
+    expect(css).toContain('.ant-input-tag-tag-drag-before{box-shadow:calc(var(--ant-line-width-bold)*-1)000var(--ant-color-primary)')
+    expect(css).not.toContain('box-shadow:-2px000')
+  })
 })

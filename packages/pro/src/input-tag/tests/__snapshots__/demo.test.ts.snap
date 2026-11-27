@@ -352,8 +352,11 @@ exports[`input-tag demo > renders draggable correctly 1`] = `
     >
       <!---->
       <span
+        aria-keyshortcuts="Alt+ArrowLeft Alt+ArrowRight"
         class="ant-tag ant-tag-filled css-var-root"
+        data-tag-index="0"
         draggable="true"
+        tabindex="0"
       >
         one
         <span
@@ -381,8 +384,11 @@ exports[`input-tag demo > renders draggable correctly 1`] = `
         <!---->
       </span>
       <span
+        aria-keyshortcuts="Alt+ArrowLeft Alt+ArrowRight"
         class="ant-tag ant-tag-filled css-var-root"
+        data-tag-index="1"
         draggable="true"
+        tabindex="0"
       >
         two
         <span
@@ -410,8 +416,11 @@ exports[`input-tag demo > renders draggable correctly 1`] = `
         <!---->
       </span>
       <span
+        aria-keyshortcuts="Alt+ArrowLeft Alt+ArrowRight"
         class="ant-tag ant-tag-filled css-var-root"
+        data-tag-index="2"
         draggable="true"
+        tabindex="0"
       >
         three
         <span
