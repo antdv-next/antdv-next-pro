@@ -11,7 +11,23 @@ export type CronSize = 'small' | 'medium' | 'large'
 export type CronStatus = '' | 'error' | 'success' | 'validating' | 'warning'
 export type CronValidateStatus = 'valid' | 'invalid' | 'empty'
 
+/**
+ * 整句自然语言描述（如「在 09:00」）使用的 cronstrue 语言。
+ *
+ * 由内置语言包通过 `cronstrue/locales/<name>.js` 提供，只打包用到的语言。
+ */
+export interface CronDescriptionLocale {
+  /** cronstrue 的语言名，如 `zh_CN`、`fr` */
+  name: string
+  /** 创建 cronstrue 语言实例，首次描述时调用一次 */
+  create: () => object
+}
+
 export interface CronLocale {
+  /**
+   * 整句描述使用的 cronstrue 语言。缺省时回退到英文。
+   */
+  descriptionLocale?: CronDescriptionLocale
   fields: Record<CronFieldName, string>
   modes: Record<CronEditorMode, string> & { special: string }
   notSpecified: string
@@ -144,7 +160,14 @@ export interface CronSemanticStyles {
 export interface CronProps {
   prefixCls?: string
   rootClass?: string
+  /**
+   * 当前表达式（受控），配合 `v-model:value` 使用。
+   */
   value?: string
+  /**
+   * 初始表达式（非受控）。只在挂载时读取一次，之后由组件内部维护。
+   */
+  defaultValue?: string
   format?: CronFormat
   showYear?: boolean
   disabled?: boolean

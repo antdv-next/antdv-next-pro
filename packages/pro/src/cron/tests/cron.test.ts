@@ -4,7 +4,7 @@ import enUS from 'antdv-next/locale/en_US'
 import frFR from 'antdv-next/locale/fr_FR'
 import zhCN from 'antdv-next/locale/zh_CN'
 import { describe, expect, it, vi } from 'vitest'
-import { defineComponent, h, nextTick, reactive, ref } from 'vue'
+import { createCommentVNode, defineComponent, h, nextTick, reactive, ref } from 'vue'
 import { useProConfigProvider } from '../../config-provider/context'
 import proFrFR from '../../locale/fr_FR'
 import proZhCN from '../../locale/zh_CN'
@@ -656,5 +656,129 @@ describe('Cron', () => {
     await nextTick()
     expect(weekWrapper.find('input').element.value).toBe('0 0 9 ? * 2#2')
     expect(weekWrapper.emitted('update:value')?.slice(-1)).toEqual([['0 0 9 ? * 2#2']])
+  })
+  describe('uncontrolled', () => {
+    it('uses defaultValue as the initial expression and reads it only once', async () => {
+      const wrapper = mount(Cron, { props: { defaultValue: '0 0 9 * * ?' } })
+
+      expect(wrapper.find('input').element.value).toBe('0 0 9 * * ?')
+      expect(wrapper.find('[role="alert"]').exists()).toBe(false)
+      expect(wrapper.emitted('validate')?.[0]?.[0]).toMatchObject({ status: 'valid' })
+
+      await wrapper.setProps({ defaultValue: '0 0 10 * * ?' })
+      expect(wrapper.find('input').element.value).toBe('0 0 9 * * ?')
+    })
+
+    it('lets value win over defaultValue', () => {
+      const wrapper = mount(Cron, { props: { value: '0 0 8 * * ?', defaultValue: '0 0 9 * * ?' } })
+      expect(wrapper.find('input').element.value).toBe('0 0 8 * * ?')
+    })
+
+    it('keeps the uncontrolled draft when the locale changes', async () => {
+      const activeLocale = ref<any>(enUS)
+      const Demo = defineComponent(() => () => h(ConfigProvider, { locale: activeLocale.value }, {
+        default: () => h(Cron, { defaultValue: '0 0 9 * * ?' }),
+      }))
+      const wrapper = mount(Demo)
+
+      // 用户把分钟改成每 5 分钟一次
+      wrapper.getComponent(Segmented).vm.$emit('update:value', 'interval')
+      await nextTick()
+      const edited = wrapper.find('input').element.value
+      expect(edited).not.toBe('0 0 9 * * ?')
+
+      activeLocale.value = proZhCN
+      await nextTick()
+      expect(wrapper.find('[data-field="second"].ant-cron-field-tab-label').text()).toBe('秒')
+      expect(wrapper.find('input').element.value).toBe(edited)
+    })
+
+    it('keeps the uncontrolled draft when showYear changes', async () => {
+      const wrapper = mount(Cron, { props: { defaultValue: '0 0 9 * * ?', showYear: false } })
+
+      wrapper.getComponent(Segmented).vm.$emit('update:value', 'interval')
+      await nextTick()
+      const edited = wrapper.find('input').element.value
+
+      await wrapper.setProps({ showYear: true })
+      // 表达式本身不被重置成空串；是否仍然合法由新的格式决定
+      expect(wrapper.find('input').element.value).toBe(edited)
+    })
+
+    it('clears the expression when a controlled value goes back to undefined', async () => {
+      const wrapper = mount(Cron, { props: { value: '0 0 9 * * ?' } })
+      await wrapper.setProps({ value: undefined })
+      expect(wrapper.find('input').element.value).toBe('')
+    })
+  })
+
+  it('renders the #presets slot without the presets prop and skips an empty slot', () => {
+    const slotOnly = mount(Cron, {
+      slots: { presets: () => h('div', { class: 'custom-presets' }, 'presets') },
+    })
+    expect(slotOnly.find('.ant-cron-presets .custom-presets').text()).toBe('presets')
+
+    const emptySlot = mount(Cron, {
+      slots: { presets: () => [createCommentVNode('v-if', true)] },
+    })
+    expect(emptySlot.find('.ant-cron-presets').exists()).toBe(false)
+
+    const fallback = mount(Cron, {
+      props: { presets: [{ label: 'Daily', value: '0 0 9 * * ?' }] },
+      slots: { presets: () => [createCommentVNode('v-if', true)] },
+    })
+    expect(fallback.find('.ant-cron-presets').text()).toBe('Daily')
+  })
+
+  it('wraps a preset with a description in a single Tooltip-triggered button', () => {
+    const wrapper = mount(Cron, {
+      props: {
+        presets: [
+          { label: 'Daily', value: '0 0 9 * * ?', description: 'Every day at 09:00' },
+          { label: 'Hourly', value: '0 0 * * * ?' },
+        ],
+      },
+    })
+
+    expect(wrapper.findAll('.ant-cron-presets button').map(button => button.text())).toEqual(['Daily', 'Hourly'])
+    expect(wrapper.findAllComponents(Tooltip)).toHaveLength(1)
+  })
+
+  it('describes with the cronstrue locale carried by the Pro locale and falls back to English', () => {
+    expect(proZhCN.Cron.descriptionLocale?.name).toBe('zh_CN')
+    expect(proFrFR.Cron.descriptionLocale?.name).toBe('fr')
+
+    const french = mount(ConfigProvider, {
+      props: { locale: proFrFR },
+      slots: { default: () => h(Cron, { value: '0 0 9 * * ?', preview: true }) },
+    })
+    expect(french.find('.ant-cron-preview-description').text()).toBe('À 09:00')
+
+    // 语言包没有携带 cronstrue 语言时（自定义语言包、cronstrue 不支持的语言）回退英文
+    const { descriptionLocale: _omitted, ...cronWithoutDescription } = proFrFR.Cron
+    const fallback = mount(ConfigProvider, {
+      props: { locale: { ...proFrFR, locale: 'xx', Cron: cronWithoutDescription } as any },
+      slots: { default: () => h(Cron, { value: '0 0 9 * * ?', preview: true }) },
+    })
+    expect(fallback.find('.ant-cron-preview-description').text()).toBe('At 09:00')
+  })
+
+  it('adds the rtl class and keeps directional styles on logical properties', () => {
+    const wrapper = mount(ConfigProvider, {
+      props: { direction: 'rtl' },
+      slots: { default: () => h(Cron, { value: '0 0 9 * * ?' }) },
+    })
+
+    expect(wrapper.find('.ant-cron').classes()).toContain('ant-cron-rtl')
+    const cronCss = Array.from(document.querySelectorAll('style'))
+      .map(el => el.textContent ?? '')
+      .filter(css => css.includes('.ant-cron'))
+      .join('\n')
+      .replace(/\s+/g, '')
+    expect(cronCss).toContain('.ant-cron-rtl{direction:rtl')
+    const cronRules = cronCss.match(/\.ant-cron[^{]*\{[^}]*\}/g) ?? []
+    expect(cronRules.length).toBeGreaterThan(0)
+    for (const rule of cronRules)
+      expect(rule).not.toMatch(/(?:margin|padding|border)-(?:left|right)|[{;](?:left|right):|text-align:(?:left|right)/)
   })
 })

@@ -69,7 +69,9 @@ describe('Pro locale', () => {
       expect(locale?.InputTag?.clear?.trim(), `${localeName}:InputTag.clear`).not.toBe('')
       expect(locale?.InputTag?.showMore?.trim(), `${localeName}:InputTag.showMore`).not.toBe('')
 
-      const messages = flattenCronLocale(locale!.Cron!)
+      // descriptionLocale 是 cronstrue 语言的载体，不是文案，不参与文案键的比对
+      const { descriptionLocale: _descriptionLocale, ...cronMessages } = locale!.Cron!
+      const messages = flattenCronLocale(cronMessages)
       expect(Object.keys(messages).sort(), localeName).toEqual(expectedMessageKeys)
       for (const key of expectedMessageKeys) {
         const message = messages[key]

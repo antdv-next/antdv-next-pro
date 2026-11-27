@@ -1,6 +1,8 @@
-import type { CronError, CronErrorCode, CronFieldMode, CronFieldName, CronFields, CronFormat, CronLocale, CronOptions, CronPreviewResult, CronValidateResult } from '../types'
+import type { CronDescriptionLocale, CronError, CronErrorCode, CronFieldMode, CronFieldName, CronFields, CronFormat, CronLocale, CronOptions, CronPreviewResult, CronValidateResult } from '../types'
 import { Cron } from 'croner'
-import cronstrue from 'cronstrue/i18n'
+// 只引入 cronstrue 核心（自带英文）。其它语言由 `src/locale/<lang>.ts` 通过
+// `descriptionLocale` 字段按需携带，不再打包 `cronstrue/i18n` 的全部语言。
+import cronstrue from 'cronstrue'
 import enUSLocale from '../../locale/en_US'
 import {
   getFieldLimits,
@@ -380,17 +382,31 @@ function resolveCronstrueLocale(localeCode = 'en') {
   return candidates.find(candidate => api.locales && candidate in api.locales) ?? 'en'
 }
 
-function describeWithCronstrue(expression: string, localeCode: string, options: CronOptions) {
+/**
+ * 语言包自带 cronstrue 语言时，按需注册到核心实例上并使用它；
+ * 否则按语言代码在已注册的语言里查找（用户也可以自行 `import 'cronstrue/locales/<lang>.js'`），找不到回退英文。
+ */
+function resolveDescriptionLocale(localeCode: string, descriptionLocale?: CronDescriptionLocale) {
+  if (!descriptionLocale)
+    return resolveCronstrueLocale(localeCode)
+  const api = getCronstrueApi()
+  api.locales ??= {}
+  if (!(descriptionLocale.name in api.locales))
+    api.locales[descriptionLocale.name] = descriptionLocale.create()
+  return descriptionLocale.name
+}
+
+function describeWithCronstrue(expression: string, localeCode: string, options: CronOptions, descriptionLocale?: CronDescriptionLocale) {
   const { format } = resolveCronOptions(options)
   return getCronstrueApi().toString(expression, {
-    locale: resolveCronstrueLocale(localeCode),
+    locale: resolveDescriptionLocale(localeCode, descriptionLocale),
     use24HourTimeFormat: true,
     dayOfWeekStartIndexZero: format === 'unix',
     throwExceptionOnParseError: true,
   })
 }
 
-function describeSpecifiedMinutes(expression: string, localeCode: string, options: CronOptions) {
+function describeSpecifiedMinutes(expression: string, localeCode: string, options: CronOptions, descriptionLocale?: CronDescriptionLocale) {
   const { format } = resolveCronOptions(options)
   const parts = expression.trim().split(/\s+/)
   const minuteIndex = format === 'unix' ? 0 : 1
@@ -409,7 +425,7 @@ function describeSpecifiedMinutes(expression: string, localeCode: string, option
   const descriptions = minutes.map((minute) => {
     const singleParts = [...parts]
     singleParts[minuteIndex] = minute
-    return describeWithCronstrue(singleParts.join(' '), localeCode, options)
+    return describeWithCronstrue(singleParts.join(' '), localeCode, options, descriptionLocale)
   })
   const timePattern = /\d{1,2}:\d{2}(?::\d{2})?/
   const times = descriptions.map(description => description.match(timePattern)?.[0])
@@ -429,9 +445,9 @@ function describeSpecifiedMinutes(expression: string, localeCode: string, option
   return descriptions[0]!.replace(timePattern, timeList)
 }
 
-export function describeExpression(expression: string, localeCode = 'en', options: CronOptions = {}): string {
-  const description = describeWithCronstrue(expression, localeCode, options)
-  return describeSpecifiedMinutes(expression, localeCode, options) ?? description
+export function describeExpression(expression: string, localeCode = 'en', options: CronOptions = {}, descriptionLocale?: CronDescriptionLocale): string {
+  const description = describeWithCronstrue(expression, localeCode, options, descriptionLocale)
+  return describeSpecifiedMinutes(expression, localeCode, options, descriptionLocale) ?? description
 }
 
 export function getPreview(expression: string, options: CronOptions = {}, locale: CronLocale = enUS, localeCode = 'en'): CronPreviewResult {
@@ -441,7 +457,7 @@ export function getPreview(expression: string, options: CronOptions = {}, locale
   const cron = createCron(validation.expression, options)
   let description: string | undefined
   try {
-    description = describeExpression(validation.expression, localeCode, options)
+    description = describeExpression(validation.expression, localeCode, options, locale.descriptionLocale)
   }
   catch {}
   return {

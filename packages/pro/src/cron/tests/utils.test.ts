@@ -166,7 +166,7 @@ describe('Cron utilities', () => {
     const options = { format: 'unix' as const }
     const fields = parseExpression('0 9 1 * 1', options)
     expect(fields).toMatchObject({ day: '1', week: '1' })
-    expect(describeExpression('0 9 1 * 1', 'zh-cn', options)).toBe('在09:00, 限每月 1 号, 或者为星期一')
+    expect(describeExpression('0 9 1 * 1', 'zh-cn', options, zhCN.descriptionLocale)).toBe('在09:00, 限每月 1 号, 或者为星期一')
     expect(getPreview('0 9 1 * 1', options).description).toBe('At 09:00, on day 1 of the month, and on Monday')
     expect(getPreview('0 9 1 * 1', options, zhCN, 'zh-cn').description).toBe('在09:00, 限每月 1 号, 或者为星期一')
   })
