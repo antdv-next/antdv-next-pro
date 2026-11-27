@@ -42,7 +42,7 @@ group:
 | fillCalendarLeading | 是否填充范围起点前的同周日期 | `boolean` | `false` | - | ✓ |
 | size | 单元格尺寸 | `'small' \| 'medium' \| 'large'` | `'medium'` | - | ✓ |
 | xGap / yGap | 水平/垂直单元格间距 | `number \| string` | `3` | - | ✓ |
-| colorTheme | 内置颜色主题，取自 Ant Design 预设色板，跟随主题算法；不设置时色阶从 `colorPrimary` 派生 | `'green' \| 'blue' \| 'orange' \| 'purple' \| 'red'` | - | - | ✓ |
+| colorTheme | 内置颜色主题，取自 Ant Design 预设色板，跟随主题算法；不设置时色阶从 `colorSuccess` 派生 | `'green' \| 'blue' \| 'orange' \| 'purple' \| 'red'` | - | - | ✓ |
 | activeColors | 自定义高于最低档位的四个颜色 | `HeatmapColorScale` | - | - | ✓ |
 | minimumColor | 自定义最低有效数值档位颜色 | `string` | - | - | ✓ |
 | tooltip | 是否显示 Tooltip，或传入 Tooltip 配置；需要按单元格生成内容时，请使用 tooltip 插槽。 | `boolean \| TooltipProps` | `false` | - | ✓ |
@@ -88,6 +88,6 @@ Heatmap 以「天」为单位聚合，`data` 与 `range` 里的时间戳需要�
 
 ## 主题 Token {#design-tokens}
 
-Heatmap 支持通过 `theme.components.Heatmap` 自定义组件样式 Token。默认颜色、标签、圆角、尺寸和焦点样式均从全局 Token 派生：默认色阶（`activeColor1` – `activeColor4`）来自 `colorPrimary` 色板，暗色主题下自动切换。
+Heatmap 支持通过 `theme.components.Heatmap` 自定义组件样式 Token。默认颜色、标签、圆角、尺寸和焦点样式均从全局 Token 派生：默认色阶（`activeColor1` – `activeColor4`）来自 `colorSuccess` 色板，暗色主题下自动切换。
 
 <ComponentTokenTable component="Heatmap" />

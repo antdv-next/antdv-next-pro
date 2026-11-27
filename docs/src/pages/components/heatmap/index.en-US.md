@@ -41,7 +41,7 @@ group:
 | fillCalendarLeading | Fill dates before the range start in the same week. | `boolean` | `false` | - | ✓ |
 | size | Cell size. | `'small' \| 'medium' \| 'large'` | `'medium'` | - | ✓ |
 | xGap / yGap | Horizontal and vertical cell gaps. | `number \| string` | `3` | - | ✓ |
-| colorTheme | Included color theme, taken from the Ant Design preset palettes and following the theme algorithm. Without it the scale derives from `colorPrimary`. | `'green' \| 'blue' \| 'orange' \| 'purple' \| 'red'` | - | - | ✓ |
+| colorTheme | Included color theme, taken from the Ant Design preset palettes and following the theme algorithm. Without it the scale derives from `colorSuccess`. | `'green' \| 'blue' \| 'orange' \| 'purple' \| 'red'` | - | - | ✓ |
 | activeColors | Four custom colors above the lowest level. | `HeatmapColorScale` | - | - | ✓ |
 | minimumColor | Custom color for the lowest valid value level. | `string` | - | - | ✓ |
 | tooltip | Show a Tooltip or provide Tooltip options. Use the tooltip slot for per-cell content. | `boolean \| TooltipProps` | `false` | - | ✓ |
@@ -87,6 +87,6 @@ Date cells expose `data-level` and `data-empty` for finer style control.
 
 ## Design Tokens {#design-tokens}
 
-Customize Heatmap with `theme.components.Heatmap`. Its defaults derive from global Tokens for color, typography, radius, sizing, and focus styles: the default scale (`activeColor1` – `activeColor4`) comes from the `colorPrimary` palette and switches automatically in dark themes.
+Customize Heatmap with `theme.components.Heatmap`. Its defaults derive from global Tokens for color, typography, radius, sizing, and focus styles: the default scale (`activeColor1` – `activeColor4`) comes from the `colorSuccess` palette and switches automatically in dark themes.
 
 <ComponentTokenTable component="Heatmap" />

@@ -446,7 +446,11 @@ describe('Heatmap', () => {
 
       expect(css).toContain('.ant-heatmap-cell[data-level="2"]{background-color:var(--ant-heatmap-active-color-1)')
       expect(css).toContain('.ant-heatmap-cell[data-level="5"]{background-color:var(--ant-heatmap-active-color-4)')
-      expect(css).toContain('--ant-heatmap-active-color-3:#1677ff')
+      // 默认色阶取成功色色板的 3 / 5 / 6 / 7 档，由浅到深
+      expect(css).toContain('--ant-heatmap-active-color-1:#b7eb8f')
+      expect(css).toContain('--ant-heatmap-active-color-2:#73d13d')
+      expect(css).toContain('--ant-heatmap-active-color-3:#52c41a')
+      expect(css).toContain('--ant-heatmap-active-color-4:#389e0d')
       expect(css).toContain('.ant-heatmap-theme-green.ant-heatmap-cell[data-level="2"]')
       expect(css).toContain('var(--ant-green-3)')
       expect(css).toContain('var(--ant-red-9)')

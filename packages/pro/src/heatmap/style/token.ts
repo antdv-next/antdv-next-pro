@@ -80,11 +80,11 @@ export function prepareComponentToken(token: any): ComponentToken {
   return {
     emptyCellColor: token.colorFillTertiary,
     minimumColor: token.colorFillSecondary,
-    // 默认色阶从主色派生：跟随 `colorPrimary`，暗色算法下自动换成暗色色板。
-    activeColor1: token.colorPrimaryBorder,
-    activeColor2: token.colorPrimaryHover,
-    activeColor3: token.colorPrimary,
-    activeColor4: token.colorPrimaryActive,
+    // 默认色阶从成功色派生（色板的 3 / 5 / 6 / 7 档）：跟随 `colorSuccess`，暗色算法下自动换成暗色色板。
+    activeColor1: token.colorSuccessBorder,
+    activeColor2: token.colorSuccessTextHover,
+    activeColor3: token.colorSuccess,
+    activeColor4: token.colorSuccessActive,
     cellSizeSM: 12,
     cellSize: 14,
     cellSizeLG: 16,
