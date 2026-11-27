@@ -2,16 +2,21 @@ import type { TooltipProps } from 'antdv-next'
 import type { CSSProperties } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/semantic'
 
-export const HEATMAP_COLOR_THEMES = {
-  green: ['#9be9a8', '#40c463', '#30a14e', '#216e39'],
-  blue: ['#c0e7ff', '#73b3ff', '#0969da', '#0550ae'],
-  orange: ['#fed7aa', '#fb923c', '#ea580c', '#c2410c'],
-  purple: ['#e9d5ff', '#c084fc', '#9333ea', '#7c3aed'],
-  red: ['#fecaca', '#f87171', '#dc2626', '#b91c1c'],
-} as const
+/**
+ * 内置颜色主题，对应 Ant Design 的预设色板（`green` / `blue` / ...）。
+ * 具体色值在样式里从全局 Token（如 `green3`）取，跟随主题算法与暗色模式。
+ */
+export const HEATMAP_COLOR_THEMES = ['green', 'blue', 'orange', 'purple', 'red'] as const
 
 export const HEATMAP_ACTIVE_COLOR_COUNT = 4
-export type HeatmapColorTheme = keyof typeof HEATMAP_COLOR_THEMES
+export type HeatmapColorTheme = (typeof HEATMAP_COLOR_THEMES)[number]
+/**
+ * 日期归一使用的时区。
+ *
+ * - `UTC`：按 UTC 日期归一，服务端聚合好的「UTC 零点」时间戳用它
+ * - `local`：按浏览器本地时区归一，`new Date(2024, 0, 1).getTime()` 这类本地时间戳用它
+ */
+export type HeatmapTimeZone = 'UTC' | 'local'
 export type HeatmapColorScale = readonly [string, string, string, string]
 export type HeatmapData = HeatmapDataItem[]
 export type HeatmapFirstDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6
@@ -53,7 +58,17 @@ export interface HeatmapProps {
   prefixCls?: string
   rootClass?: string
   data?: HeatmapData
+  /**
+   * 展示范围。`'recent'` 为截至今天的最近 365 天；数字表示公历年份（如 `2024`）；
+   * 也可以传 `{ start, end }` 时间戳。
+   * @default 'recent'
+   */
   range?: 'recent' | number | HeatmapRange
+  /**
+   * `data` / `range` 中的时间戳按哪个时区归一到日期，同时决定 `range="recent"` 的「今天」。
+   * @default 'UTC'
+   */
+  timeZone?: HeatmapTimeZone
   firstDayOfWeek?: HeatmapFirstDayOfWeek
   showMonthLabels?: boolean
   showWeekLabels?: boolean
@@ -84,13 +99,13 @@ export interface HeatmapTooltipSlotProps {
 export interface HeatmapSlots {
   footer?: () => any
   indicator?: () => any
-  'indicator-leading-text'?: () => any
-  'indicator-trailing-text'?: () => any
+  indicatorLeadingText?: () => any
+  indicatorTrailingText?: () => any
   tooltip?: (props: HeatmapTooltipSlotProps) => any
 }
 
 export interface HeatmapEmits {
-  'cell-click': (item: HeatmapDataItem, event: MouseEvent) => void
+  cellClick: (item: HeatmapDataItem, event: MouseEvent) => void
   [key: string]: (...args: any[]) => void
 }
 
@@ -98,6 +113,7 @@ export interface HeatmapConfig {
   colorTheme?: HeatmapColorTheme
   activeColors?: HeatmapColorScale
   minimumColor?: string
+  timeZone?: HeatmapTimeZone
   firstDayOfWeek?: HeatmapFirstDayOfWeek
   showMonthLabels?: boolean
   showWeekLabels?: boolean

@@ -1,8 +1,8 @@
 import type { CSSObject } from '@antdv-next/cssinjs'
 import type { FullToken, GenerateStyle } from 'antdv-next/theme/internal'
-import type { HeatmapColorScale } from '../types'
+import { unit } from '@antdv-next/cssinjs'
 import { genStyleHooks } from 'antdv-next/theme/internal'
-import { HEATMAP_COLOR_THEMES, isHeatmapColorScale } from '../types'
+import { HEATMAP_COLOR_THEMES } from '../types'
 import { prepareComponentToken } from './token'
 
 export type { ComponentToken } from './token'
@@ -10,7 +10,10 @@ export type { ComponentToken } from './token'
 interface HeatmapToken extends FullToken<'Heatmap'> {
   emptyCellColor: string
   minimumColor: string
-  colorScale: HeatmapColorScale
+  activeColor1: string
+  activeColor2: string
+  activeColor3: string
+  activeColor4: string
   cellSizeSM: number
   cellSize: number
   cellSizeLG: number
@@ -22,16 +25,37 @@ interface HeatmapToken extends FullToken<'Heatmap'> {
   focusOutlineColor: string
 }
 
+function genActiveLevelStyle(colors: readonly [string, string, string, string]): CSSObject {
+  return {
+    '&[data-level="2"]': { backgroundColor: colors[0] },
+    '&[data-level="3"]': { backgroundColor: colors[1] },
+    '&[data-level="4"]': { backgroundColor: colors[2] },
+    '&[data-level="5"]': { backgroundColor: colors[3] },
+  }
+}
+
 const genHeatmapStyle: GenerateStyle<HeatmapToken, CSSObject> = (token) => {
   const { componentCls } = token
-  // CSS variables cannot represent color arrays, so use the default scale while rendering CSS-variable styles.
-  const colorScale = isHeatmapColorScale(token.colorScale)
-    ? token.colorScale
-    : HEATMAP_COLOR_THEMES.green
-
-  if (!isHeatmapColorScale(token.colorScale) && import.meta.env?.DEV) {
-    console.warn('[Heatmap] `colorScale` token must contain four non-empty color strings. Falling back to the default color scale.')
-  }
+  const defaultLevelStyle = genActiveLevelStyle([
+    token.activeColor1,
+    token.activeColor2,
+    token.activeColor3,
+    token.activeColor4,
+  ])
+  // 内置主题取 Ant Design 预设色板的 3 / 5 / 7 / 9 档，全部来自全局 Token，
+  // 暗色算法下色板会整体重算，这里不需要额外处理。
+  const themeStyles: CSSObject = {}
+  HEATMAP_COLOR_THEMES.forEach((name) => {
+    const palette = token as unknown as Record<string, string>
+    themeStyles[`&-theme-${name}`] = {
+      [`${componentCls}-cell, ${componentCls}-indicator-color`]: genActiveLevelStyle([
+        palette[`${name}3`]!,
+        palette[`${name}5`]!,
+        palette[`${name}7`]!,
+        palette[`${name}9`]!,
+      ]),
+    }
+  })
 
   return {
     [componentCls]: {
@@ -107,10 +131,7 @@ const genHeatmapStyle: GenerateStyle<HeatmapToken, CSSObject> = (token) => {
         transition: `background-color ${token.motionDurationMid}`,
 
         '&[data-level="1"]': { backgroundColor: token.minimumColor },
-        '&[data-level="2"]': { backgroundColor: colorScale[0] },
-        '&[data-level="3"]': { backgroundColor: colorScale[1] },
-        '&[data-level="4"]': { backgroundColor: colorScale[2] },
-        '&[data-level="5"]': { backgroundColor: colorScale[3] },
+        ...defaultLevelStyle,
         '&[data-empty="true"]': {
           backgroundColor: token.emptyCellColor,
         },
@@ -118,8 +139,8 @@ const genHeatmapStyle: GenerateStyle<HeatmapToken, CSSObject> = (token) => {
           cursor: 'pointer',
         },
         '&:focus-visible': {
-          outline: `2px solid ${token.focusOutlineColor}`,
-          outlineOffset: 2,
+          outline: `${unit(token.lineWidthBold)} solid ${token.focusOutlineColor}`,
+          outlineOffset: token.lineWidthBold,
         },
       },
 
@@ -138,10 +159,12 @@ const genHeatmapStyle: GenerateStyle<HeatmapToken, CSSObject> = (token) => {
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: token.marginSM,
-        marginTop: token.marginXS,
+        marginBlockStart: token.marginXS,
       },
 
       '&-indicator': {
+        // 没有 footer 内容时不再渲染占位节点，靠 auto 外边距把指示器推到行尾。
+        marginInlineStart: 'auto',
         display: 'flex',
         alignItems: 'center',
         gap: token.marginXXS,
@@ -161,11 +184,10 @@ const genHeatmapStyle: GenerateStyle<HeatmapToken, CSSObject> = (token) => {
         backgroundColor: token.emptyCellColor,
 
         '&[data-level="1"]': { backgroundColor: token.minimumColor },
-        '&[data-level="2"]': { backgroundColor: colorScale[0] },
-        '&[data-level="3"]': { backgroundColor: colorScale[1] },
-        '&[data-level="4"]': { backgroundColor: colorScale[2] },
-        '&[data-level="5"]': { backgroundColor: colorScale[3] },
+        ...defaultLevelStyle,
       },
+
+      ...themeStyles,
     },
   }
 }

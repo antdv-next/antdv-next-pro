@@ -1,6 +1,3 @@
-import type { HeatmapColorScale } from '../types'
-import { HEATMAP_COLOR_THEMES } from '../types'
-
 export interface ComponentToken {
   /**
    * @desc 无数据单元格颜色。
@@ -13,10 +10,25 @@ export interface ComponentToken {
    */
   minimumColor: string
   /**
-   * @desc 默认活跃颜色等级。
-   * @descEN Default active color scale.
+   * @desc 第 1 档活跃颜色（数值略高于最低档）。
+   * @descEN Active color of level 1, just above the minimum level.
    */
-  colorScale: HeatmapColorScale
+  activeColor1: string
+  /**
+   * @desc 第 2 档活跃颜色。
+   * @descEN Active color of level 2.
+   */
+  activeColor2: string
+  /**
+   * @desc 第 3 档活跃颜色。
+   * @descEN Active color of level 3.
+   */
+  activeColor3: string
+  /**
+   * @desc 第 4 档活跃颜色（最高档）。
+   * @descEN Active color of level 4, the highest level.
+   */
+  activeColor4: string
   /**
    * @desc 小尺寸单元格边长。
    * @descEN Small cell size.
@@ -68,7 +80,11 @@ export function prepareComponentToken(token: any): ComponentToken {
   return {
     emptyCellColor: token.colorFillTertiary,
     minimumColor: token.colorFillSecondary,
-    colorScale: HEATMAP_COLOR_THEMES.green,
+    // 默认色阶从主色派生：跟随 `colorPrimary`，暗色算法下自动换成暗色色板。
+    activeColor1: token.colorPrimaryBorder,
+    activeColor2: token.colorPrimaryHover,
+    activeColor3: token.colorPrimary,
+    activeColor4: token.colorPrimaryActive,
     cellSizeSM: 12,
     cellSize: 14,
     cellSizeLG: 16,

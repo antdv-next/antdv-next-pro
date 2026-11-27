@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
-import { Tooltip } from 'antdv-next'
+import { ConfigProvider, Tooltip } from 'antdv-next'
 import { describe, expect, it, vi } from 'vitest'
-import { h, nextTick } from 'vue'
+import { createCommentVNode, h, nextTick } from 'vue'
 import { ProConfigProvider } from '../../index'
 import zhCN from '../../locale/zh_CN'
 import Heatmap from '../index'
@@ -107,11 +107,11 @@ describe('Heatmap', () => {
     expect(firstDataCell.element.tagName).toBe('BUTTON')
     expect(firstDataCell.attributes('type')).toBe('button')
     await firstDataCell.trigger('click')
-    expect(wrapper.emitted('cell-click')?.[0]?.[0]).toMatchObject({ timestamp: jan1, value: 0 })
-    expect(wrapper.emitted('cell-click')?.[0]?.[1]).toBeInstanceOf(MouseEvent)
+    expect(wrapper.emitted('cellClick')?.[0]?.[0]).toMatchObject({ timestamp: jan1, value: 0 })
+    expect(wrapper.emitted('cellClick')?.[0]?.[1]).toBeInstanceOf(MouseEvent)
   })
 
-  it('emits cell-click for explicit no-data items but not missing or placeholder cells', async () => {
+  it('emits cellClick for explicit no-data items but not missing or placeholder cells', async () => {
     const wrapper = mount(Heatmap, {
       props: {
         range: { start: jan1, end: jan3 },
@@ -126,13 +126,13 @@ describe('Heatmap', () => {
     expect(explicitNoDataCell.attributes('type')).toBe('button')
     await explicitNoDataCell.trigger('click')
 
-    const cellClicks = wrapper.emitted('cell-click')!
+    const cellClicks = wrapper.emitted('cellClick')!
     expect(cellClicks).toHaveLength(1)
     expect(cellClicks[0]?.[0]).toMatchObject({ timestamp: jan2, value: null })
 
     await cells[3]!.trigger('click')
     await cells[0]!.trigger('click')
-    expect(wrapper.emitted('cell-click')).toHaveLength(1)
+    expect(wrapper.emitted('cellClick')).toHaveLength(1)
   })
 
   it('keeps calendar-leading data interactive without affecting range color levels', async () => {
@@ -156,7 +156,7 @@ describe('Heatmap', () => {
     expect(cells[2]!.attributes('data-level')).toBe('5')
 
     await cells[0]!.trigger('click')
-    expect(wrapper.emitted('cell-click')?.[0]?.[0]).toMatchObject({ timestamp: leadingDay, value: 100 })
+    expect(wrapper.emitted('cellClick')?.[0]?.[0]).toMatchObject({ timestamp: leadingDay, value: 100 })
   })
 
   it('labels the calendar and limits button semantics to supplied data items', () => {
@@ -330,5 +330,220 @@ describe('Heatmap', () => {
 
     expect(wrapper.find('.heatmap-footer-slot').text()).toBe('Total: 3')
     expect(wrapper.find('.heatmap-indicator-slot').text()).toBe('Custom scale')
+  })
+
+  it('renders camelCase indicator text slots and keeps the kebab-case names working', () => {
+    const camel = mount(Heatmap, {
+      props: { range: { start: jan1, end: jan2 } },
+      slots: {
+        indicatorLeadingText: () => 'Low',
+        indicatorTrailingText: () => 'High',
+      },
+    })
+    expect(camel.find('.ant-heatmap-indicator').text()).toBe('LowHigh')
+
+    const kebab = mount(Heatmap, {
+      props: { range: { start: jan1, end: jan2 } },
+      slots: {
+        'indicator-leading-text': () => 'Low',
+        'indicator-trailing-text': () => 'High',
+      } as any,
+    })
+    expect(kebab.find('.ant-heatmap-indicator').text()).toBe('LowHigh')
+  })
+
+  it('falls back to the defaults when slots only yield empty nodes', () => {
+    const empty = () => [createCommentVNode('v-if', true)]
+    const wrapper = mount(Heatmap, {
+      props: {
+        range: { start: jan1, end: jan2 },
+        data: [{ timestamp: jan1, value: 3 }],
+        tooltip: true,
+      },
+      slots: {
+        footer: empty,
+        indicator: empty,
+        indicatorLeadingText: empty,
+        indicatorTrailingText: empty,
+        tooltip: empty,
+      },
+    })
+
+    // 空的 indicator 插槽回退到默认指示器，文字回退到语言包
+    expect(wrapper.find('.ant-heatmap-indicator').text()).toBe('LessMore')
+    // 空的 footer 插槽不再留下占位 div
+    expect(wrapper.find('.ant-heatmap-footer').element.children).toHaveLength(1)
+    // 空的 tooltip 插槽回退到默认文案
+    expect(String(wrapper.findComponent(Tooltip).props('title'))).toContain('Level')
+  })
+
+  it('does not render the footer placeholder when there is no footer slot', () => {
+    const wrapper = mount(Heatmap, { props: { range: { start: jan1, end: jan2 } } })
+
+    const footer = wrapper.find('.ant-heatmap-footer')
+    expect(footer.element.children).toHaveLength(1)
+    expect(footer.element.firstElementChild?.classList.contains('ant-heatmap-indicator')).toBe(true)
+
+    const hidden = mount(Heatmap, { props: { range: { start: jan1, end: jan2 }, showColorIndicator: false } })
+    expect(hidden.find('.ant-heatmap-footer').exists()).toBe(false)
+  })
+
+  it('merges a partial Heatmap locale with the English defaults field by field', () => {
+    const wrapper = mount(ProConfigProvider, {
+      props: { locale: { ...zhCN, Heatmap: { less: '少' } as any } },
+      slots: {
+        default: () => h(Heatmap, { range: { start: jan1, end: jan2 } }),
+      },
+    })
+
+    expect(wrapper.find('.ant-heatmap-indicator').text()).toBe('少More')
+    expect(wrapper.find('table').attributes('aria-label')).toBe('Heatmap')
+  })
+
+  describe('colors', () => {
+    it('uses a theme class instead of inline colors for built-in themes', () => {
+      const wrapper = mount(Heatmap, {
+        props: {
+          range: { start: jan1, end: jan2 },
+          data: [
+            { timestamp: jan1, value: 0 },
+            { timestamp: jan2, value: 8 },
+          ],
+          colorTheme: 'orange',
+        },
+      })
+
+      expect(wrapper.find('.ant-heatmap').classes()).toContain('ant-heatmap-theme-orange')
+      expect((wrapper.find('[data-level="5"]').element as HTMLElement).style.backgroundColor).toBe('')
+      wrapper.findAll('.ant-heatmap-indicator-color').forEach((color) => {
+        expect((color.element as HTMLElement).style.backgroundColor).toBe('')
+      })
+    })
+
+    it('lets activeColors win over colorTheme and ignores invalid themes', () => {
+      const custom = mount(Heatmap, {
+        props: {
+          range: { start: jan1, end: jan1 },
+          colorTheme: 'orange',
+          activeColors: ['#111111', '#222222', '#333333', '#444444'],
+        },
+      })
+      expect(custom.find('.ant-heatmap').classes()).not.toContain('ant-heatmap-theme-orange')
+
+      const invalid = mount(Heatmap, {
+        props: { range: { start: jan1, end: jan1 }, colorTheme: 'invalid-theme' as any },
+      })
+      expect(invalid.find('.ant-heatmap').classes().some(name => name.startsWith('ant-heatmap-theme-'))).toBe(false)
+    })
+
+    it('derives the default scale and the built-in themes from design tokens', () => {
+      mount(Heatmap, { props: { range: { start: jan1, end: jan1 } } })
+
+      const css = Array.from(document.querySelectorAll('style'))
+        .map(el => el.textContent ?? '')
+        .join('\n')
+        .replace(/\s+/g, '')
+
+      expect(css).toContain('.ant-heatmap-cell[data-level="2"]{background-color:var(--ant-heatmap-active-color-1)')
+      expect(css).toContain('.ant-heatmap-cell[data-level="5"]{background-color:var(--ant-heatmap-active-color-4)')
+      expect(css).toContain('--ant-heatmap-active-color-3:#1677ff')
+      expect(css).toContain('.ant-heatmap-theme-green.ant-heatmap-cell[data-level="2"]')
+      expect(css).toContain('var(--ant-green-3)')
+      expect(css).toContain('var(--ant-red-9)')
+      // 不再出现写死的 GitHub 配色
+      expect(css).not.toContain('#9be9a8')
+      expect(css).not.toContain('#216e39')
+    })
+  })
+
+  describe('timeZone', () => {
+    // 本地时间戳：无论测试机在哪个时区，`local` 都应该把它们归到本地日历日
+    const localJan1 = new Date(2024, 0, 1).getTime()
+    const localJan1Late = new Date(2024, 0, 1, 23, 59, 59).getTime()
+    const localJan2 = new Date(2024, 0, 2).getTime()
+    const localJan3 = new Date(2024, 0, 3).getTime()
+
+    it('normalizes data and ranges by the local calendar day', () => {
+      const data = normalizeData([
+        { timestamp: localJan1, value: 1 },
+        { timestamp: localJan1Late, value: 2 },
+        { timestamp: localJan2, value: 3 },
+      ], 'local')
+
+      expect(data.size).toBe(2)
+      expect(data.get(jan1)?.value).toBe(2)
+      expect(data.get(jan2)?.value).toBe(3)
+
+      expect(resolveRange({ start: localJan1, end: localJan3 }, undefined, 'local')).toEqual({ start: jan1, end: jan3 })
+      expect(resolveRange('recent', localJan1Late, 'local').end).toBe(jan1)
+      // 年份范围与时区无关
+      expect(resolveRange(2024, undefined, 'local')).toEqual({ start: jan1, end: Date.UTC(2024, 11, 31) })
+    })
+
+    it('exposes local-midnight timestamps on calendar cells', () => {
+      const data = normalizeData([{ timestamp: localJan1Late, value: 2 }], 'local')
+      const calendar = createCalendar({ start: jan1, end: jan3 }, data, 0, false, 'local')
+      const cell = calendar[1]![0]!
+
+      expect(cell.dayKey).toBe(jan1)
+      expect(cell.timestamp).toBe(localJan1)
+      expect(cell.date?.getDate()).toBe(1)
+      expect(cell.value).toBe(2)
+    })
+
+    it('renders local timestamps on the local day and labels them with that date', async () => {
+      const wrapper = mount(Heatmap, {
+        props: {
+          timeZone: 'local',
+          range: { start: localJan1, end: localJan3 },
+          data: [{ timestamp: localJan1Late, value: 4 }],
+          classes: { cell: 'heatmap-cell' },
+        },
+      })
+
+      const cells = wrapper.findAll('.heatmap-cell').filter(cell => cell.element.tagName === 'BUTTON')
+      expect(cells).toHaveLength(1)
+      expect(cells[0]!.attributes('aria-label')).toContain('Jan 1, 2024')
+
+      await cells[0]!.trigger('click')
+      expect(wrapper.emitted('cellClick')?.[0]?.[0]).toMatchObject({ timestamp: localJan1Late, value: 4 })
+    })
+
+    it('reads timeZone from ProConfigProvider and lets props override it', () => {
+      const render = (timeZone?: 'UTC' | 'local') => mount(ProConfigProvider, {
+        props: { heatmap: { timeZone: 'local' } },
+        slots: {
+          default: () => h(Heatmap, {
+            timeZone,
+            range: { start: jan1, end: jan3 },
+            data: [{ timestamp: jan2 + 12 * 60 * 60 * 1000, value: 4 }],
+          }),
+        },
+      })
+
+      // UTC 正午在任何时区都落在本地的 1 月 2 日或 3 日；显式 UTC 时一定是 1 月 2 日
+      expect(render('UTC').find('button').attributes('aria-label')).toContain('Jan 2, 2024')
+      const localLabel = new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+        .format(new Date(jan2 + 12 * 60 * 60 * 1000))
+      expect(render().find('button').attributes('aria-label')).toContain(localLabel)
+    })
+  })
+
+  it('adds the rtl class and keeps the table direction-agnostic', () => {
+    const wrapper = mount({
+      render() {
+        return h(ConfigProvider, { direction: 'rtl' }, {
+          default: () => h(Heatmap, { range: { start: jan1, end: jan3 }, data: [{ timestamp: jan1, value: 1 }] }),
+        })
+      },
+    })
+
+    expect(wrapper.find('.ant-heatmap').classes()).toContain('ant-heatmap-rtl')
+    const css = Array.from(document.querySelectorAll('style'))
+      .map(el => el.textContent ?? '')
+      .join('\n')
+      .replace(/\s+/g, '')
+    expect(css).toContain('.ant-heatmap-rtl{direction:rtl')
+    expect(css).toContain('.ant-heatmap-footer{display:flex;align-items:center;justify-content:space-between;gap:var(--ant-margin-sm);margin-block-start:var(--ant-margin-xs)')
   })
 })
