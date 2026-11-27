@@ -11,6 +11,7 @@ describe('@antdv-next/pro', () => {
       'ProConfigProvider',
       'Scrollbar',
       'default',
+      'defineCronDescriptionLocale',
       'validateCronExpression',
     ])
   })
