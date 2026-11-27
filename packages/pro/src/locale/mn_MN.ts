@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Ангилал сонгох эсвэл хайх',
+    clear: 'Цэвэрлэх',
+    confirm: 'Тийм',
+    cancel: 'Цуцлах',
+    selectAll: 'Бүгдийг сонгох',
+    min: 'Доод',
+    max: 'Дээд',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Дулааны зураг',

@@ -14,6 +14,7 @@ export default {
     navigation: '导航',
     scrollbar: 'Scrollbar 滚动条',
     // Data Display
+    categorySearch: 'CategorySearch 分类搜索',
     dataDisplay: '数据展示',
     comment: 'Comment 评论',
     heatmap: 'Heatmap 热力图',

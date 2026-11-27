@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Ընտրեք կատեգորիա կամ որոնեք',
+    clear: 'Մաքրել',
+    confirm: 'Օկ',
+    cancel: 'Չեղարկել',
+    selectAll: 'Ընտրել բոլորը',
+    min: 'Նվազ.',
+    max: 'Առավ.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Ջերմային քարտեզ',

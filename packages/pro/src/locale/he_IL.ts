@@ -76,6 +76,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'בחרו קטגוריה או חפשו',
+    clear: 'נקה',
+    confirm: 'אישור',
+    cancel: 'ביטול',
+    selectAll: 'בחר הכול',
+    min: 'מינימום',
+    max: 'מקסימום',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'מפת חום',

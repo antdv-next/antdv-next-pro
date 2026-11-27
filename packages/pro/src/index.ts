@@ -1,4 +1,5 @@
 import type { App, Plugin } from 'vue'
+import type { ComponentToken as CategorySearchComponentToken } from './category-search/style'
 import type { ComponentToken as CommentComponentToken } from './comment/style'
 import type { ComponentToken as CronComponentToken } from './cron/style'
 import type { ComponentToken as HeatmapComponentToken } from './heatmap/style'
@@ -9,6 +10,7 @@ import * as components from './components'
 
 declare module 'antdv-next/theme/interface/components' {
   interface ComponentTokenMap {
+    CategorySearch?: CategorySearchComponentToken
     Comment?: CommentComponentToken
     Cron?: CronComponentToken
     Heatmap?: HeatmapComponentToken
@@ -18,6 +20,31 @@ declare module 'antdv-next/theme/interface/components' {
   }
 }
 
+export type {
+  CategorySearchChangeInfo,
+  CategorySearchChangeType,
+  CategorySearchClassNamesType,
+  CategorySearchEmits,
+  CategorySearchFieldNames,
+  CategorySearchLabelRenderInfo,
+  CategorySearchOption,
+  CategorySearchOptionGroup,
+  CategorySearchOptionValue,
+  CategorySearchPanelRenderInfo,
+  CategorySearchPlacement,
+  CategorySearchProps,
+  CategorySearchRef,
+  CategorySearchSemanticClassNames,
+  CategorySearchSemanticName,
+  CategorySearchSemanticStyles,
+  CategorySearchSlots,
+  CategorySearchStylesType,
+  CategorySearchTagRenderInfo,
+  CategorySearchType,
+  CategorySearchValue,
+  CategorySearchValueItem,
+  CategorySearchValueOption,
+} from './category-search'
 export type {
   CommentAlign,
   CommentClassNamesType,
@@ -33,6 +60,7 @@ export type {
 export * from './components'
 export { default as ProConfigProvider } from './config-provider'
 export type {
+  CategorySearchConfig,
   CommentConfig,
   CronConfig,
   HeatmapConfig,

@@ -1,1 +1,1 @@
-export type { HeatmapLocale, InputTagLocale, ProLocale } from './types'
+export type { CategorySearchLocale, HeatmapLocale, InputTagLocale, ProLocale } from './types'

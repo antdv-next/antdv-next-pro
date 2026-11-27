@@ -76,6 +76,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Bir kategori seçin veya arayın',
+    clear: 'Temizle',
+    confirm: 'Tamam',
+    cancel: 'İptal',
+    selectAll: 'Tümünü seç',
+    min: 'En az',
+    max: 'En çok',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Isı haritası',

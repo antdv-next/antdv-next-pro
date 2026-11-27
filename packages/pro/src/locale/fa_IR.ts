@@ -76,6 +76,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'یک دسته را انتخاب یا جستجو کنید',
+    clear: 'پاک کردن',
+    confirm: 'تایید',
+    cancel: 'لغو',
+    selectAll: 'انتخاب همه',
+    min: 'حداقل',
+    max: 'حداکثر',
+    rangeSeparator: ' ~ ',
+    valueSeparator: '، ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'نقشه حرارتی',

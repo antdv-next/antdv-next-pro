@@ -76,6 +76,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Izaberite kategoriju ili pretražite',
+    clear: 'Obriši',
+    confirm: 'U redu',
+    cancel: 'Otkaži',
+    selectAll: 'Izaberi sve',
+    min: 'Min.',
+    max: 'Maks.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Топлотна мапа',

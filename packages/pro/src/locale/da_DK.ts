@@ -76,6 +76,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Vælg en kategori eller søg',
+    clear: 'Ryd',
+    confirm: 'OK',
+    cancel: 'Afbryd',
+    selectAll: 'Vælg alle',
+    min: 'Min.',
+    max: 'Maks.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Varmekort',

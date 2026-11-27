@@ -14,6 +14,7 @@ export default {
     navigation: 'Navigation',
     scrollbar: 'Scrollbar',
     // Data Display
+    categorySearch: 'CategorySearch',
     dataDisplay: 'Data Display',
     comment: 'Comment',
     heatmap: 'Heatmap',

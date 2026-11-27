@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Izvēlieties kategoriju vai meklējiet',
+    clear: 'Notīrīt',
+    confirm: 'OK',
+    cancel: 'Atcelt',
+    selectAll: 'Atlasīt visu',
+    min: 'Min.',
+    max: 'Maks.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Siltuma karte',

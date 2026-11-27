@@ -76,6 +76,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Chọn danh mục hoặc tìm kiếm',
+    clear: 'Xóa',
+    confirm: 'Đồng ý',
+    cancel: 'Hủy',
+    selectAll: 'Chọn tất cả',
+    min: 'Tối thiểu',
+    max: 'Tối đa',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Bản đồ nhiệt',

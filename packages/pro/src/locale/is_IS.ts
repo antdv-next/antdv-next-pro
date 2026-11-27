@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Veldu flokk eða leitaðu',
+    clear: 'Hreinsa',
+    confirm: 'Áfram',
+    cancel: 'Hætta við',
+    selectAll: 'Velja allt',
+    min: 'Lágm.',
+    max: 'Hám.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Hitakort',

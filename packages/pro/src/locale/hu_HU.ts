@@ -76,6 +76,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Válasszon kategóriát vagy keressen',
+    clear: 'Törlés',
+    confirm: 'Alkalmazás',
+    cancel: 'Visszavonás',
+    selectAll: 'Összes kijelölése',
+    min: 'Min.',
+    max: 'Max.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Hőtérkép',

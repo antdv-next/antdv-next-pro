@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'Επιλέξτε κατηγορία ή αναζητήστε',
+    clear: 'Καθαρισμός',
+    confirm: 'ΟΚ',
+    cancel: 'Άκυρο',
+    selectAll: 'Επιλογή όλων',
+    min: 'Ελάχ.',
+    max: 'Μέγ.',
+    rangeSeparator: ' ~ ',
+    valueSeparator: ', ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Θερμικός χάρτης',

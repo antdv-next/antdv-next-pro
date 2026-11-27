@@ -72,6 +72,17 @@ const cronLocale = {
 
 const proLocale = {
   ...locale,
+  CategorySearch: {
+    placeholder: 'پۆلێک هەڵبژێرە یان بگەڕێ',
+    clear: 'پاککردنەوە',
+    confirm: 'Temam',
+    cancel: 'Betal ke',
+    selectAll: 'هەمووی هەڵبژێرە',
+    min: 'کەمترین',
+    max: 'زۆرترین',
+    rangeSeparator: ' ~ ',
+    valueSeparator: '، ',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'نەخشەی گەرم',

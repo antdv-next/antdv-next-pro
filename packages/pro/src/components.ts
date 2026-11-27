@@ -1,3 +1,4 @@
+export { CategorySearch } from './category-search/index.tsx'
 export { Comment } from './comment/index.tsx'
 export { default as ProConfigProvider } from './config-provider'
 export { Cron, defineCronDescriptionLocale, validateCronExpression } from './cron/index.tsx'

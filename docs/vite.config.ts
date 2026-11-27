@@ -61,6 +61,10 @@ export default defineConfig({
       },
       // Consume @antdv-next/pro from workspace source for instant HMR.
       {
+        find: /^@antdv-next\/pro\/category-search$/,
+        replacement: path.resolve(baseUrl, '../packages/pro/src/category-search/index.tsx'),
+      },
+      {
         find: /^@antdv-next\/pro\/comment$/,
         replacement: path.resolve(baseUrl, '../packages/pro/src/comment/index.tsx'),
       },
