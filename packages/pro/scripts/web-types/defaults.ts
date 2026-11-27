@@ -25,6 +25,7 @@ export const defaultComponents: DefaultComponentDefinition[] = [
       { name: 'comment', description: 'Default Comment configuration.', type: 'CommentConfig' },
       { name: 'cron', description: 'Default Cron configuration.', type: 'CronConfig' },
       { name: 'heatmap', description: 'Default Heatmap configuration.', type: 'HeatmapConfig' },
+      { name: 'highlight', description: 'Default Highlight configuration.', type: 'HighlightConfig' },
       { name: 'scrollbar', description: 'Default Scrollbar configuration.', type: 'ScrollbarConfig' },
       { name: 'inputTag', description: 'Default InputTag configuration.', type: 'InputTagConfig' },
     ],

@@ -22,6 +22,10 @@ export const covers: Covers = {
     cover: '/component-overview/heatmap.svg',
     coverDark: '/component-overview/heatmap-dark.svg',
   },
+  Highlight: {
+    cover: '/component-overview/highlight.svg',
+    coverDark: '/component-overview/highlight-dark.svg',
+  },
   InputTag: {
     cover: '/component-overview/input-tag.svg',
     coverDark: '/component-overview/input-tag-dark.svg',

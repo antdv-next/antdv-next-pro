@@ -17,5 +17,6 @@ export default {
     dataDisplay: 'Data Display',
     comment: 'Comment',
     heatmap: 'Heatmap',
+    highlight: 'Highlight',
   },
 } as const

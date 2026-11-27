@@ -8,6 +8,7 @@ import { renderToString } from 'vue/server-renderer'
 import Comment from '../../src/comment'
 import Cron from '../../src/cron'
 import Heatmap from '../../src/heatmap'
+import Highlight from '../../src/highlight'
 import InputTag from '../../src/input-tag'
 import Scrollbar from '../../src/scrollbar'
 
@@ -146,6 +147,7 @@ function defaultNode() {
     }),
     h(Cron),
     h(Heatmap),
+    h(Highlight, { content: 'Highlight content', keywords: 'content' }),
     h(Scrollbar, { visibility: 'hidden', visibilityX: 'hidden', visibilityY: 'hidden' }, { default: () => h('div') }),
     h(InputTag, { defaultValue: ['InputTag'] }),
   ])

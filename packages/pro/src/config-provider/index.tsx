@@ -40,6 +40,7 @@ export type {
   CommentConfig,
   CronConfig,
   HeatmapConfig,
+  HighlightConfig,
   InputTagConfig,
   ProConfigProviderEmits,
   ProConfigProviderProps,

@@ -73,6 +73,10 @@ const componentGlobalTokens: Record<string, string[]> = {
     'paddingXXS',
     'motionDurationMid',
   ],
+  Highlight: [
+    'borderRadiusXS',
+    'colorPrimary',
+  ],
   InputTag: [
     'marginXXS',
     'controlHeight',

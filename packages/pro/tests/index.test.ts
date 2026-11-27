@@ -7,11 +7,13 @@ describe('@antdv-next/pro', () => {
       'Comment',
       'Cron',
       'Heatmap',
+      'Highlight',
       'InputTag',
       'ProConfigProvider',
       'Scrollbar',
       'default',
       'defineCronDescriptionLocale',
+      'getHighlightChunks',
       'validateCronExpression',
     ])
   })
