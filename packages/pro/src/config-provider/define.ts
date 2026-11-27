@@ -3,6 +3,7 @@ import type { CSSProperties } from 'vue'
 import type { CommentConfig } from '../comment/types'
 import type { CronConfig } from '../cron/types'
 import type { HeatmapConfig } from '../heatmap/types'
+import type { InputTagConfig } from '../input-tag'
 import type { ProLocale } from '../locale/types'
 
 export type ScrollbarVisibility = 'auto' | 'always' | 'hidden'
@@ -21,17 +22,6 @@ export interface ScrollbarConfig {
   style?: CSSProperties
   classes?: Record<string, string>
   styles?: Record<string, CSSProperties>
-}
-
-export interface InputTagConfig {
-  maxCount?: number
-  tokenSeparators?: string[]
-  allowDuplicate?: boolean
-  allowClear?: boolean
-  class?: string
-  style?: CSSProperties
-  classes?: Record<string, string> | ((info: { props: any }) => Record<string, string>)
-  styles?: Record<string, CSSProperties> | ((info: { props: any }) => Record<string, CSSProperties>)
 }
 
 export interface ProConfigContextProps {
@@ -57,4 +47,4 @@ export interface ProConfigProviderSlots {
 
 export type ProConfigProviderEmits = Record<string, any>
 
-export type { CommentConfig, CronConfig, HeatmapConfig }
+export type { CommentConfig, CronConfig, HeatmapConfig, InputTagConfig }

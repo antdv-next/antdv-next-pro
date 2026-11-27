@@ -87,6 +87,7 @@ export type {
   HeatmapTooltipSlotProps,
 } from './heatmap'
 export type {
+  InputTagAllowClearConfig,
   InputTagClassNamesType,
   InputTagEmits,
   InputTagInputProps,

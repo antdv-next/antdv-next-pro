@@ -45,19 +45,22 @@ group:
 | disabled | 是否禁用组件 | `boolean` | `false` | - | × |
 | readonly | 是否只读 | `boolean` | `false` | - | × |
 | autoFocus | 是否自动聚焦输入框 | `boolean` | `false` | - | × |
-| size | 输入框尺寸 | `SizeType` | - | - | × |
+| size | 输入框尺寸 | `SizeType` | - | - | ✓ |
 | status | 手动设置校验状态，默认跟随 Form.Item | `InputProps['status']` | - | - | × |
-| variant | 输入框变体 | `Variant` | - | - | × |
+| variant | 输入框变体 | `Variant` | - | - | ✓ |
 | maxCount | 最大标签数量 | `number` | - | - | ✓ |
 | tokenSeparators | 按触发键提交时用于拆分标签的分隔符 | `string[]` | `[]` | - | ✓ |
 | allowDuplicate | 是否允许重复标签 | `boolean` | `false` | - | ✓ |
-| allowClear | 是否显示清空按钮 | `boolean` | `false` | - | ✓ |
-| trigger | 标签提交触发键 | `'enter' \| 'space'` | `'enter'` | - | × |
-| saveOnBlur | 失焦时是否提交输入内容 | `boolean` | `false` | - | × |
-| draggable | 是否允许拖拽排序 | `boolean` | `false` | - | × |
-| collapseTags | 是否折叠标签 | `boolean` | `false` | - | × |
-| collapseTagsTooltip | 是否通过 Tooltip 显示折叠标签 | `boolean` | `false` | - | × |
-| maxCollapseTags | 折叠时最多显示的标签数量 | `number` | `1` | - | × |
+| allowClear | 是否显示清空按钮，传对象可自定义清空图标 | `boolean \| { clearIcon?: VueNode }` | `false` | - | ✓ |
+| prefix | 标签列表前的内容 | `VueNode` | - | - | × |
+| suffix | 输入框末尾的内容，位于清空按钮之后 | `VueNode` | - | - | × |
+| clearIcon | 自定义清空图标，优先于 `allowClear.clearIcon` | `VueNode` | - | - | × |
+| trigger | 标签提交触发键 | `'enter' \| 'space'` | `'enter'` | - | ✓ |
+| saveOnBlur | 失焦时是否提交输入内容 | `boolean` | `false` | - | ✓ |
+| draggable | 是否允许拖拽排序；开启后标签可聚焦，支持 `Alt + ←/→` 键盘排序 | `boolean` | `false` | - | × |
+| maxTagCount | 最多显示的标签数量，超出的折叠为一个占位标签；不设置时全部显示 | `number` | - | - | × |
+| maxTagPlaceholder | 折叠占位标签的内容 | `VueNode \| ((omittedValues: string[]) => VueNode)` | `+ N` | - | × |
+| maxTagTooltip | 是否通过 Tooltip 显示被折叠的标签 | `boolean` | `false` | - | × |
 | inputProps | 传给内部 Input 的属性，详情参考 [Input Props](https://www.antdv-next.cn/components/input-cn#input-props)；受控值、状态、交互事件和 prefix/suffix 等由 InputTag 管理 | `InputTagInputProps` | - | - | × |
 | tagProps | 传给每个内部 Tag 的属性，详情参考 [Tag Props](https://www.antdv-next.cn/components/tag-cn#tag-props)；`closable`、`disabled` 和 `onClose` 由 InputTag 管理 | `InputTagTagProps` | - | - | × |
 | classes | 语义化结构 class | `InputTagClassNamesType` | - | - | ✓ |
@@ -73,9 +76,11 @@ group:
 | remove | 删除标签后触发 | `(value: string, info: { index: number, trigger: 'tag-remove' \| 'backspace', event?: Event }) => void` | - |
 | clear | 点击清空按钮后触发 | `(event: MouseEvent) => void` | - |
 | pressEnter | 输入框触发 Enter 时触发 | `(inputValue: string, event: KeyboardEvent) => void` | - |
-| dragTag | 拖拽调整标签顺序后触发 | `(oldIndex: number, newIndex: number, value: string, event?: DragEvent) => void` | - |
+| dragTag | 拖拽或通过键盘调整标签顺序后触发 | `(oldIndex: number, newIndex: number, value: string, event?: DragEvent \| KeyboardEvent) => void` | - |
 | focus | 输入框获得焦点时触发 | `(event: FocusEvent) => void` | - |
 | blur | 输入框失去焦点时触发 | `(event: FocusEvent) => void` | - |
+| keydown | 输入框按键按下时触发，先于组件内部的按键处理 | `(event: KeyboardEvent) => void` | - |
+| keyup | 输入框按键抬起时触发，先于组件内部的按键处理 | `(event: KeyboardEvent) => void` | - |
 
 `change` 事件的 `info.trigger` 用于标识变化来源，包括 `enter`、`space`、`blur`、`token-separator`、`drag`、`tag-remove`、`backspace` 和 `clear`。
 
@@ -101,12 +106,15 @@ const rules = [
 
 | 插槽 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
-| prefix | 标签列表前的内容 | - | - |
-| suffix | 输入框末尾的内容 | - | - |
-| clearIcon | 自定义清空图标 | - | - |
+| prefix | 标签列表前的内容 | `() => any` | - |
+| suffix | 输入框末尾的内容 | `() => any` | - |
+| clearIcon | 自定义清空图标 | `() => any` | - |
+| maxTagPlaceholder | 自定义折叠占位标签的内容 | `(props: { omittedValues: string[] }) => any` | - |
 | tag | 自定义标签内容 | `{ value: string, index: number, closable: boolean, onClose: (event: MouseEvent) => void }` | - |
 
-> `tag` 插槽仅作用于主内容区的标签。开启 `collapseTagsTooltip` 后，Tooltip 内展示的折叠标签为纯展示内容，**不会**应用 `tag` 插槽，但仍会应用 `tagProps` 以及 `classes.tag` / `styles.tag` 语义化样式。
+> `prefix`、`suffix`、`clearIcon`、`maxTagPlaceholder` 同时提供了属性和插槽，两者都存在时以插槽为准。
+>
+> `tag` 插槽仅作用于主内容区的标签。开启 `maxTagTooltip` 后，Tooltip 内展示的折叠标签为纯展示内容，**不会**应用 `tag` 插槽，但仍会应用 `tagProps` 以及 `classes.tag` / `styles.tag` 语义化样式。
 
 
 ### 方法 {#methods}
@@ -141,6 +149,8 @@ const rules = [
 #### 拖拽标签时如何决定插入位置？
 
 开启 `draggable` 后，拖拽标签悬停在目标标签上时，根据鼠标位于目标标签的**左半区还是右半区**决定插入位置：左半区插入到目标之前，右半区插入到目标之后。拖拽过程中目标标签会显示对应的插入位置指示线。
+
+不方便使用鼠标时，可以用 Tab 聚焦到某个标签，按 `Alt + ←` / `Alt + →` 把它向前或向后移动一位（RTL 下方向自动镜像）。键盘排序同样触发 `change`（`info.trigger` 为 `drag`）和 `dragTag`。
 
 #### `inputProps` / `tagProps` 支持哪些属性？
 
