@@ -746,4 +746,44 @@ describe('CategorySearch', () => {
     await openList(wrapper)
     expect(popup()!.style.width).toBe('320px')
   })
+
+  it('reserves the measured suffix width so the clear button never wraps with the tags', async () => {
+    const offsetWidth = vi.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockImplementation(function (this: HTMLElement) {
+      return this.classList.contains('ant-category-search-suffix') ? 24 : 0
+    })
+    const varName = '--ant-category-search-suffix-width'
+    try {
+      const wrapper = mountSearch({ allowClear: true, style: { color: 'red' } })
+      const root = wrapper.find('.ant-category-search')
+      const rootStyle = () => (root.element as HTMLElement).style
+      await flush()
+      // nothing to clear yet: no suffix, no reserved space
+      expect(wrapper.find('.ant-category-search-suffix').exists()).toBe(false)
+      expect(wrapper.find('.ant-category-search-selector').classes()).not.toContain('ant-category-search-selector-with-suffix')
+      expect(rootStyle().getPropertyValue(varName)).toBe('')
+
+      await wrapper.setProps({ value: [{ key: 'status', value: 'open' }] })
+      await flush()
+      expect(wrapper.find('.ant-category-search-suffix .ant-category-search-clear').exists()).toBe(true)
+      expect(wrapper.find('.ant-category-search-selector').classes()).toContain('ant-category-search-selector-with-suffix')
+      expect(rootStyle().getPropertyValue(varName)).toBe('24px')
+      // attrs style is still merged
+      expect(rootStyle().color).toBe('red')
+
+      await wrapper.setProps({ value: [] })
+      await flush()
+      expect(wrapper.find('.ant-category-search-selector').classes()).not.toContain('ant-category-search-selector-with-suffix')
+      expect(rootStyle().getPropertyValue(varName)).toBe('')
+    }
+    finally {
+      offsetWidth.mockRestore()
+    }
+  })
+
+  it('reserves space for a custom suffix slot', async () => {
+    const wrapper = mountSearch({}, { suffix: () => h('span', { class: 'custom-suffix' }, 'save') })
+    await flush()
+    expect(wrapper.find('.ant-category-search-suffix .custom-suffix').exists()).toBe(true)
+    expect(wrapper.find('.ant-category-search-selector').classes()).toContain('ant-category-search-selector-with-suffix')
+  })
 })

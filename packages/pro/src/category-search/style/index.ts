@@ -15,6 +15,14 @@ interface CategorySearchToken extends FullToken<'CategorySearch'> {
 
 const genSelectorStyle: GenerateStyle<CategorySearchToken, CSSObject> = (token) => {
   const { componentCls, antCls } = token
+  const inputVarPrefix = `--${antCls.replace(/^\./, '')}-input`
+  const suffixWidthVar = `--${componentCls.replace(/^\./, '')}-suffix-width`
+  // Same values as the Input component tokens; used when the Input CSS variables are not available.
+  const paddingInline = `var(${inputVarPrefix}-padding-inline, ${unit(token.calc(token.paddingSM).sub(token.lineWidth).equal())})`
+  const paddingInlineSM = `var(${inputVarPrefix}-padding-inline-sm, ${unit(token.calc(token.controlPaddingHorizontalSM).sub(token.lineWidth).equal())})`
+  const paddingInlineLG = `var(${inputVarPrefix}-padding-inline-lg, ${unit(token.calc(token.controlPaddingHorizontal).sub(token.lineWidth).equal())})`
+  // The suffix is taken out of the flow, so tags and the input wrap without ever pushing it to a new line.
+  const reserveSuffix = (padding: string) => `calc(${padding} + var(${suffixWidthVar}, 1em) + ${unit(token.marginXXS)})`
 
   return {
     [componentCls]: {
@@ -28,10 +36,15 @@ const genSelectorStyle: GenerateStyle<CategorySearchToken, CSSObject> = (token) 
 
       [`${componentCls}-selector`]: {
         height: 'auto',
-        minHeight: token.controlHeight,
         alignItems: 'center',
         flexWrap: 'wrap',
+        gap: token.marginXXS,
         cursor: 'text',
+
+        // Input's zero-width line-height placeholder would become a flex item and add a leading gap.
+        '&::before': {
+          display: 'none',
+        },
 
         [`& ${antCls}-input-prefix`]: {
           display: 'contents',
@@ -40,9 +53,36 @@ const genSelectorStyle: GenerateStyle<CategorySearchToken, CSSObject> = (token) 
 
         [`& ${antCls}-input`]: {
           flex: '1 1 0',
-          minWidth: token.controlHeight * 2,
+          minWidth: token.calc(token.controlHeight).mul(2).equal(),
           width: 'auto',
           paddingInline: 0,
+        },
+
+        [`& ${antCls}-input-suffix`]: {
+          position: 'absolute',
+          insetBlock: 0,
+          insetInlineEnd: paddingInline,
+          marginInlineStart: 0,
+        },
+
+        [`&${antCls}-input-affix-wrapper-sm ${antCls}-input-suffix`]: {
+          insetInlineEnd: paddingInlineSM,
+        },
+
+        [`&${antCls}-input-affix-wrapper-lg ${antCls}-input-suffix`]: {
+          insetInlineEnd: paddingInlineLG,
+        },
+      },
+
+      [`${componentCls}-selector-with-suffix`]: {
+        paddingInlineEnd: reserveSuffix(paddingInline),
+
+        [`&${antCls}-input-affix-wrapper-sm`]: {
+          paddingInlineEnd: reserveSuffix(paddingInlineSM),
+        },
+
+        [`&${antCls}-input-affix-wrapper-lg`]: {
+          paddingInlineEnd: reserveSuffix(paddingInlineLG),
         },
       },
 
@@ -55,23 +95,15 @@ const genSelectorStyle: GenerateStyle<CategorySearchToken, CSSObject> = (token) 
         alignItems: 'center',
       },
 
+      // Layout-transparent: tags and the input are laid out by the selector, so the input follows the last tag.
       [`${componentCls}-content`]: {
-        display: 'inline-flex',
-        maxWidth: '100%',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        gap: token.marginXXS,
-        paddingInlineEnd: token.marginXXS,
-
-        '&:empty': {
-          display: 'none',
-        },
+        display: 'contents',
       },
 
       [`${componentCls}-tag`]: {
         display: 'inline-flex',
         alignItems: 'center',
-        maxWidth: token.tagMaxWidth,
+        maxWidth: `min(${unit(token.tagMaxWidth)}, 100%)`,
         marginInlineEnd: 0,
         cursor: 'pointer',
       },
@@ -143,7 +175,7 @@ const genPopupStyle: GenerateStyle<CategorySearchToken, CSSObject> = (token) => 
 
       [`${popupCls}-list`]: {
         minWidth: token.popupListMinWidth,
-        maxHeight: token.controlHeight * 8,
+        maxHeight: token.calc(token.controlHeight).mul(8).equal(),
         margin: 0,
         padding: 0,
         overflowY: 'auto',
@@ -222,7 +254,7 @@ const genPopupStyle: GenerateStyle<CategorySearchToken, CSSObject> = (token) => 
         display: 'flex',
         flexDirection: 'column',
         gap: token.marginXS,
-        maxHeight: token.controlHeight * 8,
+        maxHeight: token.calc(token.controlHeight).mul(8).equal(),
         overflowY: 'auto',
       },
 

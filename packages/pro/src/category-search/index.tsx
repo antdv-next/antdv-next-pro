@@ -34,7 +34,7 @@ import { useBaseConfig } from 'antdv-next/config-provider/context'
 import { useDisabledContext } from 'antdv-next/config-provider/DisabledContext'
 import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
 import { useLocaleContext } from 'antdv-next/locale/index'
-import { computed, defineComponent, h, nextTick, ref, shallowRef, watch } from 'vue'
+import { computed, defineComponent, h, nextTick, onBeforeUnmount, onMounted, onUpdated, ref, shallowRef, watch } from 'vue'
 import { getSlotPropsFnRun, NoFormStyle, unwrapExposedElement, useFormItemProviderRest } from '../_util'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
@@ -106,6 +106,34 @@ const CategorySearch = defineComponent<
     const draft = shallowRef<any>(undefined)
     const pending = ref(false)
     let pointerInRoot = false
+
+    // The suffix (clear button + custom suffix) is absolutely positioned at the inline end,
+    // so its width is measured and reserved as padding on the selector.
+    const suffixWidth = shallowRef(0)
+    let suffixElement: HTMLElement | null = null
+    let suffixObserver: ResizeObserver | undefined
+    function measureSuffix() {
+      suffixWidth.value = suffixElement?.offsetWidth ?? 0
+    }
+    function syncSuffixElement() {
+      const element = rootRef.value?.querySelector<HTMLElement>(`.${prefixCls.value}-suffix`) ?? null
+      if (element !== suffixElement) {
+        suffixObserver?.disconnect()
+        suffixElement = element
+        if (element && typeof ResizeObserver !== 'undefined') {
+          suffixObserver ??= new ResizeObserver(measureSuffix)
+          suffixObserver.observe(element)
+        }
+      }
+      measureSuffix()
+    }
+    onMounted(syncSuffixElement)
+    onUpdated(syncSuffixElement)
+    onBeforeUnmount(() => {
+      suffixObserver?.disconnect()
+      suffixObserver = undefined
+      suffixElement = null
+    })
 
     watch(
       () => unwrapExposedElement<HTMLInputElement>(inputRef.value?.input),
@@ -898,7 +926,7 @@ const CategorySearch = defineComponent<
 
       const input = h(AInput, {
         ref: inputRef,
-        class: `${prefixCls.value}-selector`,
+        class: clsx(`${prefixCls.value}-selector`, { [`${prefixCls.value}-selector-with-suffix`]: !!suffix }),
         value: mergedSearchValue.value,
         prefix: renderContent(),
         suffix,
@@ -944,7 +972,9 @@ const CategorySearch = defineComponent<
         ...omitClassAndStyle(attrs as Record<string, any>),
         ref: rootRef,
         class: mergedClassName.value,
-        style: mergedStyle.value,
+        style: suffix && suffixWidth.value > 0
+          ? [{ [`--${prefixCls.value}-suffix-width`]: `${suffixWidth.value}px` }, ...mergedStyle.value]
+          : mergedStyle.value,
         onMousedown: handleRootPointerDown,
         onClick: handleRootClick,
       }, [input])
