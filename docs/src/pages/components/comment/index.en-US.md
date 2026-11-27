@@ -35,10 +35,11 @@ group:
 | --- | --- | --- | --- | --- | --- |
 | prefixCls | Component class prefix | `string` | - | - | × |
 | rootClass | Class applied to the component root | `string` | - | - | × |
-| author | Comment author. A `string` renders as plain text. | `string \| VNode` | - | - | × |
+| author | Comment author. A `string` renders as plain text. | `VueNode` | - | - | × |
 | avatar | Avatar image URL. It is forwarded to `Avatar`'s `src`, and `author` becomes the image `alt`. | `string` | - | - | × |
-| datetime | Comment time. The component never formats it. | `string \| VNode` | - | - | × |
-| content | Comment body. The component never parses HTML or Markdown. | `string \| VNode` | - | - | × |
+| datetime | Comment time. The component never formats it. | `VueNode` | - | - | × |
+| content | Comment body. The component never parses HTML or Markdown. | `VueNode` | - | - | × |
+| actions | Comment actions, laid out by `Space`. | `VueNode` | - | - | × |
 | datetimePlacement | How the datetime is placed relative to the author. | `'inline' \| 'block'` | `'inline'` | - | ✓ |
 | align | Alignment of the datetime within its row, using a logical direction that mirrors in RTL. | `'start' \| 'end'` | `'start'` | - | ✓ |
 | classes | Customize semantic classes with an object or function. | `CommentClassNamesType` | - | - | ✓ |
@@ -63,7 +64,7 @@ Child comments go in the default slot; the component does not limit the depth. L
 
 ## Actions {#actions}
 
-The actions area is entirely defined by the `#actions` slot. The component ships no built-in action names or icon mapping.
+The actions area is defined by the `#actions` slot or the `actions` prop (the slot wins when both exist). The component ships no built-in action names or icon mapping.
 
 ```vue
 <a-comment author="Zhang San" content="...">
@@ -100,7 +101,7 @@ Common action icons:
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-`avatar`, `header`, `body`, `actions`, and `children` render only when they have content.
+`avatar`, `header`, `content`, `actions`, and `children` render only when they have content; an empty slot (for example a falsy `v-if`) renders nothing either.
 
 ## Design Tokens {#design-tokens}
 

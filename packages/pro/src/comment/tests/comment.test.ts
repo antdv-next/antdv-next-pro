@@ -2,7 +2,7 @@ import type { CommentProps } from '../types'
 import { mount } from '@vue/test-utils'
 import { Button, ConfigProvider } from 'antdv-next'
 import { describe, expect, it, vi } from 'vitest'
-import { h, nextTick } from 'vue'
+import { createCommentVNode, h, nextTick } from 'vue'
 import rtlTest from '../../../../../tests/shared/rtlTest'
 import { ProConfigProvider } from '../../index'
 import Comment from '../index'
@@ -11,11 +11,11 @@ const semanticClasses: CommentProps['classes'] = {
   root: 'c-root',
   inner: 'c-inner',
   avatar: 'c-avatar',
-  content: 'c-content',
+  main: 'c-main',
   header: 'c-header',
   author: 'c-author',
   datetime: 'c-datetime',
-  body: 'c-body',
+  content: 'c-content',
   actions: 'c-actions',
   children: 'c-children',
 }
@@ -48,10 +48,10 @@ describe('Comment', () => {
 
     expect(wrapper.find('.ant-comment-author').text()).toBe('Zhang San')
     expect(wrapper.find('.ant-comment-datetime').text()).toBe('5 minutes ago')
-    expect(wrapper.find('.ant-comment-body').text()).toBe('This is a comment.')
+    expect(wrapper.find('.ant-comment-content').text()).toBe('This is a comment.')
   })
 
-  it('renders actions only through the #actions slot', () => {
+  it('renders actions from the #actions slot', () => {
     const wrapper = mountFull({}, {
       actions: () => [
         h(Button, { type: 'text', size: 'small' }, { default: () => 'Like' }),
@@ -123,7 +123,7 @@ describe('Comment', () => {
     const wrapper = mountFull()
 
     expect(wrapper.find('.ant-comment-header').exists()).toBe(true)
-    // actions 是纯插槽，没有插槽时整个容器不渲染
+    // 没有 actions 插槽和属性时整个容器不渲染
     expect(wrapper.find('.ant-comment-actions').exists()).toBe(false)
   })
 
@@ -132,7 +132,7 @@ describe('Comment', () => {
       {
         avatar: 'https://example.com/avatar.png',
         classes: semanticClasses,
-        styles: { body: { color: 'rgb(1, 2, 3)' } },
+        styles: { content: { color: 'rgb(1, 2, 3)' } },
       },
       {
         actions: () => h('span', { class: 'semantic-action' }, 'Like'),
@@ -143,15 +143,15 @@ describe('Comment', () => {
     expect(wrapper.find('.ant-comment').classes()).toContain('c-root')
     expect(wrapper.find('.ant-comment-inner').classes()).toContain('c-inner')
     expect(wrapper.find('.ant-comment-avatar').classes()).toContain('c-avatar')
-    expect(wrapper.find('.ant-comment-content').classes()).toContain('c-content')
+    expect(wrapper.find('.ant-comment-main').classes()).toContain('c-main')
     expect(wrapper.find('.ant-comment-header').classes()).toContain('c-header')
     expect(wrapper.find('.ant-comment-author').classes()).toContain('c-author')
     expect(wrapper.find('.ant-comment-datetime').classes()).toContain('c-datetime')
-    expect(wrapper.find('.ant-comment-body').classes()).toContain('c-body')
+    expect(wrapper.find('.ant-comment-content').classes()).toContain('c-content')
     expect(wrapper.find('.ant-comment-actions').classes()).toContain('c-actions')
     expect(wrapper.find('.ant-comment-children').classes()).toContain('c-children')
 
-    expect(wrapper.find('.ant-comment-body').attributes('style')).toContain('color: rgb(1, 2, 3)')
+    expect(wrapper.find('.ant-comment-content').attributes('style')).toContain('color: rgb(1, 2, 3)')
   })
 
   it('places nested comments in children outside of inner', () => {
@@ -193,12 +193,12 @@ describe('Comment', () => {
     expect(blockEnd.find('.ant-comment-header').classes()).toContain('ant-flex-align-flex-end')
   })
 
-  it('omits header, body and actions nodes when nothing is provided', () => {
+  it('omits header, content and actions nodes when nothing is provided', () => {
     const wrapper = mount(Comment, {})
 
     expect(wrapper.find('.ant-comment').exists()).toBe(true)
     expect(wrapper.find('.ant-comment-header').exists()).toBe(false)
-    expect(wrapper.find('.ant-comment-body').exists()).toBe(false)
+    expect(wrapper.find('.ant-comment-content').exists()).toBe(false)
     expect(wrapper.find('.ant-comment-actions').exists()).toBe(false)
     expect(wrapper.find('.ant-comment-children').exists()).toBe(false)
   })
@@ -336,13 +336,75 @@ describe('Comment', () => {
     expect(root.attributes('data-extra')).toBe('yes')
   })
 
+  it('renders actions from the actions prop and lets the #actions slot win', () => {
+    const fromProp = mountFull({
+      actions: () => [
+        h(Button, { type: 'text', size: 'small' }, { default: () => 'Like' }),
+        h(Button, { type: 'text', size: 'small' }, { default: () => 'Reply' }),
+      ],
+    })
+    expect(fromProp.findAll('.ant-comment-actions .ant-space-item').map(item => item.text())).toEqual(['Like', 'Reply'])
+
+    const fromVNode = mountFull({ actions: h('a', { class: 'prop-action' }, 'Edit') })
+    expect(fromVNode.find('.ant-comment-actions .prop-action').text()).toBe('Edit')
+
+    const both = mountFull(
+      { actions: h('a', { class: 'prop-action' }, 'Edit') },
+      { actions: () => h('a', { class: 'slot-action' }, 'Slot') },
+    )
+    expect(both.find('.slot-action').exists()).toBe(true)
+    expect(both.find('.prop-action').exists()).toBe(false)
+  })
+
+  it('accepts render functions and numbers for the rendering props', () => {
+    const wrapper = mount(Comment, {
+      props: {
+        author: () => h('b', { class: 'fn-author' }, 'Fn author'),
+        datetime: 2024,
+        content: () => [h('p', 'first'), h('p', 'second')],
+      },
+    })
+
+    expect(wrapper.find('.ant-comment-author .fn-author').text()).toBe('Fn author')
+    expect(wrapper.find('.ant-comment-datetime').text()).toBe('2024')
+    expect(wrapper.findAll('.ant-comment-content p')).toHaveLength(2)
+  })
+
+  it('does not render empty containers when a slot only yields empty nodes', () => {
+    // `v-if` 为假时 Vue 产出的是注释节点，数组长度为 1，不能只按长度判断
+    const empty = () => [createCommentVNode('v-if', true)]
+    const wrapper = mount(Comment, {
+      slots: {
+        avatar: empty,
+        author: empty,
+        datetime: empty,
+        content: empty,
+        actions: empty,
+        default: empty,
+      },
+    })
+
+    expect(wrapper.find('.ant-comment-avatar').exists()).toBe(false)
+    expect(wrapper.find('.ant-comment-header').exists()).toBe(false)
+    expect(wrapper.find('.ant-comment-content').exists()).toBe(false)
+    expect(wrapper.find('.ant-comment-actions').exists()).toBe(false)
+    expect(wrapper.find('.ant-comment-children').exists()).toBe(false)
+  })
+
+  it('does not render empty containers for empty string props', () => {
+    const wrapper = mount(Comment, { props: { author: '', datetime: '', content: '' } })
+
+    expect(wrapper.find('.ant-comment-header').exists()).toBe(false)
+    expect(wrapper.find('.ant-comment-content').exists()).toBe(false)
+  })
+
   describe('generated css', () => {
     /**
-     * `content` 是 `inner` 的 flex item，默认 `flex-grow: 0` 只会占内容宽度。
+     * `main` 是 `inner` 的 flex item，默认 `flex-grow: 0` 只会占内容宽度。
      * 不显式撑满时，header 的 `align: 'end'` 只在内容宽度内生效，
      * 正文很短时 `space-between` 看不出任何效果。
      */
-    it('makes the content column fill the remaining width', () => {
+    it('makes the main column fill the remaining width', () => {
       mount(Comment, { props: { author: 'Zhang San', content: 'x' } })
 
       const css = Array.from(document.querySelectorAll('style'))
@@ -350,7 +412,7 @@ describe('Comment', () => {
         .join('\n')
         .replace(/\s+/g, '')
 
-      expect(css).toContain('.ant-comment-content{flex:auto;min-width:0')
+      expect(css).toContain('.ant-comment-main{flex:auto;min-width:0')
     })
 
     /**

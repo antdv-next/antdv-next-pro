@@ -5,6 +5,7 @@ import { Avatar, Flex, Space } from 'antdv-next'
 import { useBaseConfig } from 'antdv-next/config-provider/context'
 import useCSSVarCls from 'antdv-next/config-provider/hooks/useCSSVarCls'
 import { computed, defineComponent } from 'vue'
+import { filterEmpty, getSlotPropsFnRun } from '../_util/node'
 import { useMergeSemantic } from '../_util/semantic'
 import { useProComponentConfig } from '../config-provider'
 import useStyle from './style'
@@ -21,9 +22,12 @@ function omitClassAndStyle(attrs: Record<string, any>) {
  *
  * 容器上有 `column-gap` / `row-gap`，空节点同样会占一份间距，
  * 所以这里必须按存在性渲染，而不是补空占位。
+ *
+ * 取值统一走 `getSlotPropsFnRun`（slot 优先、prop 兜底），它会用 `filterEmpty`
+ * 清掉注释节点（插槽内 `v-if` 为假时的产物）、空 Fragment 与空白文本。
  */
 function hasNode(value: unknown) {
-  if (value == null || value === false)
+  if (value == null || value === false || value === true || value === '')
     return false
   return !Array.isArray(value) || value.length > 0
 }
@@ -84,11 +88,11 @@ const Comment = defineComponent<
       const isBlock = mergedDatetimePlacement.value === 'block'
       const isEnd = mergedAlign.value === 'end'
 
-      const authorContent = slots.author ? slots.author() : props.author
-      const datetimeContent = slots.datetime ? slots.datetime() : props.datetime
-      const bodyContent = slots.content ? slots.content() : props.content
+      const authorContent = getSlotPropsFnRun(slots, props, 'author')
+      const datetimeContent = getSlotPropsFnRun(slots, props, 'datetime')
+      const contentNode = getSlotPropsFnRun(slots, props, 'content')
       const avatarContent = slots.avatar
-        ? slots.avatar()
+        ? filterEmpty(slots.avatar())
         : props.avatar
           ? (
               <Avatar
@@ -99,7 +103,8 @@ const Comment = defineComponent<
             )
           : null
 
-      const actionsContent = slots.actions ? slots.actions() : null
+      const actionsContent = getSlotPropsFnRun(slots, props, 'actions')
+      const childrenContent = slots.default ? filterEmpty(slots.default()) : null
 
       const hasAuthor = hasNode(authorContent)
       const hasDatetime = hasNode(datetimeContent)
@@ -123,8 +128,8 @@ const Comment = defineComponent<
             )}
             <Flex
               vertical
-              class={clsx(`${prefix}-content`, classNames.content)}
-              style={styles.content}
+              class={clsx(`${prefix}-main`, classNames.main)}
+              style={styles.main}
             >
               {hasHeader && (
                 <Flex
@@ -146,9 +151,9 @@ const Comment = defineComponent<
                   )}
                 </Flex>
               )}
-              {hasNode(bodyContent) && (
-                <div class={clsx(`${prefix}-body`, classNames.body)} style={styles.body}>
-                  {bodyContent}
+              {hasNode(contentNode) && (
+                <div class={clsx(`${prefix}-content`, classNames.content)} style={styles.content}>
+                  {contentNode}
                 </div>
               )}
               {hasNode(actionsContent) && (
@@ -163,13 +168,13 @@ const Comment = defineComponent<
               )}
             </Flex>
           </Flex>
-          {slots.default && (
+          {hasNode(childrenContent) && (
             <Flex
               vertical
               class={clsx(`${prefix}-children`, classNames.children)}
               style={styles.children}
             >
-              {slots.default()}
+              {childrenContent}
             </Flex>
           )}
         </article>

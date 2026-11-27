@@ -40,7 +40,7 @@ const genCommentStyle: GenerateStyle<CommentToken, CSSObject> = (token) => {
         columnGap: token.contentGap,
       },
 
-      '&-content': {
+      '&-main': {
         // 作为 inner 的 flex item，默认 `flex-grow: 0` 只会占内容宽度。
         // 必须显式撑满剩余宽度，否则 header 的 `align: 'end'` 只在内容宽度内生效，
         // 正文很短时看起来完全没有效果。
@@ -77,7 +77,7 @@ const genCommentStyle: GenerateStyle<CommentToken, CSSObject> = (token) => {
         whiteSpace: 'nowrap',
       },
 
-      '&-body': {
+      '&-content': {
         color: token.bodyColor,
       },
 
