@@ -1,6 +1,7 @@
 import type { ConfigProviderProps } from 'antdv-next/config-provider'
 import type { CSSProperties } from 'vue'
 import type { CategorySearchConfig } from '../category-search/types'
+import type { CodeConfig } from '../code/types'
 import type { CommentConfig } from '../comment/types'
 import type { CronConfig } from '../cron/types'
 import type { HeatmapConfig } from '../heatmap/types'
@@ -28,6 +29,7 @@ export interface ScrollbarConfig {
 
 export interface ProConfigContextProps {
   categorySearch?: CategorySearchConfig
+  code?: CodeConfig
   comment?: CommentConfig
   cron?: CronConfig
   heatmap?: HeatmapConfig
@@ -36,7 +38,7 @@ export interface ProConfigContextProps {
   inputTag?: InputTagConfig
 }
 
-export const PRO_CONFIG_KEYS = ['categorySearch', 'comment', 'cron', 'heatmap', 'highlight', 'scrollbar', 'inputTag'] as const satisfies readonly (keyof ProConfigContextProps)[]
+export const PRO_CONFIG_KEYS = ['categorySearch', 'code', 'comment', 'cron', 'heatmap', 'highlight', 'scrollbar', 'inputTag'] as const satisfies readonly (keyof ProConfigContextProps)[]
 
 export interface ProConfigProviderProps extends Omit<ConfigProviderProps, 'locale'>, ProConfigContextProps {
   locale?: ProLocale
@@ -51,4 +53,4 @@ export interface ProConfigProviderSlots {
 
 export type ProConfigProviderEmits = Record<string, any>
 
-export type { CategorySearchConfig, CommentConfig, CronConfig, HeatmapConfig, HighlightConfig, InputTagConfig }
+export type { CategorySearchConfig, CodeConfig, CommentConfig, CronConfig, HeatmapConfig, HighlightConfig, InputTagConfig }

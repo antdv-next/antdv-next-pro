@@ -1,6 +1,13 @@
 import type { Locale as AntLocale } from 'antdv-next/locale/index'
 import type { CronLocale } from '../cron/types'
 
+export interface CodeLocale {
+  /** Diff 新增行的读屏文本 */
+  added: string
+  /** Diff 删除行的读屏文本 */
+  removed: string
+}
+
 export interface HeatmapLocale {
   label: string
   less: string
@@ -39,6 +46,7 @@ export interface CategorySearchLocale {
 
 export interface ProLocale extends AntLocale {
   CategorySearch?: CategorySearchLocale
+  Code?: CodeLocale
   Cron?: CronLocale
   Heatmap?: HeatmapLocale
   InputTag?: InputTagLocale

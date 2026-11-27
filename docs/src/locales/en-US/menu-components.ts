@@ -16,6 +16,7 @@ export default {
     // Data Display
     categorySearch: 'CategorySearch',
     dataDisplay: 'Data Display',
+    code: 'Code',
     comment: 'Comment',
     heatmap: 'Heatmap',
     highlight: 'Highlight',

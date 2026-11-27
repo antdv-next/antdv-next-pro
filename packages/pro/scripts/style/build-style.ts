@@ -6,6 +6,7 @@ import * as _antd from 'antdv-next/dist/components'
 import { createSSRApp, Fragment, h } from 'vue'
 import { renderToString } from 'vue/server-renderer'
 import CategorySearch from '../../src/category-search'
+import Code from '../../src/code'
 import Comment from '../../src/comment'
 import Cron from '../../src/cron'
 import Heatmap from '../../src/heatmap'
@@ -134,6 +135,7 @@ function defaultNode() {
 
   return h(Fragment, null, [
     ...nodes,
+    h(Code, { content: ' const a = 1\n-const b = 2\n+const b = 3', diff: true, showLineNumbers: true, wordWrap: true, copyable: true }),
     h(Comment, {
       author: 'Author',
       avatar: 'https://antdv-next.com/avatar.png',

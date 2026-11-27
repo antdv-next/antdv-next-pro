@@ -1,7 +1,9 @@
 import { isRef } from 'vue'
 
-// antdv-next has no public _util subpath; isolate the dist import here as well.
+// antdv-next has no public _util subpath; isolate the dist imports here as well.
+export { default as copyToClipboard } from 'antdv-next/dist/_util/copy'
 export { getSlotPropsFnRun } from 'antdv-next/dist/_util/tools'
+export { devUseWarning, isDev } from 'antdv-next/dist/_util/warning'
 
 // antdv-next has no first-class ./form/context export; isolate the dist wildcard import here.
 export {

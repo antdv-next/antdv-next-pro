@@ -23,6 +23,7 @@ export const defaultComponents: DefaultComponentDefinition[] = [
       { name: 'popupMatchSelectWidth', description: 'Whether popup width matches the select width.', type: 'boolean' },
       { name: 'popupOverflow', description: 'Popup overflow strategy.', type: '\'viewport\' | \'scroll\'' },
       { name: 'categorySearch', description: 'Default CategorySearch configuration.', type: 'CategorySearchConfig' },
+      { name: 'code', description: 'Default Code configuration.', type: 'CodeConfig' },
       { name: 'comment', description: 'Default Comment configuration.', type: 'CommentConfig' },
       { name: 'cron', description: 'Default Cron configuration.', type: 'CronConfig' },
       { name: 'heatmap', description: 'Default Heatmap configuration.', type: 'HeatmapConfig' },

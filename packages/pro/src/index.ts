@@ -1,5 +1,6 @@
 import type { App, Plugin } from 'vue'
 import type { ComponentToken as CategorySearchComponentToken } from './category-search/style'
+import type { ComponentToken as CodeComponentToken } from './code/style'
 import type { ComponentToken as CommentComponentToken } from './comment/style'
 import type { ComponentToken as CronComponentToken } from './cron/style'
 import type { ComponentToken as HeatmapComponentToken } from './heatmap/style'
@@ -11,6 +12,7 @@ import * as components from './components'
 declare module 'antdv-next/theme/interface/components' {
   interface ComponentTokenMap {
     CategorySearch?: CategorySearchComponentToken
+    Code?: CodeComponentToken
     Comment?: CommentComponentToken
     Cron?: CronComponentToken
     Heatmap?: HeatmapComponentToken
@@ -46,6 +48,27 @@ export type {
   CategorySearchValueOption,
 } from './category-search'
 export type {
+  CodeClassNamesType,
+  CodeCopyConfig,
+  CodeCopyInfo,
+  CodeEmits,
+  CodeErrorInfo,
+  CodeErrorStage,
+  CodeExtraInfo,
+  CodeHighlighter,
+  CodeHighlightInfo,
+  CodeNode,
+  CodeProps,
+  CodeRef,
+  CodeSemanticClassNames,
+  CodeSemanticName,
+  CodeSemanticStyles,
+  CodeSlots,
+  CodeStylesType,
+  CodeTheme,
+  CodeToken,
+} from './code'
+export type {
   CommentAlign,
   CommentClassNamesType,
   CommentDatetimePlacement,
@@ -61,6 +84,7 @@ export * from './components'
 export { default as ProConfigProvider } from './config-provider'
 export type {
   CategorySearchConfig,
+  CodeConfig,
   CommentConfig,
   CronConfig,
   HeatmapConfig,

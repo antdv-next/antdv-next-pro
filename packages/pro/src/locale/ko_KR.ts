@@ -87,6 +87,10 @@ const proLocale = {
     rangeSeparator: ' ~ ',
     valueSeparator: ', ',
   },
+  Code: {
+    added: '추가',
+    removed: '삭제',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: '히트맵',

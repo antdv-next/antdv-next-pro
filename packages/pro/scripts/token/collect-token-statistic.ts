@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { theme } from 'antdv-next'
 import { prepareComponentToken as prepareCategorySearchToken } from '../../src/category-search/style/token'
+import { prepareComponentToken as prepareCodeToken } from '../../src/code/style/token'
 import { prepareComponentToken as prepareCommentToken } from '../../src/comment/style/token'
 import { prepareComponentToken as prepareCronToken } from '../../src/cron/style/token'
 import { prepareComponentToken as prepareHeatmapToken } from '../../src/heatmap/style/token'
@@ -14,10 +15,38 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const repoRoot = path.resolve(scriptDir, '../../../..')
 const outputPath = path.resolve(repoRoot, 'docs/src/assets/token.json')
 
+const CODE_GLOBAL = [
+  'colorText',
+  'colorPrimaryBorder',
+  'fontFamily',
+  'fontFamilyCode',
+  'fontSizeSM',
+  'lineHeight',
+  'lineWidth',
+  'lineWidthFocus',
+  'lineType',
+  'marginXXS',
+  'colorFillQuaternary',
+  'colorBorderSecondary',
+  'borderRadiusLG',
+  'paddingSM',
+  'paddingXS',
+  'paddingXXS',
+  'colorTextQuaternary',
+  'colorSuccessBg',
+  'colorSuccess',
+  'colorErrorBg',
+  'colorError',
+]
+
 async function main() {
   const globalToken = theme.getDesignToken()
 
   const output = {
+    Code: {
+      global: CODE_GLOBAL,
+      component: prepareCodeToken(globalToken),
+    },
     Comment: {
       global: [
         'colorText',

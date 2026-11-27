@@ -55,6 +55,12 @@ describe('Pro locale', () => {
       const locale = proLocaleModules[`../${localeName}.ts`]
       expect(locale?.locale, localeName).toEqual(expect.any(String))
       expect(locale?.Cron, localeName).toBeDefined()
+      expect(locale?.Code, localeName).toMatchObject({
+        added: expect.any(String),
+        removed: expect.any(String),
+      })
+      expect(locale?.Code?.added?.trim(), `${localeName}:Code.added`).not.toBe('')
+      expect(locale?.Code?.removed?.trim(), `${localeName}:Code.removed`).not.toBe('')
       expect(locale?.Heatmap, localeName).toMatchObject({
         label: expect.any(String),
         less: expect.any(String),
@@ -119,6 +125,15 @@ describe('Pro locale', () => {
     expect(enUS.CategorySearch).toMatchObject({ placeholder: 'Select a category or search', confirm: 'OK', cancel: 'Cancel' })
     expect(frFR.CategorySearch?.selectAll).toBe('Tout sélectionner')
     expect(proLocaleModules['../zh_CN.ts']?.CategorySearch).toMatchObject({ confirm: '确定', valueSeparator: '、' })
+  })
+
+  it('ships Code messages for representative locales', () => {
+    expect(enUS.Code).toEqual({ added: 'Added', removed: 'Removed' })
+    expect(proLocaleModules['../zh_CN.ts']?.Code).toEqual({ added: '新增', removed: '删除' })
+    expect(proLocaleModules['../zh_TW.ts']?.Code).toEqual({ added: '新增', removed: '刪除' })
+    expect(proLocaleModules['../ja_JP.ts']?.Code).toEqual({ added: '追加', removed: '削除' })
+    // 其他语言先用英文兜底。
+    expect(frFR.Code).toEqual({ added: 'Added', removed: 'Removed' })
   })
 
   it('is assignable to the antdv-next Locale type', () => {
