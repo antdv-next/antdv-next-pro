@@ -75,7 +75,7 @@ const componentGlobalTokens: Record<string, string[]> = {
   ],
   Highlight: [
     'borderRadiusXS',
-    'gold3',
+    'colorPrimary',
   ],
   InputTag: [
     'marginXXS',

@@ -607,7 +607,40 @@ exports[`highlight demo > renders theme correctly 1`] = `
   <span
     class="ant-highlight css-var-v-0 ant-highlight-css-var"
   >
-    Text style: antdv-
+    Follows colorPrimary: antdv-
+    <mark
+      class="ant-highlight-highlight"
+    >
+      next
+    </mark>
+    -pro
+  </span>
+  <span
+    class="ant-highlight css-var-v-1 ant-highlight-css-var"
+  >
+    Bold text: antdv-
+    <mark
+      class="ant-highlight-highlight"
+    >
+      next
+    </mark>
+    -pro
+  </span>
+  <span
+    class="ant-highlight css-var-v-2 ant-highlight-css-var"
+  >
+    Custom color and background: antdv-
+    <mark
+      class="ant-highlight-highlight"
+    >
+      next
+    </mark>
+    -pro
+  </span>
+  <span
+    class="ant-highlight css-var-v-3 ant-highlight-css-var"
+  >
+    Mark style: antdv-
     <mark
       class="ant-highlight-highlight"
     >

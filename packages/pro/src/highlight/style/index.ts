@@ -24,7 +24,7 @@ const genHighlightStyle: GenerateStyle<HighlightToken, CSSObject> = (token) => {
       },
 
       [`${componentCls}-highlight`]: {
-        // 显式写出背景与文字颜色，覆盖 UA 对 `<mark>` 的默认黄底黑字。
+        // 显式写出背景与文字颜色，覆盖 UA 对 `<mark>` 的默认黄底黑字；默认是主色文字、透明背景。
         margin: 0,
         paddingBlock: 0,
         paddingInline: token.highlightPaddingInline,

@@ -66,7 +66,7 @@ async function main() {
       component: prepareHeatmapToken(globalToken),
     },
     Highlight: {
-      global: ['borderRadiusXS', 'gold3'],
+      global: ['borderRadiusXS', 'colorPrimary'],
       component: prepareHighlightToken(globalToken),
     },
     InputTag: {

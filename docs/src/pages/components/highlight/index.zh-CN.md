@@ -15,7 +15,7 @@ group:
 - 搜索结果、表格筛选、日志检索等需要高亮**部分**文字的场景。
 - 替代业务里手写的 `split` + `v-html`：组件只渲染文本节点，没有 XSS 风险，SSR 前后端输出一致。
 
-和 `Typography.Text` 的 `mark` 的区别：`mark` 把整段文字包成一个 `<mark>`，`Highlight` 只包住命中关键词的部分。默认外观和 `mark` 一致。
+和 `Typography.Text` 的 `mark` 的区别：`mark` 把整段文字包成一个 `<mark>`，`Highlight` 只包住命中关键词的部分。默认只把命中文字显示为品牌主色、不加背景；文字颜色和背景色都可以通过组件 Token 或 `styles.highlight` 定制。
 
 ## 代码演示 {#examples}
 

@@ -1,12 +1,12 @@
 export interface ComponentToken {
   /**
-   * @desc 命中片段的背景色，默认与 Typography `mark` 一致。
-   * @descEN Background color of highlighted chunks, same as Typography `mark` by default.
+   * @desc 命中片段的背景色，默认透明。
+   * @descEN Background color of highlighted chunks, transparent by default.
    */
   highlightBg: string
   /**
-   * @desc 命中片段的文字颜色，默认继承。
-   * @descEN Text color of highlighted chunks, inherited by default.
+   * @desc 命中片段的文字颜色，默认为品牌主色。
+   * @descEN Text color of highlighted chunks, the brand primary color by default.
    */
   highlightColor: string
   /**
@@ -28,9 +28,9 @@ export interface ComponentToken {
 
 export function prepareComponentToken(token: any): ComponentToken {
   return {
-    // Typography `mark` 使用 `@ant-design/colors` 的 `gold[2]`，对应色板 Token `gold3`。
-    highlightBg: token.gold3,
-    highlightColor: 'inherit',
+    // 默认外观保持克制：只把命中文字变成品牌主色，不加背景。
+    highlightBg: 'transparent',
+    highlightColor: token.colorPrimary,
     highlightFontWeight: 'inherit',
     highlightPaddingInline: 0,
     highlightBorderRadius: token.borderRadiusXS,

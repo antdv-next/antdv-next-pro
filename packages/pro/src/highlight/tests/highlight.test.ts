@@ -6,6 +6,7 @@ import { renderToString } from 'vue/server-renderer'
 import rtlTest from '../../../../../tests/shared/rtlTest'
 import { ProConfigProvider } from '../../index'
 import Highlight from '../index'
+import { prepareComponentToken } from '../style/token'
 
 function mountHighlight(props: HighlightProps = {}, slots: Record<string, any> = {}, attrs: Record<string, any> = {}) {
   return mount(Highlight, {
@@ -223,6 +224,16 @@ describe('Highlight', () => {
       slots: { default: () => h(Highlight, { content: 'abc', keywords: 'b' }) },
     })
     expect(wrapper.find('.ant-highlight').classes()).toContain('ant-highlight-rtl')
+  })
+
+  it('defaults to primary-colored text on a transparent background', () => {
+    const token = prepareComponentToken({ colorPrimary: '#1677ff', gold3: '#ffe58f', borderRadiusXS: 2 })
+    expect(token.highlightColor).toBe('#1677ff')
+    expect(token.highlightBg).toBe('transparent')
+    expect(token.highlightFontWeight).toBe('inherit')
+    expect(token.highlightPaddingInline).toBe(0)
+    // 跟随品牌主色
+    expect(prepareComponentToken({ colorPrimary: '#00b96b' }).highlightColor).toBe('#00b96b')
   })
 })
 

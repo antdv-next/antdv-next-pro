@@ -14,7 +14,7 @@ group:
 - Search results, table filters, log search, and other places where **part** of a text should be highlighted.
 - Replace hand-written `split` + `v-html` code: the component renders text nodes only, so there is no XSS risk, and the server and client output match.
 
-Compared with the `mark` prop of `Typography.Text`: `mark` wraps the whole text in one `<mark>`, while `Highlight` wraps only the matched parts. The default look is the same as `mark`.
+Compared with the `mark` prop of `Typography.Text`: `mark` wraps the whole text in one `<mark>`, while `Highlight` wraps only the matched parts. By default the matched text is shown in the brand primary color with no background; both the text color and the background can be customized through component tokens or `styles.highlight`.
 
 ## Examples {#examples}
 
