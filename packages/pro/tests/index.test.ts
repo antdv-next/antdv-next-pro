@@ -5,6 +5,7 @@ describe('@antdv-next/pro', () => {
   it('exposes the plugin and public components from the package entry', () => {
     expect(Object.keys(Pro).sort()).toEqual([
       'CategorySearch',
+      'Code',
       'Comment',
       'Cron',
       'Heatmap',

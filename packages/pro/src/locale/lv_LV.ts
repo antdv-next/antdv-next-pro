@@ -83,6 +83,10 @@ const proLocale = {
     rangeSeparator: ' ~ ',
     valueSeparator: ', ',
   },
+  Code: {
+    added: 'Added',
+    removed: 'Removed',
+  },
   Cron: cronLocale,
   Heatmap: {
     label: 'Siltuma karte',

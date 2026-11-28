@@ -514,6 +514,9 @@ importers:
       npm-run-all:
         specifier: catalog:dev
         version: 4.1.5
+      shiki:
+        specifier: catalog:docs
+        version: 4.4.3
       tinyglobby:
         specifier: catalog:dev
         version: 0.2.17

@@ -29,6 +29,16 @@
       "import": "./dist/category-search/index.js",
       "default": "./dist/category-search/index.js"
     },
+    "./code": {
+      "types": "./dist/code/index.d.ts",
+      "import": "./dist/code/index.js",
+      "default": "./dist/code/index.js"
+    },
+    "./code/shiki": {
+      "types": "./dist/code/shiki/index.d.ts",
+      "import": "./dist/code/shiki/index.js",
+      "default": "./dist/code/shiki/index.js"
+    },
     "./comment": {
       "types": "./dist/comment/index.d.ts",
       "import": "./dist/comment/index.js",
@@ -95,20 +105,27 @@
     "test:watch": "vitest watch",
     "test:ui": "vitest --ui",
     "typecheck": "vue-tsc --project tsconfig.json --noEmit",
-    "build": "run-s build:web-types build:esm",
+    "build": "run-s build:web-types build:esm check:optional-peer",
     "build:web-types": "tsx ./scripts/web-types/index.ts",
     "build:style": "cross-env NODE_ENV=production tsx ./scripts/vite-ssr-run.ts ./scripts/style/build-style.ts buildStyle",
     "build:token-meta": "tsx ./scripts/token/generate-token-meta.ts",
     "build:token-statistic": "tsx ./scripts/token/collect-token-statistic.ts",
     "build:token": "run-p build:token-meta build:token-statistic",
     "build:esm": "tsdown",
+    "check:optional-peer": "node ./scripts/check-optional-peer.mjs",
     "dev": "tsdown --watch",
     "prepublish": "pnpm build",
     "bump": "bumpp --commit \"chore(release): @antdv-next/pro %s\" --push --tag \"@antdv-next/pro@%s\""
   },
   "peerDependencies": {
     "antdv-next": ">=1.3.0",
+    "shiki": ">=3.0.0",
     "vue": ">=3.2.0"
+  },
+  "peerDependenciesMeta": {
+    "shiki": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@antdv-next/cssinjs": "catalog:prod",
@@ -132,6 +149,7 @@
     "bumpp": "catalog:dev",
     "markdown-it": "catalog:docs",
     "npm-run-all": "catalog:dev",
+    "shiki": "catalog:docs",
     "tinyglobby": "catalog:dev",
     "tsdown": "catalog:dev",
     "tsx": "catalog:dev",

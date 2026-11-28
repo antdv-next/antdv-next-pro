@@ -16,6 +16,7 @@ export default {
     // Data Display
     categorySearch: 'CategorySearch 分类搜索',
     dataDisplay: '数据展示',
+    code: 'Code 代码展示',
     comment: 'Comment 评论',
     heatmap: 'Heatmap 热力图',
     highlight: 'Highlight 文本高亮',

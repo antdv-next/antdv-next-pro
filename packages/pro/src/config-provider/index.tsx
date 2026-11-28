@@ -38,6 +38,7 @@ export default ProConfigProvider
 export { useProComponentConfig, useProConfig, useProConfigProvider } from './context'
 export type {
   CategorySearchConfig,
+  CodeConfig,
   CommentConfig,
   CronConfig,
   HeatmapConfig,

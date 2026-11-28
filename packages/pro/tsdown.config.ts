@@ -7,6 +7,7 @@ export default defineConfig({
   entry: [
     'src/index.ts',
     'src/**/index.tsx',
+    'src/code/shiki/index.ts',
     'src/locale/index.ts',
     'src/locale/*.ts',
   ],
@@ -34,6 +35,9 @@ export default defineConfig({
       'antdv-next/theme/internal',
       '@antdv-next/cssinjs',
       '@antdv-next/cssinjs/cssinjs-utils',
+      // Optional peer: only `src/code/shiki` may import it, and it must never be bundled.
+      'shiki',
+      /^shiki\//,
     ],
   },
   outExtensions() {

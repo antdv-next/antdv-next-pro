@@ -10,6 +10,10 @@ export const covers: Covers = {
     cover: '/component-overview/category-search.svg',
     coverDark: '/component-overview/category-search-dark.svg',
   },
+  Code: {
+    cover: '/component-overview/code.svg',
+    coverDark: '/component-overview/code-dark.svg',
+  },
   Comment: {
     cover: '/component-overview/comment.svg',
     coverDark: '/component-overview/comment-dark.svg',

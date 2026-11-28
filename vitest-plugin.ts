@@ -37,6 +37,14 @@ export default defineConfig({
         replacement: path.resolve(baseUrl, './packages/pro/src/scrollbar/index.tsx'),
       },
       {
+        find: /^@antdv-next\/pro\/code\/shiki$/,
+        replacement: path.resolve(baseUrl, './packages/pro/src/code/shiki/index.ts'),
+      },
+      {
+        find: /^@antdv-next\/pro\/code$/,
+        replacement: path.resolve(baseUrl, './packages/pro/src/code/index.tsx'),
+      },
+      {
         find: /^@antdv-next\/pro\/cron$/,
         replacement: path.resolve(baseUrl, './packages/pro/src/cron/index.tsx'),
       },
